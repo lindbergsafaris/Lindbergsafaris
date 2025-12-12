@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import api from '@/lib/api';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const Blog = () => {
     const [posts, setPosts] = useState<any[]>([]);
@@ -30,6 +31,10 @@ const Blog = () => {
         fetchPosts();
     }, []);
 
+    if (loading) {
+        return <LoadingScreen />;
+    }
+
     return (
         <Layout>
             <div className="bg-gray-900 text-white py-20">
@@ -43,12 +48,7 @@ const Blog = () => {
 
             <Section>
                 <Container>
-                    {loading && (
-                        <div className="text-center py-20">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                            <p className="mt-4 text-gray-600">Loading blog posts...</p>
-                        </div>
-                    )}
+
 
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
@@ -57,14 +57,14 @@ const Blog = () => {
                         </div>
                     )}
 
-                    {!loading && !error && posts.length === 0 && (
+                    {!error && posts.length === 0 && (
                         <div className="text-center py-20 bg-gray-50 rounded-lg">
                             <p className="text-gray-600 text-lg">No blog posts found.</p>
                             <p className="text-gray-500 text-sm mt-2">Add blog posts in Sanity Studio.</p>
                         </div>
                     )}
 
-                    {!loading && !error && posts.length > 0 && (
+                    {!error && posts.length > 0 && (
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {posts.map((post) => (

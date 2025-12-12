@@ -6,15 +6,15 @@ import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import TourCard from '@/components/tours/TourCard';
-import DestinationCard from '@/components/destinations/DestinationCard';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { getWhatsAppLink } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
+import { regionData } from '@/data/destinations';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const Home = () => {
     const [tours, setTours] = useState<any[]>([]);
-    const [destinations, setDestinations] = useState<any[]>([]);
     const [hotDeals, setHotDeals] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -28,19 +28,19 @@ const Home = () => {
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80", // Resort/Pool image
+            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80", // Resort/Pool image
             title: "Hotel Booking",
             subtitle: "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
         },
         {
             id: 3,
-            image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=2021&q=80", // Travel/Transport
+            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=2021&q=80", // Travel/Transport
             title: "Transport Services",
             subtitle: "Comfortable and reliable transport solutions for your entire journey."
         },
         {
             id: 4,
-            image: "https://images.unsplash.com/photo-1559563362-c667ba5f5480?ixlib=rb-4.0.3&auto=format&fit=crop&w=2001&q=80", // Passport/Visa
+            image: "https://images.unsplash.com/photo-1569949381156-d5033c5b2443?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", // Passport/Visa
             title: "Visa Application",
             subtitle: "Hassle-free visa assistance to ensure smooth entry into your destination."
         },
@@ -52,7 +52,7 @@ const Home = () => {
         },
         {
             id: 6,
-            image: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", // Map/Planning
+            image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", // Map/Planning
             title: "Custom Itineraries",
             subtitle: "Tailor-made packages designed specifically for your unique preferences and budget."
         }
@@ -86,9 +86,8 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [toursRes, destsRes, hotDealsRes] = await Promise.all([
+                const [toursRes, hotDealsRes] = await Promise.all([
                     api.tours.getAll(),
-                    api.destinations.getAll(),
                     api.hotDeals.getAll()
                 ]);
 
@@ -97,14 +96,10 @@ const Home = () => {
                 const featuredTours = allTours.filter((t: any) => t.featured).slice(0, 3);
                 setTours(featuredTours.length > 0 ? featuredTours : allTours.slice(0, 3));
 
-                // Get first 4 destinations
-                setDestinations((destsRes.data || []).slice(0, 4));
-
                 // Get Hot Deals
                 setHotDeals(hotDealsRes.data || []);
 
                 console.log('Tours:', toursRes.data);
-                console.log('Destinations:', destsRes.data);
                 console.log('Hot Deals:', hotDealsRes.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -116,6 +111,10 @@ const Home = () => {
 
         fetchData();
     }, []);
+
+    if (loading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <Layout>
@@ -201,8 +200,8 @@ const Home = () => {
                             <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-bold mb-4">
                                 <Tag size={16} /> Hot Deals
                             </div>
-                            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Exclusive Offers</h2>
-                            <p className="text-gray-600 max-w-2xl mx-auto">Limited time offers on our most popular safari packages.</p>
+                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-gray-900">Exclusive Offers</h2>
+                            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Limited time offers on our most popular safari packages.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -260,7 +259,7 @@ const Home = () => {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                         {partners.map((_, index) => (
                             <div key={index} className="flex justify-center">
-                                <div className="h-12 bg-gray-200 w-full rounded flex items-center justify-center text-gray-400 font-bold text-xs">
+                                <div className="h-24 bg-gray-200 w-full rounded flex items-center justify-center text-gray-400 font-bold text-lg">
                                     {/* Placeholder for actual logos */}
                                     LOGO {index + 1}
                                 </div>
@@ -278,27 +277,25 @@ const Home = () => {
                         <p className="text-gray-600 max-w-2xl mx-auto">From the vast plains of the Serengeti to the pristine beaches of Zanzibar.</p>
                     </div>
 
-                    {loading ? (
-                        <div className="text-center py-12">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                        </div>
-                    ) : destinations.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {destinations.map((dest) => (
-                                <DestinationCard
-                                    key={dest._id}
-                                    id={dest._id}
-                                    name={dest.name}
-                                    image={dest.cardImage?.url || dest.heroImage?.url || 'https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                    tourCount={dest.tourCount || 0}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {Object.values(regionData).map((region) => (
+                            <Link to={`/regions/${region.id}`} key={region.id} className="group relative overflow-hidden rounded-xl h-80 block">
+                                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-all duration-500 z-10" />
+                                <img
+                                    src={region.image}
+                                    alt={region.title}
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 bg-white rounded-lg">
-                            <p className="text-gray-600">No destinations available yet. Add destinations in Sanity Studio!</p>
-                        </div>
-                    )}
+                                <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
+                                    <h3 className="text-2xl font-serif font-bold mb-2">{region.title}</h3>
+                                    <p className="text-sm text-gray-200 line-clamp-2 mb-3">{region.description}</p>
+                                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors">
+                                        Explore Region <ChevronRight size={16} />
+                                    </span>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
                 </Container>
             </Section>
 
@@ -315,11 +312,7 @@ const Home = () => {
                         </Link>
                     </div>
 
-                    {loading ? (
-                        <div className="text-center py-12">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                        </div>
-                    ) : tours.length > 0 ? (
+                    {tours.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {tours.map((tour) => (
                                 <TourCard

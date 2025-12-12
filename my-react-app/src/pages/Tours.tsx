@@ -5,6 +5,7 @@ import Section from '@/components/ui/Section';
 import TourCard from '@/components/tours/TourCard';
 import TourFilter from '@/components/tours/TourFilter';
 import api from '@/lib/api';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const Tours = () => {
     const [tours, setTours] = useState<any[]>([]);
@@ -28,6 +29,10 @@ const Tours = () => {
         fetchTours();
     }, []);
 
+    if (loading) {
+        return <LoadingScreen />;
+    }
+
     return (
         <Layout>
             {/* Hero Section */}
@@ -50,12 +55,7 @@ const Tours = () => {
 
                         {/* Tours Grid */}
                         <div className="lg:w-3/4">
-                            {loading && (
-                                <div className="text-center py-20">
-                                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                                    <p className="mt-4 text-gray-600">Loading tours...</p>
-                                </div>
-                            )}
+
 
                             {error && (
                                 <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
@@ -65,14 +65,14 @@ const Tours = () => {
                                 </div>
                             )}
 
-                            {!loading && !error && tours.length === 0 && (
+                            {!error && tours.length === 0 && (
                                 <div className="text-center py-20 bg-gray-50 rounded-lg">
                                     <p className="text-gray-600 text-lg">No tours found.</p>
                                     <p className="text-gray-500 text-sm mt-2">Add tours in Sanity Studio to see them here.</p>
                                 </div>
                             )}
 
-                            {!loading && !error && tours.length > 0 && (
+                            {!error && tours.length > 0 && (
                                 <>
                                     <div className="mb-6">
                                         <p className="text-gray-600">

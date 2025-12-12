@@ -20,7 +20,17 @@ const Header = () => {
 
     const navItems = [
         { name: 'Home', path: '/' },
-        { name: 'Services', path: '/services' },
+        {
+            name: 'Services',
+            path: '#',
+            dropdown: [
+                { name: 'Airticketing', path: '/services/airticketing' },
+                { name: 'Hotel Booking', path: '/services/hotel-booking' },
+                { name: 'Transport Services', path: '/services/transport' },
+                { name: 'Visa Applications', path: '/services/visa' },
+                { name: 'Custom Itineraries', path: '/services/custom-itineraries' },
+            ]
+        },
         {
             name: 'Themed Packages',
             path: '#',
@@ -45,7 +55,15 @@ const Header = () => {
                 { name: 'Bush Camps', path: '/accommodation/bush-camps' },
             ]
         },
-        { name: 'Destination', path: '/destinations' },
+        {
+            name: 'Destination',
+            path: '#',
+            dropdown: [
+                { name: 'Africa', path: '/regions/africa' },
+                { name: 'Middle East', path: '/regions/middle-east' },
+                { name: 'Europe', path: '/regions/europe' },
+            ]
+        },
         { name: 'Company', path: '/company' },
         { name: 'Blog', path: '/blog' },
         { name: 'Contact', path: '/contact' },

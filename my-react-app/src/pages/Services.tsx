@@ -4,7 +4,6 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import { Link } from 'react-router-dom';
 import { Car, Hotel, Plane, Compass, ArrowRight, Map, Shield, Users, Heart } from 'lucide-react';
-import api from '@/lib/api';
 
 // Icon mapping
 const iconMap: Record<string, any> = {
@@ -22,21 +21,48 @@ const Services = () => {
     const [services, setServices] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchServices = async () => {
-            try {
-                const response = await api.services.getAll();
-                // Sort by order if available
-                const sortedServices = (response.data || []).sort((a: any, b: any) => (a.order || 99) - (b.order || 99));
-                setServices(sortedServices);
-            } catch (error) {
-                console.error('Error fetching services:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const servicesList = [
+        {
+            _id: '1',
+            title: 'Airticketing',
+            description: 'Best flight deals and seamless booking experiences for international and local travel.',
+            icon: 'Plane',
+            features: ['International Flights', 'Local Flights', 'Best Price Guarantee', '24/7 Support']
+        },
+        {
+            _id: '2',
+            title: 'Hotel Booking',
+            description: 'Luxury accommodations in the heart of nature, from bush camps to 5-star resorts.',
+            icon: 'Hotel',
+            features: ['Luxury Resorts', 'Bush Camps', 'City Hotels', 'Best Rates']
+        },
+        {
+            _id: '3',
+            title: 'Transport Services',
+            description: 'Comfortable and reliable transport solutions for your entire journey.',
+            icon: 'Car',
+            features: ['Airport Transfers', 'Safari Jeeps', 'Car Hire', 'Professional Drivers']
+        },
+        {
+            _id: '4',
+            title: 'Visa Applications',
+            description: 'Hassle-free visa assistance to ensure smooth entry into your destination.',
+            icon: 'Shield',
+            features: ['Visa Advice', 'Application Assistance', 'Document Review', 'Fast Processing']
+        },
+        {
+            _id: '5',
+            title: 'Custom Itineraries',
+            description: 'Tailor-made packages designed specifically for your unique preferences and budget.',
+            icon: 'Map',
+            features: ['Personalized Planning', 'Flexible Schedules', 'Expert Advice', 'Unique Experiences']
+        }
+    ];
 
-        fetchServices();
+    useEffect(() => {
+        // Simulate loading for smooth UX or just set immediately
+        setServices(servicesList);
+        setLoading(false);
     }, []);
 
     return (

@@ -5,6 +5,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import { cn } from '@/lib/utils';
 import api from '@/lib/api';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -116,6 +117,10 @@ const Company = () => {
             });
         }
     };
+
+    if (loading) {
+        return <LoadingScreen />;
+    }
 
     return (
         <Layout>
@@ -260,11 +265,7 @@ const Company = () => {
                         </p>
                     </div>
 
-                    {loading ? (
-                        <div className="text-center py-12">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                        </div>
-                    ) : faqs.length > 0 ? (
+                    {faqs.length > 0 ? (
                         <div className="max-w-3xl mx-auto space-y-4">
                             {faqs.map((faq, index) => (
                                 <div key={faq._id || index} className="border border-gray-200 rounded-lg overflow-hidden">
@@ -310,11 +311,7 @@ const Company = () => {
                         </p>
                     </div>
 
-                    {loading ? (
-                        <div className="text-center py-12">
-                            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                        </div>
-                    ) : testimonials.length > 0 ? (
+                    {testimonials.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {testimonials.map((item, index) => (
                                 <div key={item._id || index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-all">
