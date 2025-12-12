@@ -19,7 +19,7 @@ const Visa = () => {
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1569949381156-d5033c5b2443?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")' }}
+                    style={{ backgroundImage: 'url("https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg")' }}
                 >
                     <div className="absolute inset-0 bg-black/60" />
                 </div>

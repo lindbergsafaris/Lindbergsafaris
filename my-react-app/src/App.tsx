@@ -19,6 +19,7 @@ import Quiz from '@/pages/Quiz';
 import PackageCategory from '@/pages/PackageCategory';
 import AccommodationCategory from '@/pages/AccommodationCategory';
 import Company from '@/pages/Company';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Component to handle redirects with hash navigation
 const CompanyRedirect = ({ section }: { section: string }) => {
@@ -44,6 +45,7 @@ const CompanyRedirect = ({ section }: { section: string }) => {
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tours" element={<Tours />} />

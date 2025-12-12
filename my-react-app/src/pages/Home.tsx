@@ -40,7 +40,7 @@ const Home = () => {
         },
         {
             id: 4,
-            image: "https://images.unsplash.com/photo-1569949381156-d5033c5b2443?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", // Passport/Visa
+            image: "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg", // Passport/Visa
             title: "Visa Application",
             subtitle: "Hassle-free visa assistance to ensure smooth entry into your destination."
         },

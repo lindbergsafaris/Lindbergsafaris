@@ -63,7 +63,7 @@ export const destinationsData: Record<string, DestinationData> = {
         name: 'Dubai',
         tagline: 'The City of Gold',
         description: 'Dubai is a city of superlatives, where traditional Arabian culture meets futuristic innovation. From the world\'s tallest building to man-made islands, luxury shopping, and desert adventures, Dubai offers an unforgettable experience.',
-        heroImage: 'https://images.unsplash.com/photo-1512453979798-5ea904ac6605?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        heroImage: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0013_xpz1j2.jpg',
         highlights: [
             'Burj Khalifa',
             'The Dubai Mall',
@@ -100,7 +100,7 @@ export const destinationsData: Record<string, DestinationData> = {
         name: 'Italy',
         tagline: 'La Dolce Vita',
         description: 'Italy is a country of diverse beauty, from the rolling hills of Tuscany to the ancient ruins of Rome and the romantic canals of Venice. Enjoy world-class cuisine, art, and history.',
-        heroImage: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        heroImage: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
         highlights: [
             'Colosseum & Roman Forum',
             'Venice Canals',
@@ -201,7 +201,7 @@ export const destinationsData: Record<string, DestinationData> = {
         name: 'Qatar',
         tagline: 'Where Tradition Meets Modernity',
         description: 'Qatar is a peninsula Arab country whose terrain comprises arid desert and a long Persian (Arab) Gulf shoreline of beaches and dunes. Also on the coast is the capital, Doha, known for its futuristic skyscrapers and other ultramodern architecture.',
-        heroImage: 'https://images.unsplash.com/photo-1595842873736-231968393522?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        heroImage: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0014_j9ytmb.jpg',
         highlights: [
             'Souq Waqif',
             'Museum of Islamic Art',
@@ -233,7 +233,7 @@ export const destinationsData: Record<string, DestinationData> = {
         name: 'Spain',
         tagline: 'Passion in Every Corner',
         description: 'Spain is a country on Europe’s Iberian Peninsula, includes 17 autonomous regions with diverse geography and cultures. Capital city Madrid is home to the Royal Palace and Prado museum.',
-        heroImage: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        heroImage: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
         highlights: [
             'Sagrada Familia',
             'Alhambra',
@@ -265,7 +265,7 @@ export const destinationsData: Record<string, DestinationData> = {
         name: 'United Kingdom',
         tagline: 'Great Britain & Northern Ireland',
         description: 'The United Kingdom, made up of England, Scotland, Wales and Northern Ireland, is an island nation in northwestern Europe. England – birthplace of Shakespeare and The Beatles – is home to the capital, London.',
-        heroImage: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        heroImage: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
         highlights: [
             'London Eye',
             'Tower of London',
@@ -312,19 +312,19 @@ export const regionData: Record<string, any> = {
         description: 'Discover the rich history and modern marvels of the Middle East.',
         image: 'https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&auto=format&fit=crop&w=2076&q=80',
         subDestinations: [
-            { id: 'dubai', name: 'Dubai', image: 'https://images.unsplash.com/photo-1512453979798-5ea904ac6605?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 15 },
-            { id: 'qatar', name: 'Qatar', image: 'https://images.unsplash.com/photo-1595842873736-231968393522?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 6 },
+            { id: 'dubai', name: 'Dubai', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0013_xpz1j2.jpg', tourCount: 15 },
+            { id: 'qatar', name: 'Qatar', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0014_j9ytmb.jpg', tourCount: 6 },
         ]
     },
     'europe': {
         id: 'europe',
         title: 'Europe',
         description: 'Explore the diverse cultures and landscapes of Europe.',
-        image: 'https://images.unsplash.com/photo-1471341971474-27c5b814c7da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80',
+        image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555070/europe_vnsqoy.jpg',
         subDestinations: [
-            { id: 'italy', name: 'Italy', image: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 10 },
-            { id: 'spain', name: 'Spain', image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 8 },
-            { id: 'uk', name: 'UK', image: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 7 },
+            { id: 'italy', name: 'Italy', image: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 10 },
+            { id: 'spain', name: 'Spain', image: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 8 },
+            { id: 'uk', name: 'UK', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 7 },
         ]
     }
 };
