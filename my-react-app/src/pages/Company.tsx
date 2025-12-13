@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import { cn } from '@/lib/utils';
 import api from '@/lib/api';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import LocationMap from '@/components/ui/LocationMap';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -345,6 +346,18 @@ const Company = () => {
                             <p className="text-gray-600">No testimonials available yet.</p>
                         </div>
                     )}
+                </Container>
+            </Section>
+            {/* Location Section */}
+            <Section className="bg-white scroll-mt-20">
+                <Container>
+                    <div className="text-center mb-12">
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Find Us</h2>
+                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                            Visit our offices in Nairobi
+                        </p>
+                    </div>
+                    <LocationMap className="h-[400px] w-full shadow-lg border border-gray-100" />
                 </Container>
             </Section>
         </Layout>

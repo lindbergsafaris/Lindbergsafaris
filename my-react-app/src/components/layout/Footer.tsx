@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import Container from '@/components/ui/Container';
+import LocationMap from '@/components/ui/LocationMap';
 
 const Footer = () => {
     return (
@@ -62,6 +63,11 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
+                </div>
+
+                <div className="mt-12 pt-8 border-t border-gray-800">
+                    <h4 className="text-lg font-bold text-white mb-6">Visit Us</h4>
+                    <LocationMap className="h-64 md:h-80 w-full rounded-lg" />
                 </div>
 
                 <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
