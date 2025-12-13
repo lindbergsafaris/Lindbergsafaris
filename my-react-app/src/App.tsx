@@ -9,6 +9,13 @@ import RegionDestinations from '@/pages/RegionDestinations';
 import Services from '@/pages/Services';
 import Transport from '@/pages/services/Transport';
 import Hotels from '@/pages/services/Hotels';
+import HotelBooking from '@/pages/services/HotelBooking';
+import WildlifeSafaris from '@/pages/packages/WildlifeSafaris';
+import MountainClimbing from '@/pages/packages/MountainClimbing';
+import CruiseHoliday from '@/pages/packages/CruiseHoliday';
+import AdventurePackages from '@/pages/packages/AdventurePackages';
+import Pilgrimages from '@/pages/packages/Pilgrimages';
+import CorporateTrips from '@/pages/packages/CorporateTrips';
 import Flights from '@/pages/services/Flights';
 import Visa from '@/pages/services/Visa';
 import CustomItineraries from '@/pages/services/CustomItineraries';
@@ -56,7 +63,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/services/transport" element={<Transport />} />
         <Route path="/services/hotels" element={<Hotels />} />
-        <Route path="/services/hotel-booking" element={<Hotels />} /> {/* Alias for dropdown link */}
+        <Route path="/services/hotel-booking" element={<HotelBooking />} />
         <Route path="/services/flights" element={<Flights />} />
         <Route path="/services/airticketing" element={<Flights />} /> {/* Alias for dropdown link */}
         <Route path="/services/visa" element={<Visa />} />
@@ -75,6 +82,14 @@ function App() {
         <Route path="/impact" element={<CompanyRedirect section="impact" />} />
         <Route path="/faqs" element={<CompanyRedirect section="faqs" />} />
         <Route path="/testimonials" element={<CompanyRedirect section="testimonials" />} />
+
+        {/* Themed Packages */}
+        <Route path="/packages/wildlife" element={<WildlifeSafaris />} />
+        <Route path="/packages/climbing" element={<MountainClimbing />} />
+        <Route path="/packages/cruise" element={<CruiseHoliday />} />
+        <Route path="/packages/adventure" element={<AdventurePackages />} />
+        <Route path="/packages/pilgrimages" element={<Pilgrimages />} />
+        <Route path="/packages/corporate" element={<CorporateTrips />} />
 
         {/* Dynamic Categories */}
         <Route path="/packages/:category" element={<PackageCategory />} />
