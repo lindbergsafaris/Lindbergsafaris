@@ -46,7 +46,7 @@ router.get('/tours', async (req, res) => {
                 rating,
                 reviews,
                 "images": images[]{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -78,7 +78,7 @@ router.get('/tours/:id', async (req, res) => {
             const query = `*[_type == "tour" && _id == $id][0] {
                 ...,
                 "images": images[]{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 "destination": destination->{
@@ -122,11 +122,11 @@ router.get('/destinations', async (req, res) => {
                 slug,
                 tourCount,
                 "cardImage": cardImage{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 "heroImage": heroImage{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -198,7 +198,7 @@ router.get('/blog', async (req, res) => {
                 category,
                 readTime,
                 "featuredImage": featuredImage{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -230,7 +230,7 @@ router.get('/blog/:id', async (req, res) => {
             const query = `*[_type == "blogPost" && _id == $id][0] {
                 ...,
                 "featuredImage": featuredImage{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -269,8 +269,9 @@ router.get('/services', async (req, res) => {
                 slug,
                 description,
                 order,
-                "icon": icon{
-                    "url": asset->url + "?auto=format&q=80",
+                icon,
+                "image": image{
+                    url,
                     alt
                 }
             }`;
@@ -306,7 +307,7 @@ router.get('/packages', async (req, res) => {
                 price,
                 duration,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 category
@@ -344,7 +345,7 @@ router.get('/packages/category/:category', async (req, res) => {
                 price,
                 duration,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 category
@@ -381,7 +382,7 @@ router.get('/accommodations', async (req, res) => {
                 priceRange,
                 rating,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 description
@@ -419,7 +420,7 @@ router.get('/accommodations/type/:type', async (req, res) => {
                 priceRange,
                 rating,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 },
                 description
@@ -456,7 +457,7 @@ router.get('/hot-deals', async (req, res) => {
                 originalPrice,
                 tag,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -493,7 +494,7 @@ router.get('/popup-offer', async (req, res) => {
                 startDate,
                 endDate,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
@@ -558,7 +559,7 @@ router.get('/testimonial', async (req, res) => {
                 content,
                 rating,
                 "image": image{
-                    "url": asset->url + "?auto=format&q=80",
+                    url,
                     alt
                 }
             }`;
