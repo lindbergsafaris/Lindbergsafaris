@@ -9,13 +9,13 @@ interface TourCardProps {
     image: string;
     duration: string;
     groupSize: string;
-    price: number;
-    rating: number;
-    reviews: number;
+    price: number | string;
+    rating?: number;
+    reviews?: number;
 }
 
 const TourCard: React.FC<TourCardProps> = ({
-    id, title, image, duration, groupSize, price, rating, reviews
+    id, title, image, duration, groupSize, price, rating = 0, reviews = 0
 }) => {
     return (
         <Card className="flex flex-col h-full group">

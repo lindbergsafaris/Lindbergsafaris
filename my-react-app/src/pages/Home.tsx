@@ -13,9 +13,11 @@ import PopupOffer from '@/components/ui/PopupOffer';
 import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
+import { Tour, HotDeal } from '@/types';
+
 const Home = () => {
-    const [tours, setTours] = useState<any[]>([]);
-    const [hotDeals, setHotDeals] = useState<any[]>([]);
+    const [tours, setTours] = useState<Tour[]>([]);
+    const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
     const [loading, setLoading] = useState(true);
     const [currentSlide, setCurrentSlide] = useState(0);
 
