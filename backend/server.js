@@ -15,9 +15,16 @@ const PORT = process.env.PORT || 5000;
 
 // CORS Configuration
 // Parse allowed origins from environment variable (comma-separated)
-const allowedOrigins = process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
-    : ['http://localhost:5173']; // Default to localhost for development
+const allowedOrigins = [
+    'http://localhost:5173',
+    'https://tour-and-safari-website-aizm.vercel.app',
+    'https://tour-and-safari-website.vercel.app'
+];
+
+if (process.env.ALLOWED_ORIGINS) {
+    const envOrigins = process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim());
+    allowedOrigins.push(...envOrigins);
+}
 
 app.use(cors({
     origin: function (origin, callback) {
