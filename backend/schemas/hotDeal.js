@@ -1,4 +1,4 @@
-export default {
+const hotDeal = {
     name: 'hotDeal',
     title: 'Hot Deal',
     type: 'document',
@@ -7,24 +7,30 @@ export default {
             name: 'title',
             title: 'Title',
             type: 'string',
-            validation: (Rule: any) => Rule.required(),
+            validation: Rule => Rule.required()
         },
         {
             name: 'description',
             title: 'Description',
             type: 'text',
-            validation: (Rule: any) => Rule.required(),
+            validation: Rule => Rule.required()
         },
         {
             name: 'price',
             title: 'Price',
             type: 'string',
-            validation: (Rule: any) => Rule.required(),
+            validation: Rule => Rule.required()
         },
         {
             name: 'originalPrice',
             title: 'Original Price',
+            type: 'string'
+        },
+        {
+            name: 'tag',
+            title: 'Tag',
             type: 'string',
+            description: 'e.g. "Limited Offer", "Best Value"'
         },
         {
             name: 'image',
@@ -36,27 +42,23 @@ export default {
                     title: 'Image URL',
                     type: 'url',
                     description: 'Cloudinary image URL',
-                    validation: (Rule: any) => Rule.required(),
+                    validation: Rule => Rule.required()
                 },
                 {
                     name: 'alt',
                     title: 'Alt Text',
-                    type: 'string',
-                },
+                    type: 'string'
+                }
             ],
-            validation: (Rule: any) => Rule.required(),
-        },
-        {
-            name: 'tag',
-            title: 'Tag',
-            type: 'string',
-            description: 'e.g., "Limited Time", "Best Seller"',
+            validation: Rule => Rule.required()
         },
         {
             name: 'isActive',
             title: 'Is Active',
             type: 'boolean',
-            initialValue: true,
-        },
-    ],
+            initialValue: true
+        }
+    ]
 }
+
+export default hotDeal;

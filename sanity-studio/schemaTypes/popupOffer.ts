@@ -17,10 +17,20 @@ export default {
         {
             name: 'image',
             title: 'Image',
-            type: 'image',
-            options: {
-                hotspot: true,
-            },
+            type: 'object',
+            fields: [
+                {
+                    name: 'url',
+                    title: 'Image URL',
+                    type: 'url',
+                    description: 'Cloudinary image URL',
+                },
+                {
+                    name: 'alt',
+                    title: 'Alt Text',
+                    type: 'string',
+                },
+            ],
         },
         {
             name: 'ctaText',

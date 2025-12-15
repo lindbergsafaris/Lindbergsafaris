@@ -156,6 +156,30 @@ const AccommodationDetail = () => {
                                     )}
                                 </div>
                             </div>
+                            {/* Sections (Sub-pages) */}
+                            {accommodation.sections && accommodation.sections.length > 0 && (
+                                <div className="space-y-12">
+                                    {accommodation.sections.map((section: any, idx: number) => (
+                                        <div key={idx} className="border-t border-gray-100 pt-8">
+                                            <h3 className="text-2xl font-serif font-bold mb-4 text-gray-900">{section.title}</h3>
+                                            {section.content && (
+                                                <div className="prose prose-lg text-gray-600 leading-relaxed mb-6">
+                                                    <p>{section.content}</p>
+                                                </div>
+                                            )}
+                                            {section.images && section.images.length > 0 && (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    {section.images.map((img: any, imgIdx: number) => (
+                                                        <div key={imgIdx} className="rounded-lg overflow-hidden h-64">
+                                                            <img src={img.url} alt={img.alt || section.title} className="w-full h-full object-cover" />
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         {/* Sidebar */}

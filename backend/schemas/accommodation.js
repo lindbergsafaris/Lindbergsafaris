@@ -95,6 +95,54 @@ const accommodation = {
                     ],
                 },
             ],
+        },
+        {
+            name: 'sections',
+            title: 'Sections (Sub-pages)',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    title: 'Section',
+                    fields: [
+                        {
+                            name: 'title',
+                            title: 'Section Title',
+                            type: 'string',
+                            validation: Rule => Rule.required()
+                        },
+                        {
+                            name: 'content',
+                            title: 'Content',
+                            type: 'text',
+                            rows: 5
+                        },
+                        {
+                            name: 'images',
+                            title: 'Images',
+                            type: 'array',
+                            of: [
+                                {
+                                    type: 'object',
+                                    fields: [
+                                        {
+                                            name: 'url',
+                                            title: 'Image URL',
+                                            type: 'url',
+                                            description: 'Cloudinary image URL',
+                                        },
+                                        {
+                                            name: 'alt',
+                                            title: 'Alt Text',
+                                            type: 'string',
+                                        },
+                                    ],
+                                },
+                            ]
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
