@@ -54,7 +54,7 @@ export const destinationsData: Record<string, DestinationData> = {
             {
                 title: 'Bwindi Impenetrable Forest, Uganda',
                 description: 'Home to almost half of the world\'s mountain gorilla population. This primeval forest offers a unique and challenging trekking experience.',
-                image: 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900243/Bwindi_Impenetrable_National_Park_Uganda_j7qxdw.jpg'
             }
         ]
     },
@@ -86,12 +86,12 @@ export const destinationsData: Record<string, DestinationData> = {
             {
                 title: 'The Dubai Fountain',
                 description: 'A captivating water, music, and light spectacle in Downtown Dubai. It is the world\'s largest choreographed fountain system.',
-                image: 'https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900839/%EF%B8%8F_dubai_dreamland____When_the_sky_kisses_the_tallest_dream_Welcome_to_the_heart_of_Dubai__This_is_not_just_a_view_it_s_a_feeling__Tag_someone_who_needs_to_see_this_beauty_today___Creator_dubai_dr_nbkzwv.jpg'
             },
             {
                 title: 'Dubai Miracle Garden',
                 description: 'The world\'s largest natural flower garden, featuring over 50 million flowers and 250 million plants.',
-                image: 'https://images.unsplash.com/photo-1597211684627-d87802305f2e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900838/Experience_the_Vibrant_Tapestry_of_Dubai_Miracle_Garden_ogagmp.jpg'
             }
         ]
     },
@@ -155,12 +155,12 @@ export const destinationsData: Record<string, DestinationData> = {
             {
                 title: 'Accra, Ghana',
                 description: 'A vibrant city known for its colorful markets, historic forts, and lively beaches like Labadi Beach.',
-                image: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900395/Accra_beaches_avhjrl.jpg'
             },
             {
                 title: 'Dakar, Senegal',
                 description: 'The westernmost city on the African mainland, famous for its musical culture and the historic Goree Island.',
-                image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900394/download_5_bylqsm.jpg'
             }
         ]
     },
@@ -187,12 +187,12 @@ export const destinationsData: Record<string, DestinationData> = {
             {
                 title: 'Cape Town',
                 description: 'The Mother City, known for its harbor, natural setting in the Cape Floristic Region, and landmarks such as Table Mountain and Cape Point.',
-                image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900046/download_4_sliwha.jpg'
             },
             {
                 title: 'Kruger National Park',
                 description: 'One of Africa\'s largest game reserves. Its high density of wild animals includes the Big 5: lions, leopards, rhinos, elephants and buffalos.',
-                image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765900685/Kruger_National_Park_-_photo_by_Kerry_qg5tqq.jpg'
             }
         ]
     },
@@ -219,12 +219,12 @@ export const destinationsData: Record<string, DestinationData> = {
             {
                 title: 'Doha',
                 description: 'The capital city, home to the Museum of Islamic Art, Souq Waqif, and the stunning Corniche waterfront promenade.',
-                image: 'https://images.unsplash.com/photo-1595842873736-231968393522?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0014_j9ytmb.jpg'
             },
             {
                 title: 'The Pearl-Qatar',
                 description: 'A man-made island featuring Mediterranean-style yacht-lined marinas, residential towers, villas, and hotels.',
-                image: 'https://images.unsplash.com/photo-1512453979798-5ea904ac6605?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765901093/The_Pearl_Qatar_awwcnp.jpg'
             }
         ]
     },

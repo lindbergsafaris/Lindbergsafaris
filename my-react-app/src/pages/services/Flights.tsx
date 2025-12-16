@@ -25,7 +25,7 @@ const Flights = () => {
                     <div className="flex flex-col md:flex-row gap-12 items-center">
                         <div className="md:w-1/2 order-2 md:order-1">
                             <img
-                                src="https://images.unsplash.com/photo-1542296332-2e44a996aa0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                src="https://res.cloudinary.com/di5ga8z9i/image/upload/v1765554600/IMG-20251212-WA0013_xpz1j2.jpg"
                                 alt="Airplane"
                                 className="rounded-lg shadow-xl"
                             />

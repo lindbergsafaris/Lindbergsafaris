@@ -55,7 +55,7 @@ const Visa = () => {
                         </div>
                         <div className="md:w-1/2">
                             <img
-                                src="https://images.unsplash.com/photo-1559563362-c667ba5f5480?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                src="https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg"
                                 alt="Visa Documents"
                                 className="rounded-lg shadow-xl"
                             />

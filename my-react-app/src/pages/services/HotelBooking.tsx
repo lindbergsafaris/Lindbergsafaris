@@ -70,7 +70,7 @@ const HotelBooking = () => {
                                 <div className="w-full lg:w-1/2">
                                     <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
                                         <img
-                                            src={hotel.image}
+                                            src={"https://res.cloudinary.com/di5ga8z9i/image/upload/v1764510685/Weekend_gateway_pr7zfq.jpg"}
                                             alt={hotel.name}
                                             className="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
                                         />

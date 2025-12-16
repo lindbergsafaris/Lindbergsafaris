@@ -11,10 +11,33 @@
   }
 
   body {
-    @apply bg-background text-gray-900 font-sans antialiased;
+    @apply text-gray-900 font-sans antialiased;
+    background-image: url('/safari-background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    position: relative;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif font-bold tracking-tight;
   }
 }
@@ -23,7 +46,7 @@
   .btn-primary {
     @apply bg-primary text-white hover:bg-primary-light transition-colors duration-200 px-6 py-3 rounded-md font-medium;
   }
-  
+
   .btn-outline {
     @apply border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors duration-200 px-6 py-3 rounded-md font-medium;
   }

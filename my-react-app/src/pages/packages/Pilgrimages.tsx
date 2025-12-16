@@ -62,7 +62,7 @@ const Pilgrimages = () => {
                                 </p>
                                 <div className="grid grid-cols-2 gap-4 my-8">
                                     <img
-                                        src="https://images.unsplash.com/photo-1542042956-65538808a8e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                        src="https://res.cloudinary.com/di5ga8z9i/image/upload/v1765899792/Kaaba_in_Makkah___Holy_Kaaba_Sunrise___Hajj_Umrah_Inspiration_b6ta1k.jpg"
                                         alt="Jerusalem"
                                         className="rounded-lg shadow-md hover:scale-105 transition-transform duration-300"
                                     />
@@ -118,7 +118,7 @@ const Pilgrimages = () => {
 
                             <div className="relative rounded-xl overflow-hidden h-64 group cursor-pointer">
                                 <img
-                                    src="https://images.unsplash.com/photo-1548625361-188866171542?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                    src="https://res.cloudinary.com/di5ga8z9i/image/upload/v1765899792/16_Inspiring_Landscaping_in_the_Woods_Ideas_tj6eji.jpg"
                                     alt="Lalibela"
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
