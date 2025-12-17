@@ -139,7 +139,15 @@ const Header = () => {
                     ))}
                 </nav>
 
-                <div className="hidden lg:block ml-4">
+                <div className="hidden lg:flex items-center gap-4 ml-4">
+                    <a
+                        href="https://www.tripadvisor.com/Attraction_Review-g294207-d17384036-Reviews-Lindberg_Holidays_and_Safaris-Nairobi.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:opacity-80 transition-opacity"
+                    >
+                        <img src="/tripadvisor.jpg" alt="TripAdvisor" className="w-8 h-8 rounded-full" />
+                    </a>
                     <Link to="/contact">
                         <Button size="sm" variant="primary">
                             Book Now

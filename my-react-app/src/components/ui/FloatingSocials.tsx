@@ -38,13 +38,6 @@ const FloatingSocials = () => {
             url: 'https://www.tiktok.com/@Lindberg.holidays',
             color: 'bg-[#000000]',
             hoverColor: 'hover:bg-[#000000]/90'
-        },
-        {
-            name: 'TripAdvisor',
-            icon: <img src="/tripadvisor.jpg" alt="TripAdvisor" className="w-6 h-6 rounded-full" />,
-            url: 'https://www.tripadvisor.com/Attraction_Review-g294207-d17384036-Reviews-Lindberg_Holidays_and_Safaris-Nairobi.html',
-            color: 'bg-[#00AA6C]',
-            hoverColor: 'hover:bg-[#00AA6C]/90'
         }
     ];
 
