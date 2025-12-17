@@ -357,6 +357,65 @@ const Home = () => {
                 </Container>
             </Section>
 
+            {/* Our Clients Section */}
+            <Section className="bg-white border-b border-gray-100">
+                <Container>
+                    <div className="text-center mb-10">
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Our Clients</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">Trusted by leading organizations and happy travelers.</p>
+                    </div>
+
+                    {/* Desktop Grid */}
+                    <div className="hidden md:grid md:grid-cols-5 gap-8 items-center justify-items-center">
+                        {[
+                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
+                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
+                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
+                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
+                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
+                        ].map((logo, index) => (
+                            <div key={index} className="w-40 h-40 flex items-center justify-center p-4 transition-all duration-300">
+                                <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Mobile Marquee */}
+                    <div className="md:hidden overflow-hidden relative">
+                        <div className="flex w-[200%] animate-marquee">
+                            {/* First set of logos */}
+                            <div className="flex w-1/2 justify-around items-center gap-8 px-4">
+                                {[
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
+                                ].map((logo, index) => (
+                                    <div key={`m1-${index}`} className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2">
+                                        <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                                    </div>
+                                ))}
+                            </div>
+                            {/* Duplicate set for seamless loop */}
+                            <div className="flex w-1/2 justify-around items-center gap-8 px-4">
+                                {[
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
+                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
+                                ].map((logo, index) => (
+                                    <div key={`m2-${index}`} className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2">
+                                        <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Section>
+
             {/* 6. Travel With Us (Value Propositions) */}
             <Section className="bg-secondary/30">
                 <Container>
