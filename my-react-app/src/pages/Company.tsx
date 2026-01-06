@@ -208,8 +208,8 @@ const Company = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {values.map((value, index) => (
-                            <div key={index} className="bg-gray-50 p-8 rounded-xl text-center hover:bg-white hover:shadow-md transition-all">
-                                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+                            <div key={index} className="bg-secondary p-8 rounded-xl text-center hover:bg-white hover:shadow-md transition-all">
+                                <div className="bg-secondary-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
                                     {value.icon}
                                 </div>
                                 <h4 className="text-xl font-bold mb-3 text-gray-900">{value.title}</h4>
@@ -262,7 +262,7 @@ const Company = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {impactItems.map((item, index) => (
-                                <div key={index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                                <div key={index} className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
                                     <div className="flex items-start gap-4">
                                         <div className="bg-primary/10 p-3 rounded-lg shrink-0">
                                             <TrendingUp className="text-primary" size={24} />
@@ -294,7 +294,7 @@ const Company = () => {
                             {faqs.map((faq, index) => (
                                 <div key={faq._id || index} className="border border-gray-200 rounded-lg overflow-hidden">
                                     <button
-                                        className="w-full flex items-center justify-between p-6 bg-white hover:bg-gray-50 transition-colors text-left"
+                                        className="w-full flex items-center justify-between p-6 bg-secondary-light hover:bg-secondary transition-colors text-left"
                                         onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
                                     >
                                         <span className="font-bold text-lg text-gray-900 pr-4">{faq.question}</span>
@@ -310,7 +310,7 @@ const Company = () => {
                                             openFaqIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                                         )}
                                     >
-                                        <div className="p-6 pt-0 bg-white text-gray-600 leading-relaxed border-t border-transparent">
+                                        <div className="p-6 pt-0 bg-secondary-light text-gray-600 leading-relaxed border-t border-transparent">
                                             {faq.answer}
                                         </div>
                                     </div>
@@ -318,7 +318,7 @@ const Company = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-12 bg-gray-50 rounded-lg">
+                        <div className="text-center py-12 bg-secondary rounded-lg">
                             <p className="text-gray-600">No FAQs available yet.</p>
                         </div>
                     )}
@@ -326,7 +326,7 @@ const Company = () => {
             </Section>
 
             {/* Testimonials Section */}
-            <Section id="testimonials" className="bg-gray-50 scroll-mt-20">
+            <Section id="testimonials" className="bg-secondary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Guest Reviews</h2>
@@ -338,7 +338,7 @@ const Company = () => {
                     {testimonials.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {testimonials.map((item, index) => (
-                                <div key={item._id || index} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-all">
+                                <div key={item._id || index} className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-all">
                                     <Quote className="text-primary/20 mb-4 h-10 w-10" />
                                     <p className="text-gray-600 mb-6 italic flex-grow">"{item.text}"</p>
 
@@ -365,14 +365,14 @@ const Company = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-12 bg-white rounded-lg">
+                        <div className="text-center py-12 bg-secondary-light rounded-lg">
                             <p className="text-gray-600">No testimonials available yet.</p>
                         </div>
                     )}
                 </Container>
             </Section>
             {/* Team Section */}
-            <Section className="bg-gray-50">
+            <Section className="bg-secondary">
                 <Container>
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Meet Our Team</h2>
@@ -399,7 +399,7 @@ const Company = () => {
             </Section>
 
             {/* Partners Section */}
-            <Section className="bg-white">
+            <Section className="bg-secondary">
                 <Container>
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Our Trusted Partners</h2>
@@ -408,7 +408,7 @@ const Company = () => {
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
                         {partners.map((partner, index) => (
-                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100">
+                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100">
                                 <img
                                     src={partner.logo}
                                     alt={partner.name}
@@ -421,7 +421,7 @@ const Company = () => {
             </Section>
 
             {/* Location Section */}
-            <Section className="bg-white scroll-mt-20">
+            <Section className="bg-secondary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-12">
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Find Us</h2>

@@ -155,7 +155,7 @@ const TourDetail = () => {
 
                         {/* Sidebar */}
                         <div className="lg:w-1/3">
-                            <div id="booking-form" className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
+                            <div id="booking-form" className="bg-secondary-light p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
                                 <h3 className="text-xl font-serif font-bold mb-6">Book Your Adventure</h3>
                                 <form className="space-y-4" onSubmit={handleBooking}>
                                     <div>

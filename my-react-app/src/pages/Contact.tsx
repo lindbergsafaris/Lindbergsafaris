@@ -69,12 +69,12 @@ const Contact = () => {
                         </div>
 
                         {/* Contact Info */}
-                        <div className="bg-gray-50 p-8 rounded-xl h-fit">
+                        <div className="bg-secondary p-8 rounded-xl h-fit">
                             <h3 className="text-xl font-serif font-bold mb-6">Contact Information</h3>
 
                             <div className="space-y-6">
                                 <div className="flex items-start gap-4">
-                                    <div className="bg-white p-2 rounded-full shadow-sm text-primary shrink-0">
+                                    <div className="bg-secondary-light p-2 rounded-full shadow-sm text-primary shrink-0">
                                         <MapPin size={20} />
                                     </div>
                                     <div>
@@ -84,7 +84,7 @@ const Contact = () => {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="bg-white p-2 rounded-full shadow-sm text-primary shrink-0">
+                                    <div className="bg-secondary-light p-2 rounded-full shadow-sm text-primary shrink-0">
                                         <Phone size={20} />
                                     </div>
                                     <div>
@@ -94,7 +94,7 @@ const Contact = () => {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="bg-white p-2 rounded-full shadow-sm text-primary shrink-0">
+                                    <div className="bg-secondary-light p-2 rounded-full shadow-sm text-primary shrink-0">
                                         <Mail size={20} />
                                     </div>
                                     <div>
@@ -104,7 +104,7 @@ const Contact = () => {
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="bg-white p-2 rounded-full shadow-sm text-primary shrink-0">
+                                    <div className="bg-secondary-light p-2 rounded-full shadow-sm text-primary shrink-0">
                                         <Clock size={20} />
                                     </div>
                                     <div>

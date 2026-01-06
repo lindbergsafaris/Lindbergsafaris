@@ -168,7 +168,7 @@ const AccommodationDetail = () => {
 
                         {/* Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-gray-50 p-8 rounded-xl sticky top-24 border border-gray-100">
+                            <div className="bg-secondary p-8 rounded-xl sticky top-24 border border-gray-100">
                                 <h3 className="text-xl font-bold mb-6 text-gray-900">Book Your Stay</h3>
                                 <p className="text-gray-600 mb-8 text-sm">
                                     Contact us directly to check availability and get the best rates for your dates.

@@ -47,7 +47,7 @@ const Services = () => {
                             {services.map((service) => {
                                 const IconComponent = iconMap[service.icon || ''] || Compass;
                                 return (
-                                    <div key={service._id} className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                                    <div key={service._id} className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                                         <div className="mb-6 bg-primary-light/10 w-20 h-20 rounded-full flex items-center justify-center">
                                             <IconComponent size={40} className="text-primary" />
                                         </div>

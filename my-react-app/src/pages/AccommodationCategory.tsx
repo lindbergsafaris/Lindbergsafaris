@@ -66,7 +66,7 @@ const AccommodationCategory = () => {
                     ) : accommodations.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {accommodations.map((acc) => (
-                                <div key={acc._id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all">
+                                <div key={acc._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all">
                                     <div className="h-64 overflow-hidden relative">
                                         <img
                                             src={acc.image?.url || "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
@@ -103,7 +103,7 @@ const AccommodationCategory = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-20 bg-gray-50 rounded-lg">
+                        <div className="text-center py-20 bg-secondary rounded-lg">
                             <p className="text-gray-600 text-lg">No accommodations found for this category.</p>
                             <p className="text-gray-500 text-sm mt-2">Check back later.</p>
                         </div>

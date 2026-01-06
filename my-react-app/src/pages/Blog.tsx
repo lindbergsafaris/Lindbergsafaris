@@ -42,7 +42,7 @@ const Blog = () => {
                     )}
 
                     {!error && posts.length === 0 && (
-                        <div className="text-center py-20 bg-gray-50 rounded-lg">
+                        <div className="text-center py-20 bg-secondary rounded-lg">
                             <p className="text-gray-600 text-lg">No blog posts found.</p>
                             <p className="text-gray-500 text-sm mt-2">Add blog posts in Sanity Studio.</p>
                         </div>
@@ -52,7 +52,7 @@ const Blog = () => {
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {posts.map((post) => (
-                                    <div key={post._id} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col">
+                                    <div key={post._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col">
                                         <div className="h-48 overflow-hidden">
                                             <img
                                                 src={post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}

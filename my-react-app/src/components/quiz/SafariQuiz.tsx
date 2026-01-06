@@ -93,14 +93,14 @@ const SafariQuiz = () => {
     if (showResult) {
         const recommendation = getRecommendation();
         return (
-            <div className="bg-white p-8 rounded-xl shadow-lg text-center max-w-2xl mx-auto">
+            <div className="bg-secondary-light p-8 rounded-xl shadow-lg text-center max-w-2xl mx-auto">
                 <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Check size={32} />
                 </div>
                 <h2 className="text-3xl font-serif font-bold mb-4">We've Found Your Perfect Match!</h2>
                 <p className="text-gray-600 mb-8">Based on your preferences, we recommend:</p>
 
-                <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-8">
+                <div className="bg-secondary p-6 rounded-lg border border-gray-200 mb-8">
                     <h3 className="text-xl font-bold mb-2">{recommendation.title}</h3>
                     <p className="text-gray-600 mb-4">{recommendation.description}</p>
                     <Link to={recommendation.link}>
@@ -121,7 +121,7 @@ const SafariQuiz = () => {
     const question = questions[currentQuestion];
 
     return (
-        <div className="bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+        <div className="bg-secondary-light p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
             <div className="mb-8">
                 <div className="flex justify-between text-sm text-gray-500 mb-2">
                     <span>Question {currentQuestion + 1} of {questions.length}</span>
@@ -143,8 +143,8 @@ const SafariQuiz = () => {
                         key={option.id}
                         onClick={() => handleOptionSelect(option.id)}
                         className={`w-full text-left p-4 rounded-lg border transition-all ${answers[question.id] === option.id
-                                ? 'border-primary bg-primary/5 text-primary font-medium'
-                                : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                            ? 'border-primary bg-primary/5 text-primary font-medium'
+                            : 'border-gray-200 hover:border-primary/50 hover:bg-secondary'
                             }`}
                     >
                         {option.text}

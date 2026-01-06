@@ -91,7 +91,7 @@ const DestinationDetail = () => {
                                     <h3 className="text-2xl font-bold mb-6">Highlights</h3>
                                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {destination.highlights.map((highlight: string, index: number) => (
-                                            <li key={index} className="flex items-center gap-3 text-gray-700 bg-gray-50 p-3 rounded-lg">
+                                            <li key={index} className="flex items-center gap-3 text-gray-700 bg-secondary p-3 rounded-lg">
                                                 <div className="w-2 h-2 bg-primary rounded-full shrink-0" />
                                                 <span>{highlight}</span>
                                             </li>
@@ -134,7 +134,7 @@ const DestinationDetail = () => {
                         <div className="space-y-8">
                             {/* Practical Info */}
                             {destination.practicalInfo && (
-                                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div className="bg-secondary-light p-6 rounded-xl shadow-sm border border-gray-100">
                                     <h3 className="text-xl font-serif font-bold mb-6 border-b pb-2">Practical Info</h3>
                                     <div className="space-y-6">
                                         <div className="flex gap-4">
