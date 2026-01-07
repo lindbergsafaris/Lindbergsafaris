@@ -200,14 +200,14 @@ const Home = () => {
 
             {/* 2. Hot Deals */}
             {hotDeals.length > 0 && (
-                <Section className="bg-secondary">
+                <Section className="bg-primary">
                     <Container>
                         <div className="text-center mb-12">
-                            <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-bold mb-4">
+                            <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
                                 <Tag size={16} /> Hot Deals
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-gray-900">Exclusive Offers</h2>
-                            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Limited time offers on our most popular safari packages.</p>
+                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">Exclusive Offers</h2>
+                            <p className="text-lg text-gray-100 max-w-2xl mx-auto">Limited time offers on our most popular safari packages.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -277,11 +277,11 @@ const Home = () => {
             </Section>
 
             {/* 4. Destinations */}
-            <Section className="bg-secondary">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Explore Top Destinations</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">From the vast plains of the Serengeti to the pristine beaches of Zanzibar.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Explore Top Destinations</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">From the vast plains of the Serengeti to the pristine beaches of Zanzibar.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -409,11 +409,11 @@ const Home = () => {
             </Section>
 
             {/* 6. Travel With Us (Value Propositions) */}
-            <Section className="bg-secondary/30">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Travel With Us</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">Why choose Lindberg Safaris for your next adventure?</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Travel With Us</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">Why choose Lindberg Safaris for your next adventure?</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="flex flex-col items-center text-center p-6 bg-secondary-light rounded-xl shadow-sm">
@@ -442,11 +442,11 @@ const Home = () => {
             </Section>
 
             {/* New Travel With Us Section (Video & Affiliates) */}
-            <Section className="bg-secondary">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Travel With Us</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">See what makes our journeys special and meet our trusted partners.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Travel With Us</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">See what makes our journeys special and meet our trusted partners.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -467,7 +467,7 @@ const Home = () => {
 
                         {/* Right Column: Affiliate Members */}
                         <div>
-                            <h3 className="text-2xl font-serif font-bold mb-8 text-gray-900 text-center md:text-left">Affiliate Members</h3>
+                            <h3 className="text-2xl font-serif font-bold mb-8 text-white text-center md:text-left">Affiliate Members</h3>
                             <div className="grid grid-cols-2 gap-6">
                                 {[
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg',
@@ -490,11 +490,11 @@ const Home = () => {
             </Section>
 
             {/* 7. Our Team */}
-            <Section className="bg-secondary">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Meet Our Team</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Meet Our Team</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
                     </div>
 
                     {/* Mobile Horizontal Scroll View */}
@@ -508,8 +508,8 @@ const Home = () => {
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                                <p className="text-primary font-medium">{member.role}</p>
+                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                                <p className="text-gray-200 font-medium">{member.role}</p>
                             </div>
                         ))}
                     </div>
@@ -526,8 +526,8 @@ const Home = () => {
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                                <p className="text-primary font-medium">{member.role}</p>
+                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                                <p className="text-gray-200 font-medium">{member.role}</p>
                             </div>
                         ))}
                     </div>
