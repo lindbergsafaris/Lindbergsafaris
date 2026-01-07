@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import useSWR from 'swr';
 import { useParams, useNavigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
-import { Star, MapPin, Check, ArrowLeft } from 'lucide-react';
+import { Star, MapPin, Check, ArrowLeft, Calendar } from 'lucide-react';
 import api from '@/lib/api';
-import { getWhatsAppLink } from '@/lib/utils';
+import { createBookingMessage } from '@/lib/bookingUtils';
 import { Image, AccommodationSection, Accommodation } from '@/types';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
@@ -17,6 +18,36 @@ const AccommodationDetail = () => {
     const accommodation = accommodationData?.data || null;
     const loading = !accommodationData && !accommodationError;
     const error = accommodationError ? (accommodationError as Error).message || 'Failed to load accommodation details.' : null;
+
+    const [checkInDate, setCheckInDate] = useState('');
+    const [nights, setNights] = useState(1);
+    const [guestCount, setGuestCount] = useState(1);
+
+    const priceValue = accommodation ? (typeof accommodation.pricePerNight === 'number' ? accommodation.pricePerNight : parseInt(String(accommodation.pricePerNight || accommodation.priceRange).replace(/[^0-9]/g, '') || '0')) : 0;
+    const totalPrice = priceValue * nights * guestCount;
+
+    const handleBooking = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!accommodation) return;
+
+        const whatsappLink = createBookingMessage({
+            type: 'Accommodation',
+            title: accommodation.name,
+            date: checkInDate,
+            guests: guestCount,
+            duration: `${nights} Night${nights > 1 ? 's' : ''}`,
+            pricePerPerson: priceValue, // Note: This is price per night in this context, logic adapted
+            totalPrice: totalPrice,
+            link: window.location.href,
+            additionalInfo: `Location: ${accommodation.location}`
+        });
+
+        window.open(whatsappLink, '_blank');
+    };
+
+    const scrollToBooking = () => {
+        document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     if (loading) return <LoadingScreen />;
 
@@ -56,7 +87,7 @@ const AccommodationDetail = () => {
                         <div>
                             <div className="flex items-center gap-2 text-primary-light mb-2">
                                 <MapPin size={18} />
-                                <span>{accommodation.location}</span>
+                                {accommodation.location}
                             </div>
                             <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">{accommodation.name}</h1>
                             <div className="flex items-center gap-4">
@@ -75,7 +106,7 @@ const AccommodationDetail = () => {
                             </div>
                             <Button
                                 size="lg"
-                                onClick={() => window.open(getWhatsAppLink(`I am interested in booking ${accommodation.name} in ${accommodation.location}`), '_blank')}
+                                onClick={scrollToBooking}
                             >
                                 Book Now
                             </Button>
@@ -168,20 +199,60 @@ const AccommodationDetail = () => {
 
                         {/* Sidebar */}
                         <div className="lg:col-span-1">
-                            <div className="bg-secondary p-8 rounded-xl sticky top-24 border border-gray-100">
+                            <div id="booking-form" className="bg-secondary p-8 rounded-xl sticky top-24 border border-gray-100">
                                 <h3 className="text-xl font-bold mb-6 text-gray-900">Book Your Stay</h3>
-                                <p className="text-gray-600 mb-8 text-sm">
-                                    Contact us directly to check availability and get the best rates for your dates.
-                                </p>
-                                <Button
-                                    className="w-full mb-4"
-                                    onClick={() => window.open(getWhatsAppLink(`I am interested in booking ${accommodation.name} in ${accommodation.location}`), '_blank')}
-                                >
-                                    Book via WhatsApp
-                                </Button>
-                                <div className="text-center">
-                                    <span className="text-xs text-gray-500">Instant confirmation & support</span>
-                                </div>
+                                <form className="space-y-4" onSubmit={handleBooking}>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Check-in Date</label>
+                                        <div className="relative">
+                                            <Calendar size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                            <input
+                                                type="date"
+                                                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                                required
+                                                value={checkInDate}
+                                                onChange={(e) => setCheckInDate(e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">Nights</label>
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                                value={nights}
+                                                onChange={(e) => setNights(parseInt(e.target.value) || 1)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">Guests</label>
+                                            <select
+                                                className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                                value={guestCount}
+                                                onChange={(e) => setGuestCount(parseInt(e.target.value))}
+                                            >
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                                                    <option key={num} value={num}>{num}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-gray-200 mt-4">
+                                        <div className="flex justify-between mb-2 text-sm">
+                                            <span className="text-gray-600">Price per night</span>
+                                            <span className="font-medium">KSH {priceValue}</span>
+                                        </div>
+                                        <div className="flex justify-between text-lg font-bold text-primary mt-4 mb-6">
+                                            <span>Total</span>
+                                            <span>KSH {totalPrice}</span>
+                                        </div>
+                                        <Button type="submit" className="w-full">Book via WhatsApp</Button>
+                                        <p className="text-xs text-center text-gray-500 mt-3">Instant confirmation & support</p>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

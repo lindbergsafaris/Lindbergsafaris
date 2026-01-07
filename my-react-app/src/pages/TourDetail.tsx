@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import useSWR from 'swr';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Clock, Users, MapPin, Check, X, Calendar, Star } from 'lucide-react';
@@ -7,7 +8,7 @@ import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import TourItinerary from '@/components/tours/TourItinerary';
 import api from '@/lib/api';
-import { getWhatsAppLink } from '@/lib/utils';
+import { createBookingMessage } from '@/lib/bookingUtils';
 import { Tour } from '@/types';
 
 const TourDetail = () => {
@@ -20,11 +21,27 @@ const TourDetail = () => {
     const loading = !tourData && !tourError;
     const error = tourError ? "Failed to load tour details." : null;
 
+    const [guestCount, setGuestCount] = useState(1);
+    const [travelDate, setTravelDate] = useState('');
+
     const handleBooking = (e: React.FormEvent) => {
         e.preventDefault();
         if (!tour) return;
-        const message = `Hello! I am interested in booking the tour: "${tour.title}". Please provide more information.`;
-        window.open(getWhatsAppLink(message), '_blank');
+
+        const total = (typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0')) * guestCount;
+
+        const whatsappLink = createBookingMessage({
+            type: 'Tour',
+            title: tour.title,
+            date: travelDate,
+            guests: guestCount,
+            duration: tour.duration,
+            pricePerPerson: tour.price,
+            totalPrice: total,
+            link: window.location.href
+        });
+
+        window.open(whatsappLink, '_blank');
     };
 
     const scrollToBooking = () => {
@@ -52,6 +69,9 @@ const TourDetail = () => {
             </Layout>
         );
     }
+
+    const priceValue = typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0');
+    const totalPrice = priceValue * guestCount;
 
     return (
         <Layout>
@@ -162,16 +182,26 @@ const TourDetail = () => {
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Travel Date</label>
                                         <div className="relative">
                                             <Calendar size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                                            <input type="date" className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" required />
+                                            <input
+                                                type="date"
+                                                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                                required
+                                                value={travelDate}
+                                                onChange={(e) => setTravelDate(e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Guests</label>
-                                        <select className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20">
-                                            <option>1 Person</option>
-                                            <option>2 People</option>
-                                            <option>3 People</option>
-                                            <option>4+ People</option>
+                                        <select
+                                            className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                                            value={guestCount}
+                                            onChange={(e) => setGuestCount(parseInt(e.target.value))}
+                                        >
+                                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(num => (
+                                                <option key={num} value={num}>{num} {num === 1 ? 'Person' : 'People'}</option>
+                                            ))}
+                                            <option value="11">10+ People</option>
                                         </select>
                                     </div>
                                     <div className="pt-4 border-t border-gray-100">
@@ -181,7 +211,7 @@ const TourDetail = () => {
                                         </div>
                                         <div className="flex justify-between text-lg font-bold text-primary mt-4 mb-6">
                                             <span>Total</span>
-                                            <span>KSH {tour.price}</span>
+                                            <span>KSH {totalPrice}</span>
                                         </div>
                                         <Button type="submit" className="w-full">Proceed to Booking</Button>
                                         <p className="text-xs text-center text-gray-500 mt-3">No payment required today</p>
