@@ -84,14 +84,14 @@ const AccommodationDetail = () => {
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         {/* Main Content */}
                         <div className="lg:col-span-2 space-y-12">
                             <div>
-                                <h2 className="text-3xl font-serif font-bold mb-6 text-gray-900">About this Place</h2>
-                                <div className="prose prose-lg text-gray-600 leading-relaxed">
+                                <h2 className="text-3xl font-serif font-bold mb-6 text-white">About this Place</h2>
+                                <div className="prose prose-lg text-gray-100 leading-relaxed">
                                     {accommodation.description ? (
                                         <p>{accommodation.description}</p>
                                     ) : (
@@ -103,7 +103,7 @@ const AccommodationDetail = () => {
                             {/* Gallery (if available) */}
                             {accommodation.gallery && accommodation.gallery.length > 0 && (
                                 <div>
-                                    <h3 className="text-2xl font-serif font-bold mb-6 text-gray-900">Gallery</h3>
+                                    <h3 className="text-2xl font-serif font-bold mb-6 text-white">Gallery</h3>
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {accommodation.gallery.map((img: Image, idx: number) => (
                                             <div key={idx} className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
@@ -116,11 +116,11 @@ const AccommodationDetail = () => {
 
                             {/* Amenities (Mock if not in schema yet) */}
                             <div>
-                                <h3 className="text-2xl font-serif font-bold mb-6 text-gray-900">Amenities</h3>
+                                <h3 className="text-2xl font-serif font-bold mb-6 text-white">Amenities</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {accommodation.amenities ? (
                                         accommodation.amenities.map((amenity: string, idx: number) => (
-                                            <div key={idx} className="flex items-center gap-3 text-gray-700">
+                                            <div key={idx} className="flex items-center gap-3 text-gray-100">
                                                 <div className="bg-primary/10 p-1 rounded-full text-primary">
                                                     <Check size={14} />
                                                 </div>
@@ -130,7 +130,7 @@ const AccommodationDetail = () => {
                                     ) : (
                                         // Default amenities if none provided
                                         ['Free Wi-Fi', 'Swimming Pool', 'Restaurant', 'Bar/Lounge', 'Room Service', 'Airport Shuttle', 'Air Conditioning', 'Laundry Service'].map((item, idx) => (
-                                            <div key={idx} className="flex items-center gap-3 text-gray-700">
+                                            <div key={idx} className="flex items-center gap-3 text-gray-100">
                                                 <div className="bg-primary/10 p-1 rounded-full text-primary">
                                                     <Check size={14} />
                                                 </div>
@@ -145,9 +145,9 @@ const AccommodationDetail = () => {
                                 <div className="space-y-12">
                                     {accommodation.sections.map((section: AccommodationSection, idx: number) => (
                                         <div key={idx} className="border-t border-gray-100 pt-8">
-                                            <h3 className="text-2xl font-serif font-bold mb-4 text-gray-900">{section.title}</h3>
+                                            <h3 className="text-2xl font-serif font-bold mb-4 text-white">{section.title}</h3>
                                             {section.content && (
-                                                <div className="prose prose-lg text-gray-600 leading-relaxed mb-6">
+                                                <div className="prose prose-lg text-gray-100 leading-relaxed mb-6">
                                                     <p>{section.content}</p>
                                                 </div>
                                             )}

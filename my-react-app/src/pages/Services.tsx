@@ -26,16 +26,16 @@ const Services = () => {
 
     return (
         <Layout>
-            <div className="bg-gray-900 text-white py-20">
+            <div className="bg-primary text-white py-20">
                 <Container>
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Our Services</h1>
-                    <p className="text-lg text-gray-300 max-w-2xl">
+                    <p className="text-lg text-gray-100 max-w-2xl">
                         Beyond safaris, we offer a comprehensive range of travel services to make your trip seamless.
                     </p>
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     {loading ? (
                         <div className="text-center py-20">

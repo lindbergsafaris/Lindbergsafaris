@@ -75,20 +75,20 @@ const DestinationDetail = () => {
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                         {/* Main Content */}
                         <div className="lg:col-span-2">
-                            <h2 className="text-3xl font-serif font-bold mb-6">Overview</h2>
-                            <p className="text-gray-600 leading-relaxed mb-8 text-lg">
+                            <h2 className="text-3xl font-serif font-bold mb-6 text-white">Overview</h2>
+                            <p className="text-gray-100 leading-relaxed mb-8 text-lg">
                                 {destination.description}
                             </p>
 
                             {/* Highlights */}
                             {destination.highlights && destination.highlights.length > 0 && (
                                 <div className="mb-12">
-                                    <h3 className="text-2xl font-bold mb-6">Highlights</h3>
+                                    <h3 className="text-2xl font-bold mb-6 text-white">Highlights</h3>
                                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {destination.highlights.map((highlight: string, index: number) => (
                                             <li key={index} className="flex items-center gap-3 text-gray-700 bg-secondary p-3 rounded-lg">
@@ -103,7 +103,7 @@ const DestinationDetail = () => {
                             {/* Places to Visit (Blog Style) */}
                             {destination.placesToVisit && destination.placesToVisit.length > 0 && (
                                 <div className="mb-12">
-                                    <h3 className="text-2xl font-serif font-bold mb-8">Top Places to Visit in {destination.name}</h3>
+                                    <h3 className="text-2xl font-serif font-bold mb-8 text-white">Top Places to Visit in {destination.name}</h3>
                                     <div className="space-y-12">
                                         {destination.placesToVisit.map((place: PlaceToVisit, index: number) => (
                                             <div key={index} className="flex flex-col md:flex-row gap-8 items-start">
@@ -115,11 +115,11 @@ const DestinationDetail = () => {
                                                     />
                                                 </div>
                                                 <div className="md:w-1/2">
-                                                    <h4 className="text-xl font-bold mb-3 flex items-center gap-2">
-                                                        <MapPin size={20} className="text-primary" />
+                                                    <h4 className="text-xl font-bold mb-3 flex items-center gap-2 text-white">
+                                                        <MapPin size={20} className="text-accent" />
                                                         {place.title}
                                                     </h4>
-                                                    <p className="text-gray-600 leading-relaxed">
+                                                    <p className="text-gray-100 leading-relaxed">
                                                         {place.description}
                                                     </p>
                                                 </div>
@@ -170,13 +170,13 @@ const DestinationDetail = () => {
                             )}
 
                             {/* Inquiry Form */}
-                            <div className="bg-primary/5 p-6 rounded-xl border border-primary/10 sticky top-24">
-                                <h3 className="text-xl font-serif font-bold mb-2">Plan Your Trip</h3>
-                                <p className="text-sm text-gray-600 mb-6">Interested in {destination.name}? Send us an inquiry and we'll help you plan the perfect safari.</p>
+                            <div className="bg-white/10 p-6 rounded-xl border border-white/20 sticky top-24">
+                                <h3 className="text-xl font-serif font-bold mb-2 text-white">Plan Your Trip</h3>
+                                <p className="text-sm text-gray-200 mb-6">Interested in {destination.name}? Send us an inquiry and we'll help you plan the perfect safari.</p>
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     <div>
-                                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                                        <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-1">Your Name</label>
                                         <input
                                             type="text"
                                             id="name"
@@ -184,12 +184,12 @@ const DestinationDetail = () => {
                                             required
                                             value={formData.name}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-white/10 text-white focus:ring-2 focus:ring-white/20 focus:border-transparent outline-none"
                                             placeholder="John Doe"
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-200 mb-1">Email Address</label>
                                         <input
                                             type="email"
                                             id="email"
@@ -197,12 +197,12 @@ const DestinationDetail = () => {
                                             required
                                             value={formData.email}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-white/10 text-white focus:ring-2 focus:ring-white/20 focus:border-transparent outline-none"
                                             placeholder="john@example.com"
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                        <label htmlFor="message" className="block text-sm font-medium text-gray-200 mb-1">Message</label>
                                         <textarea
                                             id="message"
                                             name="message"
@@ -210,7 +210,7 @@ const DestinationDetail = () => {
                                             rows={4}
                                             value={formData.message}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent outline-none resize-none"
+                                            className="w-full px-4 py-2 rounded-lg border border-gray-600 bg-white/10 text-white focus:ring-2 focus:ring-white/20 focus:border-transparent outline-none resize-none"
                                             placeholder={`I'm interested in visiting ${destination.name}...`}
                                         />
                                     </div>

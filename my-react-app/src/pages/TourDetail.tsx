@@ -97,24 +97,24 @@ const TourDetail = () => {
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     <div className="flex flex-col lg:flex-row gap-12">
                         {/* Main Content */}
                         <div className="lg:w-2/3">
                             <div className="mb-10">
-                                <h2 className="text-2xl font-serif font-bold mb-4">Overview</h2>
-                                <div className="text-gray-600 leading-relaxed mb-6 prose max-w-none">
+                                <h2 className="text-2xl font-serif font-bold mb-4 text-white">Overview</h2>
+                                <div className="text-gray-100 leading-relaxed mb-6 prose max-w-none">
                                     {tour.description}
                                 </div>
 
                                 {tour.highlights && tour.highlights.length > 0 && (
                                     <>
-                                        <h3 className="text-xl font-bold mb-3">Highlights</h3>
+                                        <h3 className="text-xl font-bold mb-3 text-white">Highlights</h3>
                                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                             {tour.highlights.map((highlight: string, index: number) => (
-                                                <li key={index} className="flex items-start gap-2 text-gray-700">
-                                                    <Check size={18} className="text-primary mt-1 shrink-0" />
+                                                <li key={index} className="flex items-start gap-2 text-gray-100">
+                                                    <Check size={18} className="text-accent mt-1 shrink-0" />
                                                     <span>{highlight}</span>
                                                 </li>
                                             ))}

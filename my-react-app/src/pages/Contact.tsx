@@ -22,36 +22,36 @@ const Contact = () => {
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Contact Form */}
                         <div>
-                            <h2 className="text-3xl font-serif font-bold mb-6">Get in Touch</h2>
-                            <p className="text-gray-600 mb-8">
+                            <h2 className="text-3xl font-serif font-bold mb-6 text-white">Get in Touch</h2>
+                            <p className="text-gray-100 mb-8">
                                 Have a question or ready to book? Fill out the form below and our team will get back to you within 24 hours.
                             </p>
 
                             <form className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                                        <input type="text" className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                                        <label className="block text-sm font-medium text-gray-200 mb-1">First Name</label>
+                                        <input type="text" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                                        <input type="text" className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                                        <label className="block text-sm font-medium text-gray-200 mb-1">Last Name</label>
+                                        <input type="text" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                                    <input type="email" className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20" />
+                                    <label className="block text-sm font-medium text-gray-200 mb-1">Email Address</label>
+                                    <input type="email" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                                    <select className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20">
+                                    <label className="block text-sm font-medium text-gray-200 mb-1">Subject</label>
+                                    <select className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20 [&>option]:text-gray-900">
                                         <option>General Inquiry</option>
                                         <option>Booking Request</option>
                                         <option>Partnership</option>
@@ -60,8 +60,8 @@ const Contact = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                                    <textarea rows={5} className="w-full px-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
+                                    <label className="block text-sm font-medium text-gray-200 mb-1">Message</label>
+                                    <textarea rows={5} className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"></textarea>
                                 </div>
 
                                 <Button size="lg" className="w-full md:w-auto">Send Message</Button>

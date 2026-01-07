@@ -176,16 +176,16 @@ const Company = () => {
             </div>
 
             {/* About Us Section */}
-            <Section id="about" className="scroll-mt-20">
+            <Section id="about" className="scroll-mt-20 bg-primary">
                 <Container>
                     <div className="flex flex-col md:flex-row gap-12 items-center mb-20">
                         <div className="md:w-1/2">
-                            <h2 className="text-4xl font-serif font-bold mb-6 text-gray-900">About Us</h2>
-                            <p className="text-gray-600 leading-relaxed mb-4">
+                            <h2 className="text-4xl font-serif font-bold mb-6 text-white">About Us</h2>
+                            <p className="text-gray-100 leading-relaxed mb-4">
                                 Lindberg Safaris was born out of a deep love for the African wilderness.
                                 Founded by a team of experienced safari enthusiasts, our mission is to share the magic of East Africa with the world.
                             </p>
-                            <p className="text-gray-600 leading-relaxed">
+                            <p className="text-gray-100 leading-relaxed">
                                 With over 25 years of combined experience, we specialize in crafting bespoke safari itineraries that cater to your unique interests and preferences.
                                 Whether you dream of witnessing the Great Migration, tracking gorillas in the mist, or relaxing on pristine beaches, we are here to make it happen.
                             </p>
@@ -200,8 +200,8 @@ const Company = () => {
                     </div>
 
                     <div className="text-center mb-12">
-                        <h3 className="text-3xl font-serif font-bold mb-4 text-gray-900">Why Choose Us</h3>
-                        <p className="text-gray-600 max-w-2xl mx-auto">
+                        <h3 className="text-3xl font-serif font-bold mb-4 text-white">Why Choose Us</h3>
+                        <p className="text-gray-100 max-w-2xl mx-auto">
                             We go above and beyond to ensure your safari is everything you dreamed of and more.
                         </p>
                     </div>
@@ -245,17 +245,17 @@ const Company = () => {
             </Section>
 
             {/* Our Impact Section */}
-            <Section id="impact" className="bg-secondary/20 scroll-mt-20">
+            <Section id="impact" className="bg-primary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Our Impact</h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Our Impact</h2>
+                        <p className="text-xl text-gray-100 max-w-3xl mx-auto">
                             Making a difference in East Africa
                         </p>
                     </div>
 
                     <div className="max-w-4xl mx-auto">
-                        <p className="text-lg text-gray-600 leading-relaxed mb-12 text-center">
+                        <p className="text-lg text-gray-100 leading-relaxed mb-12 text-center">
                             Every safari you book contributes to conservation efforts and community development.
                             We believe that tourism should benefit both wildlife and the people who live alongside it.
                         </p>
@@ -280,11 +280,11 @@ const Company = () => {
             </Section>
 
             {/* FAQs Section */}
-            <Section id="faqs" className="scroll-mt-20">
+            <Section id="faqs" className="scroll-mt-20 bg-primary">
                 <Container>
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Frequently Asked Questions</h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Frequently Asked Questions</h2>
+                        <p className="text-xl text-gray-100 max-w-3xl mx-auto">
                             Everything you need to know before your African adventure
                         </p>
                     </div>
@@ -326,11 +326,11 @@ const Company = () => {
             </Section>
 
             {/* Testimonials Section */}
-            <Section id="testimonials" className="bg-secondary scroll-mt-20">
+            <Section id="testimonials" className="bg-primary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Guest Reviews</h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Guest Reviews</h2>
+                        <p className="text-xl text-gray-100 max-w-3xl mx-auto">
                             Read what our travelers have to say about their Lindberg Safaris experience
                         </p>
                     </div>
@@ -372,11 +372,11 @@ const Company = () => {
                 </Container>
             </Section>
             {/* Team Section */}
-            <Section className="bg-secondary">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Meet Our Team</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Meet Our Team</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
                     </div>
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 no-scrollbar md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-8 md:pb-0">
@@ -390,8 +390,8 @@ const Company = () => {
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900">{member.name}</h3>
-                                <p className="text-primary font-medium">{member.role}</p>
+                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
+                                <p className="text-gray-200 font-medium">{member.role}</p>
                             </div>
                         ))}
                     </div>
@@ -399,11 +399,11 @@ const Company = () => {
             </Section>
 
             {/* Partners Section */}
-            <Section className="bg-secondary">
+            <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Our Trusted Partners</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">Collaborating with the best to deliver excellence.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Our Trusted Partners</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">Collaborating with the best to deliver excellence.</p>
                     </div>
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
@@ -421,11 +421,11 @@ const Company = () => {
             </Section>
 
             {/* Location Section */}
-            <Section className="bg-secondary scroll-mt-20">
+            <Section className="bg-primary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">Find Us</h2>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Find Us</h2>
+                        <p className="text-xl text-gray-100 max-w-3xl mx-auto">
                             Visit our offices in Nairobi
                         </p>
                     </div>

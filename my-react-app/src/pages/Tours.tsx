@@ -22,16 +22,16 @@ const Tours = () => {
     return (
         <Layout>
             {/* Hero Section */}
-            <div className="bg-gray-900 text-white py-20">
+            <div className="bg-primary text-white py-20">
                 <Container>
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Safari Tours</h1>
-                    <p className="text-lg text-gray-300 max-w-2xl">
+                    <p className="text-lg text-gray-100 max-w-2xl">
                         Discover our handpicked collection of unforgettable safari experiences across East Africa.
                     </p>
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Filters Sidebar */}
@@ -61,7 +61,7 @@ const Tours = () => {
                             {!error && tours.length > 0 && (
                                 <>
                                     <div className="mb-6">
-                                        <p className="text-gray-600">
+                                        <p className="text-gray-100">
                                             Showing <span className="font-bold">{tours.length}</span> {tours.length === 1 ? 'tour' : 'tours'}
                                         </p>
                                     </div>

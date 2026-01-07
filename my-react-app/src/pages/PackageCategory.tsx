@@ -55,7 +55,7 @@ const PackageCategory = () => {
                 </Container>
             </div>
 
-            <Section>
+            <Section className="bg-primary">
                 <Container>
                     {loading ? (
                         <div className="text-center py-20">
