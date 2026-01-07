@@ -7,11 +7,10 @@ import { cn } from '@/lib/utils';
 import api from '@/lib/api';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
-import { FAQ, Testimonial } from '@/types';
+import { Testimonial } from '@/types';
 
 const Company = () => {
-    const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-    const [faqs, setFaqs] = useState<FAQ[]>([]);
+    const [openFaqIndex, setOpenFaqIndex] = useState<string | null>(null);
     const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -109,14 +108,130 @@ const Company = () => {
         { name: 'Partner 7', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
     ];
 
+    // Static FAQ Data
+    const faqCategories = [
+        {
+            title: "General Information",
+            items: [
+                {
+                    question: "What services does Lindberg Holidays & Safaris offer?",
+                    answer: "We offer a wide range of travel services including custom safari itineraries, beach holidays, cultural tours, mountain climbing, hotel bookings, and airport transfers across East Africa."
+                },
+                {
+                    question: "What is a safari, and what does it include?",
+                    answer: "A safari is an adventurous journey to observe wildlife in their natural habitat. Our packages typically include transport in 4x4 vehicles, professional guides, park entrance fees, accommodation, and meals."
+                },
+                {
+                    question: "Where is Lindberg Holidays & Safaris located?",
+                    answer: "Our head office is located in Nairobi, Kenya, at United Bible Society, Ground Floor, Ndemi Rd."
+                },
+                {
+                    question: "How long has Lindberg Holidays & Safaris been in operation?",
+                    answer: "We have over 25 years of combined experience in the tourism industry, providing exceptional safari experiences."
+                },
+                {
+                    question: "How can I contact Lindberg for inquiries?",
+                    answer: "You can reach us via email at lindberg@lindbergsafari.com, by phone at 0745654619, or through the contact form on our website."
+                }
+            ]
+        },
+        {
+            title: "Booking and Payments",
+            items: [
+                {
+                    question: "How do I book a safari or tour package with Lindberg?",
+                    answer: "You can book by contacting us directly through our website, email, or WhatsApp. Our tour consultants will work with you to finalize your itinerary."
+                },
+                {
+                    question: "What payment methods do you accept?",
+                    answer: "We accept bank transfers, credit cards (Visa/Mastercard), and mobile money payments (M-Pesa)."
+                },
+                {
+                    question: "Do I need to pay a deposit when booking?",
+                    answer: "Yes, a deposit is required to secure your booking, with the balance payable before the start of your safari."
+                },
+                {
+                    question: "Can I pay in installments?",
+                    answer: "Yes, we offer flexible payment plans. Please discuss this with your tour consultant during booking."
+                },
+                {
+                    question: "What is your cancellation policy?",
+                    answer: "Cancellation policies vary by package and season. Please refer to our Terms and Conditions provided at the time of booking."
+                }
+            ]
+        },
+        {
+            title: "Tour Packages",
+            items: [
+                {
+                    question: "What types of safaris do you offer?",
+                    answer: "We offer wildlife safaris, beach holidays, cultural tours, bird watching tours, and photography safaris in Kenya, Tanzania, Uganda, and Rwanda."
+                },
+                {
+                    question: "Can I customize my tour package?",
+                    answer: "Absolutely! We specialize in tailor-made itineraries to suit your preferences, budget, and interests."
+                },
+                {
+                    question: "What is included in a safari package?",
+                    answer: "Packages generally include accommodation, meals on full board, transport in safari vehicles, park fees, and the services of an English-speaking driver-guide."
+                },
+                {
+                    question: "Do you offer group discounts?",
+                    answer: "Yes, we offer discounts for groups, families, and repeat clients. Contact us for a quote."
+                }
+            ]
+        },
+        {
+            title: "Travel Information",
+            items: [
+                {
+                    question: "Do I need a visa to travel with Lindberg?",
+                    answer: "Visa requirements depend on your nationality and the destination. We provide guidance on how to apply for e-visas for Kenya, Tanzania, and other East African countries."
+                },
+                {
+                    question: "Do you offer travel insurance?",
+                    answer: "We highly recommend that all travelers purchase comprehensive travel insurance. While we have AMREF Flying Doctors evacuation cover, personal medical and travel insurance is the traveler's responsibility."
+                }
+            ]
+        },
+        {
+            title: "Customer Support",
+            items: [
+                {
+                    question: "What if I need to change my booking?",
+                    answer: "Changes are subject to availability and may incur additional charges depending on the timing and third-party policies (hotels/airlines)."
+                },
+                {
+                    question: "What should I do in case of an emergency during my trip?",
+                    answer: "You will have access to a 24/7 emergency contact number, and our guides are trained to handle emergencies on the ground."
+                },
+                {
+                    question: "How can I provide feedback after my trip?",
+                    answer: "We value your feedback! You can leave a review on our website, TripAdvisor, or send us an email directly."
+                },
+                {
+                    question: "Do you have a loyalty or referral program?",
+                    answer: "Yes, we appreciate our returning guests and referrals. Ask us about our loyalty benefits."
+                }
+            ]
+        },
+        {
+            title: "Partner and Affiliate Programs",
+            items: [
+                {
+                    question: "Do you work with travel agents or external sales agents?",
+                    answer: "Yes, we have a partner program for travel agents. Please contact our sales team for more information."
+                }
+            ]
+        }
+    ];
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [faqsRes, testimonialsRes] = await Promise.all([
-                    api.faq.getAll(),
+                const [testimonialsRes] = await Promise.all([
                     api.testimonial.getAll()
                 ]);
-                setFaqs(faqsRes.data || []);
                 setTestimonials(testimonialsRes.data || []);
             } catch (error) {
                 console.error('Error fetching company data:', error);
@@ -140,6 +255,11 @@ const Company = () => {
                 behavior: 'smooth'
             });
         }
+    };
+
+    const toggleFaq = (categoryIndex: number, itemIndex: number) => {
+        const key = `${categoryIndex}-${itemIndex}`;
+        setOpenFaqIndex(openFaqIndex === key ? null : key);
     };
 
     if (loading) {
@@ -285,43 +405,61 @@ const Company = () => {
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Frequently Asked Questions</h2>
                         <p className="text-xl text-gray-100 max-w-3xl mx-auto">
-                            Everything you need to know before your African adventure
+                            Find answers to your most common travel questions right here
                         </p>
                     </div>
 
-                    {faqs.length > 0 ? (
-                        <div className="max-w-3xl mx-auto space-y-4">
-                            {faqs.map((faq, index) => (
-                                <div key={faq._id || index} className="border border-gray-200 rounded-lg overflow-hidden">
-                                    <button
-                                        className="w-full flex items-center justify-between p-6 bg-secondary-light hover:bg-secondary transition-colors text-left"
-                                        onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                                    >
-                                        <span className="font-bold text-lg text-gray-900 pr-4">{faq.question}</span>
-                                        {openFaqIndex === index ? (
-                                            <Minus className="text-primary shrink-0" />
-                                        ) : (
-                                            <Plus className="text-primary shrink-0" />
-                                        )}
-                                    </button>
-                                    <div
-                                        className={cn(
-                                            "transition-all duration-300 ease-in-out overflow-hidden",
-                                            openFaqIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                                        )}
-                                    >
-                                        <div className="p-6 pt-0 bg-secondary-light text-gray-600 leading-relaxed border-t border-transparent">
-                                            {faq.answer}
-                                        </div>
-                                    </div>
+                    <div className="max-w-4xl mx-auto space-y-12">
+                        {faqCategories.map((category, catIndex) => (
+                            <div key={catIndex}>
+                                <h3 className="text-2xl font-serif font-bold mb-6 text-white border-b border-white/20 pb-2">{category.title}</h3>
+                                <div className="space-y-4">
+                                    {category.items.map((item, itemIndex) => {
+                                        const isOpen = openFaqIndex === `${catIndex}-${itemIndex}`;
+                                        return (
+                                            <div key={itemIndex} className="border border-white/20 rounded-lg overflow-hidden bg-white/5 backdrop-blur-sm">
+                                                <button
+                                                    className="w-full flex items-center justify-between p-6 hover:bg-white/10 transition-colors text-left"
+                                                    onClick={() => toggleFaq(catIndex, itemIndex)}
+                                                >
+                                                    <span className="font-bold text-lg text-white pr-4">{item.question}</span>
+                                                    {isOpen ? (
+                                                        <Minus className="text-white shrink-0" />
+                                                    ) : (
+                                                        <Plus className="text-white shrink-0" />
+                                                    )}
+                                                </button>
+                                                <div
+                                                    className={cn(
+                                                        "transition-all duration-300 ease-in-out overflow-hidden",
+                                                        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                                    )}
+                                                >
+                                                    <div className="p-6 pt-0 text-gray-200 leading-relaxed border-t border-white/10">
+                                                        {item.answer}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 bg-secondary rounded-lg">
-                            <p className="text-gray-600">No FAQs available yet.</p>
-                        </div>
-                    )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Still Have Questions CTA */}
+                    <div className="mt-16 text-center bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 max-w-3xl mx-auto">
+                        <h3 className="text-2xl font-bold text-white mb-4">Still Have Questions?</h3>
+                        <p className="text-gray-200 mb-8">
+                            Can't find the answer you're looking for? Our team is here to help you plan your perfect safari.
+                        </p>
+                        <button
+                            onClick={() => window.location.href = '/contact'}
+                            className="px-8 py-3 bg-white text-primary font-bold rounded-full hover:bg-gray-100 transition-colors"
+                        >
+                            Contact Us
+                        </button>
+                    </div>
                 </Container>
             </Section>
 
