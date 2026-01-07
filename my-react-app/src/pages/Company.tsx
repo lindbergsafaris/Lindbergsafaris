@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Shield, Users, Heart, Award, Plus, Minus, Star, Quote, Target, TrendingUp, Leaf } from 'lucide-react';
+import { Shield, Users, Heart, Award, Plus, Minus, Star, Quote, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -50,17 +50,17 @@ const Company = () => {
     // Calling section items
     const callingItems = [
         {
-            icon: <Target size={40} className="text-white" />,
+            image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Our Mission",
             description: "To connect people with the raw beauty of nature and create unforgettable experiences that inspire conservation and cultural appreciation."
         },
         {
-            icon: <Heart size={40} className="text-white" />,
+            image: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Our Passion",
             description: "We are driven by a deep love for Africa's wilderness and a commitment to sharing its magic with the world while preserving it for future generations."
         },
         {
-            icon: <Leaf size={40} className="text-white" />,
+            image: "https://images.unsplash.com/photo-1535941339077-2dd1c7963098?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Conservation First",
             description: "We believe in responsible tourism that protects wildlife, empowers local communities, and ensures the sustainability of our natural heritage."
         }
@@ -352,12 +352,20 @@ const Company = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {callingItems.map((item, index) => (
-                            <div key={index} className="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 hover:bg-white/15 transition-all">
-                                <div className="bg-white/20 w-20 h-20 rounded-full flex items-center justify-center mb-6">
-                                    {item.icon}
+                            <div
+                                key={index}
+                                className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10"
+                            >
+                                <div
+                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style={{ backgroundImage: `url("${item.image}")` }}
+                                />
+                                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+
+                                <div className="relative h-full flex flex-col justify-end p-8 z-10">
+                                    <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
+                                    <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
                                 </div>
-                                <h3 className="text-2xl font-bold mb-4">{item.title}</h3>
-                                <p className="text-primary-light leading-relaxed">{item.description}</p>
                             </div>
                         ))}
                     </div>

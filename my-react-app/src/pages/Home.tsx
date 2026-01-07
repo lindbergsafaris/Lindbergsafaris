@@ -416,27 +416,39 @@ const Home = () => {
                         <p className="text-gray-100 max-w-2xl mx-auto">Why choose Lindberg Safaris for your next adventure?</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="flex flex-col items-center text-center p-6 bg-secondary-light rounded-xl shadow-sm">
-                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                        {[
+                            {
+                                title: "25+ Years Experience",
+                                description: "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998.",
+                                image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            },
+                            {
+                                title: "Safe & Secure",
+                                description: "Your safety is our priority. We provide 24/7 support and work with trusted partners.",
+                                image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            },
+                            {
+                                title: "Tailored Journeys",
+                                description: "Every trip is unique. We customize every detail to match your preferences and dreams.",
+                                image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            }
+                        ].map((item, index) => (
+                            <div
+                                key={index}
+                                className="relative overflow-hidden rounded-xl h-[300px] group shadow-lg border border-white/10"
+                            >
+                                <div
+                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                    style={{ backgroundImage: `url("${item.image}")` }}
+                                />
+                                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+
+                                <div className="relative h-full flex flex-col justify-end p-8 z-10 text-center md:text-left">
+                                    <h3 className="text-xl font-serif font-bold mb-2 text-white">{item.title}</h3>
+                                    <p className="text-gray-100 text-sm md:text-base">{item.description}</p>
+                                </div>
                             </div>
-                            <h3 className="text-xl font-serif font-bold mb-2">25+ Years Experience</h3>
-                            <p className="text-gray-600">Deep local knowledge and expertise in crafting perfect safari itineraries since 1998.</p>
-                        </div>
-                        <div className="flex flex-col items-center text-center p-6 bg-secondary-light rounded-xl shadow-sm">
-                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                            </div>
-                            <h3 className="text-xl font-serif font-bold mb-2">Safe & Secure</h3>
-                            <p className="text-gray-600">Your safety is our priority. We provide 24/7 support and work with trusted partners.</p>
-                        </div>
-                        <div className="flex flex-col items-center text-center p-6 bg-secondary-light rounded-xl shadow-sm">
-                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" /></svg>
-                            </div>
-                            <h3 className="text-xl font-serif font-bold mb-2">Tailored Journeys</h3>
-                            <p className="text-gray-600">Every trip is unique. We customize every detail to match your preferences and dreams.</p>
-                        </div>
+                        ))}
                     </div>
                 </Container>
             </Section>
