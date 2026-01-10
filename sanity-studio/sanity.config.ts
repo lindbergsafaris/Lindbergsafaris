@@ -7,7 +7,7 @@ export default defineConfig({
   name: 'lindberg-safaris',
   title: 'Lindberg Safaris CMS',
 
-  projectId: 'nk22ixww',
+  projectId: 'tdpau1kt',
   dataset: 'production',
 
   plugins: [structureTool(), visionTool()],
