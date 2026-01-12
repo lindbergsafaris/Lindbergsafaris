@@ -1,31 +1,28 @@
 import { useState } from 'react';
-import useSWR from 'swr';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Info, MapPin, Send } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
-import api from '@/lib/api';
 import { Destination, PlaceToVisit } from '@/types';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { destinationsData } from '@/data/destinations';
 
 const DestinationDetail = () => {
     const { id } = useParams<{ id: string }>();
-    const { data: destinationData, error: destinationError } = useSWR<{ data: Destination }>(id ? `destination-${id}` : null, () => api.destinations.getById(id!));
 
     // Get static destination data if available
     const staticDestination = id ? destinationsData[id] : null;
 
     // Calculate loading state
-    const loading = !destinationData && !destinationError && !staticDestination;
+    const loading = false;
 
-    // Fallback to static data if Sanity doesn't have the destination
-    let destination = destinationData?.data || null;
+    // Use static data
+    let destination: Destination | null = null;
 
-    // If no data from Sanity but we have static data, use it
-    if (!destination && staticDestination) {
+    // If we have static data, use it
+    if (staticDestination) {
         destination = {
             _id: staticDestination.id,
             name: staticDestination.name,

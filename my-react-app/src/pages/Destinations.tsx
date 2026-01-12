@@ -1,18 +1,16 @@
-import useSWR from 'swr';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import DestinationCard from '@/components/destinations/DestinationCard';
-import api from '@/lib/api';
 import { Destination } from '@/types';
 
 const Destinations = () => {
 
+    // No longer fetching from Sanity - destinations are handled via static data in RegionDestinations
+    const destinations: Destination[] = [];
+    const loading = false;
+    const error = null;
 
-    const { data: destinationsData, error: destinationsError } = useSWR<{ data: Destination[] }>('destinations', () => api.destinations.getAll());
-    const destinations = destinationsData?.data || [];
-    const loading = !destinationsData && !destinationsError;
-    const error = destinationsError ? (destinationsError as Error).message || 'Failed to load destinations' : null;
 
     return (
         <Layout>

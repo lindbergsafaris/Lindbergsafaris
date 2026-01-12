@@ -44,36 +44,6 @@ export const toursAPI = {
     },
 };
 
-// Destinations API
-export const destinationsAPI = {
-    getAll: async () => {
-        const query = `*[_type == "destination"] | order(name asc) {
-            _id,
-            name,
-            slug,
-            tourCount,
-            "cardImage": cardImage{
-                url,
-                alt
-            },
-            "heroImage": heroImage{
-                url,
-                alt
-            }
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-
-    getById: async (id: string) => {
-        const query = `*[_type == "destination" && _id == $id][0]{
-            ...,
-            "tours": *[_type == "tour" && references(^._id)]
-        }`;
-        const data = await client.fetch(query, { id });
-        return { data };
-    },
-};
 
 // Blog API
 export const blogAPI = {
@@ -109,63 +79,7 @@ export const blogAPI = {
     },
 };
 
-// Services API
-export const servicesAPI = {
-    getAll: async () => {
-        const query = `*[_type == "service"] | order(order asc) {
-            _id,
-            title,
-            slug,
-            description,
-            order,
-            icon,
-            "image": image{
-                url,
-                alt
-            }
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-};
 
-// Packages API
-export const packagesAPI = {
-    getAll: async () => {
-        const query = `*[_type == "package"] | order(_createdAt desc) {
-            _id,
-            title,
-            slug,
-            description,
-            price,
-            duration,
-            "image": image{
-                url,
-                alt
-            },
-            category
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-    getByCategory: async (category: string) => {
-        const query = `*[_type == "package" && category == $category] | order(_createdAt desc) {
-            _id,
-            title,
-            slug,
-            description,
-            price,
-            duration,
-            "image": image{
-                url,
-                alt
-            },
-            category
-        }`;
-        const data = await client.fetch(query, { category });
-        return { data };
-    },
-};
 
 // Accommodations API
 export const accommodationsAPI = {
@@ -268,20 +182,6 @@ export const popupAPI = {
     },
 };
 
-// FAQ API
-export const faqAPI = {
-    getAll: async () => {
-        const query = `*[_type == "faq"] | order(order asc) {
-            _id,
-            question,
-            answer,
-            category,
-            order
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-};
 
 // Testimonial API
 export const testimonialAPI = {
@@ -308,14 +208,10 @@ export const healthCheck = async () => {
 
 export default {
     tours: toursAPI,
-    destinations: destinationsAPI,
     blog: blogAPI,
-    services: servicesAPI,
-    packages: packagesAPI,
     accommodations: accommodationsAPI,
     hotDeals: hotDealsAPI,
     popup: popupAPI,
-    faq: faqAPI,
     testimonial: testimonialAPI,
     healthCheck,
 };
