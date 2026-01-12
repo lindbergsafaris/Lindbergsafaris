@@ -9,12 +9,35 @@ import Button from '@/components/ui/Button';
 import api from '@/lib/api';
 import { Destination, PlaceToVisit } from '@/types';
 import { createBookingMessage } from '@/lib/bookingUtils';
+import { destinationsData } from '@/data/destinations';
 
 const DestinationDetail = () => {
     const { id } = useParams<{ id: string }>();
     const { data: destinationData, error: destinationError } = useSWR<{ data: Destination }>(id ? `destination-${id}` : null, () => api.destinations.getById(id!));
-    const destination = destinationData?.data || null;
-    const loading = !destinationData && !destinationError;
+
+    // Get static destination data if available
+    const staticDestination = id ? destinationsData[id] : null;
+
+    // Calculate loading state
+    const loading = !destinationData && !destinationError && !staticDestination;
+
+    // Fallback to static data if Sanity doesn't have the destination
+    let destination = destinationData?.data || null;
+
+    // If no data from Sanity but we have static data, use it
+    if (!destination && staticDestination) {
+        destination = {
+            _id: staticDestination.id,
+            name: staticDestination.name,
+            tagline: staticDestination.tagline,
+            description: staticDestination.description,
+            heroImage: { url: staticDestination.heroImage },
+            highlights: staticDestination.highlights,
+            practicalInfo: staticDestination.practicalInfo,
+            placesToVisit: staticDestination.placesToVisit,
+        } as Destination;
+    }
+
 
     // Form State
     const [formData, setFormData] = useState({
