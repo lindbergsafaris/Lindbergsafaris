@@ -80,9 +80,12 @@ const Header = () => {
     return (
         <header
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-                isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm py-3" : "bg-white/80 backdrop-blur-sm py-4"
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-cover bg-center bg-no-repeat",
+                isScrolled ? "shadow-md py-3" : "py-4"
             )}
+            style={{
+                backgroundImage: `linear-gradient(to bottom, rgba(238, 214, 175, 0.95), rgba(218, 165, 32, 0.95)), url("/safari-background.png")`
+            }}
         >
             <Container className="flex items-center justify-between">
                 <Link to="/" className="shrink-0 mr-8">
