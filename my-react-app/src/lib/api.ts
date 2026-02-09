@@ -201,6 +201,57 @@ export const testimonialAPI = {
     },
 };
 
+// Packages API
+export const packagesAPI = {
+    getAll: async () => {
+        const query = `*[_type == "package"] | order(_createdAt desc) {
+            _id,
+            title,
+            category,
+            duration,
+            price,
+            "image": image{
+                url,
+                alt
+            },
+            description
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+    getByCategory: async (category: string) => {
+        const query = `*[_type == "package" && category == $category] | order(_createdAt desc) {
+            _id,
+            title,
+            category,
+            duration,
+            price,
+            "image": image{
+                url,
+                alt
+            },
+            description
+        }`;
+        const data = await client.fetch(query, { category });
+        return { data };
+    },
+};
+
+// Services API
+export const servicesAPI = {
+    getAll: async () => {
+        const query = `*[_type == "service"] | order(_createdAt desc) {
+            _id,
+            title,
+            description,
+            icon,
+            features
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+};
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -213,6 +264,8 @@ export default {
     hotDeals: hotDealsAPI,
     popup: popupAPI,
     testimonial: testimonialAPI,
+    packages: packagesAPI,
+    services: servicesAPI,
     healthCheck,
 };
 
