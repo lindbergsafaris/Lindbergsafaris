@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "Gundua Moyo wa Pori wa Afrika",
+            "subtitle": "Furahia uchawi wa nyika na safari maalum zilizoundwa kwa ajili ya ndoto zako."
+        },
+        "slide2": {
+            "title": "Kuhifadhi Hoteli",
+            "subtitle": "Malazi ya kifahari katika moyo wa asili, kutoka kambi za porini hadi resorts za nyota tano."
+        },
+        "slide3": {
+            "title": "Huduma za Usafiri",
+            "subtitle": "Suluhisho za usafiri zenye faraja na uaminifu kwa safari yako nzima."
+        },
+        "slide4": {
+            "title": "Maombi ya Visa",
+            "subtitle": "Usaidizi wa visa bila matatizo kuhakikisha kuingia kwa urahisi kwenye destinasheni yako."
+        },
+        "slide5": {
+            "title": "Tiketi za Ndege",
+            "subtitle": "Ofa bora za ndege na uzoefu wa kuhifadhi usio na mfano kwa usafiri wa kimataifa na wa ndani."
+        },
+        "slide6": {
+            "title": "Ratiba Maalum",
+            "subtitle": "Vifurushi vilivyoundwa maalum kwa mapendeleo yako ya kipekee na bajeti."
+        }
+    },
+    "hotDeals": {
+        "badge": "Ofa Kali",
+        "title": "Ofa za Kipekee",
+        "description": "Ofa za muda mfupi kwenye vifurushi vyetu maarufu vya safari."
+    },
+    "partners": {
+        "badge": "Washirika Wetu",
+        "title": "Waaminifu wa Hali ya Juu",
+        "description": "Tunafanya kazi na washirika wa kiwango cha kimataifa kuhakikisha safari yako ni laini."
+    },
+    "destinations": {
+        "title": "Chunguza Destinasheni Bora",
+        "description": "Kutoka tambarare kubwa za Serengeti hadi fukwe safi za Zanzibar."
+    },
+    "tours": {
+        "title": "Safari za Alama",
+        "description": "Uzoefu uliochaguliwa kwa makini unaonyesha bora zaidi ya wanyamapori na mandhari ya Afrika.",
+        "noToursAvailable": "Hakuna safari zinazopatikana bado. Ongeza safari kwenye Sanity Studio!"
+    },
+    "clients": {
+        "title": "Wateja Wetu",
+        "description": "Waaminifu na mashirika ya kiongozi na wasafiri wenye furaha."
+    },
+    "travelWithUs": {
+        "title": "Safari Pamoja Nasi",
+        "description": "Kwa nini kuchagua Lindberg Safaris kwa adventure yako inayofuata?",
+        "experience": {
+            "title": "Uzoefu wa Miaka 25+",
+            "description": "Ujuzi wa kina wa ndani na ustadi katika kuunda ratiba kamili za safari tangu 1998."
+        },
+        "safety": {
+            "title": "Salama na Amani",
+            "description": "Usalama wako ni kipaumbele chetu. Tunatoa msaada wa saa 24/7 na kufanya kazi na washirika waaminifu."
+        },
+        "tailored": {
+            "title": "Safari Maalum",
+            "description": "Kila safari ni ya kipekee. Tunabadilisha kila undani ili kulingana na mapendeleo na ndoto zako."
+        },
+        "videoSection": {
+            "title": "Safari Pamoja Nasi",
+            "description": "Tazama kinachofanya safari zetu kuwa maalum na kukutana na washirika wetu waaminifu.",
+            "affiliateMembers": "Wanachama wa Shirikisho"
+        }
+    },
+    "team": {
+        "title": "Kutimu Yetu",
+        "description": "Wataalam wenye shauku nyuma ya safari zako zisizosahaulika."
+    },
+    "newsletter": {
+        "title": "Baki Ukiwa na Msukumo",
+        "description": "Jisajili kwenye jarida letu kwa vidokezo vya safari, ofa maalum, na msukumo wa usafiri.",
+        "placeholder": "Weka barua pepe yako"
+    }
+}

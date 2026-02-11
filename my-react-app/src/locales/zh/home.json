@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "探索非洲的狂野之心",
+            "subtitle": "体验草原的魔力，享受为您量身定制的个性化狩猎旅行。"
+        },
+        "slide2": {
+            "title": "酒店预订",
+            "subtitle": "自然中心的豪华住宿，从丛林营地到五星级度假村。"
+        },
+        "slide3": {
+            "title": "交通服务",
+            "subtitle": "为您的整个旅程提供舒适可靠的交通解决方案。"
+        },
+        "slide4": {
+            "title": "签证申请",
+            "subtitle": "无忧签证协助，确保顺利进入您的目的地。"
+        },
+        "slide5": {
+            "title": "机票",
+            "subtitle": "国际和国内旅行的最佳航班优惠和无缝预订体验。"
+        },
+        "slide6": {
+            "title": "定制行程",
+            "subtitle": "专为您的独特偏好和预算设计的定制套餐。"
+        }
+    },
+    "hotDeals": {
+        "badge": "热门优惠",
+        "title": "独家优惠",
+        "description": "我们最受欢迎的狩猎旅行套餐限时优惠。"
+    },
+    "partners": {
+        "badge": "我们的合作伙伴",
+        "title": "值得信赖的最佳合作伙伴",
+        "description": "我们与世界级合作伙伴合作，确保您的旅程顺利无忧。"
+    },
+    "destinations": {
+        "title": "探索顶级目的地",
+        "description": "从塞伦盖蒂的广袤平原到桑给巴尔的原始海滩。"
+    },
+    "tours": {
+        "title": "招牌狩猎旅行",
+        "description": "精心挑选的体验，展示非洲野生动物和风景的精华。",
+        "noToursAvailable": "暂无可用旅行。在Sanity Studio中添加旅行！"
+    },
+    "clients": {
+        "title": "我们的客户",
+        "description": "受到领先组织和满意旅行者的信赖。"
+    },
+    "travelWithUs": {
+        "title": "与我们一起旅行",
+        "description": "为什么选择Lindberg Safaris进行下一次冒险？",
+        "experience": {
+            "title": "25年以上经验",
+            "description": "自1998年以来，深厚的本地知识和打造完美狩猎旅行行程的专业知识。"
+        },
+        "safety": {
+            "title": "安全可靠",
+            "description": "您的安全是我们的首要任务。我们提供全天候支持，并与值得信赖的合作伙伴合作。"
+        },
+        "tailored": {
+            "title": "定制旅程",
+            "description": "每次旅行都是独一无二的。我们定制每一个细节以匹配您的偏好和梦想。"
+        },
+        "videoSection": {
+            "title": "与我们一起旅行",
+            "description": "了解是什么让我们的旅程与众不同，认识我们值得信赖的合作伙伴。",
+            "affiliateMembers": "附属成员"
+        }
+    },
+    "team": {
+        "title": "认识我们的团队",
+        "description": "为您打造难忘旅程的热情专家。"
+    },
+    "newsletter": {
+        "title": "保持灵感",
+        "description": "订阅我们的新闻通讯，获取狩猎旅行技巧、独家优惠和旅行灵感。",
+        "placeholder": "输入您的电子邮件"
+    }
+}

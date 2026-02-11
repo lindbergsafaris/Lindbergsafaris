@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
 import { ChevronLeft, ChevronRight, Tag, Handshake } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
@@ -17,6 +18,7 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 import { Tour, HotDeal } from '@/types';
 
 const Home = () => {
+    const { t } = useTranslation(['common', 'home']);
     const [tours, setTours] = useState<Tour[]>([]);
     const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
 
@@ -26,38 +28,38 @@ const Home = () => {
         {
             id: 1,
             image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80",
-            title: "Discover Africa's Wild Heart",
-            subtitle: "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            title: t('home:hero.slide1.title'),
+            subtitle: t('home:hero.slide1.subtitle')
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80", // Resort/Pool image
-            title: "Hotel Booking",
-            subtitle: "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80",
+            title: t('home:hero.slide2.title'),
+            subtitle: t('home:hero.slide2.subtitle')
         },
         {
             id: 3,
-            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=2021&q=80", // Travel/Transport
-            title: "Transport Services",
-            subtitle: "Comfortable and reliable transport solutions for your entire journey."
+            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=2021&q=80",
+            title: t('home:hero.slide3.title'),
+            subtitle: t('home:hero.slide3.subtitle')
         },
         {
             id: 4,
-            image: "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg", // Passport/Visa
-            title: "Visa Application",
-            subtitle: "Hassle-free visa assistance to ensure smooth entry into your destination."
+            image: "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg",
+            title: t('home:hero.slide4.title'),
+            subtitle: t('home:hero.slide4.subtitle')
         },
         {
             id: 5,
-            image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80", // Airplane/Ticketing
-            title: "Ticketing",
-            subtitle: "Best flight deals and seamless booking experiences for international and local travel."
+            image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80",
+            title: t('home:hero.slide5.title'),
+            subtitle: t('home:hero.slide5.subtitle')
         },
         {
             id: 6,
-            image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80", // Map/Planning
-            title: "Custom Itineraries",
-            subtitle: "Tailor-made packages designed specifically for your unique preferences and budget."
+            image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+            title: t('home:hero.slide6.title'),
+            subtitle: t('home:hero.slide6.subtitle')
         }
     ];
 
@@ -155,11 +157,11 @@ const Home = () => {
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
                                     <Link to="/contact">
-                                        <Button size="lg">Start Your Journey</Button>
+                                        <Button size="lg">{t('common:buttons.startYourJourney')}</Button>
                                     </Link>
                                     <Link to="/tours">
                                         <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary">
-                                            View Our Tours
+                                            {t('common:buttons.viewOurTours')}
                                         </Button>
                                     </Link>
                                 </div>
@@ -204,10 +206,10 @@ const Home = () => {
                     <Container>
                         <div className="text-center mb-12">
                             <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
-                                <Tag size={16} /> Hot Deals
+                                <Tag size={16} /> {t('home:hotDeals.badge')}
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">Exclusive Offers</h2>
-                            <p className="text-lg text-gray-100 max-w-2xl mx-auto">Limited time offers on our most popular safari packages.</p>
+                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">{t('home:hotDeals.title')}</h2>
+                            <p className="text-lg text-gray-100 max-w-2xl mx-auto">{t('home:hotDeals.description')}</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -241,7 +243,7 @@ const Home = () => {
                                             className="w-full"
                                             onClick={() => window.open(getWhatsAppLink(`I am interested in the ${deal.title} offer`), '_blank')}
                                         >
-                                            Inquire Deal
+                                            {t('common:buttons.inquireDeal')}
                                         </Button>
                                     </div>
                                 </div>
@@ -256,10 +258,10 @@ const Home = () => {
                 <Container>
                     <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1 rounded-full text-sm font-bold mb-4">
-                            <Handshake size={16} /> Our Partners
+                            <Handshake size={16} /> {t('home:partners.badge')}
                         </div>
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Trusted By The Best</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">We work with world-class partners to ensure your journey is seamless.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">{t('home:partners.title')}</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">{t('home:partners.description')}</p>
                     </div>
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
@@ -280,8 +282,8 @@ const Home = () => {
             <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Explore Top Destinations</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">From the vast plains of the Serengeti to the pristine beaches of Zanzibar.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:destinations.title')}</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">{t('home:destinations.description')}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -297,7 +299,7 @@ const Home = () => {
                                     <h3 className="text-2xl font-serif font-bold mb-2">{region.title}</h3>
                                     <p className="text-sm text-gray-200 line-clamp-2 mb-3">{region.description}</p>
                                     <span className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors">
-                                        Explore Region <ChevronRight size={16} />
+                                        {t('common:buttons.exploreRegion')} <ChevronRight size={16} />
                                     </span>
                                 </div>
                             </Link>
@@ -311,11 +313,11 @@ const Home = () => {
                 <Container>
                     <div className="flex justify-between items-end mb-10">
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Signature Safaris</h2>
-                            <p className="text-gray-600 max-w-xl">Handpicked experiences that showcase the very best of African wildlife and landscapes.</p>
+                            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">{t('home:tours.title')}</h2>
+                            <p className="text-gray-600 max-w-xl">{t('home:tours.description')}</p>
                         </div>
                         <Link to="/tours" className="hidden md:block">
-                            <Button variant="outline">View All Tours</Button>
+                            <Button variant="outline">{t('common:buttons.viewAllTours')}</Button>
                         </Link>
                     </div>
 
@@ -337,13 +339,13 @@ const Home = () => {
                         </div>
                     ) : (
                         <div className="text-center py-12 bg-secondary-light rounded-lg">
-                            <p className="text-gray-600">No tours available yet. Add tours in Sanity Studio!</p>
+                            <p className="text-gray-600">{t('home:tours.noToursAvailable')}</p>
                         </div>
                     )}
 
                     <div className="mt-8 text-center md:hidden">
                         <Link to="/tours">
-                            <Button variant="outline" className="w-full">View All Tours</Button>
+                            <Button variant="outline" className="w-full">{t('common:buttons.viewAllTours')}</Button>
                         </Link>
                     </div>
                 </Container>
@@ -353,8 +355,8 @@ const Home = () => {
             <Section className="bg-secondary border-b border-gray-100">
                 <Container>
                     <div className="text-center mb-10">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">Our Clients</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">Trusted by leading organizations and happy travelers.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-gray-900">{t('home:clients.title')}</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">{t('home:clients.description')}</p>
                     </div>
 
                     {/* Desktop Grid */}
@@ -412,24 +414,24 @@ const Home = () => {
             <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Travel With Us</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">Why choose Lindberg Safaris for your next adventure?</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:travelWithUs.title')}</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">{t('home:travelWithUs.description')}</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
                             {
-                                title: "25+ Years Experience",
-                                description: "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998.",
+                                title: t('home:travelWithUs.experience.title'),
+                                description: t('home:travelWithUs.experience.description'),
                                 image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                             },
                             {
-                                title: "Safe & Secure",
-                                description: "Your safety is our priority. We provide 24/7 support and work with trusted partners.",
+                                title: t('home:travelWithUs.safety.title'),
+                                description: t('home:travelWithUs.safety.description'),
                                 image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                             },
                             {
-                                title: "Tailored Journeys",
-                                description: "Every trip is unique. We customize every detail to match your preferences and dreams.",
+                                title: t('home:travelWithUs.tailored.title'),
+                                description: t('home:travelWithUs.tailored.description'),
                                 image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                             }
                         ].map((item, index) => (
@@ -457,8 +459,8 @@ const Home = () => {
             <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Travel With Us</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">See what makes our journeys special and meet our trusted partners.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:travelWithUs.videoSection.title')}</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">{t('home:travelWithUs.videoSection.description')}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -479,7 +481,7 @@ const Home = () => {
 
                         {/* Right Column: Affiliate Members */}
                         <div>
-                            <h3 className="text-2xl font-serif font-bold mb-8 text-white text-center md:text-left">Affiliate Members</h3>
+                            <h3 className="text-2xl font-serif font-bold mb-8 text-white text-center md:text-left">{t('home:travelWithUs.videoSection.affiliateMembers')}</h3>
                             <div className="grid grid-cols-2 gap-6">
                                 {[
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg',
@@ -505,8 +507,8 @@ const Home = () => {
             <Section className="bg-primary">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Meet Our Team</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:team.title')}</h2>
+                        <p className="text-gray-100 max-w-2xl mx-auto">{t('home:team.description')}</p>
                     </div>
 
                     {/* Mobile Horizontal Scroll View */}
@@ -550,15 +552,15 @@ const Home = () => {
             <Section className="bg-primary text-white">
                 <Container>
                     <div className="max-w-3xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Stay Inspired</h2>
-                        <p className="text-primary-light mb-8">Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.</p>
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">{t('home:newsletter.title')}</h2>
+                        <p className="text-primary-light mb-8">{t('home:newsletter.description')}</p>
                         <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                             <input
                                 type="email"
-                                placeholder="Enter your email"
+                                placeholder={t('home:newsletter.placeholder')}
                                 className="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
                             />
-                            <Button variant="secondary" size="lg">Subscribe Now</Button>
+                            <Button variant="secondary" size="lg">{t('common:buttons.subscribeNow')}</Button>
                         </div>
                     </div>
                 </Container>

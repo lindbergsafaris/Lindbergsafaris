@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "Strona Główna",
+        "services": "Usługi",
+        "themedPackages": "Pakiety Tematyczne",
+        "accommodation": "Zakwaterowanie",
+        "destination": "Destynacja",
+        "company": "Firma",
+        "blog": "Blog",
+        "contact": "Kontakt",
+        "bookNow": "Zarezerwuj Teraz"
+    },
+    "services": {
+        "airticketing": "Bilety Lotnicze",
+        "hotelBooking": "Rezerwacja Hoteli",
+        "transportServices": "Usługi Transportowe",
+        "visaApplications": "Wnioski Wizowe",
+        "customItineraries": "Niestandardowe Trasy"
+    },
+    "packages": {
+        "wildlifeSafaris": "Safari Dzikich Zwierząt",
+        "mountainClimbing": "Wspinaczka Górska",
+        "cruiseHoliday": "Wakacje na Statku Wycieczkowym",
+        "adventurePackages": "Pakiety Przygodowe",
+        "pilgrimages": "Pielgrzymki",
+        "corporateTrips": "Wyjazdy Edukacyjne i Firmowe"
+    },
+    "accommodation": {
+        "lodges": "Domki",
+        "holidayHomes": "Domy Wakacyjne",
+        "townHotels": "Hotele Miejskie",
+        "luxuryCamps": "Luksusowe Obozy",
+        "resortHotels": "Hotele Wypoczynkowe",
+        "bushCamps": "Obozy w Buszu"
+    },
+    "destinations": {
+        "africa": "Afryka",
+        "middleEast": "Bliski Wschód",
+        "europe": "Europa"
+    },
+    "footer": {
+        "brandName": "Lindberg Safaris",
+        "brandDescription": "Tworzymy niezapomniane doświadczenia safari od ponad 25 lat. Odkryj magię Afryki z naszymi spersonalizowanymi podróżami.",
+        "quickLinks": "Szybkie Linki",
+        "aboutUs": "O Nas",
+        "ourTours": "Nasze Wycieczki",
+        "destinations": "Destynacje",
+        "travelBlog": "Blog Podróżniczy",
+        "contactUs": "Skontaktuj się z Nami",
+        "services": "Usługi",
+        "safarisAndTours": "Safari i Wycieczki",
+        "hotelsAndAccommodation": "Hotele i Zakwaterowanie",
+        "transportServices": "Usługi Transportowe",
+        "flightTicketing": "Bilety Lotnicze",
+        "contactInfo": "Skontaktuj się z Nami",
+        "visitUs": "Odwiedź Nas",
+        "copyright": "© {{year}} Lindberg Safaris. Wszelkie prawa zastrzeżone."
+    },
+    "buttons": {
+        "bookNow": "Zarezerwuj Teraz",
+        "viewAllTours": "Zobacz Wszystkie Wycieczki",
+        "startYourJourney": "Rozpocznij Swoją Podróż",
+        "viewOurTours": "Zobacz Nasze Wycieczki",
+        "inquireDeal": "Zapytaj o Ofertę",
+        "exploreRegion": "Odkryj Region",
+        "subscribeNow": "Subskrybuj Teraz",
+        "submit": "Wyślij",
+        "sendMessage": "Wyślij Wiadomość",
+        "learnMore": "Dowiedz się Więcej"
+    },
+    "common": {
+        "loading": "Ładowanie...",
+        "error": "Błąd",
+        "noDataAvailable": "Brak dostępnych danych",
+        "tryAgain": "Spróbuj Ponownie",
+        "close": "Zamknij",
+        "open": "Otwórz",
+        "menu": "Menu"
+    }
+}

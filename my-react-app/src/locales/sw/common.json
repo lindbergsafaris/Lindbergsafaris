@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "Nyumbani",
+        "services": "Huduma",
+        "themedPackages": "Vifurushi vya Mandhari",
+        "accommodation": "Malazi",
+        "destination": "Destinasheni",
+        "company": "Kampuni",
+        "blog": "Blogu",
+        "contact": "Wasiliana",
+        "bookNow": "Weka Hifadhi Sasa"
+    },
+    "services": {
+        "airticketing": "Tiketi za Ndege",
+        "hotelBooking": "Kuhifadhi Hoteli",
+        "transportServices": "Huduma za Usafiri",
+        "visaApplications": "Maombi ya Visa",
+        "customItineraries": "Ratiba Maalum"
+    },
+    "packages": {
+        "wildlifeSafaris": "Safari za Wanyamapori",
+        "mountainClimbing": "Kupanda Milima",
+        "cruiseHoliday": "Likizo ya Merikebu",
+        "adventurePackages": "Vifurushi vya Adventure",
+        "pilgrimages": "Ziara za Kidini",
+        "corporateTrips": "Safari za Elimu na Kampuni"
+    },
+    "accommodation": {
+        "lodges": "Malodges",
+        "holidayHomes": "Nyumba za Likizo",
+        "townHotels": "Hoteli za Mjini",
+        "luxuryCamps": "Kambi za Kifahari",
+        "resortHotels": "Hoteli za Resort",
+        "bushCamps": "Kambi za Porini"
+    },
+    "destinations": {
+        "africa": "Afrika",
+        "middleEast": "Mashariki ya Kati",
+        "europe": "Ulaya"
+    },
+    "footer": {
+        "brandName": "Lindberg Safaris",
+        "brandDescription": "Kuunda uzoefu wa safari usiosahaulika kwa zaidi ya miaka 25. Gundua uchawi wa Afrika na safari zetu maalum.",
+        "quickLinks": "Viungo vya Haraka",
+        "aboutUs": "Kuhusu Sisi",
+        "ourTours": "Safari Zetu",
+        "destinations": "Destinasheni",
+        "travelBlog": "Blogu ya Usafiri",
+        "contactUs": "Wasiliana Nasi",
+        "services": "Huduma",
+        "safarisAndTours": "Safari na Ziara",
+        "hotelsAndAccommodation": "Hoteli na Malazi",
+        "transportServices": "Huduma za Usafiri",
+        "flightTicketing": "Tiketi za Ndege",
+        "contactInfo": "Wasiliana Nasi",
+        "visitUs": "Tembelea Ofisi Yetu",
+        "copyright": "© {{year}} Lindberg Safaris. Haki zote zimehifadhiwa."
+    },
+    "buttons": {
+        "bookNow": "Weka Hifadhi Sasa",
+        "viewAllTours": "Tazama Safari Zote",
+        "startYourJourney": "Anza Safari Yako",
+        "viewOurTours": "Tazama Safari Zetu",
+        "inquireDeal": "Uliza Ofa",
+        "exploreRegion": "Chunguza Eneo",
+        "subscribeNow": "Jisajili Sasa",
+        "submit": "Wasilisha",
+        "sendMessage": "Tuma Ujumbe",
+        "learnMore": "Jifunze Zaidi"
+    },
+    "common": {
+        "loading": "Inapakia...",
+        "error": "Kosa",
+        "noDataAvailable": "Hakuna data inayopatikana",
+        "tryAgain": "Jaribu Tena",
+        "close": "Funga",
+        "open": "Fungua",
+        "menu": "Menyu"
+    }
+}

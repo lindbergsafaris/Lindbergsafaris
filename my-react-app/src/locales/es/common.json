@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "Inicio",
+        "services": "Servicios",
+        "themedPackages": "Paquetes Temáticos",
+        "accommodation": "Alojamiento",
+        "destination": "Destino",
+        "company": "Empresa",
+        "blog": "Blog",
+        "contact": "Contacto",
+        "bookNow": "Reservar Ahora"
+    },
+    "services": {
+        "airticketing": "Boletos de Avión",
+        "hotelBooking": "Reserva de Hoteles",
+        "transportServices": "Servicios de Transporte",
+        "visaApplications": "Solicitudes de Visa",
+        "customItineraries": "Itinerarios Personalizados"
+    },
+    "packages": {
+        "wildlifeSafaris": "Safaris de Vida Silvestre",
+        "mountainClimbing": "Escalada de Montañas",
+        "cruiseHoliday": "Vacaciones en Crucero",
+        "adventurePackages": "Paquetes de Aventura",
+        "pilgrimages": "Peregrinaciones",
+        "corporateTrips": "Viajes Educativos y Corporativos"
+    },
+    "accommodation": {
+        "lodges": "Lodges",
+        "holidayHomes": "Casas de Vacaciones",
+        "townHotels": "Hoteles Urbanos",
+        "luxuryCamps": "Campamentos de Lujo",
+        "resortHotels": "Hoteles Resort",
+        "bushCamps": "Campamentos de Sabana"
+    },
+    "destinations": {
+        "africa": "África",
+        "middleEast": "Medio Oriente",
+        "europe": "Europa"
+    },
+    "footer": {
+        "brandName": "Lindberg Safaris",
+        "brandDescription": "Creando experiencias de safari inolvidables desde hace más de 25 años. Descubre la magia de África con nuestros viajes personalizados.",
+        "quickLinks": "Enlaces Rápidos",
+        "aboutUs": "Sobre Nosotros",
+        "ourTours": "Nuestros Tours",
+        "destinations": "Destinos",
+        "travelBlog": "Blog de Viajes",
+        "contactUs": "Contáctenos",
+        "services": "Servicios",
+        "safarisAndTours": "Safaris y Tours",
+        "hotelsAndAccommodation": "Hoteles y Alojamiento",
+        "transportServices": "Servicios de Transporte",
+        "flightTicketing": "Boletos de Vuelo",
+        "contactInfo": "Contáctenos",
+        "visitUs": "Visítenos",
+        "copyright": "© {{year}} Lindberg Safaris. Todos los derechos reservados."
+    },
+    "buttons": {
+        "bookNow": "Reservar Ahora",
+        "viewAllTours": "Ver Todos los Tours",
+        "startYourJourney": "Comienza tu Viaje",
+        "viewOurTours": "Ver Nuestros Tours",
+        "inquireDeal": "Consultar Oferta",
+        "exploreRegion": "Explorar Región",
+        "subscribeNow": "Suscribirse Ahora",
+        "submit": "Enviar",
+        "sendMessage": "Enviar Mensaje",
+        "learnMore": "Aprende Más"
+    },
+    "common": {
+        "loading": "Cargando...",
+        "error": "Error",
+        "noDataAvailable": "No hay datos disponibles",
+        "tryAgain": "Intentar de Nuevo",
+        "close": "Cerrar",
+        "open": "Abrir",
+        "menu": "Menú"
+    }
+}

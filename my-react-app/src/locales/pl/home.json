@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "Odkryj Dzikie Serce Afryki",
+            "subtitle": "Doświadcz magii sawanny dzięki spersonalizowanym safari dostosowanym do Twoich marzeń."
+        },
+        "slide2": {
+            "title": "Rezerwacja Hoteli",
+            "subtitle": "Luksusowe zakwaterowanie w sercu natury, od obozów w buszu po 5-gwiazdkowe kurorty."
+        },
+        "slide3": {
+            "title": "Usługi Transportowe",
+            "subtitle": "Wygodne i niezawodne rozwiązania transportowe dla całej Twojej podróży."
+        },
+        "slide4": {
+            "title": "Wniosek Wizowy",
+            "subtitle": "Bezproblemowa pomoc wizowa zapewniająca płynny wjazd do miejsca docelowego."
+        },
+        "slide5": {
+            "title": "Bilety Lotnicze",
+            "subtitle": "Najlepsze oferty lotów i bezproblemowe rezerwacje dla podróży międzynarodowych i krajowych."
+        },
+        "slide6": {
+            "title": "Niestandardowe Trasy",
+            "subtitle": "Pakiety szyte na miarę zaprojektowane specjalnie dla Twoich unikalnych preferencji i budżetu."
+        }
+    },
+    "hotDeals": {
+        "badge": "Gorące Oferty",
+        "title": "Ekskluzywne Oferty",
+        "description": "Oferty ograniczone czasowo na nasze najpopularniejsze pakiety safari."
+    },
+    "partners": {
+        "badge": "Nasi Partnerzy",
+        "title": "Zaufani przez Najlepszych",
+        "description": "Współpracujemy z partnerami światowej klasy, aby zapewnić bezproblemową podróż."
+    },
+    "destinations": {
+        "title": "Odkryj Najlepsze Destynacje",
+        "description": "Od rozległych równin Serengeti po dziewicze plaże Zanzibaru."
+    },
+    "tours": {
+        "title": "Safari Sygnaturowe",
+        "description": "Starannie dobrane doświadczenia prezentujące to, co najlepsze w afrykańskiej przyrodzie i krajobrazach.",
+        "noToursAvailable": "Brak dostępnych wycieczek. Dodaj wycieczki w Sanity Studio!"
+    },
+    "clients": {
+        "title": "Nasi Klienci",
+        "description": "Zaufani przez wiodące organizacje i szczęśliwych podróżników."
+    },
+    "travelWithUs": {
+        "title": "Podróżuj z Nami",
+        "description": "Dlaczego warto wybrać Lindberg Safaris na następną przygodę?",
+        "experience": {
+            "title": "Ponad 25 Lat Doświadczenia",
+            "description": "Głęboka wiedza lokalna i ekspertyza w tworzeniu idealnych tras safari od 1998 roku."
+        },
+        "safety": {
+            "title": "Bezpieczne i Pewne",
+            "description": "Twoje bezpieczeństwo jest naszym priorytetem. Zapewniamy wsparcie 24/7 i współpracujemy z zaufanymi partnerami."
+        },
+        "tailored": {
+            "title": "Podróże Szyte na Miarę",
+            "description": "Każda podróż jest wyjątkowa. Dostosowujemy każdy szczegół do Twoich preferencji i marzeń."
+        },
+        "videoSection": {
+            "title": "Podróżuj z Nami",
+            "description": "Zobacz, co czyni nasze podróże wyjątkowymi i poznaj naszych zaufanych partnerów.",
+            "affiliateMembers": "Członkowie Stowarzyszeni"
+        }
+    },
+    "team": {
+        "title": "Poznaj Nasz Zespół",
+        "description": "Pasjonaci stojący za Twoimi niezapomnianymi podróżami."
+    },
+    "newsletter": {
+        "title": "Bądź Zainspirowany",
+        "description": "Zapisz się do naszego newslettera, aby otrzymywać wskazówki dotyczące safari, ekskluzywne oferty i inspiracje podróżnicze.",
+        "placeholder": "Wprowadź swój adres e-mail"
+    }
+}

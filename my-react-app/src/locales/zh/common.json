@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "主页",
+        "services": "服务",
+        "themedPackages": "主题套餐",
+        "accommodation": "住宿",
+        "destination": "目的地",
+        "company": "公司",
+        "blog": "博客",
+        "contact": "联系我们",
+        "bookNow": "立即预订"
+    },
+    "services": {
+        "airticketing": "机票",
+        "hotelBooking": "酒店预订",
+        "transportServices": "交通服务",
+        "visaApplications": "签证申请",
+        "customItineraries": "定制行程"
+    },
+    "packages": {
+        "wildlifeSafaris": "野生动物狩猎旅行",
+        "mountainClimbing": "登山",
+        "cruiseHoliday": "邮轮假期",
+        "adventurePackages": "冒险套餐",
+        "pilgrimages": "朝圣之旅",
+        "corporateTrips": "教育与企业旅行"
+    },
+    "accommodation": {
+        "lodges": "旅馆",
+        "holidayHomes": "度假屋",
+        "townHotels": "城镇酒店",
+        "luxuryCamps": "豪华营地",
+        "resortHotels": "度假酒店",
+        "bushCamps": "丛林营地"
+    },
+    "destinations": {
+        "africa": "非洲",
+        "middleEast": "中东",
+        "europe": "欧洲"
+    },
+    "footer": {
+        "brandName": "Lindberg Safaris",
+        "brandDescription": "25年来打造难忘的狩猎旅行体验。与我们一起发现非洲的魔力。",
+        "quickLinks": "快速链接",
+        "aboutUs": "关于我们",
+        "ourTours": "我们的旅行",
+        "destinations": "目的地",
+        "travelBlog": "旅行博客",
+        "contactUs": "联系我们",
+        "services": "服务",
+        "safarisAndTours": "狩猎旅行与观光",
+        "hotelsAndAccommodation": "酒店与住宿",
+        "transportServices": "交通服务",
+        "flightTicketing": "航班票务",
+        "contactInfo": "联系我们",
+        "visitUs": "访问我们",
+        "copyright": "© {{year}} Lindberg Safaris. 保留所有权利。"
+    },
+    "buttons": {
+        "bookNow": "立即预订",
+        "viewAllTours": "查看所有旅行",
+        "startYourJourney": "开始你的旅程",
+        "viewOurTours": "查看我们的旅行",
+        "inquireDeal": "咨询优惠",
+        "exploreRegion": "探索地区",
+        "subscribeNow": "立即订阅",
+        "submit": "提交",
+        "sendMessage": "发送消息",
+        "learnMore": "了解更多"
+    },
+    "common": {
+        "loading": "加载中...",
+        "error": "错误",
+        "noDataAvailable": "无可用数据",
+        "tryAgain": "重试",
+        "close": "关闭",
+        "open": "打开",
+        "menu": "菜单"
+    }
+}

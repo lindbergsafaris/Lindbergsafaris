@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
+import LanguageSelector from '@/components/LanguageSelector';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
+    const { t } = useTranslation('common');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -19,54 +22,54 @@ const Header = () => {
     }, []);
 
     const navItems = [
-        { name: 'Home', path: '/' },
+        { name: t('nav.home'), path: '/' },
         {
-            name: 'Services',
+            name: t('nav.services'),
             path: '#',
             dropdown: [
-                { name: 'Airticketing', path: '/services/airticketing' },
-                { name: 'Hotel Booking', path: '/services/hotel-booking' },
-                { name: 'Transport Services', path: '/services/transport' },
-                { name: 'Visa Applications', path: '/services/visa' },
-                { name: 'Custom Itineraries', path: '/services/custom-itineraries' },
+                { name: t('services.airticketing'), path: '/services/airticketing' },
+                { name: t('services.hotelBooking'), path: '/services/hotel-booking' },
+                { name: t('services.transportServices'), path: '/services/transport' },
+                { name: t('services.visaApplications'), path: '/services/visa' },
+                { name: t('services.customItineraries'), path: '/services/custom-itineraries' },
             ]
         },
         {
-            name: 'Themed Packages',
+            name: t('nav.themedPackages'),
             path: '#',
             dropdown: [
-                { name: 'Wildlife Safaris', path: '/packages/wildlife' },
-                { name: 'Mountain Climbing', path: '/packages/climbing' },
-                { name: 'Cruise Holiday', path: '/packages/cruise' },
-                { name: 'Adventure Packages', path: '/packages/adventure' },
-                { name: 'Pilgrimages', path: '/packages/pilgrimages' },
-                { name: 'Educational & Corporate Trips', path: '/packages/corporate' },
+                { name: t('packages.wildlifeSafaris'), path: '/packages/wildlife' },
+                { name: t('packages.mountainClimbing'), path: '/packages/climbing' },
+                { name: t('packages.cruiseHoliday'), path: '/packages/cruise' },
+                { name: t('packages.adventurePackages'), path: '/packages/adventure' },
+                { name: t('packages.pilgrimages'), path: '/packages/pilgrimages' },
+                { name: t('packages.corporateTrips'), path: '/packages/corporate' },
             ]
         },
         {
-            name: 'Accommodation',
+            name: t('nav.accommodation'),
             path: '#',
             dropdown: [
-                { name: 'Lodges', path: '/accommodation/lodges' },
-                { name: 'Holiday Homes', path: '/accommodation/holiday-homes' },
-                { name: 'Town Hotels', path: '/accommodation/town-hotels' },
-                { name: 'Luxury Camps', path: '/accommodation/luxury-camps' },
-                { name: 'Resort Hotels', path: '/accommodation/resort-hotels' },
-                { name: 'Bush Camps', path: '/accommodation/bush-camps' },
+                { name: t('accommodation.lodges'), path: '/accommodation/lodges' },
+                { name: t('accommodation.holidayHomes'), path: '/accommodation/holiday-homes' },
+                { name: t('accommodation.townHotels'), path: '/accommodation/town-hotels' },
+                { name: t('accommodation.luxuryCamps'), path: '/accommodation/luxury-camps' },
+                { name: t('accommodation.resortHotels'), path: '/accommodation/resort-hotels' },
+                { name: t('accommodation.bushCamps'), path: '/accommodation/bush-camps' },
             ]
         },
         {
-            name: 'Destination',
+            name: t('nav.destination'),
             path: '#',
             dropdown: [
-                { name: 'Africa', path: '/regions/africa' },
-                { name: 'Middle East', path: '/regions/middle-east' },
-                { name: 'Europe', path: '/regions/europe' },
+                { name: t('destinations.africa'), path: '/regions/africa' },
+                { name: t('destinations.middleEast'), path: '/regions/middle-east' },
+                { name: t('destinations.europe'), path: '/regions/europe' },
             ]
         },
-        { name: 'Company', path: '/company' },
-        { name: 'Blog', path: '/blog' },
-        { name: 'Contact', path: '/contact' },
+        { name: t('nav.company'), path: '/company' },
+        { name: t('nav.blog'), path: '/blog' },
+        { name: t('nav.contact'), path: '/contact' },
     ];
 
     const toggleDropdown = (name: string) => {
@@ -143,6 +146,7 @@ const Header = () => {
                 </nav>
 
                 <div className="hidden lg:flex items-center gap-4 ml-4">
+                    <LanguageSelector />
                     <a
                         href="https://www.tripadvisor.com/Attraction_Review-g294207-d17384036-Reviews-Lindberg_Holidays_and_Safaris-Nairobi.html"
                         target="_blank"
@@ -153,7 +157,7 @@ const Header = () => {
                     </a>
                     <Link to="/contact">
                         <Button size="sm" variant="primary">
-                            Book Now
+                            {t('nav.bookNow')}
                         </Button>
                     </Link>
                 </div>
@@ -207,7 +211,7 @@ const Header = () => {
                             )}
                         </div>
                     ))}
-                    <Button className="w-full mt-4">Book Now</Button>
+                    <Button className="w-full mt-4">{t('nav.bookNow')}</Button>
                 </div>
             )}
         </header>

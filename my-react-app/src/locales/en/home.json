@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "Discover Africa's Wild Heart",
+            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+        },
+        "slide2": {
+            "title": "Hotel Booking",
+            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+        },
+        "slide3": {
+            "title": "Transport Services",
+            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+        },
+        "slide4": {
+            "title": "Visa Application",
+            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+        },
+        "slide5": {
+            "title": "Ticketing",
+            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+        },
+        "slide6": {
+            "title": "Custom Itineraries",
+            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+        }
+    },
+    "hotDeals": {
+        "badge": "Hot Deals",
+        "title": "Exclusive Offers",
+        "description": "Limited time offers on our most popular safari packages."
+    },
+    "partners": {
+        "badge": "Our Partners",
+        "title": "Trusted By The Best",
+        "description": "We work with world-class partners to ensure your journey is seamless."
+    },
+    "destinations": {
+        "title": "Explore Top Destinations",
+        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+    },
+    "tours": {
+        "title": "Signature Safaris",
+        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
+        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+    },
+    "clients": {
+        "title": "Our Clients",
+        "description": "Trusted by leading organizations and happy travelers."
+    },
+    "travelWithUs": {
+        "title": "Travel With Us",
+        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "experience": {
+            "title": "25+ Years Experience",
+            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+        },
+        "safety": {
+            "title": "Safe & Secure",
+            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+        },
+        "tailored": {
+            "title": "Tailored Journeys",
+            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+        },
+        "videoSection": {
+            "title": "Travel With Us",
+            "description": "See what makes our journeys special and meet our trusted partners.",
+            "affiliateMembers": "Affiliate Members"
+        }
+    },
+    "team": {
+        "title": "Meet Our Team",
+        "description": "The passionate experts behind your unforgettable journeys."
+    },
+    "newsletter": {
+        "title": "Stay Inspired",
+        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
+        "placeholder": "Enter your email"
+    }
+}

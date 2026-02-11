@@ -1,0 +1,93 @@
+import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Globe, ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+interface Language {
+    code: string;
+    name: string;
+    flag: string;
+}
+
+const languages: Language[] = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'sw', name: 'Kiswahili', flag: '🇰🇪' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'pl', name: 'Polski', flag: '🇵🇱' },
+    { code: 'zh', name: '中文', flag: '🇨🇳' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+];
+
+const LanguageSelector = () => {
+    const { i18n } = useTranslation();
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
+    const changeLanguage = (languageCode: string) => {
+        i18n.changeLanguage(languageCode);
+        setIsOpen(false);
+    };
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center gap-2 px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 transition-colors text-gray-800 border border-gray-300/30"
+                aria-label="Select language"
+            >
+                <Globe size={18} className="shrink-0" />
+                <span className="hidden sm:inline-block text-sm font-medium">
+                    {currentLanguage.flag} {currentLanguage.name}
+                </span>
+                <span className="sm:hidden text-lg">{currentLanguage.flag}</span>
+                <ChevronDown
+                    size={16}
+                    className={cn(
+                        "transition-transform shrink-0 hidden sm:block",
+                        isOpen && "rotate-180"
+                    )}
+                />
+            </button>
+
+            {isOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50 overflow-hidden">
+                    <div className="py-1">
+                        {languages.map((language) => (
+                            <button
+                                key={language.code}
+                                onClick={() => changeLanguage(language.code)}
+                                className={cn(
+                                    "w-full px-4 py-2 text-left text-sm flex items-center gap-3 hover:bg-primary/5 transition-colors",
+                                    currentLanguage.code === language.code && "bg-primary/10 text-primary font-medium"
+                                )}
+                            >
+                                <span className="text-lg">{language.flag}</span>
+                                <span>{language.name}</span>
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default LanguageSelector;

@@ -1,0 +1,80 @@
+{
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "themedPackages": "Themed Packages",
+        "accommodation": "Accommodation",
+        "destination": "Destination",
+        "company": "Company",
+        "blog": "Blog",
+        "contact": "Contact",
+        "bookNow": "Book Now"
+    },
+    "services": {
+        "airticketing": "Airticketing",
+        "hotelBooking": "Hotel Booking",
+        "transportServices": "Transport Services",
+        "visaApplications": "Visa Applications",
+        "customItineraries": "Custom Itineraries"
+    },
+    "packages": {
+        "wildlifeSafaris": "Wildlife Safaris",
+        "mountainClimbing": "Mountain Climbing",
+        "cruiseHoliday": "Cruise Holiday",
+        "adventurePackages": "Adventure Packages",
+        "pilgrimages": "Pilgrimages",
+        "corporateTrips": "Educational & Corporate Trips"
+    },
+    "accommodation": {
+        "lodges": "Lodges",
+        "holidayHomes": "Holiday Homes",
+        "townHotels": "Town Hotels",
+        "luxuryCamps": "Luxury Camps",
+        "resortHotels": "Resort Hotels",
+        "bushCamps": "Bush Camps"
+    },
+    "destinations": {
+        "africa": "Africa",
+        "middleEast": "Middle East",
+        "europe": "Europe"
+    },
+    "footer": {
+        "brandName": "Lindberg Safaris",
+        "brandDescription": "Crafting unforgettable safari experiences for over 25 years. Discover the magic of Africa with our personalized journeys.",
+        "quickLinks": "Quick Links",
+        "aboutUs": "About Us",
+        "ourTours": "Our Tours",
+        "destinations": "Destinations",
+        "travelBlog": "Travel Blog",
+        "contactUs": "Contact Us",
+        "services": "Services",
+        "safarisAndTours": "Safaris & Tours",
+        "hotelsAndAccommodation": "Hotels & Accommodation",
+        "transportServices": "Transport Services",
+        "flightTicketing": "Flight Ticketing",
+        "contactInfo": "Contact Us",
+        "visitUs": "Visit Us",
+        "copyright": "© {{year}} Lindberg Safaris. All rights reserved."
+    },
+    "buttons": {
+        "bookNow": "Book Now",
+        "viewAllTours": "View All Tours",
+        "startYourJourney": "Start Your Journey",
+        "viewOurTours": "View Our Tours",
+        "inquireDeal": "Inquire Deal",
+        "exploreRegion": "Explore Region",
+        "subscribeNow": "Subscribe Now",
+        "submit": "Submit",
+        "sendMessage": "Send Message",
+        "learnMore": "Learn More"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "noDataAvailable": "No data available",
+        "tryAgain": "Try Again",
+        "close": "Close",
+        "open": "Open",
+        "menu": "Menu"
+    }
+}
