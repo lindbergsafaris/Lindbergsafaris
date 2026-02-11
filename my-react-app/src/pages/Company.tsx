@@ -70,15 +70,18 @@ const Company = () => {
     const impactItems = [
         {
             title: "Supporting Anti-Poaching Units",
-            description: "A portion of every safari booking goes directly to funding anti-poaching patrols and wildlife protection initiatives."
+            description: "A portion of every safari booking goes directly to funding anti-poaching patrols and wildlife protection initiatives.",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824813/WhatsApp_Image_2026-02-10_at_17.18.26_2_ire2q6.jpg"
         },
         {
             title: "Funding Local Schools",
-            description: "We partner with communities to build and support schools, providing education opportunities for children in rural areas."
+            description: "We partner with communities to build and support schools, providing education opportunities for children in rural areas.",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.26_3_tnwxox.jpg"
         },
         {
             title: "Planting Trees",
-            description: "Our reforestation program has planted over 10,000 trees, helping to restore habitats and combat climate change."
+            description: "Our reforestation program has planted over 10,000 trees, helping to restore habitats and combat climate change.",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824821/WhatsApp_Image_2026-02-10_at_17.17.30_smziyr.jpg"
         },
         {
             title: "Community Empowerment",
@@ -312,9 +315,9 @@ const Company = () => {
                         </div>
                         <div className="md:w-1/2">
                             <img
-                                src="https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg"
                                 alt="Safari Landscape"
-                                className="rounded-lg shadow-xl"
+                                className="rounded-lg shadow-xl w-full h-full object-cover"
                             />
                         </div>
                     </div>
@@ -390,8 +393,17 @@ const Company = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {impactItems.map((item, index) => (
-                                <div key={index} className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
-                                    <div className="flex items-start gap-4">
+                                <div key={index} className="bg-secondary-light rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden flex flex-col">
+                                    {item.image && (
+                                        <div className="h-48 overflow-hidden">
+                                            <img
+                                                src={item.image}
+                                                alt={item.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                                            />
+                                        </div>
+                                    )}
+                                    <div className="p-8 flex items-start gap-4">
                                         <div className="bg-primary/10 p-3 rounded-lg shrink-0">
                                             <TrendingUp className="text-primary" size={24} />
                                         </div>
