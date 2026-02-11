@@ -62,6 +62,7 @@ const Header = () => {
             name: t('nav.destination'),
             path: '#',
             dropdown: [
+                { name: t('destinations.kenya'), path: '/destinations/kenya', bold: true },
                 { name: t('destinations.africa'), path: '/regions/africa' },
                 { name: t('destinations.middleEast'), path: '/regions/middle-east' },
                 { name: t('destinations.europe'), path: '/regions/europe' },
@@ -137,7 +138,7 @@ const Header = () => {
                                             <Link
                                                 key={subItem.name}
                                                 to={subItem.path}
-                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary"
+                                                className={`block px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary ${subItem.bold ? 'font-bold' : ''}`}
                                             >
                                                 {subItem.name}
                                             </Link>
@@ -195,7 +196,7 @@ const Header = () => {
                                                 <Link
                                                     key={subItem.name}
                                                     to={subItem.path}
-                                                    className="block text-sm text-gray-600 hover:text-primary"
+                                                    className={`block text-sm text-gray-600 hover:text-primary ${subItem.bold ? 'font-bold' : ''}`}
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                 >
                                                     {subItem.name}

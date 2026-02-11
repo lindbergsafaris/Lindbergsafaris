@@ -20,7 +20,45 @@ export interface DestinationData {
     placesToVisit: PlaceToVisit[];
 }
 
+
 export const destinationsData: Record<string, DestinationData> = {
+    'kenya': {
+        id: 'kenya',
+        name: 'Kenya',
+        tagline: 'The Heart of Safari',
+        description: 'Kenya is the birthplace of the word "safari" and remains one of Africa\'s premier wildlife destinations. From the world-famous Masai Mara to the stunning beaches of Diani and the vibrant capital of Nairobi, Kenya offers an incredible diversity of experiences. Witness the Great Migration, spot the Big Five, and immerse yourself in rich Maasai culture.',
+        heroImage: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80',
+        highlights: [
+            'Masai Mara National Reserve',
+            'Amboseli National Park - Views of Kilimanjaro',
+            'Diani Beach & Coastal Paradise',
+            'Nairobi National Park',
+            'Lake Nakuru Flamingos'
+        ],
+        practicalInfo: {
+            bestTime: 'July to October (Migration), December to March (Dry Season)',
+            visaInfo: 'e-Visa available online',
+            currency: 'Kenyan Shilling (KES), USD widely accepted',
+            language: 'English, Swahili'
+        },
+        placesToVisit: [
+            {
+                title: 'Masai Mara National Reserve',
+                description: 'World-renowned for its exceptional populations of lions, leopards, cheetahs, and elephants, and the annual migration of wildebeest, zebras, and Thomson\'s gazelles.',
+                image: 'https://images.unsplash.com/photo-1534759846116-5799c33ce22a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                title: 'Amboseli National Park',
+                description: 'Famous for its stunning views of Mount Kilimanjaro and large herds of elephants. One of the best places in Africa to get close to free-ranging elephants.',
+                image: 'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            {
+                title: 'Diani Beach',
+                description: 'A pristine coastal paradise with white sandy beaches, turquoise waters, and vibrant coral reefs. Perfect for relaxation after your safari adventure.',
+                image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            }
+        ]
+    },
     'east-africa': {
         id: 'east-africa',
         name: 'East Africa',

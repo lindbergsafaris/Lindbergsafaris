@@ -7,7 +7,6 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 // Lazy load pages
 const Tours = lazy(() => import('@/pages/Tours'));
 const TourDetail = lazy(() => import('@/pages/TourDetail'));
-const Destinations = lazy(() => import('@/pages/Destinations'));
 const DestinationDetail = lazy(() => import('@/pages/DestinationDetail'));
 const RegionDestinations = lazy(() => import('@/pages/RegionDestinations'));
 const Services = lazy(() => import('@/pages/Services'));
@@ -62,7 +61,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:id" element={<TourDetail />} />
-          <Route path="/destinations" element={<Destinations />} />
           <Route path="/regions/:region" element={<RegionDestinations />} />
           <Route path="/destinations/:id" element={<DestinationDetail />} />
           <Route path="/services" element={<Services />} />
