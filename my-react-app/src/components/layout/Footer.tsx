@@ -74,7 +74,7 @@ const Footer = () => {
                             <li className="flex items-center gap-3">
                                 <Phone size={20} className="text-primary-dark shrink-0" />
                                 <div>
-                                    <p>0745654619</p>
+                                    <p>+254743377948</p>
                                 </div>
                             </li>
                             <li className="flex items-center gap-3">

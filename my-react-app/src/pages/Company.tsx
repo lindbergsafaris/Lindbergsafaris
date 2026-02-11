@@ -131,7 +131,7 @@ const Company = () => {
                 },
                 {
                     question: "How can I contact Lindberg for inquiries?",
-                    answer: "You can reach us via email at lindberg@lindbergsafari.com, by phone at 0745654619, or through the contact form on our website."
+                    answer: "You can reach us via email at lindberg@lindbergsafari.com, by phone at +254743377948, or through the contact form on our website."
                 }
             ]
         },
