@@ -65,6 +65,10 @@ const Header = () => {
                 { name: t('destinations.africa'), path: '/regions/africa' },
                 { name: t('destinations.middleEast'), path: '/regions/middle-east' },
                 { name: t('destinations.europe'), path: '/regions/europe' },
+                { name: t('destinations.america'), path: '/regions/america' },
+                { name: t('destinations.oceania'), path: '/regions/oceania' },
+                { name: t('destinations.southAmerica'), path: '/regions/south-america' },
+                { name: t('destinations.northAmerica'), path: '/regions/north-america' },
             ]
         },
         { name: t('nav.company'), path: '/company' },

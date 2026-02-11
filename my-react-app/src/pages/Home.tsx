@@ -27,13 +27,13 @@ const Home = () => {
     const slides = [
         {
             id: 1,
-            image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
             title: t('home:hero.slide1.title'),
             subtitle: t('home:hero.slide1.subtitle')
         },
         {
             id: 2,
-            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
             title: t('home:hero.slide2.title'),
             subtitle: t('home:hero.slide2.subtitle')
         },

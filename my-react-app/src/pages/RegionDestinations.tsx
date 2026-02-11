@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import DestinationCard from '@/components/destinations/DestinationCard';
+import RegionNavigator from '@/components/destinations/RegionNavigator';
 
 import { regionData } from '@/data/destinations';
 import { SubDestination } from '@/types';
@@ -39,7 +40,13 @@ const RegionDestinations = () => {
                 </Container>
             </div>
 
-            <Section className="bg-primary">
+            <Section className="bg-primary pt-8 pb-4">
+                <Container>
+                    <RegionNavigator currentRegion={region} />
+                </Container>
+            </Section>
+
+            <Section className="bg-primary pt-4">
                 <Container>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {data.subDestinations.map((dest: SubDestination) => (

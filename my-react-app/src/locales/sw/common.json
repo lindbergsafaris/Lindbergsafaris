@@ -36,7 +36,11 @@
     "destinations": {
         "africa": "Afrika",
         "middleEast": "Mashariki ya Kati",
-        "europe": "Ulaya"
+        "europe": "Ulaya",
+        "america": "Amerika",
+        "oceania": "Oceania",
+        "southAmerica": "Amerika Kusini",
+        "northAmerica": "Amerika Kaskazini"
     },
     "footer": {
         "brandName": "Lindberg Safaris",

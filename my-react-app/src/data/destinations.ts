@@ -326,5 +326,46 @@ export const regionData: Record<string, any> = {
             { id: 'spain', name: 'Spain', image: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 8 },
             { id: 'uk', name: 'UK', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 7 },
         ]
+    },
+    'america': {
+        id: 'america',
+        title: 'America',
+        description: 'Discover the vast landscapes and vibrant cities of the Americas.',
+        image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        subDestinations: [
+            { id: 'usa', name: 'USA', image: 'https://images.unsplash.com/photo-1485738422979-f5c462d49f74?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 12 },
+            { id: 'canada', name: 'Canada', image: 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 5 },
+            { id: 'brazil', name: 'Brazil', image: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 8 },
+        ]
+    },
+    'oceania': {
+        id: 'oceania',
+        title: 'Oceania',
+        description: 'Explore the stunning islands and unique ecosystems of Oceania.',
+        image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        subDestinations: [
+            { id: 'australia', name: 'Australia', image: 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 15 },
+            { id: 'new-zealand', name: 'New Zealand', image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 9 },
+        ]
+    },
+    'south-america': {
+        id: 'south-america',
+        title: 'South America',
+        description: 'Experience the rich culture and diverse natural wonders of South America.',
+        image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        subDestinations: [
+            { id: 'peru', name: 'Peru', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 10 },
+            { id: 'argentina', name: 'Argentina', image: 'https://images.unsplash.com/photo-1589909202802-8f4aadce1849?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 7 },
+        ]
+    },
+    'north-america': {
+        id: 'north-america',
+        title: 'North America',
+        description: 'From bustling metropolises to majestic natural parks, North America has it all.',
+        image: 'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80',
+        subDestinations: [
+            { id: 'usa', name: 'USA', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 20 },
+            { id: 'mexico', name: 'Mexico', image: 'https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', tourCount: 12 },
+        ]
     }
 };

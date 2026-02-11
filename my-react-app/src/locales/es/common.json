@@ -36,7 +36,11 @@
     "destinations": {
         "africa": "África",
         "middleEast": "Medio Oriente",
-        "europe": "Europa"
+        "europe": "Europa",
+        "america": "América",
+        "oceania": "Oceanía",
+        "southAmerica": "América del Sur",
+        "northAmerica": "América del Norte"
     },
     "footer": {
         "brandName": "Lindberg Safaris",
