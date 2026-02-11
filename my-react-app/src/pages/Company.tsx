@@ -315,9 +315,9 @@ const Company = () => {
                         </div>
                         <div className="md:w-1/2">
                             <img
-                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg"
+                                src="https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
                                 alt="Safari Landscape"
-                                className="rounded-lg shadow-xl w-full h-full object-cover"
+                                className="rounded-lg shadow-xl"
                             />
                         </div>
                     </div>
@@ -329,16 +329,27 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {values.map((value, index) => (
-                            <div key={index} className="bg-secondary p-8 rounded-xl text-center hover:bg-white hover:shadow-md transition-all">
-                                <div className="bg-secondary-light w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
-                                    {value.icon}
-                                </div>
-                                <h4 className="text-xl font-bold mb-3 text-gray-900">{value.title}</h4>
-                                <p className="text-gray-600 text-sm">{value.description}</p>
+                    <div className="flex flex-col lg:flex-row gap-12 items-center">
+                        <div className="lg:w-1/2">
+                            <img
+                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg"
+                                alt="Why Choose Us"
+                                className="rounded-lg shadow-xl w-full h-full object-cover min-h-[400px]"
+                            />
+                        </div>
+                        <div className="lg:w-1/2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {values.map((value, index) => (
+                                    <div key={index} className="bg-secondary p-6 rounded-xl text-center hover:bg-white hover:shadow-md transition-all">
+                                        <div className="bg-secondary-light w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                                            {value.icon}
+                                        </div>
+                                        <h4 className="text-lg font-bold mb-2 text-gray-900">{value.title}</h4>
+                                        <p className="text-gray-600 text-sm">{value.description}</p>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </div>
                     </div>
                 </Container>
             </Section>
