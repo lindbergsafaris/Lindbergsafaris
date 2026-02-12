@@ -51,7 +51,7 @@ const Home = () => {
         },
         {
             id: 5,
-            image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg",
             title: t('home:hero.slide5.title'),
             subtitle: t('home:hero.slide5.subtitle')
         },

@@ -21,6 +21,24 @@ import zhHome from './locales/zh/home.json';
 import frCommon from './locales/fr/common.json';
 import frHome from './locales/fr/home.json';
 
+import hiCommon from './locales/hi/common.json';
+import hiHome from './locales/hi/home.json';
+
+import arCommon from './locales/ar/common.json';
+import arHome from './locales/ar/home.json';
+
+import ptCommon from './locales/pt/common.json';
+import ptHome from './locales/pt/home.json';
+
+import deCommon from './locales/de/common.json';
+import deHome from './locales/de/home.json';
+
+import jaCommon from './locales/ja/common.json';
+import jaHome from './locales/ja/home.json';
+
+import koCommon from './locales/ko/common.json';
+import koHome from './locales/ko/home.json';
+
 // Translation resources
 const resources = {
     en: {
@@ -46,6 +64,30 @@ const resources = {
     fr: {
         common: frCommon,
         home: frHome,
+    },
+    hi: {
+        common: hiCommon,
+        home: hiHome,
+    },
+    ar: {
+        common: arCommon,
+        home: arHome,
+    },
+    pt: {
+        common: ptCommon,
+        home: ptHome,
+    },
+    de: {
+        common: deCommon,
+        home: deHome,
+    },
+    ja: {
+        common: jaCommon,
+        home: jaHome,
+    },
+    ko: {
+        common: koCommon,
+        home: koHome,
     },
 };
 
