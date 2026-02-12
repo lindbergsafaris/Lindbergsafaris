@@ -30,6 +30,7 @@ const PackageCategory = lazy(() => import('@/pages/PackageCategory'));
 const AccommodationCategory = lazy(() => import('@/pages/AccommodationCategory'));
 const AccommodationDetail = lazy(() => import('@/pages/AccommodationDetail'));
 const Company = lazy(() => import('@/pages/Company'));
+const Gallery = lazy(() => import('@/pages/Gallery'));
 
 // Component to handle redirects with hash navigation
 const CompanyRedirect = ({ section }: { section: string }) => {
@@ -78,6 +79,7 @@ function App() {
 
           {/* Company Page - Consolidated */}
           <Route path="/company" element={<Company />} />
+          <Route path="/gallery" element={<Gallery />} />
 
           {/* Redirects for old company section pages */}
           <Route path="/about" element={<CompanyRedirect section="about" />} />

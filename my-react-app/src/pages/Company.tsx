@@ -85,7 +85,8 @@ const Company = () => {
         },
         {
             title: "Community Empowerment",
-            description: "We employ local guides, source from local suppliers, and ensure tourism benefits reach the communities we visit."
+            description: "We employ local guides, source from local suppliers, and ensure tourism benefits reach the communities we visit.",
+            image: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
         }
     ];
 
@@ -275,7 +276,7 @@ const Company = () => {
             <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80")' }}
+                    style={{ backgroundImage: 'url("https://res.cloudinary.com/dbqdpitah/image/upload/v1770889599/WhatsApp_Image_2026-02-12_at_12.36.09_wd05rr.jpg")' }}
                 >
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
@@ -386,7 +387,7 @@ const Company = () => {
                 </Container>
             </Section>
 
-            {/* Our Impact Section */}
+            {/* Our Impact Section (UPDATED) */}
             <Section id="impact" className="bg-primary scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
@@ -404,24 +405,22 @@ const Company = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {impactItems.map((item, index) => (
-                                <div key={index} className="bg-secondary-light rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all overflow-hidden flex flex-col">
-                                    {item.image && (
-                                        <div className="h-48 overflow-hidden">
-                                            <img
-                                                src={item.image}
-                                                alt={item.title}
-                                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                                            />
+                                <div
+                                    key={index}
+                                    className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10"
+                                >
+                                    <div
+                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                        style={{ backgroundImage: `url("${item.image}")` }}
+                                    />
+                                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+
+                                    <div className="relative h-full flex flex-col justify-end p-8 z-10">
+                                        <div className="bg-primary p-2 rounded-lg w-fit mb-3">
+                                            <TrendingUp className="text-white" size={24} />
                                         </div>
-                                    )}
-                                    <div className="p-8 flex items-start gap-4">
-                                        <div className="bg-primary/10 p-3 rounded-lg shrink-0">
-                                            <TrendingUp className="text-primary" size={24} />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold mb-3 text-gray-900">{item.title}</h3>
-                                            <p className="text-gray-600 leading-relaxed">{item.description}</p>
-                                        </div>
+                                        <h3 className="text-2xl font-bold mb-3 text-white">{item.title}</h3>
+                                        <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
                                     </div>
                                 </div>
                             ))}
@@ -441,41 +440,54 @@ const Company = () => {
                     </div>
 
                     <div className="max-w-4xl mx-auto space-y-12">
-                        {faqCategories.map((category, catIndex) => (
-                            <div key={catIndex}>
-                                <h3 className="text-2xl font-serif font-bold mb-6 text-white border-b border-white/20 pb-2">{category.title}</h3>
-                                <div className="space-y-4">
-                                    {category.items.map((item, itemIndex) => {
-                                        const isOpen = openFaqIndex === `${catIndex}-${itemIndex}`;
-                                        return (
-                                            <div key={itemIndex} className="border border-white/20 rounded-lg overflow-hidden bg-white/5 backdrop-blur-sm">
-                                                <button
-                                                    className="w-full flex items-center justify-between p-6 hover:bg-white/10 transition-colors text-left"
-                                                    onClick={() => toggleFaq(catIndex, itemIndex)}
-                                                >
-                                                    <span className="font-bold text-lg text-white pr-4">{item.question}</span>
-                                                    {isOpen ? (
-                                                        <Minus className="text-white shrink-0" />
-                                                    ) : (
-                                                        <Plus className="text-white shrink-0" />
-                                                    )}
-                                                </button>
-                                                <div
-                                                    className={cn(
-                                                        "transition-all duration-300 ease-in-out overflow-hidden",
-                                                        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                                                    )}
-                                                >
-                                                    <div className="p-6 pt-0 text-gray-200 leading-relaxed border-t border-white/10">
-                                                        {item.answer}
+                        {faqCategories.map((category, catIndex) => {
+                            // Define distinct color schemes for each category
+                            const colorSchemes = [
+                                { border: "border-yellow-400", bg: "bg-yellow-400/10", title: "text-yellow-400" },
+                                { border: "border-blue-400", bg: "bg-blue-400/10", title: "text-blue-400" },
+                                { border: "border-green-400", bg: "bg-green-400/10", title: "text-green-400" },
+                                { border: "border-orange-400", bg: "bg-orange-400/10", title: "text-orange-400" },
+                                { border: "border-purple-400", bg: "bg-purple-400/10", title: "text-purple-400" },
+                                { border: "border-red-400", bg: "bg-red-400/10", title: "text-red-400" },
+                            ];
+                            const scheme = colorSchemes[catIndex % colorSchemes.length];
+
+                            return (
+                                <div key={catIndex} className={`p-6 rounded-xl border ${scheme.border} ${scheme.bg} backdrop-blur-sm`}>
+                                    <h3 className={`text-2xl font-serif font-bold mb-6 ${scheme.title} border-b ${scheme.border} pb-2`}>{category.title}</h3>
+                                    <div className="space-y-4">
+                                        {category.items.map((item, itemIndex) => {
+                                            const isOpen = openFaqIndex === `${catIndex}-${itemIndex}`;
+                                            return (
+                                                <div key={itemIndex} className={`border ${scheme.border} rounded-lg overflow-hidden bg-black/20`}>
+                                                    <button
+                                                        className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors text-left"
+                                                        onClick={() => toggleFaq(catIndex, itemIndex)}
+                                                    >
+                                                        <span className="font-bold text-lg text-white pr-4">{item.question}</span>
+                                                        {isOpen ? (
+                                                            <Minus className="text-white shrink-0" />
+                                                        ) : (
+                                                            <Plus className="text-white shrink-0" />
+                                                        )}
+                                                    </button>
+                                                    <div
+                                                        className={cn(
+                                                            "transition-all duration-300 ease-in-out overflow-hidden",
+                                                            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                                                        )}
+                                                    >
+                                                        <div className={`p-6 pt-0 text-gray-200 leading-relaxed border-t ${scheme.border}`}>
+                                                            {item.answer}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        );
-                                    })}
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     {/* Still Have Questions CTA */}

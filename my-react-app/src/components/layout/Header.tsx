@@ -72,7 +72,14 @@ const Header = () => {
                 { name: t('destinations.northAmerica'), path: '/regions/north-america' },
             ]
         },
-        { name: t('nav.company'), path: '/company' },
+        {
+            name: t('nav.company'),
+            path: '#',
+            dropdown: [
+                { name: 'About Us', path: '/company' },
+                { name: 'Gallery', path: '/gallery' },
+            ]
+        },
         { name: t('nav.blog'), path: '/blog' },
         { name: t('nav.contact'), path: '/contact' },
     ];
