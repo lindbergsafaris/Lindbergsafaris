@@ -19,7 +19,7 @@ const CustomItineraries = () => {
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")' }}
+                    style={{ backgroundImage: 'url("https://res.cloudinary.com/dbqdpitah/image/upload/v1770894402/custom3_cvzpla.jpg")' }}
                 >
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
@@ -55,7 +55,7 @@ const CustomItineraries = () => {
                         </div>
                         <div className="md:w-1/2">
                             <img
-                                src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770894402/custom2_z2qp0u.jpg"
                                 alt="Map Planning"
                                 className="rounded-lg shadow-xl"
                             />

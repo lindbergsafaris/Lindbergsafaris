@@ -45,7 +45,7 @@ const Home = () => {
         },
         {
             id: 4,
-            image: "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765555649/visas_vc54gx.jpg",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770894189/visa3_oasvox.jpg",
             title: t('home:hero.slide4.title'),
             subtitle: t('home:hero.slide4.subtitle')
         },
@@ -57,7 +57,7 @@ const Home = () => {
         },
         {
             id: 6,
-            image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770894402/custom_llzlln.jpg",
             title: t('home:hero.slide6.title'),
             subtitle: t('home:hero.slide6.subtitle')
         }
