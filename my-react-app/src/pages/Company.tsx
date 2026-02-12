@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Shield, Users, Heart, Award, Plus, Minus, Star, Quote, TrendingUp } from 'lucide-react';
+import { Plus, Minus, Star, Quote, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -23,25 +23,25 @@ const Company = () => {
         { id: 'testimonials', label: 'Testimonials' },
     ];
 
-    // About section values
+    // About section values (Updated with images)
     const values = [
         {
-            icon: <Shield size={32} className="text-primary" />,
+            image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Safety First",
             description: "Your safety is our top priority. We use well-maintained vehicles and experienced guides."
         },
         {
-            icon: <Users size={32} className="text-primary" />,
+            image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Expert Guides",
             description: "Our guides are passionate, knowledgeable, and dedicated to making your safari unforgettable."
         },
         {
-            icon: <Heart size={32} className="text-primary" />,
+            image: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Sustainable Tourism",
             description: "We are committed to conservation and supporting local communities."
         },
         {
-            icon: <Award size={32} className="text-primary" />,
+            image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
             title: "Excellence",
             description: "We strive for excellence in every aspect of your journey, from planning to execution."
         }
@@ -316,9 +316,9 @@ const Company = () => {
                         </div>
                         <div className="md:w-1/2">
                             <img
-                                src="https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770889599/WhatsApp_Image_2026-02-12_at_12.36.09_wd05rr.jpg"
                                 alt="Safari Landscape"
-                                className="rounded-lg shadow-xl"
+                                className="rounded-lg shadow-xl w-full object-cover"
                             />
                         </div>
                     </div>
@@ -341,12 +341,20 @@ const Company = () => {
                         <div className="lg:w-1/2">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {values.map((value, index) => (
-                                    <div key={index} className="bg-secondary p-6 rounded-xl text-center hover:bg-white hover:shadow-md transition-all">
-                                        <div className="bg-secondary-light w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                                            {value.icon}
+                                    <div
+                                        key={index}
+                                        className="relative bg-secondary overflow-hidden rounded-xl h-48 group shadow-sm hover:shadow-md transition-all border border-gray-100"
+                                    >
+                                        <div
+                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                            style={{ backgroundImage: `url("${value.image}")` }}
+                                        />
+                                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+
+                                        <div className="relative h-full flex flex-col justify-center items-center text-center p-6 z-10">
+                                            <h4 className="text-xl font-bold mb-2 text-white">{value.title}</h4>
+                                            <p className="text-gray-200 text-sm">{value.description}</p>
                                         </div>
-                                        <h4 className="text-lg font-bold mb-2 text-gray-900">{value.title}</h4>
-                                        <p className="text-gray-600 text-sm">{value.description}</p>
                                     </div>
                                 ))}
                             </div>
@@ -477,7 +485,7 @@ const Company = () => {
                                                             isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                                                         )}
                                                     >
-                                                        <div className={`p-6 pt-0 text-gray-200 leading-relaxed border-t ${scheme.border}`}>
+                                                        <div className={`p-6 text-white leading-relaxed bg-black/80 border-t ${scheme.border}`}>
                                                             {item.answer}
                                                         </div>
                                                     </div>

@@ -18,7 +18,7 @@ const Transport = () => {
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1533658280853-e4a10c25a30d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80")' }}
+                    style={{ backgroundImage: 'url("https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/Vehicle_khehig.jpg")' }}
                 >
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
@@ -54,7 +54,7 @@ const Transport = () => {
                             </div>
                             <div className="md:w-1/2">
                                 <img
-                                    src="https://images.unsplash.com/photo-1617788138017-80ad40651399?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/vehicle5_vy2gbe.jpg"
                                     alt="Safari Vehicle"
                                     className="rounded-lg shadow-xl"
                                 />
@@ -85,7 +85,7 @@ const Transport = () => {
                             </div>
                             <div className="md:w-1/2">
                                 <img
-                                    src="https://images.unsplash.com/photo-1549556272-b7e9b086780c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
                                     alt="Lindberg Fleet"
                                     className="rounded-lg shadow-xl"
                                 />
