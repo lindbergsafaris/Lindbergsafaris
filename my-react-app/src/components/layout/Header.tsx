@@ -108,12 +108,12 @@ const Header = () => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden lg:flex items-center gap-6 flex-1 justify-center">
+                <nav className="hidden lg:flex items-center gap-4 flex-1 justify-center">
                     {navItems.map((item) => (
                         <div key={item.name} className="relative group">
                             {item.dropdown ? (
                                 <button
-                                    className="flex items-center gap-1 text-sm font-medium text-gray-800 hover:text-primary transition-colors py-2"
+                                    className="flex items-center gap-1 text-sm font-medium text-gray-800 hover:text-primary transition-colors py-2 whitespace-nowrap"
                                     onClick={() => toggleDropdown(item.name)}
                                     onMouseEnter={() => setOpenDropdown(item.name)}
                                     onMouseLeave={() => setOpenDropdown(null)}
@@ -124,7 +124,7 @@ const Header = () => {
                             ) : (
                                 <Link
                                     to={item.path}
-                                    className="text-sm font-medium text-gray-800 hover:text-primary transition-colors py-2 block"
+                                    className="text-sm font-medium text-gray-800 hover:text-primary transition-colors py-2 block whitespace-nowrap"
                                 >
                                     {item.name}
                                 </Link>
