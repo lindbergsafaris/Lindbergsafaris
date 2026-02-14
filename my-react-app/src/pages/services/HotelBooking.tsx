@@ -4,7 +4,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { getWhatsAppLink } from '@/lib/utils';
 
 const collections = [
     {
@@ -67,9 +67,15 @@ const HotelBooking = () => {
                     <p className="text-xl md:text-2xl font-light tracking-wide mb-10 text-gray-100">
                         Global access. Local expertise. Unbeatable rates. From secluded safari hideaways to the glittering skylines of Dubai, we leverage world-class booking technology to secure your ideal accommodation at the best possible price.
                     </p>
-                    <Button size="lg" className="px-10 rounded-full">
-                        Book Your Stay Now
-                    </Button>
+                    <a
+                        href={getWhatsAppLink("Hello! I'm interested in booking a hotel stay with Lindberg Safaris. Could you please help me find the perfect accommodation?")}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <Button size="lg" className="px-10 rounded-full">
+                            Book Your Stay Now
+                        </Button>
+                    </a>
                 </Container>
             </div>
 
@@ -121,9 +127,14 @@ const HotelBooking = () => {
                                     <p className="text-gray-600 leading-relaxed mb-6 flex-1">
                                         {collection.description}
                                     </p>
-                                    <Link to="/contact" className="inline-flex items-center text-primary font-bold hover:gap-2 transition-all">
+                                    <a
+                                        href={getWhatsAppLink(`Hello! I'm interested in inquiring about the "${collection.title}" collection. Could you provide more details?`)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center text-primary font-bold hover:gap-2 transition-all"
+                                    >
                                         Enquire Now <ArrowRight size={18} className="ml-1" />
-                                    </Link>
+                                    </a>
                                 </div>
                             </div>
                         ))}
@@ -140,11 +151,15 @@ const HotelBooking = () => {
                     <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
                         Let us handle the details while you look forward to the journey. Contact our experts for personalized hotel recommendations and booking assistance.
                     </p>
-                    <Link to="/contact">
+                    <a
+                        href={getWhatsAppLink("Hello! I'm ready for my next escape and would like to get a personal quote for a hotel booking.")}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-10 rounded-full transition-all">
                             Get a Personal Quote
                         </Button>
-                    </Link>
+                    </a>
                 </Container>
             </Section>
         </Layout>
