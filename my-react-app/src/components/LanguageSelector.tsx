@@ -16,6 +16,12 @@ const languages: Language[] = [
     { code: 'pl', name: 'Polski', flag: '🇵🇱' },
     { code: 'zh', name: '中文', flag: '🇨🇳' },
     { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+    { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+    { code: 'pt', name: 'Português', flag: '🇵🇹' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+    { code: 'ja', name: '日本語', flag: '🇯🇵' },
+    { code: 'ko', name: '한국어', flag: '🇰🇷' },
 ];
 
 const LanguageSelector = () => {

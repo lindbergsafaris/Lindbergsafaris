@@ -2,9 +2,22 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
-import { Check, Plane, Train, Bus, Ship } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const Flights = () => {
+    const partnerLogos = [
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-9_bohmmc.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-8_vowihp.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-7_lpuiux.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066709/ticket-10_rrpvle.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-2_xs5rtj.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066707/ticket-1_yoeazb.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-4_qz926o.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066708/ticket-3_qlpo02.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066707/ticket-6_ryuplv.png",
+        "https://res.cloudinary.com/dbqdpitah/image/upload/v1771066707/ticket-5_xt3c9n.png"
+    ];
+
     return (
         <Layout>
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
@@ -16,7 +29,7 @@ const Flights = () => {
                 </div>
                 <Container className="relative z-10 text-center">
                     <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Ticketing Services</h1>
-                    <p className="text-xl font-light tracking-wide">All Your Travel Tickets in One Place</p>
+                    <p className="text-xl font-light tracking-wide">Seamless Travel Solutions Across Air, Sea, and Land</p>
                 </Container>
             </div>
 
@@ -26,44 +39,16 @@ const Flights = () => {
                     <div className="flex flex-col md:flex-row gap-12 items-center">
                         <div className="md:w-1/2 order-2 md:order-1">
                             <img
-                                src="https://images.unsplash.com/photo-1488085061387-422e29b40080?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg"
                                 alt="Travel Booking"
                                 className="rounded-lg shadow-xl"
                             />
                         </div>
                         <div className="md:w-1/2 order-1 md:order-2">
-                            <h2 className="text-3xl font-serif font-bold mb-6">Comprehensive Ticketing Solutions</h2>
+                            <h2 className="text-3xl font-serif font-bold mb-6">Experience hassle-free travel</h2>
                             <p className="text-gray-600 leading-relaxed mb-6">
-                                We handle all your ticketing needs from start to finish. Whether you need flight tickets,
-                                train reservations, bus bookings, or ferry passes, our dedicated team ensures you get the
-                                best rates and most convenient schedules for a seamless journey.
+                                Experience hassle-free travel with our all-in-one ticketing services. Whether flying across continents, cruising the seas, or exploring scenic routes by train, bus, or ferry, every journey is made simple, affordable, and personalized. Our team ensures smooth bookings, flexible options, and reliable support from start to finish.
                             </p>
-                            <ul className="space-y-3 mb-8">
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                        <Check size={16} />
-                                    </div>
-                                    <span>Competitive rates across all travel modes</span>
-                                </li>
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                        <Check size={16} />
-                                    </div>
-                                    <span>24/7 support for changes and cancellations</span>
-                                </li>
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                        <Check size={16} />
-                                    </div>
-                                    <span>Group booking discounts available</span>
-                                </li>
-                                <li className="flex items-center gap-3 text-gray-700">
-                                    <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                        <Check size={16} />
-                                    </div>
-                                    <span>Multi-modal journey planning</span>
-                                </li>
-                            </ul>
                             <Button size="lg">Request a Quote</Button>
                         </div>
                     </div>
@@ -71,130 +56,151 @@ const Flights = () => {
             </Section>
 
             {/* Service Types Grid */}
-            <Section className="bg-primary">
+            <Section className="bg-gray-50">
                 <Container>
                     <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Our Ticketing Services</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">
-                            From flights to ferries, we've got your travel covered
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3">What We Offer</h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">
+                            Comprehensive solutions for every travel mode
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {/* Flight Tickets */}
-                        <div className="bg-secondary-light rounded-xl p-6 hover:shadow-lg transition-all">
-                            <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <Plane size={24} />
+                        {/* Air Ticketing */}
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
+                                <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067327/ticket-11_l9gexs.png" alt="Air Ticketing" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-gray-900">Flight Tickets</h3>
+                            <h3 className="text-xl font-bold mb-3 text-gray-900">Air Ticketing</h3>
                             <p className="text-gray-600 text-sm mb-4">
-                                Domestic and international flights with major airlines at competitive prices
+                                Access domestic and international flights with top airlines. Enjoy competitive fares, flexible travel classes, and instant confirmations for stress-free journeys.
                             </p>
-                            <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>All major airlines</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Best price guarantee</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Flexible booking options</span>
-                                </li>
-                            </ul>
                         </div>
 
-                        {/* Train Tickets */}
-                        <div className="bg-secondary-light rounded-xl p-6 hover:shadow-lg transition-all">
-                            <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <Train size={24} />
+                        {/* Cruise Ticketing */}
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
+                                <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067327/ticket-12_vbwndm.png" alt="Cruise Ticketing" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-gray-900">Train Reservations</h3>
+                            <h3 className="text-xl font-bold mb-3 text-gray-900">Cruise Ticketing</h3>
                             <p className="text-gray-600 text-sm mb-4">
-                                Comfortable rail travel across the region with reserved seating
+                                Sail in comfort with global cruise routes, luxury or budget options, and all-inclusive packages covering meals, entertainment, and excursions.
                             </p>
-                            <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>SGR & regional trains</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Class upgrades available</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Group reservations</span>
-                                </li>
-                            </ul>
                         </div>
 
-                        {/* Bus Tickets */}
-                        <div className="bg-secondary-light rounded-xl p-6 hover:shadow-lg transition-all">
-                            <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <Bus size={24} />
+                        {/* Train Ticketing */}
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
+                                <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067331/ticket-13_mtta1x.png" alt="Train Ticketing" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-gray-900">Bus Bookings</h3>
+                            <h3 className="text-xl font-bold mb-3 text-gray-900">Train Ticketing</h3>
                             <p className="text-gray-600 text-sm mb-4">
-                                Reliable coach services for intercity and cross-border travel
+                                Discover scenic routes with flexible schedules, affordable fares, and comfortable travel classes for both short and long-distance trips.
                             </p>
-                            <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Premium coaches</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Multiple daily departures</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Safe & comfortable</span>
-                                </li>
-                            </ul>
                         </div>
 
-                        {/* Ferry Tickets */}
-                        <div className="bg-secondary-light rounded-xl p-6 hover:shadow-lg transition-all">
-                            <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-primary">
-                                <Ship size={24} />
+                        {/* Bus & Ferry Ticketing */}
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                            <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
+                                <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067324/ticket-14_v3zdao.png" alt="Bus & Ferry Ticketing" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-xl font-bold mb-3 text-gray-900">Ferry Services</h3>
+                            <h3 className="text-xl font-bold mb-3 text-gray-900">Bus & Ferry Ticketing</h3>
                             <p className="text-gray-600 text-sm mb-4">
-                                Coastal and island connections including Zanzibar ferries
+                                Connect to cities, towns, and coastal destinations with reliable operators, flexible timings, and comfortable travel options.
                             </p>
-                            <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Fast ferry options</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Zanzibar connections</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <Check size={14} className="text-primary flex-shrink-0" />
-                                    <span>Island hopping packages</span>
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </Container>
             </Section>
 
-            {/* Why Choose Us */}
+            {/* Why Book With Us */}
             <Section>
                 <Container>
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h2 className="text-3xl font-serif font-bold mb-6">Why Book With Us?</h2>
-                        <p className="text-gray-600 leading-relaxed mb-8">
-                            As your one-stop travel solution, we simplify the entire booking process.
-                            Our experienced team monitors prices, manages reservations, and provides
-                            instant support whenever you need it. Focus on your journey while we handle the details.
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl font-serif font-bold mb-4">Why Book With Us</h2>
+                            <p className="text-gray-600">Experience the difference of a personalized travel service</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
+                                    <Check size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 mb-1">Global Reach</h4>
+                                    <p className="text-gray-600 text-sm">Partnerships with leading airlines, cruise lines, and transport networks worldwide.</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
+                                    <Check size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 mb-1">Competitive Pricing</h4>
+                                    <p className="text-gray-600 text-sm">Exclusive deals and discounts across all travel modes.</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
+                                    <Check size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 mb-1">24/7 Support</h4>
+                                    <p className="text-gray-600 text-sm">Dedicated assistance for bookings, changes, or cancellations anytime.</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
+                                    <Check size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 mb-1">Flexible Options</h4>
+                                    <p className="text-gray-600 text-sm">Economy to luxury choices tailored to every traveler's comfort and budget.</p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4">
+                                <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
+                                    <Check size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-gray-900 mb-1">Personalized Service</h4>
+                                    <p className="text-gray-600 text-sm">Every ticket is handled with care to ensure a smooth, enjoyable journey.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Partner Logos */}
+            <Section className="bg-gray-50 border-t border-gray-100">
+                <Container>
+                    <div className="text-center mb-10">
+                        <h2 className="text-2xl font-serif font-bold text-gray-800">Our Trusted Partners</h2>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
+                        {partnerLogos.map((logo, index) => (
+                            <div key={index} className="w-full flex justify-center">
+                                <img
+                                    src={logo}
+                                    alt={`Partner Logo ${index + 1}`}
+                                    className="max-h-12 w-auto object-contain transition-transform hover:scale-110 duration-300"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </Container>
+            </Section>
+
+            {/* Closing CTA */}
+            <Section>
+                <Container className="text-center">
+                    <div className="max-w-3xl mx-auto bg-primary/5 rounded-2xl p-10 md:p-16 border border-primary/10">
+                        <h2 className="text-3xl font-serif font-bold mb-6 text-gray-900">Your Journey, Our Priority</h2>
+                        <p className="text-gray-700 leading-relaxed mb-8 text-lg">
+                            At Lindberg holiday, every ticket booked is more than a reservation — it's the beginning of a seamless travel experience. Whether by air, sea, rail, or road, we make sure your journey is effortless, comfortable, and unforgettable.
                         </p>
-                        <Button size="lg">Contact Us for Bookings</Button>
+                        <Button size="lg" className="px-10">Contact Us for Bookings</Button>
                     </div>
                 </Container>
             </Section>
