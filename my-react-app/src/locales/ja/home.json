@@ -1,81 +1,81 @@
 {
     "hero": {
         "slide1": {
-            "title": "Discover Africa's Wild Heart",
-            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            "title": "アフリカの野生の鼓動を発見する",
+            "subtitle": "あなたの夢に合わせたパーソナライズされたサファリで、サバンナの魔法を体験してください。"
         },
         "slide2": {
-            "title": "Hotel Booking",
-            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            "title": "ホテル予約",
+            "subtitle": "ブッシュキャンプから5つ星リゾートまで、自然の中心にある豪華な宿泊施設。"
         },
         "slide3": {
-            "title": "Transport Services",
-            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+            "title": "輸送サービス",
+            "subtitle": "旅の全工程をカバーする、快適で信頼性の高い輸送ソリューション。"
         },
         "slide4": {
-            "title": "Visa Application",
-            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+            "title": "ビザ申請",
+            "subtitle": "目的地へのスムーズな入国を確実にするための、手間のかからないビザ支援。"
         },
         "slide5": {
-            "title": "Ticketing Services",
-            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+            "title": "チケットサービス",
+            "subtitle": "国際・国内旅行向けの最高の航空券プランとシームレスな予約体験。"
         },
         "slide6": {
-            "title": "Custom Itineraries",
-            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+            "title": "カスタム旅行プラン",
+            "subtitle": "あなたの独自の好みと予算に合わせて特別に設計されたテーラーメイドのパッケージ。"
         }
     },
     "hotDeals": {
-        "badge": "Hot Deals",
-        "title": "Exclusive Offers",
-        "description": "Limited time offers on our most popular safari packages."
+        "badge": "注目のお得情報",
+        "title": "限定オファー",
+        "description": "人気のサファリパッケージの期間限定オファー。"
     },
     "partners": {
-        "badge": "Our Partners",
-        "title": "Trusted By The Best",
-        "description": "We work with world-class partners to ensure your journey is seamless."
+        "badge": "パートナー",
+        "title": "信頼されるパートナー",
+        "description": "あなたの旅がシームレスであることを確実にするため、世界クラスのパートナーと協力しています。"
     },
     "destinations": {
-        "title": "Explore Top Destinations",
-        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+        "title": "人気の目的地を探索する",
+        "description": "セレンゲティの広大な平原からザンジバルの自然のままのビーチまで。"
     },
     "tours": {
-        "title": "Signature Safaris",
-        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
-        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+        "title": "シグネチャー・サファリ",
+        "description": "アフリカの野生動物と風景の最高級を披露する、厳選された体験。",
+        "noToursAvailable": "ツアーはまだありません。Sanity Studioでツアーを追加してください！"
     },
     "clients": {
-        "title": "Our Clients",
-        "description": "Trusted by leading organizations and happy travelers."
+        "title": "お客様",
+        "description": "主要な組織や幸せな旅行者から信頼されています。"
     },
     "travelWithUs": {
-        "title": "Travel With Us",
-        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "title": "私たちと一緒に旅を",
+        "description": "次の冒険にリンドバーグ・サファリを選ぶ理由は？",
         "experience": {
-            "title": "25+ Years Experience",
-            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+            "title": "25年以上の経験",
+            "description": "1998年以来、完璧なサファリプランを作成してきた深い現地の知識と専門性。"
         },
         "safety": {
-            "title": "Safe & Secure",
-            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+            "title": "安全・安心",
+            "description": "お客様の安全が私たちの最優先事項です。24時間年中無休のサポートを提供し、信頼できるパートナーと協力しています。"
         },
         "tailored": {
-            "title": "Tailored Journeys",
-            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+            "title": "オーダーメイドの旅",
+            "description": "すべての旅はユニークです。お客様の好みや夢に合わせて、あらゆる詳細をカスタマイズします。"
         },
         "videoSection": {
-            "title": "Travel With Us",
-            "description": "See what makes our journeys special and meet our trusted partners.",
-            "affiliateMembers": "Affiliate Members"
+            "title": "私たちと一緒に旅を",
+            "description": "私たちの旅を特別なものにしている理由を知り、信頼できるパートナーに会ってください。",
+            "affiliateMembers": "提携メンバー"
         }
     },
     "team": {
-        "title": "Meet Our Team",
-        "description": "The passionate experts behind your unforgettable journeys."
+        "title": "チーム紹介",
+        "description": "あなたの忘れられない旅を支える情熱的な専門家たち。"
     },
     "newsletter": {
-        "title": "Stay Inspired",
-        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
-        "placeholder": "Enter your email"
+        "title": "インスピレーションを受ける",
+        "description": "サファリのヒント、限定オファー、旅行のインスピレーションを得るために、ニュースレターを購読してください。",
+        "placeholder": "メールアドレスを入力"
     }
 }

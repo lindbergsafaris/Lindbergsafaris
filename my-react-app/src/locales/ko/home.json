@@ -1,81 +1,81 @@
 {
     "hero": {
         "slide1": {
-            "title": "Discover Africa's Wild Heart",
-            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            "title": "아프리카의 야생 심장을 발견하세요",
+            "subtitle": "당신의 꿈에 맞춘 개인화된 사파리로 사바나의 마법을 경험하세요."
         },
         "slide2": {
-            "title": "Hotel Booking",
-            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            "title": "호텔 예약",
+            "subtitle": "부시 캠프부터 5성급 리조트까지, 자연의 중심에 있는 럭셔리 숙박 시설."
         },
         "slide3": {
-            "title": "Transport Services",
-            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+            "title": "교통 서비스",
+            "subtitle": "여행의 전 과정을 위한 편안하고 신뢰할 수 있는 교통 솔루션."
         },
         "slide4": {
-            "title": "Visa Application",
-            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+            "title": "비자 신청",
+            "subtitle": "목적지까지 원활한 입국을 보장하는 번거로움 없는 비자 지원."
         },
         "slide5": {
-            "title": "Ticketing Services",
-            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+            "title": "발권 서비스",
+            "subtitle": "국제 및 국내 여행을 위한 최고의 항공권 딜과 원활한 예약 경험."
         },
         "slide6": {
-            "title": "Custom Itineraries",
-            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+            "title": "맞춤 여행 일정",
+            "subtitle": "당신의 독특한 선호도와 예산에 맞춰 특별히 설계된 맞춤형 패키지."
         }
     },
     "hotDeals": {
-        "badge": "Hot Deals",
-        "title": "Exclusive Offers",
-        "description": "Limited time offers on our most popular safari packages."
+        "badge": "핫 딜",
+        "title": "독점 제공",
+        "description": "가장 인기 있는 사파리 패키지에 대한 기간 한정 제공."
     },
     "partners": {
-        "badge": "Our Partners",
-        "title": "Trusted By The Best",
-        "description": "We work with world-class partners to ensure your journey is seamless."
+        "badge": "파트너",
+        "title": "최고가 신뢰하는 곳",
+        "description": "우리는 당신의 여정이 원활하도록 세계적 수준의 파트너와 협력합니다."
     },
     "destinations": {
-        "title": "Explore Top Destinations",
-        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+        "title": "인기 목적지 탐험",
+        "description": "세렝게티의 광활한 평원부터 잔지바르의 깨끗한 해변까지."
     },
     "tours": {
-        "title": "Signature Safaris",
-        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
-        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+        "title": "시그니처 사파리",
+        "description": "아프리카 야생동물과 풍경의 정수를 보여주는 엄선된 경험.",
+        "noToursAvailable": "아직 이용 가능한 투어가 없습니다. Sanity Studio에서 투어를 추가하세요!"
     },
     "clients": {
-        "title": "Our Clients",
-        "description": "Trusted by leading organizations and happy travelers."
+        "title": "고객",
+        "description": "주요 조직과 행복한 여행자들이 신뢰합니다."
     },
     "travelWithUs": {
-        "title": "Travel With Us",
-        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "title": "저희와 함께 여행하세요",
+        "description": "다음 모험을 위해 린드버그 사파리를 선택해야 하는 이유는 무엇인가요?",
         "experience": {
-            "title": "25+ Years Experience",
-            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+            "title": "25년 이상의 경험",
+            "description": "1998년부터 완벽한 사파리 일정을 만들어 온 깊은 현지 지식과 전문성."
         },
         "safety": {
-            "title": "Safe & Secure",
-            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+            "title": "안전 및 보안",
+            "description": "당신의 안전이 저희의 우선순위입니다. 24/7 지원을 제공하며 신뢰할 수 있는 파트너와 협력합니다."
         },
         "tailored": {
-            "title": "Tailored Journeys",
-            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+            "title": "맞춤형 여행",
+            "description": "모든 여행은 독특합니다. 우리는 당신의 선호도와 꿈에 맞춰 모든 세부 사항을 맞춤화합니다."
         },
         "videoSection": {
-            "title": "Travel With Us",
-            "description": "See what makes our journeys special and meet our trusted partners.",
-            "affiliateMembers": "Affiliate Members"
+            "title": "저희와 함께 여행하세요",
+            "description": "저희의 여행이 특별한 이유를 알아보고 신뢰할 수 있는 파트너들을 만나보세요.",
+            "affiliateMembers": "제휴 회원"
         }
     },
     "team": {
-        "title": "Meet Our Team",
-        "description": "The passionate experts behind your unforgettable journeys."
+        "title": "팀 소개",
+        "description": "잊지 못할 여정을 만드는 열정적인 전문가들."
     },
     "newsletter": {
-        "title": "Stay Inspired",
-        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
-        "placeholder": "Enter your email"
+        "title": "영감을 받으세요",
+        "description": "사파리 팁, 독점 제안 및 여행 영감을 받으려면 뉴스레터를 구독하세요.",
+        "placeholder": "이메일을 입력하세요"
     }
 }

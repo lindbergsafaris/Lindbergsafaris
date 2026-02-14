@@ -1,81 +1,81 @@
 {
     "hero": {
         "slide1": {
-            "title": "Discover Africa's Wild Heart",
-            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            "title": "अफ्रीका के जंगली दिल की खोज करें",
+            "subtitle": "आपके सपनों के अनुरूप व्यक्तिगत सफारी के साथ सवाना के जादू का अनुभव करें।"
         },
         "slide2": {
-            "title": "Hotel Booking",
-            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            "title": "होटल बुकिंग",
+            "subtitle": "प्रकृति के केंद्र में लक्जरी आवास, बुश कैंप से लेकर 5-सितारा रिसॉर्ट्स तक।"
         },
         "slide3": {
-            "title": "Transport Services",
-            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+            "title": "परिवहन सेवाएं",
+            "subtitle": "आपकी पूरी यात्रा के लिए आरामदायक और विश्वसनीय परिवहन समाधान।"
         },
         "slide4": {
-            "title": "Visa Application",
-            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+            "title": "वीजा आवेदन",
+            "subtitle": "आपके गंतव्य में सुचारू प्रवेश सुनिश्चित करने के लिए परेशानी मुक्त वीजा सहायता।"
         },
         "slide5": {
-            "title": "Ticketing Services",
-            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+            "title": "टिकटिंग सेवाएं",
+            "subtitle": "अंतरराष्ट्रीय और स्थानीय यात्रा के लिए सर्वश्रेष्ठ उड़ान सौदे और सहज बुकिंग अनुभव।"
         },
         "slide6": {
-            "title": "Custom Itineraries",
-            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+            "title": "कस्टम यात्रा कार्यक्रम",
+            "subtitle": "विशेष रूप से आपकी अनूठी प्राथमिकताओं और बजट के लिए डिज़ाइन किए गए अनुकूलित पैकेज।"
         }
     },
     "hotDeals": {
-        "badge": "Hot Deals",
-        "title": "Exclusive Offers",
-        "description": "Limited time offers on our most popular safari packages."
+        "badge": "हॉट डील्स",
+        "title": "विशेष ऑफर",
+        "description": "हमारे सबसे लोकप्रिय सफारी पैकेजों पर सीमित समय के ऑफर।"
     },
     "partners": {
-        "badge": "Our Partners",
-        "title": "Trusted By The Best",
-        "description": "We work with world-class partners to ensure your journey is seamless."
+        "badge": "हमारे भागीदार",
+        "title": "सर्वश्रेष्ठ द्वारा भरोसेमंद",
+        "description": "हम यह सुनिश्चित करने के लिए विश्व स्तरीय भागीदारों के साथ काम करते हैं कि आपकी यात्रा सहज हो।"
     },
     "destinations": {
-        "title": "Explore Top Destinations",
-        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+        "title": "शीर्ष गंतव्यों का अन्वेषण करें",
+        "description": "सेरेन्गेटी के विशाल मैदानों से लेकर ज़ांज़ीबार के प्राचीन समुद्र तटों तक।"
     },
     "tours": {
-        "title": "Signature Safaris",
-        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
-        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+        "title": "हस्ताक्षर सफारी",
+        "description": "हैंडपिक्ड अनुभव जो अफ्रीकी वन्यजीवों और परिदृश्यों का सबसे अच्छा प्रदर्शन करते हैं।",
+        "noToursAvailable": "अभी तक कोई टूर उपलब्ध नहीं है। सैनिटी स्टूडियो में टूर जोड़ें!"
     },
     "clients": {
-        "title": "Our Clients",
-        "description": "Trusted by leading organizations and happy travelers."
+        "title": "हमारे ग्राहक",
+        "description": "प्रमुख संगठनों और खुश यात्रियों द्वारा भरोसेमंद।"
     },
     "travelWithUs": {
-        "title": "Travel With Us",
-        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "title": "हमारे साथ यात्रा करें",
+        "description": "अपने अगले साहसिक कार्य के लिए लिंडबर्ग सफारी क्यों चुनें?",
         "experience": {
-            "title": "25+ Years Experience",
-            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+            "title": "25+ वर्षों का अनुभव",
+            "description": "1998 से सटीक सफारी यात्रा कार्यक्रम तैयार करने में गहरा स्थानीय ज्ञान और विशेषज्ञता।"
         },
         "safety": {
-            "title": "Safe & Secure",
-            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+            "title": "सुरक्षित और संरक्षित",
+            "description": "आपकी सुरक्षा हमारी प्राथमिकता है। हम 24/7 सहायता प्रदान करते हैं और भरोसेमंद भागीदारों के साथ काम करते।"
         },
         "tailored": {
-            "title": "Tailored Journeys",
-            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+            "title": "अनुकूलित यात्राएं",
+            "description": "हर यात्रा अनोखी होती है। हम आपकी प्राथमिकताओं और सपनों से मेल खाने के लिए हर विवरण को अनुकूलित करते हैं।"
         },
         "videoSection": {
-            "title": "Travel With Us",
-            "description": "See what makes our journeys special and meet our trusted partners.",
-            "affiliateMembers": "Affiliate Members"
+            "title": "हमारे साथ यात्रा करें",
+            "description": "देखें कि हमारी यात्राओं को क्या खास बनाता है और हमारे भरोसेमंद भागीदारों से मिलें।",
+            "affiliateMembers": "संबद्ध सदस्य"
         }
     },
     "team": {
-        "title": "Meet Our Team",
-        "description": "The passionate experts behind your unforgettable journeys."
+        "title": "हमारी टीम से मिलें",
+        "description": "आपकी अविस्मरणीय यात्राओं के पीछे के भावुक विशेषज्ञ।"
     },
     "newsletter": {
-        "title": "Stay Inspired",
-        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
-        "placeholder": "Enter your email"
+        "title": "प्रेरित रहें",
+        "description": "सफारी टिप्स, विशेष ऑफर और यात्रा प्रेरणा के लिए हमारे न्यूज़लेटर की सदस्यता लें।",
+        "placeholder": "अपना ईमेल दर्ज करें"
     }
 }

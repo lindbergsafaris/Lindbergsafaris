@@ -1,81 +1,81 @@
 {
     "hero": {
         "slide1": {
-            "title": "Discover Africa's Wild Heart",
-            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            "title": "Descubra o Coração Selvagem da África",
+            "subtitle": "Experimente a magia da savana com safaris personalizados adaptados aos seus sonhos."
         },
         "slide2": {
-            "title": "Hotel Booking",
-            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            "title": "Reserva de Hotéis",
+            "subtitle": "Acomodações de luxo no coração da natureza, de acampamentos na selva a resorts 5 estrelas."
         },
         "slide3": {
-            "title": "Transport Services",
-            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+            "title": "Serviços de Transporte",
+            "subtitle": "Soluções de transporte confortáveis e confiáveis para toda a sua jornada."
         },
         "slide4": {
-            "title": "Visa Application",
-            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+            "title": "Pedido de Visto",
+            "subtitle": "Assistência de visto sem complicações para garantir uma entrada tranquila no seu destino."
         },
         "slide5": {
-            "title": "Ticketing Services",
-            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+            "title": "Serviços de Bilheteira",
+            "subtitle": "As melhores ofertas de voos e experiências de reserva perfeitas para viagens internacionais e locais."
         },
         "slide6": {
-            "title": "Custom Itineraries",
-            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+            "title": "Itinerários Personalizados",
+            "subtitle": "Pacotes sob medida projetados especificamente para suas preferências e orçamento exclusivos."
         }
     },
     "hotDeals": {
-        "badge": "Hot Deals",
-        "title": "Exclusive Offers",
-        "description": "Limited time offers on our most popular safari packages."
+        "badge": "Ofertas Quentes",
+        "title": "Ofertas Exclusivas",
+        "description": "Ofertas por tempo limitado em nossos pacotes de safari mais populares."
     },
     "partners": {
-        "badge": "Our Partners",
-        "title": "Trusted By The Best",
-        "description": "We work with world-class partners to ensure your journey is seamless."
+        "badge": "Nossos Parceiros",
+        "title": "Confiado Pelos Melhores",
+        "description": "Trabalhamos com parceiros de classe mundial para garantir que sua jornada seja perfeita."
     },
     "destinations": {
-        "title": "Explore Top Destinations",
-        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+        "title": "Explore os Melhores Destinos",
+        "description": "Das vastas planícies do Serengeti às praias imaculadas de Zanzibar."
     },
     "tours": {
-        "title": "Signature Safaris",
-        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
-        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+        "title": "Safaris de Assinatura",
+        "description": "Experiências escolhidas a dedo que mostram o melhor da vida selvagem e das paisagens africanas.",
+        "noToursAvailable": "Nenhum tour disponível ainda. Adicione tours no Sanity Studio!"
     },
     "clients": {
-        "title": "Our Clients",
-        "description": "Trusted by leading organizations and happy travelers."
+        "title": "Nossos Clientes",
+        "description": "Confiado por organizações líderes e viajantes felizes."
     },
     "travelWithUs": {
-        "title": "Travel With Us",
-        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "title": "Viaje Conosco",
+        "description": "Por que escolher a Lindberg Safaris para sua próxima aventura?",
         "experience": {
-            "title": "25+ Years Experience",
-            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+            "title": "25+ Anos de Experiência",
+            "description": "Profundo conhecimento local e especialização na criação de itinerários de safari perfeitos desde 1998."
         },
         "safety": {
-            "title": "Safe & Secure",
-            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+            "title": "Seguro e Protegido",
+            "description": "Sua segurança é nossa prioridade. Oferecemos suporte 24 horas por dia, 7 dias por semana e trabalhamos com parceiros de confiança."
         },
         "tailored": {
-            "title": "Tailored Journeys",
-            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+            "title": "Jornadas Personalizadas",
+            "description": "Cada viagem é única. Personalizamos cada detalhe para corresponder às suas preferências e sonhos."
         },
         "videoSection": {
-            "title": "Travel With Us",
-            "description": "See what makes our journeys special and meet our trusted partners.",
-            "affiliateMembers": "Affiliate Members"
+            "title": "Viaje Conosco",
+            "description": "Veja o que torna nossas jornadas especiais e conheça nossos parceiros de confiança.",
+            "affiliateMembers": "Membros Afiliados"
         }
     },
     "team": {
-        "title": "Meet Our Team",
-        "description": "The passionate experts behind your unforgettable journeys."
+        "title": "Conheça Nossa Equipe",
+        "description": "Os especialistas apaixonados por trás de suas jornadas inesquecíveis."
     },
     "newsletter": {
-        "title": "Stay Inspired",
-        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
-        "placeholder": "Enter your email"
+        "title": "Mantenha-se Inspirado",
+        "description": "Assine nossa newsletter para dicas de safari, ofertas exclusivas e inspiração para viagens.",
+        "placeholder": "Digite seu e-mail"
     }
 }

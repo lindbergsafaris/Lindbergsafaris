@@ -1,81 +1,81 @@
 {
     "hero": {
         "slide1": {
-            "title": "Discover Africa's Wild Heart",
-            "subtitle": "Experience the magic of the savannah with personalized safaris tailored to your dreams."
+            "title": "اكتشف القلب البري لأفريقيا",
+            "subtitle": "جرب سحر السافانا مع رحلات سفاري مخصصة مصممة خصيصًا لأحلامك."
         },
         "slide2": {
-            "title": "Hotel Booking",
-            "subtitle": "Luxury accommodations in the heart of nature, from bush camps to 5-star resorts."
+            "title": "حجز الفنادق",
+            "subtitle": "إقامة فاخرة في قلب الطبيعة، من المعسكرات البرية إلى فنادق 5 نجوم."
         },
         "slide3": {
-            "title": "Transport Services",
-            "subtitle": "Comfortable and reliable transport solutions for your entire journey."
+            "title": "خدمات النقل",
+            "subtitle": "حلول نقل مريحة وموثوقة لرحلتك بأكملها."
         },
         "slide4": {
-            "title": "Visa Application",
-            "subtitle": "Hassle-free visa assistance to ensure smooth entry into your destination."
+            "title": "طلب التأشيرة",
+            "subtitle": "مساعدة في التأشيرة خالية من المتاعب لضمان دخول سلس إلى وجهتك."
         },
         "slide5": {
-            "title": "Ticketing Services",
-            "subtitle": "Best flight deals and seamless booking experiences for international and local travel."
+            "title": "خدمات التذاكر",
+            "subtitle": "أفضل عروض الرحلات الجوية وتجارب حجز سلسة للسفر الدولي والمحلي."
         },
         "slide6": {
-            "title": "Custom Itineraries",
-            "subtitle": "Tailor-made packages designed specifically for your unique preferences and budget."
+            "title": "خطط رحلات مخصصة",
+            "subtitle": "باقات مصممة خصيصًا لتناسب تفضيلاتك الفريدة وميزانيتك."
         }
     },
     "hotDeals": {
-        "badge": "Hot Deals",
-        "title": "Exclusive Offers",
-        "description": "Limited time offers on our most popular safari packages."
+        "badge": "عروض ساخنة",
+        "title": "عروض حصرية",
+        "description": "عروض لفترة محدودة على باقات السفاري الأكثر شعبية لدينا."
     },
     "partners": {
-        "badge": "Our Partners",
-        "title": "Trusted By The Best",
-        "description": "We work with world-class partners to ensure your journey is seamless."
+        "badge": "شركاؤنا",
+        "title": "موثوق بنا من قبل الأفضل",
+        "description": "نحن نعمل مع شركاء عالميين لضمان أن رحلتك سلسة."
     },
     "destinations": {
-        "title": "Explore Top Destinations",
-        "description": "From the vast plains of the Serengeti to the pristine beaches of Zanzibar."
+        "title": "استكشف أفضل الوجهات",
+        "description": "من سهول سيرينجيتي الشاسعة إلى شواطئ زنجبار الخلابة."
     },
     "tours": {
-        "title": "Signature Safaris",
-        "description": "Handpicked experiences that showcase the very best of African wildlife and landscapes.",
-        "noToursAvailable": "No tours available yet. Add tours in Sanity Studio!"
+        "title": "رحلات سفاري مميزة",
+        "description": "تجارب مختارة بعناية تستعرض أفضل ما في الحياة البرية والمناظر الطبيعية الأفريقية.",
+        "noToursAvailable": "لا توجد جولات متاحة بعد. أضف جولات في Sanity Studio!"
     },
     "clients": {
-        "title": "Our Clients",
-        "description": "Trusted by leading organizations and happy travelers."
+        "title": "عملاؤنا",
+        "description": "موثوق بنا من قبل المنظمات الرائدة والمسافرين السعداء."
     },
     "travelWithUs": {
-        "title": "Travel With Us",
-        "description": "Why choose Lindberg Safaris for your next adventure?",
+        "title": "سافر معنا",
+        "description": "لماذا تختار ليندبرغ سفاري لمغامرتك التالية؟",
         "experience": {
-            "title": "25+ Years Experience",
-            "description": "Deep local knowledge and expertise in crafting perfect safari itineraries since 1998."
+            "title": "أكثر من 25 عامًا من الخبرة",
+            "description": "معرفة محلية عميقة وخبرة في صياغة خطط سفاري مثالية منذ عام 1998."
         },
         "safety": {
-            "title": "Safe & Secure",
-            "description": "Your safety is our priority. We provide 24/7 support and work with trusted partners."
+            "title": "آمن ومضمون",
+            "description": "سلامتك هي أولويتنا. نحن نقدم دعماً على مدار الساعة ونعمل مع شركاء موثوقين."
         },
         "tailored": {
-            "title": "Tailored Journeys",
-            "description": "Every trip is unique. We customize every detail to match your preferences and dreams."
+            "title": "رحلات مخصصة",
+            "description": "كل رحلة فريدة. نحن نخصص كل التفاصيل لتناسب تفضيلاتك وأحلامك."
         },
         "videoSection": {
-            "title": "Travel With Us",
-            "description": "See what makes our journeys special and meet our trusted partners.",
-            "affiliateMembers": "Affiliate Members"
+            "title": "سافر معنا",
+            "description": "شاهد ما يجعل رحلاتنا مميزة وتعرف على شركائنا الموثوقين.",
+            "affiliateMembers": "الأعضاء المنتسبون"
         }
     },
     "team": {
-        "title": "Meet Our Team",
-        "description": "The passionate experts behind your unforgettable journeys."
+        "title": "تعرف على فريقنا",
+        "description": "الخبراء المتحمسون وراء رحلاتك التي لا تُنسى."
     },
     "newsletter": {
-        "title": "Stay Inspired",
-        "description": "Subscribe to our newsletter for safari tips, exclusive offers, and travel inspiration.",
-        "placeholder": "Enter your email"
+        "title": "ابق مستلهماً",
+        "description": "اشترك في نشرتنا الإخبارية للحصول على نصائح السفاري والعروض الحصرية وإلهام السفر.",
+        "placeholder": "أدخل بريدك الإلكتروني"
     }
 }

@@ -29,7 +29,10 @@ const LanguageSelector = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+    const currentLanguage = languages.find(lang => {
+        const normalizedLang = i18n.language.split('-')[0].toLowerCase();
+        return lang.code === i18n.language || lang.code === normalizedLang;
+    }) || languages[0];
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
