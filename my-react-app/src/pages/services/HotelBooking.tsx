@@ -3,9 +3,46 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
-import { hotels } from '@/data/hotels';
-import { Star, MapPin, Check, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const collections = [
+    {
+        title: "Safari Lodges & Camps",
+        description: "Immersive Nature, Refined Comfort. Experience the wild without sacrificing luxury. We specialize in booking lodges and camps that place you at the heart of nature—where you can wake up to the sights and sounds of the world's most breathtaking landscapes and sleep under vast, star-filled skies.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068856/Hotel-1_mnwc2j.png"
+    },
+    {
+        title: "Beach Resorts",
+        description: "Coastal Luxury, Tailored to You. From the turquoise waters of the Diani to the vibrant shores of the Maldives, we find the perfect coastal retreat. Whether you seek total seclusion or an active resort with world-class water sports, our engines scan the globe for your perfect match.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068787/Hotel-2_gy0n7i.jpg"
+    },
+    {
+        title: "City Hotels",
+        description: "The Pulse of the World’s Greatest Cities. Stay where the action is. Our urban collection puts you minutes away from culture, cuisine, and commerce. Perfect for business travelers or city-breakers, we secure stays that balance high-speed connectivity with ultimate comfort.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068788/Hotel-3_myb5d9.jpg"
+    },
+    {
+        title: "The Luxury Collection",
+        description: "Exclusivity without boundaries. For the discerning traveler, we offer access to the world’s most prestigious addresses. Our luxury portfolio features private villas, high-end safari estates, and sophisticated suites where intuitive service and refined design are the standard.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068787/Hotel-4_z69vaj.jpg"
+    },
+    {
+        title: "Family-Friendly Stays",
+        description: "Effortless travel for the whole family. We make traveling with loved ones easy. Our family-friendly selection focuses on properties that offer space, safety, and fun, ensuring a smooth experience for parents and unforgettable memories for children.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068787/Hotel-5_lbxo84.jpg"
+    },
+    {
+        title: "Private Residences & Apartments",
+        description: "For travelers who value privacy, space, and independence. We offer a curated selection of luxury villas, serviced apartments, and private holiday homes—ideal for families, groups, or long-term stays.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068787/Hotel-6_xqxdfg.jpg"
+    },
+    {
+        title: "Staycations",
+        description: "The Art of the Local Escape. You don’t have to travel far to feel a world away. Our staycation collection features handpicked gems in your own backyard—perfect for weekend resets, anniversaries, or a quick change of scenery without the airport stress.",
+        image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068840/Hotel-7_cdtatj.png"
+    }
+];
 
 const HotelBooking = () => {
     useEffect(() => {
@@ -15,134 +52,97 @@ const HotelBooking = () => {
     return (
         <Layout>
             {/* Hero Section */}
-            <div className="relative h-[70vh] min-h-[500px] flex items-center justify-center text-white overflow-hidden">
+            <div className="relative h-[70vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
                 <div
-                    className="absolute inset-0 bg-cover bg-center z-0 transform scale-105 animate-slow-zoom"
+                    className="absolute inset-0 bg-cover bg-center z-0"
                     style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80")' }}
                 >
-                    <div className="absolute inset-0 bg-black/40" />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/60" />
+                    <div className="absolute inset-0 bg-black/50" />
                 </div>
-                <Container className="relative z-10 text-center">
-                    <span className="inline-block py-1 px-3 border border-white/30 rounded-full text-sm font-medium tracking-widest uppercase mb-6 backdrop-blur-sm">
-                        Exclusive Collection
-                    </span>
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight">
-                        Sanctuaries of <br />
-                        <span className="text-accent italic">Serenity & Style</span>
+                <Container className="relative z-10 text-center max-w-4xl">
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
+                        Find Your Perfect Stay, <br />
+                        <span className="text-primary italic">anywhere in the World</span>
                     </h1>
-                    <p className="text-xl md:text-2xl font-light tracking-wide max-w-2xl mx-auto text-gray-200 mb-10">
-                        Discover a curated selection of the world's most exquisite hotels, where luxury knows no bounds.
+                    <p className="text-xl md:text-2xl font-light tracking-wide mb-10 text-gray-100">
+                        Global access. Local expertise. Unbeatable rates. From secluded safari hideaways to the glittering skylines of Dubai, we leverage world-class booking technology to secure your ideal accommodation at the best possible price.
                     </p>
-                    <Link to="#collection">
-                        <Button size="lg" className="bg-white text-black hover:bg-gray-100 border-none">
-                            Explore Collection
-                        </Button>
-                    </Link>
+                    <Button size="lg" className="px-10 rounded-full">
+                        Book Your Stay Now
+                    </Button>
                 </Container>
             </div>
 
-            {/* Intro Section */}
-            <Section className="bg-white py-24">
+            {/* Sub-Headline Section */}
+            <Section className="bg-white">
                 <Container>
                     <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-gray-900">
-                            Redefining the Art of Hospitality
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-gray-900">
+                            Your Global Home Away from Home
                         </h2>
-                        <p className="text-lg text-gray-600 leading-relaxed mb-12">
-                            At Lindberg Safaris, we believe that where you stay is just as important as where you go.
-                            Our team has handpicked a collection of properties that offer more than just a place to sleep—they
-                            offer an experience. From historic manors to luxury tented camps, each property in our portfolio
-                            has been chosen for its unique character, exceptional service, and commitment to excellence.
+                        <p className="text-xl text-gray-600 leading-relaxed mb-6">
+                            At Lindberg Holidays and Safaris, we believe your stay should be as extraordinary as your destination. By integrating with leading global booking engines, we provide real-time access to thousands of properties across every continent.
                         </p>
-                        <div className="h-1 w-24 bg-accent mx-auto" />
+                        <p className="text-lg text-gray-600 leading-relaxed">
+                            Whether you’re looking for a boutique sanctuary by the Pyramids of Giza, a luxury wildlife lodge in a world-renowned reserve, or a five-star resort on Palm Jumeirah, our platform ensures you get the most competitive rates and seamless reservations.
+                        </p>
                     </div>
                 </Container>
             </Section>
 
-            {/* Hotel Collection */}
-            <div id="collection" className="bg-gray-50">
-                {hotels.map((hotel, index) => (
-                    <section key={hotel.id} className={`py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                        <Container>
-                            <div className={`flex flex-col lg:flex-row gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-                                {/* Image Side */}
-                                <div className="w-full lg:w-1/2">
-                                    <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
-                                        <img
-                                            src={"https://res.cloudinary.com/di5ga8z9i/image/upload/v1764510685/Weekend_gateway_pr7zfq.jpg"}
-                                            alt={hotel.name}
-                                            className="w-full h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                        <div className="absolute top-6 left-6 bg-white/90 backdrop-blur-md py-2 px-4 rounded-full shadow-sm flex items-center gap-2">
-                                            <div className="flex gap-0.5 text-accent">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <Star key={i} size={14} fill="currentColor" />
-                                                ))}
-                                            </div>
-                                            <span className="text-xs font-bold tracking-wide text-gray-900">PREMIUM</span>
-                                        </div>
+            {/* Explore Our Collections */}
+            <Section className="bg-gray-50">
+                <Container>
+                    <div className="text-center mb-16">
+                        <h2 className="text-4xl font-serif font-bold mb-4">Explore Our Collections</h2>
+                        <div className="h-1 w-20 bg-primary mx-auto" />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {collections.map((collection, index) => (
+                            <div
+                                key={index}
+                                className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${index === 6 ? 'lg:col-start-2' : ''}`}
+                            >
+                                <div className="relative h-64 overflow-hidden">
+                                    <img
+                                        src={collection.image}
+                                        alt={collection.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    />
+                                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary tracking-widest uppercase">
+                                        Collection
                                     </div>
                                 </div>
-
-                                {/* Content Side */}
-                                <div className="w-full lg:w-1/2 space-y-8">
-                                    <div>
-                                        <div className="flex items-center gap-2 text-accent font-medium mb-3">
-                                            <MapPin size={18} />
-                                            <span className="uppercase tracking-wider text-sm">{hotel.location}</span>
-                                        </div>
-                                        <h3 className="text-4xl font-serif font-bold text-gray-900 mb-6">
-                                            {hotel.name}
-                                        </h3>
-                                        <div className="space-y-4 text-gray-600 leading-relaxed text-lg">
-                                            {hotel.description.split('\n\n').map((paragraph, idx) => (
-                                                <p key={idx}>{paragraph}</p>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        {hotel.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center gap-3 text-gray-700">
-                                                <div className="w-6 h-6 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-                                                    <Check size={14} className="text-accent" />
-                                                </div>
-                                                <span className="text-sm font-medium">{feature}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="pt-4 flex items-center gap-4">
-                                        <Link to="/contact">
-                                            <Button size="lg" className="group">
-                                                Book Your Stay
-                                                <ArrowRight size={18} className="ml-2 transition-transform group-hover:translate-x-1" />
-                                            </Button>
-                                        </Link>
-                                        <span className="text-gray-500 text-sm">
-                                            Starting from <span className="text-gray-900 font-bold text-lg">{hotel.priceRange}</span> / night
-                                        </span>
-                                    </div>
+                                <div className="p-8 flex-1 flex flex-col">
+                                    <h3 className="text-2xl font-serif font-bold mb-4 text-gray-900">
+                                        {collection.title}
+                                    </h3>
+                                    <p className="text-gray-600 leading-relaxed mb-6 flex-1">
+                                        {collection.description}
+                                    </p>
+                                    <Link to="/contact" className="inline-flex items-center text-primary font-bold hover:gap-2 transition-all">
+                                        Enquire Now <ArrowRight size={18} className="ml-1" />
+                                    </Link>
                                 </div>
                             </div>
-                        </Container>
-                    </section>
-                ))}
-            </div>
+                        ))}
+                    </div>
+                </Container>
+            </Section>
 
             {/* CTA Section */}
-            <Section className="bg-gray-900 text-white py-24">
+            <Section className="bg-primary text-white">
                 <Container className="text-center">
                     <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">
-                        Ready to Experience the Extraordinary?
+                        Ready for Your Next Escape?
                     </h2>
-                    <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                        Contact our travel specialists today to start planning your dream getaway to one of these exclusive properties.
+                    <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
+                        Let us handle the details while you look forward to the journey. Contact our experts for personalized hotel recommendations and booking assistance.
                     </p>
                     <Link to="/contact">
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-black">
-                            Contact Us Now
+                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-10 rounded-full transition-all">
+                            Get a Personal Quote
                         </Button>
                     </Link>
                 </Container>
