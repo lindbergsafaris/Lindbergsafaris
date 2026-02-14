@@ -22,87 +22,108 @@ interface GalleryItem {
 const galleryItems: GalleryItem[] = [
     {
         id: 1,
-        src: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824821/WhatsApp_Image_2026-02-10_at_17.17.30_smziyr.jpg",
         category: 'wildlife',
-        title: "Majestic Lion",
+        title: "Giraffe Gathering",
         location: "Maasai Mara, Kenya"
     },
     {
         id: 2,
-        src: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
         category: 'wildlife',
-        title: "Elephants at Sunset",
-        location: "Amboseli National Park, Kenya"
+        title: "Lion King",
+        location: "Masaai Mara, Kenya"
     },
     {
         id: 3,
-        src: "https://images.unsplash.com/photo-1535941339077-2dd1c7963098?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_2_lzinpl.jpg",
         category: 'wildlife',
-        title: "Giraffe Grazing",
-        location: "Nairobi National Park, Kenya"
+        title: "Elephant Pride",
+        location: "Amboseli, Kenya"
     },
     {
         id: 4,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg",
+        category: 'wildlife',
+        title: "Savannah Giraffes",
+        location: "Kenya"
+    },
+    {
+        id: 5,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.18.58_3_a3h9sb.jpg",
+        category: 'wildlife',
+        title: "Lioness Hunt",
+        location: "Masaai Mara, Kenya"
+    },
+    {
+        id: 6,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.58_2_qyeeay.jpg",
+        category: 'wildlife',
+        title: "Lioness Resting",
+        location: "Kenya"
+    },
+    {
+        id: 7,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824813/WhatsApp_Image_2026-02-10_at_17.18.26_2_ire2q6.jpg",
+        category: 'wildlife',
+        title: "Zebra Pair",
+        location: "Masaai Mara, Kenya"
+    },
+    {
+        id: 8,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.17.31_ntfymv.jpg",
+        category: 'wildlife',
+        title: "Majestic Giraffe",
+        location: "Kenya"
+    },
+    {
+        id: 9,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.58_1_hfgpip.jpg",
+        category: 'wildlife',
+        title: "Lion Patrol",
+        location: "Masaai Mara, Kenya"
+    },
+    {
+        id: 10,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.26_3_tnwxox.jpg",
+        category: 'wildlife',
+        title: "Safari Vehicle in the Wild",
+        location: "Kenya"
+    },
+    {
+        id: 11,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
+        category: 'tours',
+        title: "Tour Excursion",
+        location: "Kenya"
+    },
+    {
+        id: 12,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg",
+        category: 'tours',
+        title: "Premium Tour Transport",
+        location: "Kenya"
+    },
+    {
+        id: 13,
+        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.26_1_di3ojf.jpg",
+        category: 'tours',
+        title: "Group Tour Departure",
+        location: "Nairobi, Kenya"
+    },
+    {
+        id: 14,
         src: "https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         category: 'scenery',
         title: "Savannah Sunrise",
         location: "Serengeti, Tanzania"
     },
     {
-        id: 5,
+        id: 15,
         src: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         category: 'scenery',
         title: "Mount Kilimanjaro",
         location: "Tanzania"
-    },
-    {
-        id: 6,
-        src: "https://images.unsplash.com/photo-1617788138017-80ad40651399?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'tours',
-        title: "Safari Adventure",
-        location: "Tsavo East, Kenya"
-    },
-    {
-        id: 7,
-        src: "https://images.unsplash.com/photo-1575550959106-5a7defe28b56?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'wildlife',
-        title: "Leopard Resting",
-        location: "Samburu National Reserve, Kenya"
-    },
-    {
-        id: 8,
-        src: "https://images.unsplash.com/photo-1551009175-8a68da93d5f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'wildlife',
-        title: "Zebra Crossing",
-        location: "Maasai Mara, Kenya"
-    },
-    {
-        id: 9,
-        src: "https://images.unsplash.com/photo-1634638063065-98334468d66f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'tours',
-        title: "Game Drive",
-        location: "Lake Nakuru, Kenya"
-    },
-    {
-        id: 10,
-        src: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'wildlife',
-        title: "Cheetah Sprint",
-        location: "Serengeti, Tanzania"
-    },
-    {
-        id: 11,
-        src: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'wildlife',
-        title: "Rhino Sanctuary",
-        location: "Ol Pejeta, Kenya"
-    },
-    {
-        id: 12,
-        src: "https://images.unsplash.com/photo-1516934024742-b461fba47600?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        category: 'tours',
-        title: "Balloon Safari",
-        location: "Maasai Mara, Kenya"
     }
 ];
 

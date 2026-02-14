@@ -422,17 +422,17 @@ const Home = () => {
                             {
                                 title: t('home:travelWithUs.experience.title'),
                                 description: t('home:travelWithUs.experience.description'),
-                                image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/Vehicle_khehig.jpg"
                             },
                             {
                                 title: t('home:travelWithUs.safety.title'),
                                 description: t('home:travelWithUs.safety.description'),
-                                image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.26_3_tnwxox.jpg"
                             },
                             {
                                 title: t('home:travelWithUs.tailored.title'),
                                 description: t('home:travelWithUs.tailored.description'),
-                                image: "https://images.unsplash.com/photo-1524850011238-e3d235c7d4c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
                             }
                         ].map((item, index) => (
                             <div
