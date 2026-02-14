@@ -24,63 +24,63 @@ const galleryItems: GalleryItem[] = [
         id: 1,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824821/WhatsApp_Image_2026-02-10_at_17.17.30_smziyr.jpg",
         category: 'wildlife',
-        title: "Giraffe Gathering",
+        title: "Elephant Grazzing",
         location: "Maasai Mara, Kenya"
     },
     {
         id: 2,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
         category: 'wildlife',
-        title: "Lion King",
+        title: "Rhinos Grazzing",
         location: "Masaai Mara, Kenya"
     },
     {
         id: 3,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_2_lzinpl.jpg",
         category: 'wildlife',
-        title: "Elephant Pride",
+        title: "Lions Resting",
         location: "Amboseli, Kenya"
     },
     {
         id: 4,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg",
         category: 'wildlife',
-        title: "Savannah Giraffes",
+        title: "Elephants Herd",
         location: "Kenya"
     },
     {
         id: 5,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.18.58_3_a3h9sb.jpg",
         category: 'wildlife',
-        title: "Lioness Hunt",
+        title: "Elephants Migrating",
         location: "Masaai Mara, Kenya"
     },
     {
         id: 6,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.58_2_qyeeay.jpg",
         category: 'wildlife',
-        title: "Lioness Resting",
+        title: "Antelopes",
         location: "Kenya"
     },
     {
         id: 7,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824813/WhatsApp_Image_2026-02-10_at_17.18.26_2_ire2q6.jpg",
         category: 'wildlife',
-        title: "Zebra Pair",
+        title: "Antelope",
         location: "Masaai Mara, Kenya"
     },
     {
         id: 8,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.17.31_ntfymv.jpg",
         category: 'wildlife',
-        title: "Majestic Giraffe",
+        title: "Majestic Rhino",
         location: "Kenya"
     },
     {
         id: 9,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.58_1_hfgpip.jpg",
         category: 'wildlife',
-        title: "Lion Patrol",
+        title: "Antelope",
         location: "Masaai Mara, Kenya"
     },
     {
@@ -94,7 +94,7 @@ const galleryItems: GalleryItem[] = [
         id: 11,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
         category: 'tours',
-        title: "Tour Excursion",
+        title: "Diani",
         location: "Kenya"
     },
     {
@@ -108,7 +108,7 @@ const galleryItems: GalleryItem[] = [
         id: 13,
         src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.26_1_di3ojf.jpg",
         category: 'tours',
-        title: "Group Tour Departure",
+        title: "Malindi",
         location: "Nairobi, Kenya"
     },
     {
