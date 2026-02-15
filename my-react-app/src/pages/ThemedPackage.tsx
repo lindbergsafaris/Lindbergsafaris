@@ -84,7 +84,23 @@ const ThemedPackage = () => {
                         <div className="lg:w-2/3">
                             {themedPackage?.content && (
                                 <div className="prose prose-lg text-gray-600 leading-relaxed mb-12">
-                                    <PortableText value={themedPackage.content} />
+                                    <PortableText
+                                        value={themedPackage.content}
+                                        components={{
+                                            types: {
+                                                image: ({ value }: any) => {
+                                                    if (!value?.url) return null;
+                                                    return (
+                                                        <img
+                                                            src={value.url}
+                                                            alt={value.alt || 'Themed Package Image'}
+                                                            className="w-full h-auto rounded-lg my-8"
+                                                        />
+                                                    );
+                                                }
+                                            }
+                                        }}
+                                    />
                                 </div>
                             )}
 

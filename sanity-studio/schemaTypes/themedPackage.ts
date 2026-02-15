@@ -72,6 +72,12 @@ export default {
                     type: 'image',
                     fields: [
                         {
+                            name: 'url',
+                            title: 'Image URL',
+                            type: 'url',
+                            description: 'Cloudinary image URL',
+                        },
+                        {
                             type: 'text',
                             name: 'alt',
                             title: 'Alternative text',
