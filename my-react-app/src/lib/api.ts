@@ -289,10 +289,9 @@ export const teamMemberAPI = {
             _id,
             name,
             role,
-            "image": image {
-                asset->,
-                url,
-                alt
+            "image": {
+                "url": coalesce(image.url, image.asset->url),
+                "alt": image.alt
             },
             order
         }`;

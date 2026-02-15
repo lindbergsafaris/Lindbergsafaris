@@ -16,7 +16,10 @@ const fallbackTeamMembers = [
 
 const TeamSection = () => {
     const { t } = useTranslation(['common', 'home']);
-    const { data: teamData } = useSWR('teamMembers', () => api.teamMember.getAll().then(res => res.data));
+    const { data: teamData, error } = useSWR('teamMembers', () => api.teamMember.getAll().then(res => res.data));
+
+    console.log('Team Data:', teamData);
+    console.log('Team Error:', error);
 
     const teamMembers = teamData && teamData.length > 0 ? teamData : fallbackTeamMembers;
 
