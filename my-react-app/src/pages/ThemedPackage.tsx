@@ -21,7 +21,7 @@ const ThemedPackage = () => {
     // Fetch the "About" content for this themed package category
     const { data: themedPackageData, error: themeError } = useSWR(
         category ? `themed-package-${category}` : null,
-        () => api.themedPackages.getBySlug(category!)
+        () => api.themedPackages.getByCategory(category!)
     );
 
     // Fetch the actual tour packages for this category

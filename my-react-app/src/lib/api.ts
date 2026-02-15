@@ -254,8 +254,8 @@ export const servicesAPI = {
 
 // Themed Packages API
 export const themedPackageAPI = {
-    getBySlug: async (slug: string) => {
-        const query = `*[_type == "themedPackage" && slug.current == $slug][0] {
+    getByCategory: async (category: string) => {
+        const query = `*[_type == "themedPackage" && category == $category][0] {
             title,
             category,
             "heroImage": heroImage{
@@ -265,7 +265,7 @@ export const themedPackageAPI = {
             description,
             content
         }`;
-        const data = await client.fetch(query, { slug });
+        const data = await client.fetch(query, { category });
         return { data };
     },
     getAll: async () => {
