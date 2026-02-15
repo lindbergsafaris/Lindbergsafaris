@@ -25,7 +25,7 @@ const TrustIndexWidget = () => {
 
     return (
         <div className="w-full max-w-7xl mx-auto px-4 py-8">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 text-primary">Guest Reviews</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-center mb-8 text-primary">Testimonials</h2>
 
             {/* 
                The container where the script will be injected.
