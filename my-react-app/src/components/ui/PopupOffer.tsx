@@ -10,7 +10,7 @@ const PopupOffer = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [offer, setOffer] = useState<PopupOfferType | null>(null);
 
-    const { data: activeOffer } = useSWR('popupOffer', () => api.popup.getActive().then(res => res.data));
+    const { data: activeOffer } = useSWR('popupOffer', () => api.popup.getAll());
 
     useEffect(() => {
         if (activeOffer) {
