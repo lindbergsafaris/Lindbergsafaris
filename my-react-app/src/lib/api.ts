@@ -163,25 +163,23 @@ export const hotDealsAPI = {
 
 // Pop-up Offer API
 export const popupAPI = {
-    getActive: async () => {
+    getAll: async () => {
         const query = `*[_type == "popupOffer" && isActive == true] | order(_createdAt desc)[0] {
             _id,
             title,
             description,
-            ctaText,
-            ctaLink,
-            startDate,
-            endDate,
-            "image": image{
+            "image": image {
+                asset->,
                 url,
                 alt
-            }
+            },
+            ctaText,
+            ctaLink,
+            isActive
         }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
+        return await client.fetch(query);
+    }
 };
-
 
 // Testimonial API
 export const testimonialAPI = {
@@ -284,6 +282,25 @@ export const themedPackageAPI = {
     }
 };
 
+// Team Members API
+export const teamMemberAPI = {
+    getAll: async () => {
+        const query = `*[_type == "teamMember"] | order(order asc, _createdAt desc) {
+            _id,
+            name,
+            role,
+            "image": image {
+                asset->,
+                url,
+                alt
+            },
+            order
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    }
+};
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -299,6 +316,7 @@ export default {
     packages: packagesAPI,
     services: servicesAPI,
     themedPackages: themedPackageAPI,
+    teamMember: teamMemberAPI,
     healthCheck,
 };
 

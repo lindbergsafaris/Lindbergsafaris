@@ -8,5 +8,6 @@ import hotDeal from './hotDeal'
 import popupOffer from './popupOffer'
 
 import themedPackage from './themedPackage'
+import teamMember from './teamMember'
 
-export const schemaTypes = [tour, blogPost, accommodation, testimonial, hotDeal, popupOffer, themedPackage]
+export const schemaTypes = [tour, blogPost, accommodation, testimonial, hotDeal, popupOffer, themedPackage, teamMember]

@@ -8,6 +8,7 @@ import api from '@/lib/api';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
 import { Testimonial } from '@/types';
+import TeamSection from '@/components/sections/TeamSection';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<string | null>(null);
@@ -90,16 +91,7 @@ const Company = () => {
         }
     ];
 
-    // Team Data
-    const teamMembers = [
-        { name: 'Charles Mwiti', role: 'CEO', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0030_nc0mt7.jpg' },
-        { name: 'Lucy Kathurima', role: 'Director', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0029_rmfaxp.jpg' },
-        { name: 'Jadiel Mwongera', role: 'Operations', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0032_ezxukj.jpg' },
-        { name: 'Anne Karegi', role: 'Accounts', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0031_bazmkr.jpg' },
-        { name: 'Ray Muriiki', role: 'Finance Analyst', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0028_ija8zw.jpg' },
-        { name: 'David Njabia', role: 'Tour Consultant', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0027_zjsjki.jpg' },
-        { name: 'Jacinter Njoroge', role: 'Tour Consultant', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0026_ay6xve.jpg' },
-    ];
+    // Team Data removed - now handled by TeamSection component
 
     // Partners Data
     const partners = [
@@ -562,29 +554,7 @@ const Company = () => {
             </Section>
             {/* Team Section */}
             <Section className="bg-primary">
-                <Container>
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Meet Our Team</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">The passionate experts behind your unforgettable journeys.</p>
-                    </div>
-
-                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 no-scrollbar md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-8 md:pb-0">
-                        {teamMembers.map((member, index) => (
-                            <div key={index} className="snap-center shrink-0 w-[80%] sm:w-[45%] md:w-auto group text-center">
-                                <div className="relative mb-4 overflow-hidden rounded-lg aspect-[3/4]">
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
-                                </div>
-                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                                <p className="text-gray-200 font-medium">{member.role}</p>
-                            </div>
-                        ))}
-                    </div>
-                </Container>
+                <TeamSection />
             </Section>
 
             {/* Partners Section */}

@@ -14,6 +14,7 @@ import { getWhatsAppLink } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
 import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import TeamSection from '@/components/sections/TeamSection';
 
 import { Tour, HotDeal } from '@/types';
 
@@ -74,16 +75,7 @@ const Home = () => {
         { name: 'Partner 7', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
     ];
 
-    // Team Data
-    const teamMembers = [
-        { name: 'Charles Mwiti', role: 'CEO', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0030_nc0mt7.jpg' },
-        { name: 'Lucy Kathurima', role: 'Director', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0029_rmfaxp.jpg' },
-        { name: 'Jadiel Mwongera', role: 'Operations', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0032_ezxukj.jpg' },
-        { name: 'Anne Karegi', role: 'Accounts', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0031_bazmkr.jpg' },
-        { name: 'Ray Muriiki', role: 'Finance Analyst', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0028_ija8zw.jpg' },
-        { name: 'David Njabia', role: 'Tour Consultant', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0027_zjsjki.jpg' },
-        { name: 'Jacinter Njoroge', role: 'Tour Consultant', image: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0026_ay6xve.jpg' },
-    ];
+    // Team Data removed - now handled by TeamSection component
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -505,47 +497,7 @@ const Home = () => {
 
             {/* 7. Our Team */}
             <Section className="bg-primary">
-                <Container>
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:team.title')}</h2>
-                        <p className="text-gray-100 max-w-2xl mx-auto">{t('home:team.description')}</p>
-                    </div>
-
-                    {/* Mobile Horizontal Scroll View */}
-                    <div className="md:hidden flex overflow-x-auto snap-x snap-mandatory gap-6 pb-4 no-scrollbar">
-                        {teamMembers.map((member, index) => (
-                            <div key={index} className="snap-center shrink-0 w-[80%] sm:w-[45%] group text-center">
-                                <div className="relative mb-4 overflow-hidden rounded-lg aspect-[3/4]">
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                                <p className="text-gray-200 font-medium">{member.role}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Desktop Grid View */}
-                    <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {teamMembers.map((member, index) => (
-                            <div key={index} className="group text-center">
-                                <div className="relative mb-4 overflow-hidden rounded-lg aspect-[3/4]">
-                                    <img
-                                        src={member.image}
-                                        alt={member.name}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-300" />
-                                </div>
-                                <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                                <p className="text-gray-200 font-medium">{member.role}</p>
-                            </div>
-                        ))}
-                    </div>
-                </Container>
+                <TeamSection />
             </Section>
 
             {/* Newsletter */}

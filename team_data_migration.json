@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Charles Mwiti",
+        "role": "CEO",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0030_nc0mt7.jpg",
+        "order": 1
+    },
+    {
+        "name": "Lucy Kathurima",
+        "role": "Director",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0029_rmfaxp.jpg",
+        "order": 2
+    },
+    {
+        "name": "Jadiel Mwongera",
+        "role": "Operations",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0032_ezxukj.jpg",
+        "order": 3
+    },
+    {
+        "name": "Anne Karegi",
+        "role": "Accounts",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813226/IMG-20251214-WA0031_bazmkr.jpg",
+        "order": 4
+    },
+    {
+        "name": "Ray Muriiki",
+        "role": "Finance Analyst",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0028_ija8zw.jpg",
+        "order": 5
+    },
+    {
+        "name": "David Njabia",
+        "role": "Tour Consultant",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0027_zjsjki.jpg",
+        "order": 6
+    },
+    {
+        "name": "Jacinter Njoroge",
+        "role": "Tour Consultant",
+        "imageUrl": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765813225/IMG-20251214-WA0026_ay6xve.jpg",
+        "order": 7
+    }
+]
