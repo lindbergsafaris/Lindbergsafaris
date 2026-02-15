@@ -16,17 +16,11 @@ const HotelBooking = lazy(() => import('@/pages/services/HotelBooking'));
 const Flights = lazy(() => import('@/pages/services/Flights'));
 const Visa = lazy(() => import('@/pages/services/Visa'));
 const CustomItineraries = lazy(() => import('@/pages/services/CustomItineraries'));
-const WildlifeSafaris = lazy(() => import('@/pages/packages/WildlifeSafaris'));
-const MountainClimbing = lazy(() => import('@/pages/packages/MountainClimbing'));
-const CruiseHoliday = lazy(() => import('@/pages/packages/CruiseHoliday'));
-const AdventurePackages = lazy(() => import('@/pages/packages/AdventurePackages'));
-const Pilgrimages = lazy(() => import('@/pages/packages/Pilgrimages'));
-const CorporateTrips = lazy(() => import('@/pages/packages/CorporateTrips'));
 const Contact = lazy(() => import('@/pages/Contact'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const Quiz = lazy(() => import('@/pages/Quiz'));
-const PackageCategory = lazy(() => import('@/pages/PackageCategory'));
+const ThemedPackage = lazy(() => import('@/pages/ThemedPackage'));
 const AccommodationCategory = lazy(() => import('@/pages/AccommodationCategory'));
 const AccommodationDetail = lazy(() => import('@/pages/AccommodationDetail'));
 const Company = lazy(() => import('@/pages/Company'));
@@ -88,16 +82,8 @@ function App() {
           <Route path="/faqs" element={<CompanyRedirect section="faqs" />} />
           <Route path="/testimonials" element={<CompanyRedirect section="testimonials" />} />
 
-          {/* Themed Packages */}
-          <Route path="/packages/wildlife" element={<WildlifeSafaris />} />
-          <Route path="/packages/climbing" element={<MountainClimbing />} />
-          <Route path="/packages/cruise" element={<CruiseHoliday />} />
-          <Route path="/packages/adventure" element={<AdventurePackages />} />
-          <Route path="/packages/pilgrimages" element={<Pilgrimages />} />
-          <Route path="/packages/corporate" element={<CorporateTrips />} />
-
-          {/* Dynamic Categories */}
-          <Route path="/packages/:category" element={<PackageCategory />} />
+          {/* Dynamic Themed Packages - Replaces all specific package routes */}
+          <Route path="/packages/:category" element={<ThemedPackage />} />
           <Route path="/accommodation/:type" element={<AccommodationCategory />} />
           <Route path="/accommodation/view/:id" element={<AccommodationDetail />} />
         </Routes>

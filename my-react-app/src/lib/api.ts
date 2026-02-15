@@ -252,6 +252,38 @@ export const servicesAPI = {
     },
 };
 
+// Themed Packages API
+export const themedPackageAPI = {
+    getBySlug: async (slug: string) => {
+        const query = `*[_type == "themedPackage" && slug.current == $slug][0] {
+            title,
+            category,
+            "heroImage": heroImage{
+                url,
+                alt
+            },
+            description,
+            content
+        }`;
+        const data = await client.fetch(query, { slug });
+        return { data };
+    },
+    getAll: async () => {
+        const query = `*[_type == "themedPackage"] | order(_createdAt desc) {
+            title,
+            slug,
+            category,
+            "heroImage": heroImage{
+                url,
+                alt
+            },
+            description
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    }
+};
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -266,6 +298,7 @@ export default {
     testimonial: testimonialAPI,
     packages: packagesAPI,
     services: servicesAPI,
+    themedPackages: themedPackageAPI,
     healthCheck,
 };
 
