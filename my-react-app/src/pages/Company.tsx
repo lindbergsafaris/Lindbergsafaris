@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Plus, Minus, Star, Quote, TrendingUp } from 'lucide-react';
+import { Plus, Minus, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import { cn } from '@/lib/utils';
-import api from '@/lib/api';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
-import { Testimonial } from '@/types';
+import TrustIndexWidget from '@/components/ui/TrustIndexWidget';
 import TeamSection from '@/components/sections/TeamSection';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<string | null>(null);
-    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Navigation items for quick jump
@@ -223,20 +221,11 @@ const Company = () => {
     ];
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [testimonialsRes] = await Promise.all([
-                    api.testimonial.getAll()
-                ]);
-                setTestimonials(testimonialsRes.data || []);
-            } catch (error) {
-                console.error('Error fetching company data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
+        // Simulate loading for smoother transition
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+        return () => clearTimeout(timer);
     }, []);
 
     const scrollToSection = (id: string) => {
@@ -508,49 +497,7 @@ const Company = () => {
 
             {/* Testimonials Section */}
             <Section id="testimonials" className="bg-primary scroll-mt-20">
-                <Container>
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Guest Reviews</h2>
-                        <p className="text-xl text-gray-100 max-w-3xl mx-auto">
-                            Read what our travelers have to say about their Lindberg Safaris experience
-                        </p>
-                    </div>
-
-                    {testimonials.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {testimonials.map((item, index) => (
-                                <div key={item._id || index} className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col h-full hover:shadow-md transition-all">
-                                    <Quote className="text-primary/20 mb-4 h-10 w-10" />
-                                    <p className="text-gray-600 mb-6 italic flex-grow">"{item.text}"</p>
-
-                                    <div className="flex items-center gap-1 text-accent mb-4">
-                                        {[...Array(item.rating || 5)].map((_, i) => (
-                                            <Star key={i} size={16} fill="currentColor" stroke="none" />
-                                        ))}
-                                    </div>
-
-                                    <div className="flex items-center gap-4 mt-auto pt-6 border-t border-gray-50">
-                                        <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden shrink-0">
-                                            <img
-                                                src={item.image?.url || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"}
-                                                alt={item.name}
-                                                className="w-full h-full object-cover"
-                                            />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold text-gray-900">{item.name}</h4>
-                                            <span className="text-xs text-gray-500">{item.location}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 bg-secondary-light rounded-lg">
-                            <p className="text-gray-600">No testimonials available yet.</p>
-                        </div>
-                    )}
-                </Container>
+                <TrustIndexWidget />
             </Section>
             {/* Team Section */}
             <Section className="bg-primary">

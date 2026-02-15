@@ -15,6 +15,7 @@ import PopupOffer from '@/components/ui/PopupOffer';
 import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
+import TrustIndexWidget from '@/components/ui/TrustIndexWidget';
 
 import { Tour, HotDeal } from '@/types';
 
@@ -498,6 +499,11 @@ const Home = () => {
             {/* 7. Our Team */}
             <Section className="bg-primary">
                 <TeamSection />
+            </Section>
+
+            {/* TrustIndex Reviews */}
+            <Section className="bg-primary">
+                <TrustIndexWidget />
             </Section>
 
             {/* Newsletter */}

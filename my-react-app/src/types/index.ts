@@ -136,14 +136,7 @@ export interface FAQ {
     order?: number;
 }
 
-export interface Testimonial {
-    _id: string;
-    name: string;
-    location?: string;
-    text?: string;
-    rating?: number;
-    image?: Image;
-}
+
 
 export interface Accommodation {
     _id: string;

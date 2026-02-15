@@ -181,23 +181,7 @@ export const popupAPI = {
     }
 };
 
-// Testimonial API
-export const testimonialAPI = {
-    getAll: async () => {
-        const query = `*[_type == "testimonial"] | order(_createdAt desc) {
-            _id,
-            name,
-            location,
-            text,
-            rating,
-            "image": {
-                "url": coalesce(image.url, image)
-            }
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-};
+
 
 // Packages API
 export const packagesAPI = {
@@ -311,7 +295,6 @@ export default {
     accommodations: accommodationsAPI,
     hotDeals: hotDealsAPI,
     popup: popupAPI,
-    testimonial: testimonialAPI,
     packages: packagesAPI,
     services: servicesAPI,
     themedPackages: themedPackageAPI,
