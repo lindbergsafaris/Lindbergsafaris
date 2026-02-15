@@ -88,26 +88,26 @@ const ThemedPackage = () => {
                                 </div>
                             )}
 
-                            {/* Package List */}
-                            <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">Available Packages</h3>
-                            {packages.length > 0 ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    {packages.map((pkg: any) => (
-                                        <TourCard
-                                            key={pkg._id}
-                                            id={pkg._id}
-                                            title={pkg.title}
-                                            image={pkg.image?.url || "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
-                                            duration={pkg.duration}
-                                            groupSize="Contact us"
-                                            price={pkg.price}
-                                            rating={0}
-                                            reviews={0}
-                                        />
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-gray-500 italic">No specific packages listed for this category yet. Contact us for a custom itinerary!</p>
+                            {/* Package List - Only show if there are actual packages to display */}
+                            {packages.length > 0 && (
+                                <>
+                                    <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">Available Packages</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {packages.map((pkg: any) => (
+                                            <TourCard
+                                                key={pkg._id}
+                                                id={pkg._id}
+                                                title={pkg.title}
+                                                image={pkg.image?.url || "https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}
+                                                duration={pkg.duration}
+                                                groupSize="Contact us"
+                                                price={pkg.price}
+                                                rating={0}
+                                                reviews={0}
+                                            />
+                                        ))}
+                                    </div>
+                                </>
                             )}
                         </div>
 
