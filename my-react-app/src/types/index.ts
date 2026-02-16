@@ -127,6 +127,7 @@ export interface Destination {
         currency?: string;
         language?: string;
     };
+    content?: any; // For flexible Sanity content
 }
 
 export interface FAQ {

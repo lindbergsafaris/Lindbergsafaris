@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Info, MapPin, Send } from 'lucide-react';
+import { PortableText } from '@portabletext/react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -8,32 +9,61 @@ import Button from '@/components/ui/Button';
 import { Destination, PlaceToVisit } from '@/types';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { destinationsData } from '@/data/destinations';
+import api from '@/lib/api';
+import LoadingScreen from '@/components/ui/LoadingScreen';
 
 const DestinationDetail = () => {
     const { id } = useParams<{ id: string }>();
 
-    // Get static destination data if available
-    const staticDestination = id ? destinationsData[id] : null;
+    const [destination, setDestination] = useState<Destination | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    // Calculate loading state
-    const loading = false;
+    useEffect(() => {
+        const fetchDestination = async () => {
+            setLoading(true);
+            try {
+                // Try fetching from Sanity first
+                if (id) {
+                    const { data } = await api.destinationPost.getBySlug(id);
+                    if (data) {
+                        setDestination({
+                            _id: data._id,
+                            name: data.title,
+                            slug: { current: data.slug },
+                            description: data.excerpt || '',
+                            heroImage: { url: data.image?.url },
+                            content: data.content,
+                            // Map other fields if available/needed
+                        } as Destination);
+                        setLoading(false);
+                        return;
+                    }
+                }
 
-    // Use static data
-    let destination: Destination | null = null;
+                // Fallback to static data
+                const staticDest = id ? destinationsData[id] : null;
+                if (staticDest) {
+                    setDestination({
+                        _id: staticDest.id,
+                        name: staticDest.name,
+                        tagline: staticDest.tagline,
+                        description: staticDest.description,
+                        heroImage: { url: staticDest.heroImage },
+                        highlights: staticDest.highlights,
+                        practicalInfo: staticDest.practicalInfo,
+                        placesToVisit: staticDest.placesToVisit,
+                        slug: { current: id || '' }
+                    } as Destination);
+                }
+            } catch (error) {
+                console.error("Failed to fetch destination:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    // If we have static data, use it
-    if (staticDestination) {
-        destination = {
-            _id: staticDestination.id,
-            name: staticDestination.name,
-            tagline: staticDestination.tagline,
-            description: staticDestination.description,
-            heroImage: { url: staticDestination.heroImage },
-            highlights: staticDestination.highlights,
-            practicalInfo: staticDestination.practicalInfo,
-            placesToVisit: staticDestination.placesToVisit,
-        } as Destination;
-    }
+        fetchDestination();
+    }, [id]);
 
 
     // Form State
@@ -66,13 +96,7 @@ const DestinationDetail = () => {
     };
 
     if (loading) {
-        return (
-            <Layout>
-                <div className="h-[50vh] flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                </div>
-            </Layout>
-        );
+        return <LoadingScreen />;
     }
 
     if (!destination) {
@@ -114,6 +138,28 @@ const DestinationDetail = () => {
                             <p className="text-gray-100 leading-relaxed mb-8 text-lg">
                                 {destination.description}
                             </p>
+
+                            {destination.content && (
+                                <div className="prose prose-lg prose-invert text-gray-100 leading-relaxed mb-8 max-w-none">
+                                    <PortableText
+                                        value={destination.content}
+                                        components={{
+                                            types: {
+                                                image: ({ value }: any) => {
+                                                    if (!value?.url) return null;
+                                                    return (
+                                                        <img
+                                                            src={value.url}
+                                                            alt={value.alt || 'Destination Image'}
+                                                            className="w-full h-auto rounded-lg my-8"
+                                                        />
+                                                    );
+                                                }
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            )}
 
                             {/* Highlights */}
                             {destination.highlights && destination.highlights.length > 0 && (
