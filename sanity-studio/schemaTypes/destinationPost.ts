@@ -56,7 +56,47 @@ export default {
             name: 'content',
             title: 'Content',
             type: 'array',
-            of: [{ type: 'block' }],
+            of: [
+                { type: 'block' },
+                {
+                    type: 'object',
+                    name: 'externalImage',
+                    title: 'External Image',
+                    fields: [
+                        {
+                            name: 'url',
+                            title: 'Image URL',
+                            type: 'url',
+                            description: 'Paste the Cloudinary (or other) image URL here.',
+                        },
+                        {
+                            name: 'alt',
+                            title: 'Alt Text',
+                            type: 'string',
+                            description: 'Alternative text for accessibility.',
+                        },
+                        {
+                            name: 'caption',
+                            title: 'Caption',
+                            type: 'string',
+                            description: 'Optional caption for the image.',
+                        }
+                    ],
+                    preview: {
+                        select: {
+                            imageUrl: 'url',
+                            title: 'alt'
+                        },
+                        prepare({ imageUrl, title }: any) {
+                            return {
+                                title: title || 'External Image',
+                                subtitle: imageUrl,
+                                media: imageUrl ? React.createElement('img', { src: imageUrl }) : undefined
+                            }
+                        }
+                    }
+                }
+            ],
         },
     ],
     preview: {

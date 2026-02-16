@@ -148,11 +148,35 @@ const DestinationDetail = () => {
                                                 image: ({ value }: any) => {
                                                     if (!value?.url) return null;
                                                     return (
-                                                        <img
-                                                            src={value.url}
-                                                            alt={value.alt || 'Destination Image'}
-                                                            className="w-full h-auto rounded-lg my-8"
-                                                        />
+                                                        <figure className="my-8">
+                                                            <img
+                                                                src={value.url}
+                                                                alt={value.alt || 'Destination Image'}
+                                                                className="w-full h-auto rounded-lg shadow-md"
+                                                            />
+                                                            {value.caption && (
+                                                                <figcaption className="text-center text-sm text-gray-400 mt-2 italic">
+                                                                    {value.caption}
+                                                                </figcaption>
+                                                            )}
+                                                        </figure>
+                                                    );
+                                                },
+                                                externalImage: ({ value }: any) => {
+                                                    if (!value?.url) return null;
+                                                    return (
+                                                        <figure className="my-8">
+                                                            <img
+                                                                src={value.url}
+                                                                alt={value.alt || 'Destination Image'}
+                                                                className="w-full h-auto rounded-lg shadow-md"
+                                                            />
+                                                            {value.caption && (
+                                                                <figcaption className="text-center text-sm text-gray-400 mt-2 italic">
+                                                                    {value.caption}
+                                                                </figcaption>
+                                                            )}
+                                                        </figure>
                                                     );
                                                 }
                                             }
