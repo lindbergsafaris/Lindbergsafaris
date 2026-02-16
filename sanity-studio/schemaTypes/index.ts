@@ -9,4 +9,7 @@ import popupOffer from './popupOffer'
 import themedPackage from './themedPackage'
 import teamMember from './teamMember'
 
-export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember]
+import destinationCategory from './destinationCategory'
+import destinationPost from './destinationPost'
+
+export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember, destinationCategory, destinationPost]

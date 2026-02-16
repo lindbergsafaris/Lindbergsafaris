@@ -289,6 +289,69 @@ export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
 };
 
+// Destination Categories API (Regions)
+export const destinationCategoryAPI = {
+    getAll: async () => {
+        const query = `*[_type == "destinationCategory"] | order(name asc) {
+            _id,
+            name,
+            "slug": slug.current,
+            description,
+            "image": {
+                "url": coalesce(imageUrl, image.asset->url)
+            }
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+    getBySlug: async (slug: string) => {
+        const query = `*[_type == "destinationCategory" && slug.current == $slug][0] {
+            _id,
+            name,
+            "slug": slug.current,
+            description,
+            "image": {
+                "url": coalesce(imageUrl, image.asset->url)
+            }
+        }`;
+        const data = await client.fetch(query, { slug });
+        return { data };
+    }
+};
+
+// Destination Posts API (Blogs/Destinations)
+export const destinationPostAPI = {
+    getByCategory: async (categorySlug: string) => {
+        const query = `*[_type == "destinationPost" && category->slug.current == $categorySlug] | order(title asc) {
+            _id,
+            title,
+            "slug": slug.current,
+            excerpt,
+            "image": {
+                "url": coalesce(imageUrl, image.asset->url)
+            },
+            tourCount
+        }`;
+        const data = await client.fetch(query, { categorySlug });
+        return { data };
+    },
+    getBySlug: async (slug: string) => {
+        const query = `*[_type == "destinationPost" && slug.current == $slug][0] {
+            _id,
+            title,
+            "slug": slug.current,
+            excerpt,
+            "image": {
+                "url": coalesce(imageUrl, image.asset->url)
+            },
+            tourCount,
+            content
+        }`;
+        const data = await client.fetch(query, { slug });
+        return { data };
+    }
+};
+
 export default {
     tours: toursAPI,
     blog: blogAPI,
@@ -299,6 +362,8 @@ export default {
     services: servicesAPI,
     themedPackages: themedPackageAPI,
     teamMember: teamMemberAPI,
+    destinationCategory: destinationCategoryAPI,
+    destinationPost: destinationPostAPI,
     healthCheck,
 };
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import api from '@/lib/api';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import LanguageSelector from '@/components/LanguageSelector';
@@ -12,6 +13,19 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const [destinationCategories, setDestinationCategories] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const { data } = await api.destinationCategory.getAll();
+                setDestinationCategories(data || []);
+            } catch (error) {
+                console.error('Failed to fetch destination categories:', error);
+            }
+        };
+        fetchCategories();
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -61,15 +75,14 @@ const Header = () => {
         {
             name: t('nav.destination'),
             path: '#',
-            dropdown: [
+            dropdown: destinationCategories.length > 0 ? destinationCategories.map(cat => ({
+                name: cat.name,
+                path: `/regions/${cat.slug}`,
+                bold: false
+            })) : [
+                // Fallback if no categories found or error
                 { name: t('destinations.kenya'), path: '/destinations/kenya', bold: true },
-                { name: t('destinations.africa'), path: '/regions/africa' },
-                { name: t('destinations.middleEast'), path: '/regions/middle-east' },
-                { name: t('destinations.europe'), path: '/regions/europe' },
-                { name: t('destinations.america'), path: '/regions/america' },
-                { name: t('destinations.oceania'), path: '/regions/oceania' },
-                { name: t('destinations.southAmerica'), path: '/regions/south-america' },
-                { name: t('destinations.northAmerica'), path: '/regions/north-america' },
+                { name: t('destinations.africa'), path: '/regions/africa', bold: false },
             ]
         },
         {
@@ -145,7 +158,7 @@ const Header = () => {
                                             <Link
                                                 key={subItem.name}
                                                 to={subItem.path}
-                                                className={`block px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary ${subItem.bold ? 'font-bold' : ''}`}
+                                                className={`block px-4 py-2 text-sm text-gray-700 hover:bg-primary/5 hover:text-primary ${(subItem as any).bold ? 'font-bold' : ''}`}
                                             >
                                                 {subItem.name}
                                             </Link>
@@ -203,7 +216,7 @@ const Header = () => {
                                                 <Link
                                                     key={subItem.name}
                                                     to={subItem.path}
-                                                    className={`block text-sm text-gray-600 hover:text-primary ${subItem.bold ? 'font-bold' : ''}`}
+                                                    className={`block text-sm text-gray-600 hover:text-primary ${(subItem as any).bold ? 'font-bold' : ''}`}
                                                     onClick={() => setIsMobileMenuOpen(false)}
                                                 >
                                                     {subItem.name}
