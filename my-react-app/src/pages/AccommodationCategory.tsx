@@ -49,10 +49,17 @@ const AccommodationCategory = () => {
 
     return (
         <Layout>
-            <div className="bg-primary text-white py-20">
-                <Container>
+            {/* Hero Section with Background Image */}
+            <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
+                <div
+                    className="absolute inset-0 bg-cover bg-center z-0"
+                    style={{ backgroundImage: `url("https://res.cloudinary.com/dbqdpitah/image/upload/v1771310598/pexels-renato-conti-1385524-2677843_rcoj7q.jpg")` }}
+                >
+                    <div className="absolute inset-0 bg-black/50" />
+                </div>
+                <Container className="relative z-10">
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 capitalize">{info.title}</h1>
-                    <p className="text-lg text-primary-light max-w-2xl">{info.description}</p>
+                    <p className="text-lg text-gray-100 max-w-2xl">{info.description}</p>
                 </Container>
             </div>
 
