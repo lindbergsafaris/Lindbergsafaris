@@ -119,7 +119,7 @@ const DestinationDetail = () => {
             <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: `url("${destination.heroImage}")` }}
+                    style={{ backgroundImage: `url("${destination.heroImage?.url || destination.heroImage}")` }}
                 >
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
