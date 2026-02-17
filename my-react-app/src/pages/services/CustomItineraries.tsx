@@ -9,6 +9,7 @@ const CustomItineraries = () => {
     const itineraries = [
         {
             title: "Great Migration Safari – 3 Days / 2 Nights",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278431/GM1_tzw1hw.jpg",
             duration: "3 Days / 2 Nights",
             location: "Masai Mara National Reserve",
             dates: "July | August | September | October",
@@ -23,6 +24,7 @@ const CustomItineraries = () => {
         },
         {
             title: "10-Day Kenya Safari: Amboseli, Laikipia & Masai Mara",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278431/GM2_ph75ki.png",
             duration: "10 Days / 9 Nights",
             location: "Amboseli, Laikipia & Masai Mara",
             description: "Begin your journey in Nairobi, where your safari host welcomes you and sets the stage for Kenya's wild wonders. From here, head straight into the heart of the wilderness for a truly unforgettable adventure.",
@@ -43,6 +45,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Cultural Tour – Nairobi",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278431/GM3_kmyl8m.jpg",
             duration: "1 Day",
             location: "Nairobi",
             description: "Dive into the heart of Nairobi, Kenya's lively capital, on a journey that blends heritage, modern life, and local experiences. Guided by Nairobi natives, explore historic landmarks, bustling markets, and green urban parks while discovering the city's diverse communities and traditions.",
@@ -60,6 +63,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Bush to Beach Safari – 10 Days / 9 Nights",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278432/GM4_uapgnw.jpg",
             duration: "10 Days / 9 Nights",
             location: "Nairobi, Lake Nakuru, Lake Naivasha, Masai Mara, Mombasa Coast",
             description: "Begin your adventure in Nairobi, Kenya's vibrant capital, where your safari host welcomes you and sets the stage for an unforgettable journey. Explore the city's rich culture and wildlife on a Nairobi city tour, visiting the David Sheldrick Wildlife Trust to see orphaned elephants, the Giraffe Centre to meet endangered Rothschild giraffes up close, and the Nairobi National Park, where wildlife roams against the backdrop of the city skyline.",
@@ -80,6 +84,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Honeymoon Safari – 4 Days / 3 Nights",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278433/GM5_y9vd9b.png",
             duration: "4 Days / 3 Nights",
             location: "Masai Mara",
             description: "Celebrate love in the heart of the Masai Mara, where endless golden plains and breathtaking sunsets create the perfect romantic backdrop. Over four days and three nights, enjoy intimate moments together in the wild, with optional morning and afternoon game drives to spot elephants, lions, giraffes, and more.",
@@ -88,6 +93,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Elephant Safari – Amboseli & Tsavo East",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278432/GM6_cp4ztw.jpg",
             duration: "4 Days / 3 Nights",
             location: "Amboseli & Tsavo East",
             description: "Embark on a 4-day wildlife adventure focused on Kenya's gentle giants the elephants. Begin in Amboseli National Park, where vast savannahs unfold beneath the snow-capped Mount Kilimanjaro. Spend two days on game drives, watching majestic elephant herds move gracefully across the plains, while lions, giraffes, buffalo, and a rich variety of birds complete the iconic African scene.",
@@ -96,6 +102,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Coastal Escape – Diani",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771068787/Hotel-2_gy0n7i.jpg",
             duration: "3 Days / 2 Nights",
             location: "Diani Beach",
             description: "Unwind on the white-sand beaches of Diani, where turquoise waters and swaying palms set the perfect backdrop. Enjoy dolphin-watching excursions or a sunset dhow cruise for unforgettable moments on the Indian Ocean.",
@@ -103,6 +110,7 @@ const CustomItineraries = () => {
         },
         {
             title: "Kenya Golf & Safari Adventure",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1771278432/GM7_mq9rsd.png",
             duration: "10 Days / 9 Nights",
             location: "Nairobi, Mount Kenya, Lake Naivasha, Masai Mara",
             description: "Experience the perfect blend of world-class golf and Kenya's iconic wildlife on this unforgettable journey. Begin in Nairobi, where you visit the Giraffe Centre to meet endangered Rothschild giraffes up close. After your city introduction, unwind at the Windsor Golf & Country Club, teeing off on lush fairways or enjoying the lodge's tranquil surroundings.",
@@ -156,6 +164,15 @@ const CustomItineraries = () => {
                     <div className="space-y-16">
                         {itineraries.map((itinerary, index) => (
                             <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                                {itinerary.image && (
+                                    <div className="w-full h-64 md:h-80 overflow-hidden">
+                                        <img
+                                            src={itinerary.image}
+                                            alt={itinerary.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                )}
                                 <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 md:p-8">
                                     <h2 className="text-2xl md:text-3xl font-serif font-bold text-gray-900 mb-4">
                                         {itinerary.title}
