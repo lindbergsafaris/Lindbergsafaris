@@ -78,7 +78,7 @@ const Header = () => {
             dropdown: destinationCategories.length > 0 ? destinationCategories.map(cat => ({
                 name: cat.name,
                 path: `/regions/${cat.slug}`,
-                bold: false
+                bold: cat.isFeatured === true
             })) : [
                 // Fallback if no categories found or error
                 { name: t('destinations.kenya'), path: '/destinations/kenya', bold: true },

@@ -292,11 +292,12 @@ export const healthCheck = async () => {
 // Destination Categories API (Regions)
 export const destinationCategoryAPI = {
     getAll: async () => {
-        const query = `*[_type == "destinationCategory"] | order(name asc) {
+        const query = `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) {
             _id,
             name,
             "slug": slug.current,
             description,
+            isFeatured,
             "image": {
                 "url": coalesce(imageUrl, image.asset->url)
             }

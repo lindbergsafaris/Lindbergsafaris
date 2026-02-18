@@ -38,5 +38,12 @@ export default {
             type: 'url',
             description: 'Optional: Use this for Cloudinary or external images if not uploading directly.',
         },
+        {
+            name: 'isFeatured',
+            title: 'Featured (Bold & Top)',
+            type: 'boolean',
+            description: 'If checked, this category will appear bold and at the top of destination lists.',
+            initialValue: false,
+        },
     ],
 }
