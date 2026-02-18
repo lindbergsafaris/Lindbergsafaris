@@ -303,7 +303,14 @@ export const destinationCategoryAPI = {
             }
         }`;
         const data = await client.fetch(query);
-        return { data };
+        // Sort featured categories to the top (frontend sort for reliable null handling)
+        const sorted = (data || []).sort((a: any, b: any) => {
+            const aFeat = a.isFeatured ? 1 : 0;
+            const bFeat = b.isFeatured ? 1 : 0;
+            if (bFeat !== aFeat) return bFeat - aFeat;
+            return (a.name || '').localeCompare(b.name || '');
+        });
+        return { data: sorted };
     },
     getBySlug: async (slug: string) => {
         const query = `*[_type == "destinationCategory" && slug.current == $slug][0] {
