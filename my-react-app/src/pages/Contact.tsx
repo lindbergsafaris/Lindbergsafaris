@@ -1,11 +1,41 @@
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import { Mail, Phone, MapPin, Clock, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
 import LocationMap from '@/components/ui/LocationMap';
 
 const Contact = () => {
+    const form = useRef<HTMLFormElement>(null);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!form.current) return;
+
+        setStatus('loading');
+        setErrorMessage('');
+
+        try {
+            await emailjs.sendForm(
+                'service_3vdy70u',
+                'template_6yeyvl4',
+                form.current,
+                'C-W21o3Kn1O6qbiGI'
+            );
+            setStatus('success');
+            form.current.reset();
+        } catch (error) {
+            console.error('EmailJS Error:', error);
+            setStatus('error');
+            setErrorMessage('Failed to send message. Please try again later or contact us directly.');
+        }
+    };
+
     return (
         <Layout>
             {/* Hero */}
@@ -32,40 +62,102 @@ const Contact = () => {
                                 Have a question or ready to book? Fill out the form below and our team will get back to you within 24 hours.
                             </p>
 
-                            <form className="space-y-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-200 mb-1">First Name</label>
-                                        <input type="text" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
+                            {status === 'success' ? (
+                                <div className="bg-green-500/10 border border-green-500/50 p-8 rounded-xl text-center">
+                                    <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                                    <h3 className="text-2xl font-serif font-bold text-white mb-2">Message Sent!</h3>
+                                    <p className="text-gray-200 mb-6">Thank you for reaching out. We've received your inquiry and will get back to you shortly.</p>
+                                    <Button
+                                        onClick={() => setStatus('idle')}
+                                        variant="outline"
+                                        className="text-white border-white/20 hover:bg-white/10"
+                                    >
+                                        Send Another Message
+                                    </Button>
+                                </div>
+                            ) : (
+                                <form ref={form} onSubmit={handleSubmit} className="space-y-6">
+                                    {status === 'error' && (
+                                        <div className="bg-red-500/10 border border-red-500/50 p-4 rounded-lg flex items-center gap-3 text-red-200 mb-6">
+                                            <AlertCircle size={20} className="shrink-0" />
+                                            <p className="text-sm">{errorMessage}</p>
+                                        </div>
+                                    )}
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label htmlFor="first_name" className="block text-sm font-medium text-gray-200 mb-1">First Name</label>
+                                            <input
+                                                id="first_name"
+                                                name="first_name"
+                                                type="text"
+                                                required
+                                                className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label htmlFor="last_name" className="block text-sm font-medium text-gray-200 mb-1">Last Name</label>
+                                            <input
+                                                id="last_name"
+                                                name="last_name"
+                                                type="text"
+                                                required
+                                                className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"
+                                            />
+                                        </div>
                                     </div>
+
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-200 mb-1">Last Name</label>
-                                        <input type="text" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
+                                        <label htmlFor="user_email" className="block text-sm font-medium text-gray-200 mb-1">Email Address</label>
+                                        <input
+                                            id="user_email"
+                                            name="user_email"
+                                            type="email"
+                                            required
+                                            className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"
+                                        />
                                     </div>
-                                </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-200 mb-1">Email Address</label>
-                                    <input type="email" className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20" />
-                                </div>
+                                    <div>
+                                        <label htmlFor="subject" className="block text-sm font-medium text-gray-200 mb-1">Subject</label>
+                                        <select
+                                            id="subject"
+                                            name="subject"
+                                            className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20 [&>option]:text-gray-900"
+                                        >
+                                            <option value="General Inquiry">General Inquiry</option>
+                                            <option value="Booking Request">Booking Request</option>
+                                            <option value="Partnership">Partnership</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-200 mb-1">Subject</label>
-                                    <select className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20 [&>option]:text-gray-900">
-                                        <option>General Inquiry</option>
-                                        <option>Booking Request</option>
-                                        <option>Partnership</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
+                                    <div>
+                                        <label htmlFor="message" className="block text-sm font-medium text-gray-200 mb-1">Message</label>
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            rows={5}
+                                            required
+                                            className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"
+                                        ></textarea>
+                                    </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-200 mb-1">Message</label>
-                                    <textarea rows={5} className="w-full px-4 py-2 border border-gray-600 bg-white/10 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-white/20"></textarea>
-                                </div>
-
-                                <Button size="lg" className="w-full md:w-auto">Send Message</Button>
-                            </form>
+                                    <Button
+                                        type="submit"
+                                        size="lg"
+                                        disabled={status === 'loading'}
+                                        className="w-full md:w-auto min-w-[160px]"
+                                    >
+                                        {status === 'loading' ? (
+                                            <span className="flex items-center gap-2">
+                                                <Loader2 size={20} className="animate-spin" />
+                                                Sending...
+                                            </span>
+                                        ) : 'Send Message'}
+                                    </Button>
+                                </form>
+                            )}
                         </div>
 
                         {/* Contact Info */}
@@ -115,7 +207,6 @@ const Contact = () => {
                                 </div>
                             </div>
 
-                            {/* Map Placeholder */}
                             <LocationMap className="mt-8 h-64 rounded-lg shadow-md" />
                         </div>
                     </div>
