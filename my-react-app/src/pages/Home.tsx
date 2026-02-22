@@ -201,7 +201,7 @@ const Home = () => {
                             <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
                                 <Tag size={16} /> {t('home:hotDeals.badge')}
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-white">{t('home:hotDeals.title')}</h2>
+                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-red-600">{t('home:hotDeals.title')}</h2>
                             <p className="text-lg text-gray-100 max-w-2xl mx-auto">{t('home:hotDeals.description')}</p>
                         </div>
 
@@ -253,8 +253,8 @@ const Home = () => {
                                             <Button
                                                 size="lg"
                                                 className={`w-full font-bold uppercase tracking-widest shadow-xl transition-all duration-300 ${isExpired
-                                                        ? 'bg-gray-400 cursor-not-allowed'
-                                                        : 'bg-white text-primary hover:bg-primary hover:text-white border-none scale-100 active:scale-95'
+                                                    ? 'bg-gray-400 cursor-not-allowed'
+                                                    : 'bg-white text-primary hover:bg-primary hover:text-white border-none scale-100 active:scale-95'
                                                     }`}
                                                 disabled={isExpired}
                                                 onClick={() => window.open(getWhatsAppLink(deal.whatsappMessage || `I am interested in the ${deal.title} offer`, deal.whatsappNumber), '_blank')}
