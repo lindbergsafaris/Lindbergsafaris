@@ -16,17 +16,6 @@ export default {
             validation: (Rule: any) => Rule.required(),
         },
         {
-            name: 'price',
-            title: 'Price',
-            type: 'string',
-            validation: (Rule: any) => Rule.required(),
-        },
-        {
-            name: 'originalPrice',
-            title: 'Original Price',
-            type: 'string',
-        },
-        {
             name: 'image',
             title: 'Image',
             type: 'object',
@@ -44,6 +33,27 @@ export default {
                     type: 'string',
                 },
             ],
+            validation: (Rule: any) => Rule.required(),
+        },
+        {
+            name: 'whatsappNumber',
+            title: 'WhatsApp Number',
+            type: 'string',
+            description: 'Phone number with country code (e.g. +254700000000). Used for the "Inquire More" button.',
+            validation: (Rule: any) => Rule.required(),
+        },
+        {
+            name: 'whatsappMessage',
+            title: 'WhatsApp Pre-filled Message',
+            type: 'string',
+            description: 'Optional pre-filled message when user clicks "Inquire More".',
+            initialValue: 'Hello, I am interested in this hot deal. Please share more details.',
+        },
+        {
+            name: 'dealExpiry',
+            title: 'Deal Expiry Date & Time',
+            type: 'datetime',
+            description: 'Set the deadline for this deal. A countdown or expiry notice will be shown.',
             validation: (Rule: any) => Rule.required(),
         },
         {
