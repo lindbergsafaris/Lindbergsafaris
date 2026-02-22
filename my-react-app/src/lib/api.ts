@@ -141,15 +141,15 @@ export const accommodationsAPI = {
     },
 };
 
-// Hot Deals API
 export const hotDealsAPI = {
     getAll: async () => {
         const query = `*[_type == "hotDeal" && isActive == true] | order(_createdAt desc) {
             _id,
             title,
             description,
-            price,
-            originalPrice,
+            whatsappNumber,
+            whatsappMessage,
+            dealExpiry,
             tag,
             "image": image{
                 url,

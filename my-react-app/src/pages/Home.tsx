@@ -206,41 +206,51 @@ const Home = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {hotDeals.map((deal) => (
-                                <div key={deal._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-                                    <div className="relative h-48 overflow-hidden">
-                                        {deal.tag && (
-                                            <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
-                                                {deal.tag}
-                                            </div>
-                                        )}
-                                        <img
-                                            src={deal.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                            alt={deal.title}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                        />
-                                    </div>
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold mb-2 text-gray-900">{deal.title}</h3>
-                                        <div className="flex justify-between items-center mb-4">
-                                            {/* <span className="text-gray-500 text-sm">{deal.duration}</span> */}
-                                            <div className="text-right w-full">
-                                                {deal.originalPrice && (
-                                                    <span className="text-gray-400 line-through text-sm block">KSH {deal.originalPrice}</span>
-                                                )}
-                                                <span className="text-primary font-bold text-lg">KSH {deal.price}</span>
-                                            </div>
+                            {hotDeals.map((deal) => {
+                                const isExpired = new Date(deal.dealExpiry) < new Date();
+                                return (
+                                    <div key={deal._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
+                                        <div className="relative h-48 overflow-hidden">
+                                            {deal.tag && (
+                                                <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+                                                    {deal.tag}
+                                                </div>
+                                            )}
+                                            <img
+                                                src={deal.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                                                alt={deal.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            />
                                         </div>
-                                        <Button
-                                            variant="outline"
-                                            className="w-full"
-                                            onClick={() => window.open(getWhatsAppLink(`I am interested in the ${deal.title} offer`), '_blank')}
-                                        >
-                                            {t('common:buttons.inquireDeal')}
-                                        </Button>
+                                        <div className="p-6">
+                                            <h3 className="text-xl font-bold mb-2 text-gray-900">{deal.title}</h3>
+                                            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{deal.description}</p>
+
+                                            <div className="flex flex-col gap-1 mb-4">
+                                                <span className={`text-xs font-bold uppercase ${isExpired ? 'text-red-500' : 'text-primary'}`}>
+                                                    {isExpired ? 'Offer Expired' : 'Limited Time Offer'}
+                                                </span>
+                                                <span className="text-gray-500 text-sm">
+                                                    Ends: {new Date(deal.dealExpiry).toLocaleDateString('en-GB', {
+                                                        day: 'numeric',
+                                                        month: 'short',
+                                                        year: 'numeric'
+                                                    })}
+                                                </span>
+                                            </div>
+
+                                            <Button
+                                                variant={isExpired ? "secondary" : "outline"}
+                                                className="w-full"
+                                                disabled={isExpired}
+                                                onClick={() => window.open(getWhatsAppLink(deal.whatsappMessage || `I am interested in the ${deal.title} offer`, deal.whatsappNumber), '_blank')}
+                                            >
+                                                {isExpired ? 'Deal Ended' : t('common:buttons.inquireDeal')}
+                                            </Button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </Container>
                 </Section>

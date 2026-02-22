@@ -33,12 +33,12 @@ export interface Tour {
 export interface HotDeal {
     _id: string;
     title: string;
+    description: string;
     tag?: string;
     image: Image;
-    originalPrice?: number | string;
-    price: number | string;
-    duration?: string;
-    description?: string;
+    whatsappNumber: string;
+    whatsappMessage?: string;
+    dealExpiry: string;
 }
 
 export interface Partner {
