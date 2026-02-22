@@ -429,54 +429,56 @@ const Company = () => {
                     </div>
 
                     <div className="max-w-4xl mx-auto space-y-12">
-                        {faqCategories.map((category, catIndex) => {
-                            // Define distinct color schemes for each category
-                            const colorSchemes = [
-                                { border: "border-yellow-400", bg: "bg-yellow-400/10", title: "text-yellow-400" },
-                                { border: "border-blue-400", bg: "bg-blue-400/10", title: "text-blue-400" },
-                                { border: "border-green-400", bg: "bg-green-400/10", title: "text-green-400" },
-                                { border: "border-orange-400", bg: "bg-orange-400/10", title: "text-orange-400" },
-                                { border: "border-purple-400", bg: "bg-purple-400/10", title: "text-purple-400" },
-                                { border: "border-red-400", bg: "bg-red-400/10", title: "text-red-400" },
-                            ];
-                            const scheme = colorSchemes[catIndex % colorSchemes.length];
-
-                            return (
-                                <div key={catIndex} className={`p-6 rounded-xl border ${scheme.border} ${scheme.bg} backdrop-blur-sm`}>
-                                    <h3 className={`text-2xl font-serif font-bold mb-6 ${scheme.title} border-b ${scheme.border} pb-2`}>{category.title}</h3>
-                                    <div className="space-y-4">
-                                        {category.items.map((item, itemIndex) => {
-                                            const isOpen = openFaqIndex === `${catIndex}-${itemIndex}`;
-                                            return (
-                                                <div key={itemIndex} className={`border ${scheme.border} rounded-lg overflow-hidden bg-black/20`}>
-                                                    <button
-                                                        className="w-full flex items-center justify-between p-6 hover:bg-white/5 transition-colors text-left"
-                                                        onClick={() => toggleFaq(catIndex, itemIndex)}
-                                                    >
-                                                        <span className="font-bold text-lg text-white pr-4">{item.question}</span>
-                                                        {isOpen ? (
-                                                            <Minus className="text-white shrink-0" />
-                                                        ) : (
-                                                            <Plus className="text-white shrink-0" />
-                                                        )}
-                                                    </button>
-                                                    <div
-                                                        className={cn(
-                                                            "transition-all duration-300 ease-in-out overflow-hidden",
-                                                            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                                                        )}
-                                                    >
-                                                        <div className={`p-6 text-white leading-relaxed bg-black/80 border-t ${scheme.border}`}>
-                                                            {item.answer}
-                                                        </div>
+                        {faqCategories.map((category, catIndex) => (
+                            <div key={catIndex} className="p-8 rounded-2xl border border-accent/30 bg-primary-dark/40 backdrop-blur-md shadow-2xl">
+                                <h3 className="text-2xl font-serif font-bold mb-8 text-accent border-b border-accent/20 pb-4 flex items-center gap-3">
+                                    <span className="w-2 h-8 bg-accent rounded-full" />
+                                    {category.title}
+                                </h3>
+                                <div className="space-y-6">
+                                    {category.items.map((item, itemIndex) => {
+                                        const isOpen = openFaqIndex === `${catIndex}-${itemIndex}`;
+                                        return (
+                                            <div
+                                                key={itemIndex}
+                                                className={cn(
+                                                    "border border-accent/20 rounded-xl overflow-hidden transition-all duration-300",
+                                                    isOpen ? "bg-primary-dark/60 shadow-lg ring-1 ring-accent/30" : "bg-white/5 hover:bg-white/10"
+                                                )}
+                                            >
+                                                <button
+                                                    className="w-full flex items-center justify-between p-6 text-left group"
+                                                    onClick={() => toggleFaq(catIndex, itemIndex)}
+                                                >
+                                                    <span className={cn(
+                                                        "font-bold text-lg pr-4 transition-colors duration-300",
+                                                        isOpen ? "text-accent" : "text-white group-hover:text-accent/80"
+                                                    )}>
+                                                        {item.question}
+                                                    </span>
+                                                    <div className={cn(
+                                                        "w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300",
+                                                        isOpen ? "bg-accent text-primary rotate-180" : "bg-white/10 text-white"
+                                                    )}>
+                                                        {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+                                                    </div>
+                                                </button>
+                                                <div
+                                                    className={cn(
+                                                        "transition-all duration-500 ease-in-out overflow-hidden",
+                                                        isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                                                    )}
+                                                >
+                                                    <div className="p-6 text-gray-100 leading-relaxed border-t border-accent/10 text-lg bg-black/20">
+                                                        {item.answer}
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                            );
-                        })}
+                            </div>
+                        ))}
                     </div>
 
                     {/* Still Have Questions CTA */}
