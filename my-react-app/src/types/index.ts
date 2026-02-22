@@ -33,7 +33,6 @@ export interface Tour {
 export interface HotDeal {
     _id: string;
     title: string;
-    description: string;
     tag?: string;
     image: Image;
     whatsappNumber: string;

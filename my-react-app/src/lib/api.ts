@@ -146,7 +146,6 @@ export const hotDealsAPI = {
         const query = `*[_type == "hotDeal" && isActive == true] | order(_createdAt desc) {
             _id,
             title,
-            description,
             whatsappNumber,
             whatsappMessage,
             dealExpiry,

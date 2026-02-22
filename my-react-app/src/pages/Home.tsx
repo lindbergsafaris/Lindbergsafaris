@@ -209,43 +209,57 @@ const Home = () => {
                             {hotDeals.map((deal) => {
                                 const isExpired = new Date(deal.dealExpiry) < new Date();
                                 return (
-                                    <div key={deal._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all group">
-                                        <div className="relative h-48 overflow-hidden">
+                                    <div
+                                        key={deal._id}
+                                        className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end"
+                                    >
+                                        {/* Background Image */}
+                                        <div
+                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-105"
+                                            style={{ backgroundImage: `url("${deal.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}")` }}
+                                        />
+
+                                        {/* Overlay Gradient */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/20" />
+
+                                        {/* Top Badges */}
+                                        <div className="absolute top-4 left-4 right-4 flex justify-between items-start z-10">
                                             {deal.tag && (
-                                                <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+                                                <div className="bg-red-600 text-white text-[10px] uppercase tracking-widest font-black px-3 py-1.5 rounded-full shadow-lg">
                                                     {deal.tag}
                                                 </div>
                                             )}
-                                            <img
-                                                src={deal.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                                alt={deal.title}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                            />
-                                        </div>
-                                        <div className="p-6">
-                                            <h3 className="text-xl font-bold mb-2 text-gray-900">{deal.title}</h3>
-                                            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{deal.description}</p>
-
-                                            <div className="flex flex-col gap-1 mb-4">
-                                                <span className={`text-xs font-bold uppercase ${isExpired ? 'text-red-500' : 'text-primary'}`}>
-                                                    {isExpired ? 'Offer Expired' : 'Limited Time Offer'}
-                                                </span>
-                                                <span className="text-gray-500 text-sm">
-                                                    Ends: {new Date(deal.dealExpiry).toLocaleDateString('en-GB', {
-                                                        day: 'numeric',
-                                                        month: 'short',
-                                                        year: 'numeric'
-                                                    })}
-                                                </span>
+                                            <div className={`px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-md ${isExpired ? 'bg-black/50 text-white' : 'bg-white/20 text-white border border-white/30'}`}>
+                                                {isExpired ? 'Expired' : 'Live Deal'}
                                             </div>
+                                        </div>
+
+                                        {/* Bottom Content */}
+                                        <div className="relative p-6 z-10 text-white">
+                                            <h3 className="text-2xl font-black mb-1 uppercase tracking-tight drop-shadow-md font-serif">
+                                                {deal.title}
+                                            </h3>
+
+                                            {!isExpired && (
+                                                <div className="flex items-center gap-2 mb-4 text-white/80 text-xs font-medium">
+                                                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                                    Ends {new Date(deal.dealExpiry).toLocaleDateString('en-GB', {
+                                                        day: 'numeric',
+                                                        month: 'short'
+                                                    })}
+                                                </div>
+                                            )}
 
                                             <Button
-                                                variant={isExpired ? "secondary" : "outline"}
-                                                className="w-full"
+                                                size="lg"
+                                                className={`w-full font-bold uppercase tracking-widest shadow-xl transition-all duration-300 ${isExpired
+                                                        ? 'bg-gray-400 cursor-not-allowed'
+                                                        : 'bg-white text-primary hover:bg-primary hover:text-white border-none scale-100 active:scale-95'
+                                                    }`}
                                                 disabled={isExpired}
                                                 onClick={() => window.open(getWhatsAppLink(deal.whatsappMessage || `I am interested in the ${deal.title} offer`, deal.whatsappNumber), '_blank')}
                                             >
-                                                {isExpired ? 'Deal Ended' : t('common:buttons.inquireDeal')}
+                                                {isExpired ? 'Offer Ended' : t('common:buttons.inquireDeal')}
                                             </Button>
                                         </div>
                                     </div>
