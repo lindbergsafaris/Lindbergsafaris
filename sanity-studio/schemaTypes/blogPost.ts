@@ -29,8 +29,76 @@ export default {
         {
             name: 'content',
             title: 'Content',
-            type: 'text',
-            description: 'Full blog post content (HTML supported)',
+            type: 'array',
+            of: [
+                { type: 'block' },
+                {
+                    type: 'object',
+                    name: 'externalImage',
+                    title: 'External Image',
+                    fields: [
+                        {
+                            name: 'url',
+                            title: 'Image URL',
+                            type: 'url',
+                            description: 'Paste the Cloudinary (or other) image URL here.',
+                        },
+                        {
+                            name: 'alt',
+                            title: 'Alt Text',
+                            type: 'string',
+                            description: 'Alternative text for accessibility.',
+                        },
+                        {
+                            name: 'caption',
+                            title: 'Caption',
+                            type: 'string',
+                            description: 'Optional caption for the image.',
+                        }
+                    ],
+                    preview: {
+                        select: {
+                            imageUrl: 'url',
+                            title: 'alt'
+                        },
+                        prepare({ imageUrl, title }: any) {
+                            return {
+                                title: title || 'External Image',
+                                subtitle: imageUrl,
+                            }
+                        }
+                    }
+                },
+                {
+                    type: 'object',
+                    name: 'videoEmbed',
+                    title: 'Video Embed',
+                    fields: [
+                        {
+                            name: 'url',
+                            title: 'Video URL',
+                            type: 'url',
+                            description: 'YouTube, Vimeo, or Google Drive share link',
+                        },
+                        {
+                            name: 'caption',
+                            title: 'Caption',
+                            type: 'string',
+                        }
+                    ],
+                    preview: {
+                        select: {
+                            url: 'url',
+                        },
+                        prepare({ url }: any) {
+                            return {
+                                title: 'Video Embed',
+                                subtitle: url,
+                            }
+                        }
+                    }
+                }
+            ],
             validation: (Rule: any) => Rule.required(),
         },
         {

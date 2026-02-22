@@ -162,6 +162,6 @@ export interface BlogPost {
     featuredImage?: Image;
     excerpt?: string;
     author?: string;
-    content: string;
+    content: any;
     readTime?: string;
 }
