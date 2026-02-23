@@ -3,6 +3,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import { Check } from 'lucide-react';
+import { getWhatsAppLink } from '@/lib/utils';
 
 const Flights = () => {
     const partnerLogos = [
@@ -49,7 +50,13 @@ const Flights = () => {
                             <p className="text-gray-600 leading-relaxed mb-6">
                                 Experience hassle-free travel with our all-in-one ticketing services. Whether flying across continents, cruising the seas, or exploring scenic routes by train, bus, or ferry, every journey is made simple, affordable, and personalized. Our team ensures smooth bookings, flexible options, and reliable support from start to finish.
                             </p>
-                            <Button size="lg">Request a Quote</Button>
+                            <a
+                                href={getWhatsAppLink("Hello! I'm interested in requesting a quote for your ticketing services.")}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <Button size="lg">Request a Quote</Button>
+                            </a>
                         </div>
                     </div>
                 </Container>
@@ -200,7 +207,13 @@ const Flights = () => {
                         <p className="text-gray-700 leading-relaxed mb-8 text-lg">
                             At Lindberg holiday, every ticket booked is more than a reservation — it's the beginning of a seamless travel experience. Whether by air, sea, rail, or road, we make sure your journey is effortless, comfortable, and unforgettable.
                         </p>
-                        <Button size="lg" className="px-10">Contact Us for Bookings</Button>
+                        <a
+                            href={getWhatsAppLink("Hello! I'd like to contact you for flight/ticketing bookings.")}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <Button size="lg" className="px-10">Contact Us for Bookings</Button>
+                        </a>
                     </div>
                 </Container>
             </Section>

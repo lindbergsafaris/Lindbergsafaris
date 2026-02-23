@@ -3,6 +3,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import { Check } from 'lucide-react';
+import { getWhatsAppLink } from '@/lib/utils';
 
 const Transport = () => {
     const features = [
@@ -50,7 +51,13 @@ const Transport = () => {
                                         </li>
                                     ))}
                                 </ul>
-                                <Button size="lg">Request a Quote</Button>
+                                <a
+                                    href={getWhatsAppLink("Hello! I'm interested in a transport service quote.")}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <Button size="lg">Request a Quote</Button>
+                                </a>
                             </div>
                             <div className="md:w-1/2">
                                 <img
