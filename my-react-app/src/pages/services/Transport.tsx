@@ -53,13 +53,11 @@ const Transport = () => {
                                 <Button size="lg">Request a Quote</Button>
                             </div>
                             <div className="md:w-1/2">
-                                <div className="relative h-72 w-full rounded-lg overflow-hidden shadow-xl">
-                                    <img
-                                        src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/vehicle5_vy2gbe.jpg"
-                                        alt="Safari Vehicle"
-                                        className="absolute inset-0 w-full h-full object-cover"
-                                    />
-                                </div>
+                                <img
+                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/vehicle5_vy2gbe.jpg"
+                                    alt="Safari Vehicle"
+                                    className="w-full h-72 object-cover rounded-lg shadow-xl"
+                                />
                             </div>
                         </div>
 
@@ -86,13 +84,11 @@ const Transport = () => {
                                 </div>
                             </div>
                             <div className="md:w-1/2">
-                                <div className="relative h-72 w-full rounded-lg overflow-hidden shadow-xl">
-                                    <img
-                                        src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
-                                        alt="Lindberg Fleet"
-                                        className="absolute inset-0 w-full h-full object-cover"
-                                    />
-                                </div>
+                                <img
+                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
+                                    alt="Lindberg Fleet"
+                                    className="w-full h-72 object-cover rounded-lg shadow-xl"
+                                />
                             </div>
                         </div>
 
