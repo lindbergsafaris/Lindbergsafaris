@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
-import { ChevronLeft, ChevronRight, Tag, Handshake } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Tag, Handshake, X } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
@@ -23,6 +23,7 @@ const Home = () => {
     const { t } = useTranslation(['common', 'home']);
     const [tours, setTours] = useState<Tour[]>([]);
     const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
+    const [selectedDeal, setSelectedDeal] = useState<HotDeal | null>(null);
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -126,6 +127,49 @@ const Home = () => {
 
             <PopupOffer />
 
+            {/* Image Lightbox for Hot Deals */}
+            {selectedDeal && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-8 animate-in fade-in duration-300"
+                    onClick={() => setSelectedDeal(null)}
+                >
+                    <button
+                        className="absolute top-6 right-6 text-white hover:text-primary transition-colors z-[110]"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedDeal(null);
+                        }}
+                    >
+                        <X size={40} />
+                    </button>
+
+                    <div
+                        className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center gap-6"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={selectedDeal.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                            alt={selectedDeal.title}
+                            className="w-full h-full object-contain rounded-lg shadow-2xl"
+                        />
+                        <div className="text-center text-white">
+                            <h3 className="text-2xl md:text-4xl font-serif font-bold mb-2">{selectedDeal.title}</h3>
+                            {selectedDeal.tag && (
+                                <span className="bg-red-600 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
+                                    {selectedDeal.tag}
+                                </span>
+                            )}
+                        </div>
+                        <Button
+                            className="mt-4 bg-white text-primary hover:bg-primary hover:text-white border-none rounded-full px-12"
+                            onClick={() => window.open(getWhatsAppLink(selectedDeal.whatsappMessage || `I am interested in the ${selectedDeal.title} offer`, selectedDeal.whatsappNumber), '_blank')}
+                        >
+                            {t('common:buttons.inquireDeal')}
+                        </Button>
+                    </div>
+                </div>
+            )}
+
             {/* 1. Carousel (Hero) */}
             <div className="relative h-screen min-h-[600px] flex items-center justify-center text-white overflow-hidden group">
                 {slides.map((slide, index) => (
@@ -211,7 +255,8 @@ const Home = () => {
                                 return (
                                     <div
                                         key={deal._id}
-                                        className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end"
+                                        className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end cursor-pointer"
+                                        onClick={() => setSelectedDeal(deal)}
                                     >
                                         {/* Background Image */}
                                         <div
