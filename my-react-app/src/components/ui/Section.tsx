@@ -6,7 +6,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
 
 const Section: React.FC<SectionProps> = ({ children, className, ...props }) => {
     return (
-        <section className={cn("py-12 md:py-20", className)} {...props}>
+        <section className={cn("py-8 md:py-14", className)} {...props}>
             {children}
         </section>
     );

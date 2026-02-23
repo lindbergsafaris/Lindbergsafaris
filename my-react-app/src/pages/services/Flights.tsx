@@ -36,13 +36,15 @@ const Flights = () => {
             {/* Main Services Overview */}
             <Section>
                 <Container>
-                    <div className="flex flex-col md:flex-row gap-12 items-center">
+                    <div className="flex flex-col md:flex-row gap-8 items-center">
                         <div className="md:w-1/2 order-2 md:order-1">
-                            <img
-                                src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg"
-                                alt="Travel Booking"
-                                className="rounded-lg shadow-xl"
-                            />
+                            <div className="relative h-72 w-full rounded-lg overflow-hidden shadow-xl">
+                                <img
+                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg"
+                                    alt="Travel Booking"
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                            </div>
                         </div>
                         <div className="md:w-1/2 order-1 md:order-2">
                             <h2 className="text-3xl font-serif font-bold mb-6">Experience hassle-free travel</h2>

@@ -30,9 +30,9 @@ const Transport = () => {
 
             <Section>
                 <Container>
-                    <div className="flex flex-col gap-16">
+                    <div className="flex flex-col gap-10">
                         {/* Intro Section */}
-                        <div className="flex flex-col md:flex-row gap-12 items-center">
+                        <div className="flex flex-col md:flex-row gap-8 items-center">
                             <div className="md:w-1/2">
                                 <h2 className="text-3xl font-serif font-bold mb-6 text-primary">Travel in Comfort & Style</h2>
                                 <p className="text-gray-600 leading-relaxed mb-6">
@@ -53,16 +53,18 @@ const Transport = () => {
                                 <Button size="lg">Request a Quote</Button>
                             </div>
                             <div className="md:w-1/2">
-                                <img
-                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/vehicle5_vy2gbe.jpg"
-                                    alt="Safari Vehicle"
-                                    className="rounded-lg shadow-xl"
-                                />
+                                <div className="relative h-72 w-full rounded-lg overflow-hidden shadow-xl">
+                                    <img
+                                        src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/vehicle5_vy2gbe.jpg"
+                                        alt="Safari Vehicle"
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                </div>
                             </div>
                         </div>
 
                         {/* Our Fleet Section */}
-                        <div className="flex flex-col md:flex-row-reverse gap-12 items-center">
+                        <div className="flex flex-col md:flex-row-reverse gap-8 items-center">
                             <div className="md:w-1/2">
                                 <h2 className="text-3xl font-serif font-bold mb-6 text-primary">Our Fleet</h2>
                                 <p className="text-gray-600 leading-relaxed mb-4">
@@ -84,11 +86,13 @@ const Transport = () => {
                                 </div>
                             </div>
                             <div className="md:w-1/2">
-                                <img
-                                    src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
-                                    alt="Lindberg Fleet"
-                                    className="rounded-lg shadow-xl"
-                                />
+                                <div className="relative h-72 w-full rounded-lg overflow-hidden shadow-xl">
+                                    <img
+                                        src="https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
+                                        alt="Lindberg Fleet"
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                </div>
                             </div>
                         </div>
 
