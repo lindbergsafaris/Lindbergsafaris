@@ -130,11 +130,13 @@ export const accommodationsAPI = {
                 alt
             },
             description,
-            amenities,
-            "gallery": gallery[]{
-                url,
-                alt
-            }
+            amenities[]{
+                name,
+                image{
+                    url,
+                    alt
+                }
+            },
         }`;
         const data = await client.fetch(query, { id });
         return { data };

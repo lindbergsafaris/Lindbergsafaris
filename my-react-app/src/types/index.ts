@@ -138,6 +138,11 @@ export interface FAQ {
 
 
 
+export interface Amenity {
+    name: string;
+    image?: Image;
+}
+
 export interface Accommodation {
     _id: string;
     name: string;
@@ -148,8 +153,7 @@ export interface Accommodation {
     rating?: number;
     pricePerNight?: string;
     priceRange?: string;
-    amenities?: string[];
-    gallery?: Image[];
+    amenities?: Amenity[];
     sections?: AccommodationSection[];
 }
 

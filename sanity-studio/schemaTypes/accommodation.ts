@@ -65,32 +65,45 @@ export default {
         },
         {
             name: 'amenities',
-            title: 'Amenities',
+            title: 'Amenities (with Images)',
             type: 'array',
-            of: [{ type: 'string' }],
-            description: 'List of amenities (e.g., Wi-Fi, Pool, Restaurant)',
-        },
-        {
-            name: 'gallery',
-            title: 'Gallery',
-            type: 'array',
+            description: 'Add amenities and an optional image for each. Default ones are pre-populated.',
+            initialValue: [
+                { name: 'Restaurant', icon: 'Utensils' },
+                { name: 'Swimming pool', icon: 'Waves' },
+                { name: 'Bar and lounge', icon: 'Wine' },
+                { name: 'Airport shuttle', icon: 'Bus' },
+            ],
             of: [
                 {
                     type: 'object',
                     fields: [
                         {
-                            name: 'url',
-                            title: 'Image URL',
-                            type: 'url',
-                            description: 'Cloudinary image URL',
+                            name: 'name',
+                            title: 'Amenity Name',
+                            type: 'string',
+                            validation: (Rule: any) => Rule.required(),
                         },
                         {
-                            name: 'alt',
-                            title: 'Alt Text',
-                            type: 'string',
-                        },
-                    ],
-                },
+                            name: 'image',
+                            title: 'Amenity Image',
+                            type: 'object',
+                            fields: [
+                                {
+                                    name: 'url',
+                                    title: 'Image URL',
+                                    type: 'url',
+                                    description: 'Cloudinary image URL for this amenity',
+                                },
+                                {
+                                    name: 'alt',
+                                    title: 'Alt Text',
+                                    type: 'string',
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
         },
         {

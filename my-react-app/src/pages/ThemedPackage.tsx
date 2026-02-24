@@ -54,7 +54,7 @@ const ThemedPackage = () => {
     return (
         <Layout>
             {/* Hero Section */}
-            <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center text-white overflow-hidden">
+            <div className="relative h-[45vh] min-h-[400px] flex items-center justify-center text-white overflow-hidden">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
                     style={{ backgroundImage: `url("${heroImage}")` }}
@@ -91,11 +91,13 @@ const ThemedPackage = () => {
                                                 image: ({ value }: any) => {
                                                     if (!value?.url) return null;
                                                     return (
-                                                        <img
-                                                            src={value.url}
-                                                            alt={value.alt || 'Themed Package Image'}
-                                                            className="w-full h-auto rounded-lg my-8"
-                                                        />
+                                                        <div className="flex justify-center my-8">
+                                                            <img
+                                                                src={value.url}
+                                                                alt={value.alt || 'Themed Package Image'}
+                                                                className="w-[70%] h-auto rounded-lg shadow-md"
+                                                            />
+                                                        </div>
                                                     );
                                                 }
                                             }

@@ -131,41 +131,38 @@ const AccommodationDetail = () => {
                                 </div>
                             </div>
 
-                            {/* Gallery (if available) */}
-                            {accommodation.gallery && accommodation.gallery.length > 0 && (
-                                <div>
-                                    <h3 className="text-2xl font-serif font-bold mb-6 text-white">Gallery</h3>
-                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                        {accommodation.gallery.map((img: Image, idx: number) => (
-                                            <div key={idx} className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
-                                                <img src={img.url} alt={img.alt || `Gallery image ${idx + 1}`} className="w-full h-full object-cover" />
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Amenities (Mock if not in schema yet) */}
+                            {/* Amenities with Images */}
                             <div>
-                                <h3 className="text-2xl font-serif font-bold mb-6 text-white">Amenities</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {accommodation.amenities ? (
-                                        accommodation.amenities.map((amenity: string, idx: number) => (
-                                            <div key={idx} className="flex items-center gap-3 text-gray-100">
-                                                <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                                    <Check size={14} />
+                                <h3 className="text-2xl font-serif font-bold mb-8 text-white">Amenities & Facilities</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {accommodation.amenities && accommodation.amenities.length > 0 ? (
+                                        accommodation.amenities.map((amenity: any, idx: number) => (
+                                            <div key={idx} className="bg-primary-dark/30 rounded-xl overflow-hidden border border-white/10 group">
+                                                {amenity.image?.url && (
+                                                    <div className="h-40 overflow-hidden">
+                                                        <img
+                                                            src={amenity.image.url}
+                                                            alt={amenity.image.alt || amenity.name}
+                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                        />
+                                                    </div>
+                                                )}
+                                                <div className="p-4 flex items-center gap-3 text-gray-100">
+                                                    <div className="bg-accent/20 p-1.5 rounded-full text-accent shadow-sm">
+                                                        <Check size={16} strokeWidth={3} />
+                                                    </div>
+                                                    <span className="font-medium text-lg">{amenity.name}</span>
                                                 </div>
-                                                <span>{amenity}</span>
                                             </div>
                                         ))
                                     ) : (
-                                        // Default amenities if none provided
-                                        ['Free Wi-Fi', 'Swimming Pool', 'Restaurant', 'Bar/Lounge', 'Room Service', 'Airport Shuttle', 'Air Conditioning', 'Laundry Service'].map((item, idx) => (
-                                            <div key={idx} className="flex items-center gap-3 text-gray-100">
-                                                <div className="bg-primary/10 p-1 rounded-full text-primary">
-                                                    <Check size={14} />
+                                        // Fallback default amenities if none in CMS
+                                        ['Restaurant', 'Swimming pool', 'Bar and lounge', 'Airport shuttle'].map((item, idx) => (
+                                            <div key={idx} className="flex items-center gap-3 text-gray-100 bg-primary-dark/30 p-4 rounded-xl border border-white/10">
+                                                <div className="bg-accent/20 p-1.5 rounded-full text-accent">
+                                                    <Check size={16} strokeWidth={3} />
                                                 </div>
-                                                <span>{item}</span>
+                                                <span className="font-medium">{item}</span>
                                             </div>
                                         ))
                                     )}
