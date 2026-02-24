@@ -65,33 +65,18 @@ const PopupOffer = () => {
                     <X size={20} className="text-gray-500" />
                 </button>
 
-                {offer.image && (
-                    <div className="h-48 w-full relative">
-                        <img
-                            src={offer.image.url}
-                            alt={offer.title}
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        <div className="absolute bottom-4 left-6 text-white">
-                            <h3 className="text-2xl font-bold font-serif">{offer.title}</h3>
-                        </div>
+                <div className="relative group cursor-pointer" onClick={handleClaim}>
+                    <img
+                        src={offer.image.url}
+                        alt={offer.title}
+                        className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+                    {/* Subtle Overlay Hint */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 flex items-center justify-center">
+                        <span className="bg-white/90 text-primary px-6 py-2 rounded-full font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0 duration-300">
+                            Claim Offer Now
+                        </span>
                     </div>
-                )}
-
-                <div className="p-6 text-center">
-                    <h3 className="text-2xl font-bold font-serif mb-4 text-gray-900">{offer.title}</h3>
-
-                    <Button onClick={handleClaim} className="w-full py-4 text-lg font-bold shadow-xl shadow-primary/20 rounded-xl">
-                        {offer.ctaText || 'Claim Offer'}
-                    </Button>
-
-                    <button
-                        onClick={handleClose}
-                        className="mt-4 text-sm text-gray-400 hover:text-gray-600 font-medium transition-colors"
-                    >
-                        No thanks, maybe later
-                    </button>
                 </div>
             </div>
         </div>
