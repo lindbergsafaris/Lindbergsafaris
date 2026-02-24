@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
-import { ChevronLeft, ChevronRight, Tag, Handshake, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Handshake, X } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Section from '@/components/ui/Section';
 import Container from '@/components/ui/Container';
@@ -109,7 +109,12 @@ const Home = () => {
 
     useEffect(() => {
         if (hotDealsData) {
-            setHotDeals(hotDealsData || []);
+            // Filter out deals where expiry date is in the past
+            const activeDeals = (hotDealsData || []).filter((deal: HotDeal) => {
+                if (!deal.dealExpiry) return false;
+                return new Date(deal.dealExpiry) > new Date();
+            });
+            setHotDeals(activeDeals);
         }
     }, [hotDealsData]);
 
@@ -243,12 +248,21 @@ const Home = () => {
             {hotDeals.length > 0 && (
                 <Section className="bg-primary">
                     <Container>
-                        <div className="text-center mb-12">
-                            <div className="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-1 rounded-full text-sm font-bold mb-4">
-                                <Tag size={16} /> {t('home:hotDeals.badge')}
+                        <div className="text-center mb-16 relative">
+                            <div className="inline-block relative">
+                                <div className="absolute inset-0 bg-red-600 transform -skew-x-12 -translate-y-2"></div>
+                                <div className="relative px-8 py-3">
+                                    <h2 className="text-3xl md:text-5xl font-black mb-0 text-white uppercase tracking-tighter italic">
+                                        {t('home:hotDeals.title')}
+                                    </h2>
+                                </div>
+                                {/* Triangle Decorators */}
+                                <div className="absolute -left-4 top-0 bottom-0 w-8 bg-red-600 transform -skew-x-12 z-0"></div>
+                                <div className="absolute -right-4 top-0 bottom-0 w-8 bg-red-600 transform -skew-x-12 z-0"></div>
                             </div>
-                            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-3 text-red-600">{t('home:hotDeals.title')}</h2>
-                            <p className="text-lg text-gray-100 max-w-2xl mx-auto">{t('home:hotDeals.description')}</p>
+                            <p className="text-lg text-gray-100 max-w-2xl mx-auto mt-6 font-medium bg-black/20 backdrop-blur-sm inline-block px-6 py-2 rounded-full">
+                                {t('home:hotDeals.description')}
+                            </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

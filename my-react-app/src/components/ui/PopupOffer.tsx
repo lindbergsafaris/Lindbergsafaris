@@ -14,6 +14,15 @@ const PopupOffer = () => {
 
     useEffect(() => {
         if (activeOffer) {
+            // Check expiry logic
+            const now = new Date();
+            const starts = activeOffer.startDate ? new Date(activeOffer.startDate) : null;
+            const ends = activeOffer.endDate ? new Date(activeOffer.endDate) : null;
+
+            const isLive = (!starts || now >= starts) && (!ends || now <= ends);
+
+            if (!isLive) return;
+
             // Check if already seen in this session
             const seenOffer = sessionStorage.getItem(`seen_offer_${activeOffer._id}`);
             if (!seenOffer) {
@@ -38,7 +47,7 @@ const PopupOffer = () => {
             window.location.href = offer.ctaLink;
         } else {
             // Default to WhatsApp
-            const message = `Hello! I would like to claim the "${offer.title}" offer.`;
+            const message = `Hello Lindberg Safaris! I want to claim the exclusive offer: "${offer.title}". Please provide more details.`;
             window.open(getWhatsAppLink(message), '_blank');
         }
         handleClose();
@@ -71,21 +80,15 @@ const PopupOffer = () => {
                 )}
 
                 <div className="p-6 text-center">
-                    {!offer.image && <h3 className="text-2xl font-bold font-serif mb-2 text-gray-900">{offer.title}</h3>}
+                    <h3 className="text-2xl font-bold font-serif mb-4 text-gray-900">{offer.title}</h3>
 
-                    {offer.description && (
-                        <p className="text-gray-600 mb-6 leading-relaxed">
-                            {offer.description}
-                        </p>
-                    )}
-
-                    <Button onClick={handleClaim} className="w-full py-3 text-lg shadow-lg shadow-primary/20">
+                    <Button onClick={handleClaim} className="w-full py-4 text-lg font-bold shadow-xl shadow-primary/20 rounded-xl">
                         {offer.ctaText || 'Claim Offer'}
                     </Button>
 
                     <button
                         onClick={handleClose}
-                        className="mt-4 text-sm text-gray-400 hover:text-gray-600 underline"
+                        className="mt-4 text-sm text-gray-400 hover:text-gray-600 font-medium transition-colors"
                     >
                         No thanks, maybe later
                     </button>

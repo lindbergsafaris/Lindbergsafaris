@@ -151,7 +151,6 @@ export interface Accommodation {
     description?: string;
     image?: Image;
     rating?: number;
-    rating?: number;
     amenities?: Amenity[];
     sections?: AccommodationSection[];
 }
