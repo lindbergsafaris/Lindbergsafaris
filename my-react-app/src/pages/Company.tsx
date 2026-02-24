@@ -6,7 +6,7 @@ import Section from '@/components/ui/Section';
 import { cn } from '@/lib/utils';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
-import TrustIndexWidget from '@/components/ui/TrustIndexWidget';
+import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import TeamSection from '@/components/sections/TeamSection';
 
 const Company = () => {
@@ -345,7 +345,7 @@ const Company = () => {
             </Section>
 
             {/* Our Calling Section */}
-            <Section id="calling" className="bg-gradient-to-br from-primary to-primary-dark text-white scroll-mt-20">
+            <Section id="calling" className="bg-gradient-to-br from-primary to-primary-dark text-white pt-0 scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6">Our Calling</h2>
@@ -377,7 +377,7 @@ const Company = () => {
             </Section>
 
             {/* Our Impact Section (UPDATED) */}
-            <Section id="impact" className="bg-primary scroll-mt-20">
+            <Section id="impact" className="bg-primary pt-0 scroll-mt-20">
                 <Container>
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-white">Our Impact</h2>
@@ -428,7 +428,7 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="max-w-4xl mx-auto space-y-12">
+                    <div className="max-w-4xl mx-auto space-y-8">
                         {faqCategories.map((category, catIndex) => (
                             <div key={catIndex} className="p-8 rounded-2xl border border-accent/30 bg-primary-dark/40 backdrop-blur-md shadow-2xl">
                                 <h3 className="text-2xl font-serif font-bold mb-8 text-accent border-b border-accent/20 pb-4 flex items-center gap-3">
@@ -498,16 +498,16 @@ const Company = () => {
             </Section>
 
             {/* Testimonials Section */}
-            <Section id="testimonials" className="bg-primary scroll-mt-20">
-                <TrustIndexWidget />
+            <Section id="testimonials" className="bg-primary pt-0 scroll-mt-20">
+                <GoogleReviewsWidget />
             </Section>
             {/* Team Section */}
-            <Section className="bg-primary">
+            <Section className="bg-primary pt-0">
                 <TeamSection />
             </Section>
 
             {/* Partners Section */}
-            <Section className="bg-primary">
+            <Section className="bg-primary pt-0">
                 <Container>
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">Our Trusted Partners</h2>

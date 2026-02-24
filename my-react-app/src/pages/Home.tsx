@@ -15,7 +15,7 @@ import PopupOffer from '@/components/ui/PopupOffer';
 import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
-import TrustIndexWidget from '@/components/ui/TrustIndexWidget';
+import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import MailchimpForm from '@/components/ui/MailchimpForm';
 
 import { Tour, HotDeal } from '@/types';
@@ -572,13 +572,13 @@ const Home = () => {
                 <TeamSection />
             </Section>
 
-            {/* TrustIndex Reviews */}
-            <Section className="bg-primary">
-                <TrustIndexWidget />
+            {/* Google Reviews */}
+            <Section className="bg-primary pb-0">
+                <GoogleReviewsWidget />
             </Section>
 
             {/* Newsletter */}
-            <Section className="bg-primary text-white">
+            <Section className="bg-primary text-white pt-0">
                 <Container>
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">{t('home:newsletter.title')}</h2>
