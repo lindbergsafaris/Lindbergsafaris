@@ -69,13 +69,13 @@ const Home = () => {
 
     // Partners Data
     const partners = [
-        { name: 'Partner 1', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg' },
-        { name: 'Partner 2', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg' },
-        { name: 'Partner 3', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg' },
-        { name: 'Partner 4', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg' },
-        { name: 'Partner 5', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0025_mokzmf.jpg' },
-        { name: 'Partner 6', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg' },
-        { name: 'Partner 7', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
+        { name: 'Legend Tours', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg' },
+        { name: 'Emirates', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg' },
+        { name: 'Magical Kenya', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg' },
+        { name: 'Kenya Tourism Board', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg' },
+        { name: 'Costa', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0025_mokzmf.jpg' },
+        { name: 'Kenya Tourism Federation', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg' },
+        { name: 'Ministry of Tourism & Wildlife', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
     ];
 
     // Team Data removed - now handled by TeamSection component
@@ -342,14 +342,19 @@ const Home = () => {
                         <p className="text-gray-600 max-w-2xl mx-auto">{t('home:partners.description')}</p>
                     </div>
 
-                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
+                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-start opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
                         {partners.map((partner, index) => (
-                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
-                                <img
-                                    src={partner.logo}
-                                    alt={partner.name}
-                                    className="max-h-full max-w-full object-contain transition-all duration-300"
-                                />
+                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex flex-col items-center gap-3">
+                                <div className="w-full flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                    <img
+                                        src={partner.logo}
+                                        alt={partner.name}
+                                        className="max-h-full max-w-full object-contain transition-all duration-300"
+                                    />
+                                </div>
+                                <p className="text-xs md:text-sm font-bold text-gray-700 text-center uppercase tracking-tight line-clamp-2 px-1">
+                                    {partner.name}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -438,16 +443,21 @@ const Home = () => {
                     </div>
 
                     {/* Desktop Grid */}
-                    <div className="hidden md:grid md:grid-cols-5 gap-8 items-center justify-items-center">
+                    <div className="hidden md:grid md:grid-cols-5 gap-8 items-start justify-items-center">
                         {[
-                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
-                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
-                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
-                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
-                            'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
-                        ].map((logo, index) => (
-                            <div key={index} className="w-40 h-40 flex items-center justify-center p-4 transition-all duration-300">
-                                <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                            { name: 'Rasor Expeditions', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg' },
+                            { name: 'Don Bosco Church', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg' },
+                            { name: 'Fusion Capital', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg' },
+                            { name: 'Britam', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg' },
+                            { name: 'Kingdom Bank', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg' }
+                        ].map((client, index) => (
+                            <div key={index} className="flex flex-col items-center gap-3">
+                                <div className="w-40 h-40 flex items-center justify-center p-4 transition-all duration-300 bg-white rounded-lg shadow-sm">
+                                    <img src={client.logo} alt={client.name} className="max-w-full max-h-full object-contain" />
+                                </div>
+                                <p className="text-xs md:text-sm font-bold text-gray-700 text-center uppercase tracking-tight">
+                                    {client.name}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -456,30 +466,40 @@ const Home = () => {
                     <div className="md:hidden overflow-hidden relative">
                         <div className="flex w-[200%] animate-marquee">
                             {/* First set of logos */}
-                            <div className="flex w-1/2 justify-around items-center gap-8 px-4">
+                            <div className="flex w-1/2 justify-around items-start gap-8 px-4">
                                 {[
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
-                                ].map((logo, index) => (
-                                    <div key={`m1-${index}`} className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2">
-                                        <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                                    { name: 'Rasor Expeditions', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg' },
+                                    { name: 'Don Bosco Church', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg' },
+                                    { name: 'Fusion Capital', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg' },
+                                    { name: 'Britam', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg' },
+                                    { name: 'Kingdom Bank', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg' }
+                                ].map((client, index) => (
+                                    <div key={`m1-${index}`} className="w-32 flex-shrink-0 flex flex-col items-center gap-2">
+                                        <div className="w-full h-32 flex items-center justify-center p-2 bg-white rounded-lg shadow-sm">
+                                            <img src={client.logo} alt={client.name} className="max-w-full max-h-full object-contain" />
+                                        </div>
+                                        <p className="text-[10px] font-bold text-gray-700 text-center uppercase tracking-tight">
+                                            {client.name}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
                             {/* Duplicate set for seamless loop */}
-                            <div className="flex w-1/2 justify-around items-center gap-8 px-4">
+                            <div className="flex w-1/2 justify-around items-start gap-8 px-4">
                                 {[
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg',
-                                    'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg'
-                                ].map((logo, index) => (
-                                    <div key={`m2-${index}`} className="w-32 h-32 flex-shrink-0 flex items-center justify-center p-2">
-                                        <img src={logo} alt={`Client ${index + 1}`} className="max-w-full max-h-full object-contain" />
+                                    { name: 'Rasor Expeditions', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg' },
+                                    { name: 'Don Bosco Church', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg' },
+                                    { name: 'Fusion Capital', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ae547141_oqvaum.jpg' },
+                                    { name: 'Britam', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg' },
+                                    { name: 'Kingdom Bank', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg' }
+                                ].map((client, index) => (
+                                    <div key={`m2-${index}`} className="w-32 flex-shrink-0 flex flex-col items-center gap-2">
+                                        <div className="w-full h-32 flex items-center justify-center p-2 bg-white rounded-lg shadow-sm">
+                                            <img src={client.logo} alt={client.name} className="max-w-full max-h-full object-contain" />
+                                        </div>
+                                        <p className="text-[10px] font-bold text-gray-700 text-center uppercase tracking-tight">
+                                            {client.name}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
