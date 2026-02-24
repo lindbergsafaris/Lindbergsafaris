@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { X } from 'lucide-react';
-import Button from '@/components/ui/Button';
 import api from '@/lib/api';
 import { getWhatsAppLink } from '@/lib/utils';
 import { PopupOffer as PopupOfferType } from '@/types';
@@ -53,7 +52,7 @@ const PopupOffer = () => {
         handleClose();
     };
 
-    if (!offer || !isOpen) return null;
+    if (!offer || !isOpen || !offer.image) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
