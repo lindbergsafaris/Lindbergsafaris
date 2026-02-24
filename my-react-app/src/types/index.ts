@@ -151,8 +151,7 @@ export interface Accommodation {
     description?: string;
     image?: Image;
     rating?: number;
-    pricePerNight?: string;
-    priceRange?: string;
+    rating?: number;
     amenities?: Amenity[];
     sections?: AccommodationSection[];
 }

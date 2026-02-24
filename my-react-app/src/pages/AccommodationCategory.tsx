@@ -91,12 +91,7 @@ const AccommodationCategory = () => {
                                             {acc.location || 'Unknown Location'}
                                         </div>
                                         <h3 className="text-xl font-serif font-bold mb-4">{acc.name}</h3>
-                                        <div className="flex items-center justify-between mt-auto">
-                                            <div>
-                                                <span className="text-xs text-gray-500 block">From</span>
-                                                <span className="text-lg font-bold text-primary">KSH {acc.pricePerNight}</span>
-                                                <span className="text-xs text-gray-500"> / night</span>
-                                            </div>
+                                        <div className="flex items-center justify-end mt-4">
                                             <Button
                                                 size="sm"
                                                 variant="outline"

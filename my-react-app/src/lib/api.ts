@@ -123,7 +123,6 @@ export const accommodationsAPI = {
             name,
             type,
             location,
-            pricePerNight,
             rating,
             "image": image{
                 url,

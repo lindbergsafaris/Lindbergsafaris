@@ -58,21 +58,15 @@ export default {
             validation: (Rule: any) => Rule.min(1).max(5),
         },
         {
-            name: 'pricePerNight',
-            title: 'Price Per Night',
-            type: 'string',
-            description: 'e.g., "20000" or "15000 - 25000"',
-        },
-        {
             name: 'amenities',
             title: 'Amenities (with Images)',
             type: 'array',
             description: 'Add amenities and an optional image for each. Default ones are pre-populated.',
             initialValue: [
-                { name: 'Restaurant', icon: 'Utensils' },
-                { name: 'Swimming pool', icon: 'Waves' },
-                { name: 'Bar and lounge', icon: 'Wine' },
-                { name: 'Airport shuttle', icon: 'Bus' },
+                { name: 'Restaurant' },
+                { name: 'Swimming pool' },
+                { name: 'Bar and lounge' },
+                { name: 'Airport shuttle' },
             ],
             of: [
                 {

@@ -23,8 +23,7 @@ const AccommodationDetail = () => {
     const [nights, setNights] = useState(1);
     const [guestCount, setGuestCount] = useState(1);
 
-    const priceValue = accommodation ? (typeof accommodation.pricePerNight === 'number' ? accommodation.pricePerNight : parseInt(String(accommodation.pricePerNight || accommodation.priceRange).replace(/[^0-9]/g, '') || '0')) : 0;
-    const totalPrice = priceValue * nights * guestCount;
+    // Removal of price logic
 
     const handleBooking = (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,8 +35,6 @@ const AccommodationDetail = () => {
             date: checkInDate,
             guests: guestCount,
             duration: `${nights} Night${nights > 1 ? 's' : ''}`,
-            pricePerPerson: priceValue, // Note: This is price per night in this context, logic adapted
-            totalPrice: totalPrice,
             link: window.location.href,
             additionalInfo: `Location: ${accommodation.location}`
         });
@@ -98,17 +95,12 @@ const AccommodationDetail = () => {
                                 <span className="text-gray-300 capitalize">{accommodation.type?.replace('-', ' ')}</span>
                             </div>
                         </div>
-                        <div className="flex flex-col items-start md:items-end gap-4">
-                            <div className="text-right">
-                                <span className="text-sm text-gray-300 block">Starting from</span>
-                                <span className="text-3xl font-bold text-primary">KSH {accommodation.pricePerNight || accommodation.priceRange || 'On Request'}</span>
-                                <span className="text-sm text-gray-300"> / night</span>
-                            </div>
+                        <div className="flex flex-col items-start md:items-end gap-4 h-full justify-center">
                             <Button
                                 size="lg"
                                 onClick={scrollToBooking}
                             >
-                                Book Now
+                                Inquire Now
                             </Button>
                         </div>
                     </div>
@@ -197,7 +189,7 @@ const AccommodationDetail = () => {
                         {/* Sidebar */}
                         <div className="lg:col-span-1">
                             <div id="booking-form" className="bg-secondary p-8 rounded-xl sticky top-24 border border-gray-100">
-                                <h3 className="text-xl font-bold mb-6 text-gray-900">Book Your Stay</h3>
+                                <h3 className="text-xl font-bold mb-6 text-gray-900">Inquire About Your Stay</h3>
                                 <form className="space-y-4" onSubmit={handleBooking}>
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 mb-1">Check-in Date</label>
@@ -238,16 +230,8 @@ const AccommodationDetail = () => {
                                     </div>
 
                                     <div className="pt-4 border-t border-gray-200 mt-4">
-                                        <div className="flex justify-between mb-2 text-sm">
-                                            <span className="text-gray-600">Price per night</span>
-                                            <span className="font-medium">KSH {priceValue}</span>
-                                        </div>
-                                        <div className="flex justify-between text-lg font-bold text-primary mt-4 mb-6">
-                                            <span>Total</span>
-                                            <span>KSH {totalPrice}</span>
-                                        </div>
-                                        <Button type="submit" className="w-full">Book via WhatsApp</Button>
-                                        <p className="text-xs text-center text-gray-500 mt-3">Instant confirmation & support</p>
+                                        <Button type="submit" className="w-full text-white">Send Inquiry via WhatsApp</Button>
+                                        <p className="text-xs text-center text-gray-500 mt-3">Quick response & support</p>
                                     </div>
                                 </form>
                             </div>
