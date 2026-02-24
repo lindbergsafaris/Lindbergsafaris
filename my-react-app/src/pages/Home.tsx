@@ -16,6 +16,7 @@ import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
 import TrustIndexWidget from '@/components/ui/TrustIndexWidget';
+import MailchimpForm from '@/components/ui/MailchimpForm';
 
 import { Tour, HotDeal } from '@/types';
 
@@ -581,15 +582,8 @@ const Home = () => {
                 <Container>
                     <div className="max-w-3xl mx-auto text-center">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">{t('home:newsletter.title')}</h2>
-                        <p className="text-primary-light mb-8">{t('home:newsletter.description')}</p>
-                        <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                            <input
-                                type="email"
-                                placeholder={t('home:newsletter.placeholder')}
-                                className="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
-                            />
-                            <Button variant="secondary" size="lg">{t('common:buttons.subscribeNow')}</Button>
-                        </div>
+                        <p className="text-white opacity-90 mb-8">{t('home:newsletter.description')}</p>
+                        <MailchimpForm />
                     </div>
                 </Container>
             </Section>
