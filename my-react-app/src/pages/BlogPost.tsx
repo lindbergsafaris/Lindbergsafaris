@@ -125,10 +125,10 @@ const BlogPost = () => {
                 </Container>
             </div>
 
-            <Section className="bg-primary pt-16">
+            <Section className="bg-white pt-16">
                 <Container>
                     <div className="max-w-4xl mx-auto">
-                        <div className="prose prose-lg prose-invert max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:text-gray-100 prose-p:leading-relaxed prose-a:text-accent hover:prose-a:text-accent/80 transition-colors">
+                        <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-bold prose-headings:text-primary prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80 transition-colors">
                             {Array.isArray(post.content) ? (
                                 <PortableText
                                     value={post.content}
@@ -143,7 +143,7 @@ const BlogPost = () => {
                                                             className="w-full h-auto rounded-xl shadow-2xl"
                                                         />
                                                         {value.caption && (
-                                                            <figcaption className="mt-4 text-center text-sm text-gray-400 italic">
+                                                            <figcaption className="mt-4 text-center text-sm text-gray-500 italic">
                                                                 {value.caption}
                                                             </figcaption>
                                                         )}
@@ -176,7 +176,7 @@ const BlogPost = () => {
                                                             )}
                                                         </div>
                                                         {value.caption && (
-                                                            <figcaption className="mt-4 text-center text-sm text-gray-400 italic">
+                                                            <figcaption className="mt-4 text-center text-sm text-gray-500 italic">
                                                                 {value.caption}
                                                             </figcaption>
                                                         )}
