@@ -61,7 +61,7 @@ const Home = () => {
         },
         {
             id: 6,
-            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770894402/custom_llzlln.jpg",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772176629/CustomIT_arrztu.jpg",
             title: t('home:hero.slide6.title'),
             subtitle: t('home:hero.slide6.subtitle')
         }
