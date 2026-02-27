@@ -49,7 +49,7 @@ const Home = () => {
         },
         {
             id: 4,
-            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770894189/visa3_oasvox.jpg",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772176017/RPK_rxvnwy.jpg",
             title: t('home:hero.slide4.title'),
             subtitle: t('home:hero.slide4.subtitle')
         },
