@@ -144,7 +144,7 @@ const Visa = () => {
                     <div className="max-w-4xl mx-auto mt-20 text-center">
                         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-12">
                             <p className="text-amber-800 text-sm italic">
-                                Visa approval is at the sole discretion of the relevant embassy or consulate and cannot be guaranteed. Our role is to provide expert guidance and a carefully prepared, compliant application, minimizing the risk of administrative errors and ensuring a smooth, professional process from start to finish.
+                                Visa approval is at the sole discretion of the relevant embassy or consulate. Our role is to provide expert guidance and a carefully prepared, compliant application, minimizing the risk of administrative errors and ensuring a smooth, professional process from start to finish.
                             </p>
                         </div>
                         <h2 className="text-3xl font-serif font-bold mb-6">Ready to travel without the worry?</h2>

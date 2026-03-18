@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 const CustomItineraries = () => {
     const itineraries = [
         {
-            title: "Great Migration Safari – 3 Days / 2 Nights",
+            title: "Great Migration Safari",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005636/custom3_djob7r.png",
-            duration: "3 Days / 2 Nights",
+            duration: "",
             location: "Masai Mara National Reserve",
             dates: "July | August | September | October",
             description: "Begin your journey in Nairobi before heading to the legendary Masai Mara National Reserve, the stage for Africa’s greatest wildlife spectacle the Great Migration. With two game drives daily, you’ll witness vast herds of wildebeest and zebras sweeping across the savannah, while lions, leopards, elephants, rhinos, and buffalo the famed Big Five roam freely. Sunrise and sunset paint the plains in golden hues, creating unforgettable safari moments.",
@@ -23,17 +23,17 @@ const CustomItineraries = () => {
             ]
         },
         {
-            title: "10-Day Kenya Safari: Amboseli, Laikipia & Masai Mara",
+            title: "Kenya Safari: Amboseli, Laikipia & Masai Mara",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005636/custom2_alilvz.png",
-            duration: "10 Days / 9 Nights",
+            duration: "",
             location: "Amboseli, Laikipia & Masai Mara",
             description: "Begin your journey in Nairobi, where your safari host welcomes you and sets the stage for Kenya’s wild wonders. From here, head straight into the heart of the wilderness for a truly unforgettable adventure.",
             details: [
-                "Travel to Amboseli National Park for two days of game drives beneath the towering snow-capped Kilimanjaro. Spot majestic elephant herds, lions, cheetahs, buffalo, and over 600 bird species as the golden savannah comes alive at sunrise and sunset. Every moment is a chance for thrilling wildlife encounters and unforgettable photographs.",
-                "Next, explore Laikipia’s Loisaba Conservancy over two days of discovery. Rolling river valleys, open plains, and rich forests are home to the Big Five, endangered wild dogs, and an extraordinary variety of birds. Venture through the bush on game drives, horseback, or camel, and witness cutting-edge conservation efforts protecting Kenya’s wilderness.",
-                "Finally, immerse yourself in the legendary Masai Mara for three days of extraordinary safari experiences. Witness iconic predator action, elephant herds, and vast herds of wildebeest and zebras during migration season. Expert Maasai guides reveal both epic wildlife moments and the Mara’s quieter, hidden corners."
+                "Travel to Amboseli National Park for game drives beneath the towering snow-capped Kilimanjaro. Spot majestic elephant herds, lions, cheetahs, buffalo, and over 600 bird species as the golden savannah comes alive at sunrise and sunset. Every moment is a chance for thrilling wildlife encounters and unforgettable photographs.",
+                "Next, explore Laikipia’s Loisaba Conservancy for discovery. Rolling river valleys, open plains, and rich forests are home to the Big Five, endangered wild dogs, and an extraordinary variety of birds. Venture through the bush on game drives, horseback, or camel, and witness cutting-edge conservation efforts protecting Kenya’s wilderness.",
+                "Finally, immerse yourself in the legendary Masai Mara for extraordinary safari experiences. Witness iconic predator action, elephant herds, and vast herds of wildebeest and zebras during migration season. Expert Maasai guides reveal both epic wildlife moments and the Mara’s quieter, hidden corners."
             ],
-            conclusion: "Conclude your adventure with a return to Nairobi, reflecting on ten days of sweeping landscapes, dramatic wildlife encounters, and the magic of Kenya at its most spectacular.",
+            conclusion: "Conclude your adventure with a return to Nairobi, reflecting on sweeping landscapes, dramatic wildlife encounters, and the magic of Kenya at its most spectacular.",
             highlights: [
                 "Experience three iconic safari regions in one journey: Amboseli, Laikipia, and the Masai Mara.",
                 "Witness majestic elephants, the Big Five, and seasonal wildebeest migration in their natural habitats.",
@@ -46,7 +46,7 @@ const CustomItineraries = () => {
         {
             title: "Cultural Tour – Nairobi",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005636/custom4_y0h6wn.png",
-            duration: "1 Day",
+            duration: "",
             location: "Nairobi",
             description: "Dive into the heart of Nairobi, Kenya’s lively capital, on a journey that blends heritage, modern life, and local experiences. Guided by Nairobi natives, explore historic landmarks, bustling markets, and green urban parks while discovering the city’s diverse communities and traditions.",
             additionalInfo: "Along the way, enjoy traditional Kenyan cuisine with a modern twist, paired with the colorful energy of matatu culture, where decorated minibuses, local music, and vibrant street art give Nairobi its unique rhythm. This relaxed yet immersive tour offers a true taste of Nairobi its people, its flavors, and its spirit.",
@@ -62,19 +62,19 @@ const CustomItineraries = () => {
             ]
         },
         {
-            title: "Bush to Beach Safari – 10 Days / 9 Nights",
+            title: "Bush to Beach Safari",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005649/custom7_tcdgmc.png",
-            duration: "10 Days / 9 Nights",
+            duration: "",
             location: "Nairobi, Lake Nakuru, Lake Naivasha, Masai Mara, Mombasa Coast",
-            description: "Begin your adventure in Nairobi, Kenya’s vibrant capital, where your safari host welcomes you and sets the stage for an unforgettable journey. Explore the city’s rich culture and wildlife on a Nairobi city tour, visiting the David Sheldrick Wildlife Trust to see orphaned elephants, the Giraffe Centre to meet endangered Rothschild giraffes up close, and the Nairobi National Park, where wildlife roams against the backdrop of the city skyline.",
+            description: "Begin your adventure in Nairobi, Kenya’s vibrant capital, where your safari host welcomes you and sets the stage for an unforgettable journey. Explore the city’s rich culture and wildlife on a City tour, visiting the David Sheldrick Wildlife Trust to see orphaned elephants, the Giraffe Centre to meet endangered Rothschild giraffes up close, and the Nairobi National Park, where wildlife roams against the backdrop of the city skyline.",
             details: [
-                "Your safari then moves into the wild heart of Kenya. Visit Lake Nakuru, famed for its flamingos and diverse wildlife, and Lake Naivasha, where hippos, giraffes, and a variety of birdlife thrive. Spend days on thrilling game drives and boat rides, immersing yourself in the stunning landscapes of the Great Rift Valley.",
-                "Next, experience the legendary Masai Mara, where sweeping acacia-dotted plains teem with wildlife. Spend three days on morning and afternoon game drives, witnessing lions, leopards, elephants, and, during migration season, vast herds of wildebeest and zebras crossing the plains a spectacle like no other.",
-                "After your Mara adventure, return briefly to Nairobi before flying to the coast of Mombasa. Relax and unwind along the pristine beaches of Mombasa, Diani, or Watamu for three days of sun, sea, and sand, blending your bush safari with coastal serenity."
+                "Your safari then moves into the wild heart of Kenya. Visit Lake Nakuru, famed for its flamingos and diverse wildlife, and Lake Naivasha, where hippos, giraffes, and a variety of birdlife thrive. Spend time on thrilling game drives and boat rides, immersing yourself in the stunning landscapes of the Great Rift Valley.",
+                "Next, experience the legendary Masai Mara, where sweeping acacia-dotted plains teem with wildlife. Spend morning and afternoon game drives, witnessing lions, leopards, elephants, and, during migration season, vast herds of wildebeest and zebras crossing the plains a spectacle like no other.",
+                "After your Mara adventure, return briefly to Nairobi before flying to the coast of Mombasa. Relax and unwind along the pristine beaches of Mombasa, Diani, or Watamu for sun, sea, and sand, blending your bush safari with coastal serenity."
             ],
             conclusion: "Swim in turquoise waters, explore marine life, or simply soak up the tropical atmosphere before your journey back to Nairobi for departure, carrying memories of Kenya’s incredible wildlife, landscapes, and culture.",
             highlights: [
-                "Nairobi city tour: Landmarks, parks, and cultural highlights.",
+                "City tour: Landmarks, parks, and cultural highlights.",
                 "Lake Nakuru: Flamingos, rhinos, and a diverse array of wildlife.",
                 "Lake Naivasha: Hippos, giraffes, and scenic boat rides.",
                 "Masai Mara: Big Five, seasonal wildebeest migration, lions, leopards, elephants, and breathtaking savannah landscapes.",
@@ -83,27 +83,27 @@ const CustomItineraries = () => {
             ]
         },
         {
-            title: "Honeymoon Safari – 4 Days / 3 Nights",
+            title: "Honeymoon Safari",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005641/custom8_v6wrjr.png",
-            duration: "4 Days / 3 Nights",
+            duration: "",
             location: "Masai Mara",
-            description: "Celebrate love in the heart of the Masai Mara, where endless golden plains and breathtaking sunsets create the perfect romantic backdrop. Over four days and three nights, enjoy intimate moments together in the wild, with optional morning and afternoon game drives to spot elephants, lions, giraffes, and more.",
+            description: "Celebrate love in the heart of the Masai Mara, where endless golden plains and breathtaking sunsets create the perfect romantic backdrop. Enjoy intimate moments together in the wild, with optional morning and afternoon game drives to spot elephants, lions, giraffes, and more.",
             additionalInfo: "For a truly magical experience, rise early for a hot air balloon safari, drifting over the savannah as the sun illuminates the landscape, followed by a champagne breakfast in the bush. Unwind together in luxury and privacy, share quiet moments under the vast African skies, and toast to unforgettable memories amid the iconic beauty of the Mara.",
             conclusion: "Every detail of this honeymoon safari is designed for romance, adventure, and connection a once-in-a-lifetime escape for two."
         },
         {
             title: "Elephant Safari – Amboseli & Tsavo East",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005654/custom9_u9dqjn.png",
-            duration: "4 Days / 3 Nights",
+            duration: "",
             location: "Amboseli & Tsavo East",
-            description: "Embark on a 4-day wildlife adventure focused on Kenya’s gentle giants the elephants. Begin in Amboseli National Park, where vast savannahs unfold beneath the snow-capped Mount Kilimanjaro. Spend two days on game drives, watching majestic elephant herds move gracefully across the plains, while lions, giraffes, buffalo, and a rich variety of birds complete the iconic African scene.",
+            description: "Embark on a wildlife adventure focused on Kenya’s gentle giants the elephants. Begin in Amboseli National Park, where vast savannahs unfold beneath the snow-capped Mount Kilimanjaro. Enjoy game drives, watching majestic elephant herds move gracefully across the plains, while lions, giraffes, buffalo, and a rich variety of birds complete the iconic African scene.",
             additionalInfo: "Next, journey to Tsavo East, a stunning wilderness of red-earth landscapes and open plains, home to some of Kenya’s largest elephant populations. Explore the park on game drives through diverse habitats, spotting elephants in their natural environment and learning about local conservation efforts from your expert guides.",
             conclusion: "This safari is perfect for elephant lovers and wildlife enthusiasts, offering immersive encounters with these magnificent creatures while experiencing the beauty and diversity of Kenya’s premier national parks"
         },
         {
             title: "Coastal Escape – Diani",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005637/custom10_qs8apu.png",
-            duration: "3 Days / 2 Nights",
+            duration: "",
             location: "Diani Beach",
             description: "Unwind on the white-sand beaches of Diani, where turquoise waters and swaying palms set the perfect backdrop. Enjoy dolphin-watching excursions or a sunset dhow cruise for unforgettable moments on the Indian Ocean.",
             additionalInfo: "Travel via flight or the scenic SGR rail/road route, combining convenience with adventure. Relax, explore marine life, and soak up the magic of Kenya’s coast."
@@ -111,7 +111,7 @@ const CustomItineraries = () => {
         {
             title: "Kenya Golf & Safari Adventure",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005634/custom11_jqqxb4.png",
-            duration: "10 Days / 9 Nights",
+            duration: "",
             location: "Nairobi, Mount Kenya, Lake Naivasha, Masai Mara",
             description: "Experience the perfect blend of world-class golf and Kenya’s iconic wildlife on this unforgettable journey. Begin in Nairobi, where you visit the Giraffe Centre to meet endangered Rothschild giraffes up close. After your city introduction, unwind at the Windsor Golf & Country Club, teeing off on lush fairways or enjoying the lodge’s tranquil surroundings.",
             details: [
@@ -124,7 +124,7 @@ const CustomItineraries = () => {
         {
             title: "Ladies Safari & Coastal Escape",
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772005655/custom12_mnbfij.png",
-            duration: "8 Days",
+            duration: "",
             location: "Nairobi, Ol Pejeta, Lake Nakuru, Lake Naivasha, Masai Mara, Mombasa",
             description: "Celebrate friendship, freedom, and adventure on this unforgettable journey through Kenya’s most iconic destinations. Your experience begins in Nairobi, where you’ll meet rescued baby elephants at a renowned elephant orphanage and feed endangered Rothschild giraffes at a peaceful urban sanctuary, the perfect introduction to Kenya’s inspiring conservation efforts.",
             details: [
@@ -172,10 +172,12 @@ const CustomItineraries = () => {
                                             {itinerary.title}
                                         </h2>
                                         <div className="flex flex-wrap gap-4 text-sm text-gray-700">
-                                            <div className="flex items-center gap-2">
-                                                <Clock className="text-primary" size={18} />
-                                                <span className="font-semibold">{itinerary.duration}</span>
-                                            </div>
+                                            {itinerary.duration && (
+                                                <div className="flex items-center gap-2">
+                                                    <Clock className="text-primary" size={18} />
+                                                    <span className="font-semibold">{itinerary.duration}</span>
+                                                </div>
+                                            )}
                                             <div className="flex items-center gap-2">
                                                 <MapPin className="text-primary" size={18} />
                                                 <span>{itinerary.location}</span>
