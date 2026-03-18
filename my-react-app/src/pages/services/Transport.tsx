@@ -121,7 +121,7 @@ const Transport = () => {
                         </div>
 
                         {/* Safety Section */}
-                        <div className="text-center max-w-3xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto mb-12">
                             <h2 className="text-3xl font-serif font-bold mb-6 text-primary">Safety & Maintenance</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 Your safety is non-negotiable. All our vehicles undergo rigorous servicing before every single trip.
@@ -132,6 +132,35 @@ const Transport = () => {
                                     <span key={item} className="px-4 py-2 bg-primary/10 text-primary rounded-full font-medium text-sm">
                                         {item}
                                     </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Fleet Gallery Showcase */}
+                        <div className="border-t border-gray-100 pt-12">
+                            <div className="text-center mb-12">
+                                <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Our Fleet Showcase</h2>
+                                <p className="text-gray-600">Explore the vehicles that drive your adventures across East Africa</p>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {[
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828030/car3_ww1lxp.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828034/car8_rhpsug.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828031/car4_sncpif.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828037/car6_g7u49u.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828034/car7_qh5i8l.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828044/car2_vzh6vs.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828040/Car1_e0z8yq.jpg",
+                                    "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828041/car5_drfmr6.jpg"
+                                ].map((img, index) => (
+                                    <div key={index} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
+                                        <img
+                                            src={img}
+                                            alt={`Lindberg Fleet ${index + 1}`}
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                    </div>
                                 ))}
                             </div>
                         </div>
