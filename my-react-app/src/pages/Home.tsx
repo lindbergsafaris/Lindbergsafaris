@@ -12,7 +12,6 @@ import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { getWhatsAppLink } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
-import { regionData } from '@/data/destinations';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
 import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
