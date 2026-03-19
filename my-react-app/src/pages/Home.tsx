@@ -97,6 +97,7 @@ const Home = () => {
 
     const { data: toursData, error: toursError } = useSWR('tours', () => api.tours.getAll().then(res => res.data));
     const { data: hotDealsData, error: hotDealsError } = useSWR('hotDeals', () => api.hotDeals.getAll().then(res => res.data));
+    const { data: destinationsData, error: destinationsError } = useSWR('destinations', () => api.destinationCategory.getAll().then(res => res.data));
 
     useEffect(() => {
         if (toursData) {
@@ -118,7 +119,7 @@ const Home = () => {
         }
     }, [hotDealsData]);
 
-    const loading = (!toursData && !toursError) || (!hotDealsData && !hotDealsError);
+    const loading = (!toursData && !toursError) || (!hotDealsData && !hotDealsError) || (!destinationsData && !destinationsError);
 
     if (loading) {
         return <LoadingScreen />;
@@ -370,16 +371,16 @@ const Home = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {Object.values(regionData).map((region) => (
-                            <Link to={`/regions/${region.id}`} key={region.id} className="group relative overflow-hidden rounded-xl h-80 block">
+                        {(destinationsData || []).map((region: any) => (
+                            <Link to={`/regions/${region.slug}`} key={region._id} className="group relative overflow-hidden rounded-xl h-80 block">
                                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
                                 <img
-                                    src={region.image}
-                                    alt={region.title}
+                                    src={region.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80'}
+                                    alt={region.name}
                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
                                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
-                                    <h3 className="text-2xl font-serif font-bold mb-2">{region.title}</h3>
+                                    <h3 className="text-2xl font-serif font-bold mb-2">{region.name}</h3>
                                     <p className="text-sm text-gray-200 line-clamp-2 mb-3">{region.description}</p>
                                     <span className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors">
                                         {t('common:buttons.exploreRegion')} <ChevronRight size={16} />
