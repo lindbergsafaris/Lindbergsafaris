@@ -30,7 +30,7 @@ const Home = () => {
     const slides = [
         {
             id: 1,
-            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg",
             title: t('home:hero.slide1.title'),
             subtitle: t('home:hero.slide1.subtitle')
         },
@@ -60,7 +60,7 @@ const Home = () => {
         },
         {
             id: 6,
-            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772176629/CustomIT_arrztu.jpg",
+            image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel2_kf3i7r.jpg",
             title: t('home:hero.slide6.title'),
             subtitle: t('home:hero.slide6.subtitle')
         }
