@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MaintenancePage from '@/components/MaintenancePage'; // MAINTENANCE MODE — remove this import to restore routing
+
 import { useEffect, Suspense, lazy } from 'react';
 import Home from '@/pages/Home';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -49,8 +49,7 @@ const CompanyRedirect = ({ section }: { section: string }) => {
 };
 
 function App() {
-  return <MaintenancePage />; // MAINTENANCE MODE — remove this line to restore routing
-  return (  // eslint-disable-line no-unreachable
+  return (
     <Router>
       <ScrollToTop />
       <Suspense fallback={<LoadingScreen />}>
