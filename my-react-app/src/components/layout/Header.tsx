@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 const Header = () => {
     const { t } = useTranslation('common');
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [destinationCategories, setDestinationCategories] = useState<any[]>([]);
@@ -28,10 +29,32 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
+        let lastScrollY = window.scrollY;
+        const THRESHOLD = 10;
+
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10);
+            const currentScrollY = window.scrollY;
+
+            // Always show header at the very top of the page
+            if (currentScrollY < THRESHOLD) {
+                setIsVisible(true);
+                setIsScrolled(false);
+                lastScrollY = currentScrollY;
+                return;
+            }
+
+            setIsScrolled(true);
+
+            const delta = currentScrollY - lastScrollY;
+
+            // Only update visibility when scroll delta exceeds threshold (prevents jitter)
+            if (Math.abs(delta) > THRESHOLD) {
+                setIsVisible(delta < 0); // scrolling up → show, scrolling down → hide
+                lastScrollY = currentScrollY;
+            }
         };
-        window.addEventListener('scroll', handleScroll);
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -108,11 +131,13 @@ const Header = () => {
     return (
         <header
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-cover bg-center bg-no-repeat",
+                "fixed top-0 left-0 right-0 z-50 bg-cover bg-center bg-no-repeat",
                 isScrolled ? "shadow-md py-3" : "py-4"
             )}
             style={{
-                backgroundImage: `linear-gradient(to bottom, rgba(238, 214, 175, 0.95), rgba(218, 165, 32, 0.95)), url("/safari-background.png")`
+                backgroundImage: `linear-gradient(to bottom, rgba(238, 214, 175, 0.95), rgba(218, 165, 32, 0.95)), url("/safari-background.png")`,
+                transform: isVisible ? 'translateY(0)' : 'translateY(-100%)',
+                transition: 'transform 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease',
             }}
         >
             <Container className="flex items-center justify-between">
