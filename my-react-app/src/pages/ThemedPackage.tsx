@@ -54,7 +54,7 @@ const ThemedPackage = () => {
     return (
         <Layout>
             {/* Hero Section */}
-            <div className="relative h-[45vh] min-h-[400px] flex items-center justify-center text-white overflow-hidden">
+            <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center text-white overflow-hidden pt-24">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
                     style={{ backgroundImage: `url("${heroImage}")` }}
