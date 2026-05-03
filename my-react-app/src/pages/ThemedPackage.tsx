@@ -130,15 +130,25 @@ const ThemedPackage = () => {
                         </div>
 
                         {/* Sidebar */}
-                        <div className="lg:w-1/3 space-y-8">
-                            <div className="bg-accent text-white p-8 rounded-xl text-center sticky top-24">
-                                <h3 className="text-2xl font-serif font-bold mb-4">Ready to go?</h3>
-                                <p className="mb-6 text-white/90">Contact us today to start planning your dream {title}.</p>
-                                <Link to="/contact">
-                                    <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-accent">
-                                        Get a Quote
-                                    </Button>
-                                </Link>
+                        <div className="lg:w-1/3 bg-primary rounded-3xl p-8 flex flex-col h-fit lg:h-auto">
+                            <div className="sticky top-32 z-10">
+                                <div className="bg-accent text-white p-8 rounded-2xl text-center shadow-xl">
+                                    <h3 className="text-2xl font-serif font-bold mb-4">Ready to go?</h3>
+                                    <p className="mb-6 text-white/90">Contact us today to start planning your dream {title}.</p>
+                                    <Link to="/contact">
+                                        <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-accent">
+                                            Get a Quote
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
+
+                            <div className="mt-12 flex justify-center flex-shrink-0">
+                                <img
+                                    src="/logo.png"
+                                    alt="Lindberg Safaris"
+                                    className="h-28 w-auto opacity-30 brightness-0 invert"
+                                />
                             </div>
                         </div>
                     </div>
