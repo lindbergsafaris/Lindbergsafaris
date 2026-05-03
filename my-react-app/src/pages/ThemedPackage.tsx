@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
@@ -8,8 +9,10 @@ import Button from '@/components/ui/Button';
 import TourCard from '@/components/tours/TourCard';
 import api from '@/lib/api';
 import { PortableText } from '@portabletext/react';
+import { getWhatsAppLink } from '@/lib/utils';
 
 const ThemedPackage = () => {
+    const { t } = useTranslation(['common', 'home']);
     const { category } = useParams();
     const [mounted, setMounted] = useState(false);
 
@@ -29,6 +32,8 @@ const ThemedPackage = () => {
         category ? `packages-${category}` : null,
         () => api.packages.getByCategory(category!)
     );
+
+    const { data: popupOffer } = useSWR('popupOffer', () => api.popup.getAll());
 
     const themedPackage = themedPackageData?.data;
     const packages = packagesData?.data || [];
@@ -130,8 +135,8 @@ const ThemedPackage = () => {
                         </div>
 
                         {/* Sidebar */}
-                        <div className="lg:w-1/3 bg-primary rounded-3xl p-8 flex flex-col h-fit lg:h-auto">
-                            <div className="sticky top-32 z-10">
+                        <div className="lg:w-1/3 bg-primary rounded-3xl p-8 flex flex-col h-fit lg:h-auto gap-8">
+                            <div className="sticky top-32 z-10 space-y-8">
                                 <div className="bg-accent text-white p-8 rounded-2xl text-center shadow-xl">
                                     <h3 className="text-2xl font-serif font-bold mb-4">Ready to go?</h3>
                                     <p className="mb-6 text-white/90">Contact us today to start planning your dream {title}.</p>
@@ -141,9 +146,39 @@ const ThemedPackage = () => {
                                         </Button>
                                     </Link>
                                 </div>
+
+                                {/* Static Exclusive Offer Card */}
+                                {popupOffer && popupOffer.image && (
+                                    <div
+                                        className="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl cursor-pointer group"
+                                        onClick={() => {
+                                            if (popupOffer.ctaLink) {
+                                                window.location.href = popupOffer.ctaLink;
+                                            } else {
+                                                const message = `Hello Lindberg Safaris! I want to claim the exclusive offer: "${popupOffer.title}". Please provide more details.`;
+                                                window.open(getWhatsAppLink(message), '_blank');
+                                            }
+                                        }}
+                                    >
+                                        <div className="relative">
+                                            <img
+                                                src={popupOffer.image.url}
+                                                alt={popupOffer.title}
+                                                className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                                        </div>
+                                        <div className="p-4 bg-white text-center border-t border-gray-100">
+                                            <p className="text-primary font-black uppercase text-[10px] tracking-[0.2em] italic mb-1">
+                                                {t('home:hotDeals.badge') || 'Limited Time Offer'}
+                                            </p>
+                                            <p className="text-gray-900 font-bold text-sm line-clamp-1">{popupOffer.title}</p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="mt-12 flex justify-center flex-shrink-0">
+                            <div className="mt-4 flex justify-center flex-shrink-0">
                                 <img
                                     src="/logo.png"
                                     alt="Lindberg Safaris"
