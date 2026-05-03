@@ -370,23 +370,42 @@ const Home = () => {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {(destinationsData || []).map((region: any) => (
-                            <Link to={`/regions/${region.slug}`} key={region._id} className="group relative overflow-hidden rounded-xl h-80 block">
-                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
-                                <img
-                                    src={region.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80'}
-                                    alt={region.name}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
-                                    <h3 className="text-2xl font-serif font-bold mb-2">{region.name}</h3>
-                                    <p className="text-sm text-gray-200 line-clamp-2 mb-3">{region.description}</p>
-                                    <span className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors">
-                                        {t('common:buttons.exploreRegion')} <ChevronRight size={16} />
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
+                        {(destinationsData || []).map((region: any, index: number) => {
+                            const total = destinationsData.length;
+                            const isLast = index === total - 1;
+                            const remainder3 = total % 3;
+                            const remainder2 = total % 2;
+
+                            let spanClass = "";
+                            if (isLast) {
+                                if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
+
+                                if (remainder2 === 1) spanClass += " md:col-span-2";
+                            }
+
+                            return (
+                                <Link
+                                    to={`/regions/${region.slug}`}
+                                    key={region._id}
+                                    className={`group relative overflow-hidden rounded-xl h-80 block ${spanClass}`}
+                                >
+                                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
+                                    <img
+                                        src={region.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80'}
+                                        alt={region.name}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
+                                        <h3 className="text-2xl font-serif font-bold mb-2">{region.name}</h3>
+                                        <p className="text-sm text-gray-200 line-clamp-2 mb-3">{region.description}</p>
+                                        <span className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors">
+                                            {t('common:buttons.exploreRegion')} <ChevronRight size={16} />
+                                        </span>
+                                    </div>
+                                </Link>
+                            );
+                        })}
                     </div>
                 </Container>
             </Section>
