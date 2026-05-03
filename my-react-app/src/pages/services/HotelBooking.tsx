@@ -59,7 +59,7 @@ const HotelBooking = () => {
                 >
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
-                <Container className="relative z-10 text-center max-w-4xl">
+                <Container className="relative z-10 text-center max-w-5xl">
                     <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
                         Find Your Perfect Stay, <br />
                         <span className="text-primary italic">anywhere in the World</span>
@@ -82,7 +82,7 @@ const HotelBooking = () => {
             {/* Sub-Headline Section */}
             <Section className="bg-white">
                 <Container>
-                    <div className="max-w-4xl mx-auto text-center">
+                    <div className="max-w-5xl mx-auto text-center">
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-gray-900">
                             Your Global Home Away from Home
                         </h2>

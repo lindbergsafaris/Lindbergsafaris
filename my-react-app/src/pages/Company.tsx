@@ -386,7 +386,7 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <p className="text-lg text-gray-100 leading-relaxed mb-12 text-center">
                             Every safari you book contributes to conservation efforts and community development.
                             We believe that tourism should benefit both wildlife and the people who live alongside it.
@@ -428,7 +428,7 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="max-w-4xl mx-auto space-y-8">
+                    <div className="max-w-5xl mx-auto space-y-8">
                         {faqCategories.map((category, catIndex) => (
                             <div key={catIndex} className="p-8 rounded-2xl border border-accent/30 bg-primary-dark/40 backdrop-blur-md shadow-2xl">
                                 <h3 className="text-2xl font-serif font-bold mb-8 text-accent border-b border-accent/20 pb-4 flex items-center gap-3">
@@ -482,7 +482,7 @@ const Company = () => {
                     </div>
 
                     {/* Still Have Questions CTA */}
-                    <div className="mt-16 text-center bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 max-w-3xl mx-auto">
+                    <div className="mt-16 text-center bg-white/10 backdrop-blur-md p-10 rounded-2xl border border-white/20 max-w-5xl mx-auto">
                         <h3 className="text-2xl font-bold text-white mb-4">Still Have Questions?</h3>
                         <p className="text-gray-200 mb-8">
                             Can't find the answer you're looking for? Our team is here to help you plan your perfect safari.

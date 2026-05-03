@@ -43,7 +43,7 @@ const Visa = () => {
                 >
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
-                <Container className="relative z-10 text-center max-w-4xl">
+                <Container className="relative z-10 text-center max-w-5xl">
                     <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">Your Gateway to the World, Simplified</h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide italic">
                         Expert Guidance for a Stress-Free Visa Application Process
@@ -54,7 +54,7 @@ const Visa = () => {
             {/* Intro Section */}
             <Section>
                 <Container>
-                    <div className="max-w-4xl mx-auto">
+                    <div className="max-w-5xl mx-auto">
                         <p className="text-xl text-gray-700 leading-relaxed text-center mb-16">
                             Applying for a visa can be overwhelming — unclear requirements, strict embassy rules, and the fear of rejection. Our visa application support service is designed to remove the guesswork and give you confidence at every step.
                         </p>
@@ -92,7 +92,7 @@ const Visa = () => {
 
                         <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-20 border border-gray-100 shadow-sm">
                             <h2 className="text-3xl font-serif font-bold mb-8 text-center text-gray-900">Why Choose Us?</h2>
-                            <p className="text-gray-600 text-center mb-10 max-w-3xl mx-auto">
+                            <p className="text-gray-600 text-center mb-10 max-w-5xl mx-auto">
                                 Amongst other many providers of visa application services, ours is engineered to stand apart by focusing on what matters most to the modern traveler: certainty, clarity, and control. We move beyond simple form-filling to offer a truly comprehensive and differentiated experience.
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -141,7 +141,7 @@ const Visa = () => {
                         ))}
                     </div>
 
-                    <div className="max-w-4xl mx-auto mt-20 text-center">
+                    <div className="max-w-5xl mx-auto mt-20 text-center">
                         <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-12">
                             <p className="text-amber-800 text-sm italic">
                                 Visa approval is at the sole discretion of the relevant embassy or consulate. Our role is to provide expert guidance and a carefully prepared, compliant application, minimizing the risk of administrative errors and ensuring a smooth, professional process from start to finish.

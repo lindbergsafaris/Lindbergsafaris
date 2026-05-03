@@ -121,7 +121,7 @@ const Transport = () => {
                         </div>
 
                         {/* Safety Section */}
-                        <div className="text-center max-w-3xl mx-auto mb-12">
+                        <div className="text-center max-w-5xl mx-auto mb-12">
                             <h2 className="text-3xl font-serif font-bold mb-6 text-primary">Safety & Maintenance</h2>
                             <p className="text-gray-600 leading-relaxed mb-4">
                                 Your safety is non-negotiable. All our vehicles undergo rigorous servicing before every single trip.

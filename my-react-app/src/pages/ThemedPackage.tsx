@@ -100,7 +100,7 @@ const ThemedPackage = () => {
                                                             <img
                                                                 src={value.url}
                                                                 alt={value.alt || 'Themed Package Image'}
-                                                                className="w-3/5 h-auto rounded-lg shadow-md"
+                                                                className="w-full h-auto rounded-lg shadow-md"
                                                             />
                                                         </div>
                                                     );
