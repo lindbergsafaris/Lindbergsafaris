@@ -86,7 +86,7 @@ const BlogPost = () => {
                         <ArrowLeft size={20} /> Back to Journal
                     </Link>
 
-                    <div className="max-w-5xl">
+                    <div className="max-w-[1100px] mx-auto">
                         <div className="flex items-center gap-4 text-sm text-gray-200 mb-4">
                             <span className="bg-white/10 text-white px-3 py-1 rounded-full font-medium backdrop-blur-sm border border-white/10">
                                 {post.category || 'General'}
@@ -127,7 +127,7 @@ const BlogPost = () => {
 
             <Section className="bg-white pt-16">
                 <Container>
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-[1100px] mx-auto">
                         <div className="prose prose-lg max-w-none prose-headings:font-serif prose-headings:font-bold prose-headings:text-primary prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-primary hover:prose-a:text-primary/80 transition-colors">
                             {Array.isArray(post.content) ? (
                                 <PortableText
@@ -136,7 +136,7 @@ const BlogPost = () => {
                                         types: {
                                             externalImage: ({ value }) => (
                                                 <figure className="my-12 flex flex-col items-center">
-                                                    <div className="max-w-4xl w-full">
+                                                    <div className="w-full">
                                                         <img
                                                             src={value.url}
                                                             alt={value.alt || ''}
