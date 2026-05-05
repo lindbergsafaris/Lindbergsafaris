@@ -284,6 +284,25 @@ export const teamMemberAPI = {
     }
 };
 
+// Hero Slides API
+export const heroSlidesAPI = {
+    getAll: async () => {
+        const query = `*[_type == "heroSlide"] | order(order asc, _createdAt desc) {
+            _id,
+            title,
+            subtitle,
+            image,
+            primaryButtonText,
+            primaryButtonLink,
+            secondaryButtonText,
+            secondaryButtonLink,
+            order
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+};
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -372,6 +391,7 @@ export default {
     teamMember: teamMemberAPI,
     destinationCategory: destinationCategoryAPI,
     destinationPost: destinationPostAPI,
+    heroSlides: heroSlidesAPI,
     healthCheck,
 };
 

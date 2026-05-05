@@ -11,5 +11,6 @@ import teamMember from './teamMember'
 
 import destinationCategory from './destinationCategory'
 import destinationPost from './destinationPost'
+import heroSlide from './heroSlide'
 
-export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember, destinationCategory, destinationPost]
+export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember, destinationCategory, destinationPost, heroSlide]

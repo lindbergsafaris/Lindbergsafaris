@@ -167,3 +167,15 @@ export interface BlogPost {
     content: any;
     readTime?: string;
 }
+
+export interface HeroSlide {
+    _id: string;
+    image: string;
+    title: string;
+    subtitle: string;
+    primaryButtonText?: string;
+    primaryButtonLink?: string;
+    secondaryButtonText?: string;
+    secondaryButtonLink?: string;
+    order?: number;
+}

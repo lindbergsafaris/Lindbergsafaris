@@ -17,7 +17,7 @@ import TeamSection from '@/components/sections/TeamSection';
 import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import MailchimpForm from '@/components/ui/MailchimpForm';
 
-import { Tour, HotDeal } from '@/types';
+import { Tour, HotDeal, HeroSlide } from '@/types';
 
 const Home = () => {
     const { t } = useTranslation(['common', 'home']);
@@ -27,44 +27,71 @@ const Home = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const slides = [
+    const fallbackSlides: HeroSlide[] = [
         {
-            id: 1,
+            _id: 'fallback-1',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg",
             title: t('home:hero.slide1.title'),
-            subtitle: t('home:hero.slide1.subtitle')
+            subtitle: t('home:hero.slide1.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         },
         {
-            id: 2,
+            _id: 'fallback-2',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
             title: t('home:hero.slide2.title'),
-            subtitle: t('home:hero.slide2.subtitle')
+            subtitle: t('home:hero.slide2.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         },
         {
-            id: 3,
+            _id: 'fallback-3',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/Vehicle_khehig.jpg",
             title: t('home:hero.slide3.title'),
-            subtitle: t('home:hero.slide3.subtitle')
+            subtitle: t('home:hero.slide3.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         },
         {
-            id: 4,
+            _id: 'fallback-4',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1772176017/RPK_rxvnwy.jpg",
             title: t('home:hero.slide4.title'),
-            subtitle: t('home:hero.slide4.subtitle')
+            subtitle: t('home:hero.slide4.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         },
         {
-            id: 5,
+            _id: 'fallback-5',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg",
             title: t('home:hero.slide5.title'),
-            subtitle: t('home:hero.slide5.subtitle')
+            subtitle: t('home:hero.slide5.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         },
         {
-            id: 6,
+            _id: 'fallback-6',
             image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel2_kf3i7r.jpg",
             title: t('home:hero.slide6.title'),
-            subtitle: t('home:hero.slide6.subtitle')
+            subtitle: t('home:hero.slide6.subtitle'),
+            primaryButtonText: t('common:buttons.startYourJourney'),
+            primaryButtonLink: '/contact',
+            secondaryButtonText: t('common:buttons.viewOurTours'),
+            secondaryButtonLink: '/tours'
         }
     ];
+
+    const { data: slidesData } = useSWR('heroSlides', () => api.heroSlides.getAll().then(res => res.data));
+    const slides = slidesData && slidesData.length > 0 ? slidesData : fallbackSlides;
 
     // Partners Data
     const partners = [
@@ -179,9 +206,9 @@ const Home = () => {
 
             {/* 1. Carousel (Hero) */}
             <div className="relative h-screen min-h-[600px] flex items-center justify-center text-white overflow-hidden group">
-                {slides.map((slide, index) => (
+                {slides.map((slide: HeroSlide, index: number) => (
                     <div
-                        key={slide.id}
+                        key={slide._id}
                         className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
                             }`}
                     >
@@ -200,12 +227,12 @@ const Home = () => {
                                     {slide.subtitle}
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
-                                    <Link to="/contact">
-                                        <Button size="lg">{t('common:buttons.startYourJourney')}</Button>
+                                    <Link to={slide.primaryButtonLink || '/contact'}>
+                                        <Button size="lg">{slide.primaryButtonText || t('common:buttons.startYourJourney')}</Button>
                                     </Link>
-                                    <Link to="/tours">
+                                    <Link to={slide.secondaryButtonLink || '/tours'}>
                                         <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary">
-                                            {t('common:buttons.viewOurTours')}
+                                            {slide.secondaryButtonText || t('common:buttons.viewOurTours')}
                                         </Button>
                                     </Link>
                                 </div>
@@ -232,7 +259,7 @@ const Home = () => {
 
                 {/* Carousel Indicators */}
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-                    {slides.map((_, index) => (
+                    {slides.map((_: HeroSlide, index: number) => (
                         <button
                             key={index}
                             onClick={() => setCurrentSlide(index)}
