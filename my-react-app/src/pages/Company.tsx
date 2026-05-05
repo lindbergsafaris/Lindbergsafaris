@@ -8,6 +8,9 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
 import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import TeamSection from '@/components/sections/TeamSection';
+import useSWR from 'swr';
+import api from '@/lib/api';
+import { Link } from 'react-router-dom';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<string | null>(null);
@@ -92,15 +95,18 @@ const Company = () => {
     // Team Data removed - now handled by TeamSection component
 
     // Partners Data
-    const partners = [
-        { name: 'Partner 1', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg' },
-        { name: 'Partner 2', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg' },
-        { name: 'Partner 3', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg' },
-        { name: 'Partner 4', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg' },
-        { name: 'Partner 5', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0025_mokzmf.jpg' },
-        { name: 'Partner 6', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg' },
-        { name: 'Partner 7', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
+    const fallbackPartners = [
+        { name: 'Legend Tours', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg' },
+        { name: 'Emirates', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg' },
+        { name: 'Magical Kenya', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg' },
+        { name: 'Kenya Tourism Board', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg' },
+        { name: 'Costa', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0025_mokzmf.jpg' },
+        { name: 'Kenya Tourism Federation', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg' },
+        { name: 'Ministry of Tourism & Wildlife', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
     ];
+
+    const { data: partnersData } = useSWR('partners', () => api.partners.getAll().then(res => res.data));
+    const partners = partnersData && partnersData.length > 0 ? partnersData : fallbackPartners;
 
     // Static FAQ Data
     const faqCategories = [
@@ -515,14 +521,22 @@ const Company = () => {
                     </div>
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
-                        {partners.map((partner, index) => (
-                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        {partners.map((partner: any, index: number) => (
+                            <Link 
+                                key={index} 
+                                to={partner.website || '#'} 
+                                target={partner.website ? "_blank" : "_self"}
+                                className={cn(
+                                    "snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100",
+                                    !partner.website && "cursor-default"
+                                )}
+                            >
                                 <img
                                     src={partner.logo}
                                     alt={partner.name}
                                     className="max-h-full max-w-full object-contain transition-all duration-300"
                                 />
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </Container>

@@ -10,7 +10,7 @@ import Button from '@/components/ui/Button';
 import TourCard from '@/components/tours/TourCard';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
-import { getWhatsAppLink } from '@/lib/utils';
+import { getWhatsAppLink, cn } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
@@ -94,7 +94,7 @@ const Home = () => {
     const slides = slidesData && slidesData.length > 0 ? slidesData : fallbackSlides;
 
     // Partners Data
-    const partners = [
+    const fallbackPartners = [
         { name: 'Legend Tours', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg' },
         { name: 'Emirates', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg' },
         { name: 'Magical Kenya', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg' },
@@ -103,6 +103,9 @@ const Home = () => {
         { name: 'Kenya Tourism Federation', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg' },
         { name: 'Ministry of Tourism & Wildlife', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg' },
     ];
+
+    const { data: partnersData } = useSWR('partners', () => api.partners.getAll().then(res => res.data));
+    const partners = partnersData && partnersData.length > 0 ? partnersData : fallbackPartners;
 
     // Team Data removed - now handled by TeamSection component
 
@@ -370,15 +373,22 @@ const Home = () => {
                     </div>
 
                     <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-start opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
-                        {partners.map((partner, index) => (
+                        {partners.map((partner: any, index: number) => (
                             <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex flex-col items-center gap-3">
-                                <div className="w-full flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all">
+                                <Link 
+                                    to={partner.website || '#'} 
+                                    target={partner.website ? "_blank" : "_self"}
+                                    className={cn(
+                                        "w-full flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all",
+                                        !partner.website && "cursor-default"
+                                    )}
+                                >
                                     <img
                                         src={partner.logo}
                                         alt={partner.name}
                                         className="max-h-full max-w-full object-contain transition-all duration-300"
                                     />
-                                </div>
+                                </Link>
                                 <p className="text-xs md:text-sm font-bold text-gray-700 text-center uppercase tracking-tight line-clamp-2 px-1">
                                     {partner.name}
                                 </p>

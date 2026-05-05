@@ -303,6 +303,22 @@ export const heroSlidesAPI = {
     },
 };
 
+// Partners API
+export const partnersAPI = {
+    getAll: async () => {
+        const query = `*[_type == "partner"] | order(order asc, _createdAt desc) {
+            _id,
+            name,
+            logo,
+            website,
+            order
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+};
+
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -392,6 +408,7 @@ export default {
     destinationCategory: destinationCategoryAPI,
     destinationPost: destinationPostAPI,
     heroSlides: heroSlidesAPI,
+    partners: partnersAPI,
     healthCheck,
 };
 
