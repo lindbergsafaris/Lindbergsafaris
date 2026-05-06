@@ -327,10 +327,6 @@ const Home = () => {
 
                                         {/* Bottom Content */}
                                         <div className="relative p-6 z-10 text-white">
-                                            <h3 className="text-2xl font-black mb-1 uppercase tracking-tight drop-shadow-md font-serif">
-                                                {deal.title}
-                                            </h3>
-
                                             {!isExpired && (
                                                 <div className="flex items-center gap-2 mb-4 text-white/80 text-xs font-medium">
                                                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
