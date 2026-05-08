@@ -327,23 +327,34 @@ const Company = () => {
                         </div>
                         <div className="lg:w-1/2">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {values.map((value, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative bg-secondary overflow-hidden rounded-xl h-48 group shadow-sm hover:shadow-md transition-all border border-gray-100"
-                                    >
-                                        <div
-                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                            style={{ backgroundImage: `url("${value.image}")` }}
-                                        />
-                                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+                                {values.map((value, index) => {
+                                    const total = values.length;
+                                    const isLast = index === total - 1;
+                                    const remainder2 = total % 2;
 
-                                        <div className="relative h-full flex flex-col justify-center items-center text-center p-6 z-10">
-                                            <h4 className="text-xl font-bold mb-2 text-white">{value.title}</h4>
-                                            <p className="text-gray-200 text-sm">{value.description}</p>
+                                    let spanClass = "";
+                                    if (isLast && remainder2 === 1) {
+                                        spanClass = " md:col-span-2";
+                                    }
+
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={`relative overflow-hidden rounded-xl h-48 group shadow-sm border border-white/10 ${spanClass}`}
+                                        >
+                                            <div
+                                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                                style={{ backgroundImage: `url("${value.image}")` }}
+                                            />
+                                            <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-all duration-300 z-10" />
+
+                                            <div className="relative h-full flex flex-col justify-center items-center text-center p-6 z-20">
+                                                <h4 className="text-xl font-serif font-bold mb-2 text-white">{value.title}</h4>
+                                                <p className="text-gray-100 text-sm">{value.description}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
@@ -360,24 +371,38 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {callingItems.map((item, index) => (
-                            <div
-                                key={index}
-                                className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10"
-                            >
-                                <div
-                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                    style={{ backgroundImage: `url("${item.image}")` }}
-                                />
-                                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {callingItems.map((item, index) => {
+                            const total = callingItems.length;
+                            const isLast = index === total - 1;
+                            const remainder3 = total % 3;
+                            const remainder2 = total % 2;
 
-                                <div className="relative h-full flex flex-col justify-end p-8 z-10">
-                                    <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
-                                    <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
+                            let spanClass = "";
+                            if (isLast) {
+                                if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                if (remainder2 === 1) spanClass += " md:col-span-2";
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={`relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 ${spanClass}`}
+                                >
+                                    <div
+                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                        style={{ backgroundImage: `url("${item.image}")` }}
+                                    />
+                                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-all duration-300 z-10" />
+
+                                    <div className="relative h-full flex flex-col justify-end p-8 z-20">
+                                        <h3 className="text-2xl font-serif font-bold mb-4 text-white">{item.title}</h3>
+                                        <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </Container>
             </Section>
@@ -398,27 +423,41 @@ const Company = () => {
                             We believe that tourism should benefit both wildlife and the people who live alongside it.
                         </p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {impactItems.map((item, index) => (
-                                <div
-                                    key={index}
-                                    className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10"
-                                >
-                                    <div
-                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                        style={{ backgroundImage: `url("${item.image}")` }}
-                                    />
-                                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {impactItems.map((item, index) => {
+                                const total = impactItems.length;
+                                const isLast = index === total - 1;
+                                const remainder3 = total % 3;
+                                const remainder2 = total % 2;
 
-                                    <div className="relative h-full flex flex-col justify-end p-8 z-10">
-                                        <div className="bg-primary p-2 rounded-lg w-fit mb-3">
-                                            <TrendingUp className="text-white" size={24} />
+                                let spanClass = "";
+                                if (isLast) {
+                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                    if (remainder2 === 1) spanClass += " md:col-span-2";
+                                }
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 ${spanClass}`}
+                                    >
+                                        <div
+                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                            style={{ backgroundImage: `url("${item.image}")` }}
+                                        />
+                                        <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-all duration-300 z-10" />
+
+                                        <div className="relative h-full flex flex-col justify-end p-8 z-20">
+                                            <div className="bg-primary p-2 rounded-lg w-fit mb-3">
+                                                <TrendingUp className="text-white" size={24} />
+                                            </div>
+                                            <h3 className="text-2xl font-serif font-bold mb-3 text-white">{item.title}</h3>
+                                            <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
                                         </div>
-                                        <h3 className="text-2xl font-bold mb-3 text-white">{item.title}</h3>
-                                        <p className="text-gray-100 leading-relaxed text-sm md:text-base">{item.description}</p>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </Container>

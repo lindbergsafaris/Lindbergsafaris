@@ -117,28 +117,45 @@ const Visa = () => {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Common Visa Applications</h2>
                         <p className="text-gray-600">We assist with visa applications for major destinations across the globe</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {visaTypes.map((visa, index) => (
-                            <div key={index} className="group relative overflow-hidden rounded-2xl shadow-lg aspect-[4/3]">
-                                <img
-                                    src={visa.image}
-                                    alt={visa.name}
-                                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                                <div className="absolute bottom-0 left-0 right-0 p-6">
-                                    <h3 className="text-2xl font-bold text-white mb-2">{visa.name}</h3>
-                                    <a
-                                        href={getWhatsAppLink(`Hello! I'm inquiring about the ${visa.name} application process. Could you please provide more information?`)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center text-primary font-bold hover:gap-2 transition-all"
-                                    >
-                                        Start My Application <ArrowRight size={18} className="ml-2" />
-                                    </a>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {visaTypes.map((visa, index) => {
+                            const total = visaTypes.length;
+                            const isLast = index === total - 1;
+                            const remainder3 = total % 3;
+                            const remainder2 = total % 2;
+
+                            let spanClass = "";
+                            if (isLast) {
+                                if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                if (remainder2 === 1) spanClass += " md:col-span-2";
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={`group relative overflow-hidden rounded-xl h-80 block ${spanClass}`}
+                                >
+                                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
+                                    <img
+                                        src={visa.image}
+                                        alt={visa.name}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
+                                        <h3 className="text-2xl font-serif font-bold mb-2">{visa.name}</h3>
+                                        <a
+                                            href={getWhatsAppLink(`Hello! I'm inquiring about the ${visa.name} application process. Could you please provide more information?`)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-sm font-medium text-primary-light group-hover:text-white transition-colors"
+                                        >
+                                            Start My Application <ArrowRight size={16} />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <div className="max-w-5xl mx-auto mt-20 text-center">

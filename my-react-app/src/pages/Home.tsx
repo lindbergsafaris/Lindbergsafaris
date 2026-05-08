@@ -295,13 +295,25 @@ const Home = () => {
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {hotDeals.map((deal) => {
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {hotDeals.map((deal, index) => {
+                                const total = hotDeals.length;
+                                const isLast = index === total - 1;
+                                const remainder3 = total % 3;
+                                const remainder2 = total % 2;
+
+                                let spanClass = "";
+                                if (isLast) {
+                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                    if (remainder2 === 1) spanClass += " md:col-span-2";
+                                }
+
                                 const isExpired = new Date(deal.dealExpiry) < new Date();
                                 return (
                                     <div
                                         key={deal._id}
-                                        className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end cursor-pointer"
+                                        className={`relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end cursor-pointer ${spanClass}`}
                                         onClick={() => setSelectedDeal(deal)}
                                     >
                                         {/* Background Image */}
@@ -457,20 +469,35 @@ const Home = () => {
                     </div>
 
                     {tours.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {tours.map((tour) => (
-                                <TourCard
-                                    key={tour._id}
-                                    id={tour._id}
-                                    title={tour.title}
-                                    image={tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                    duration={tour.duration}
-                                    groupSize={tour.groupSize || 'Contact us'}
-                                    price={tour.price}
-                                    rating={tour.rating || 0}
-                                    reviews={tour.reviews || 0}
-                                />
-                            ))}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+                            {tours.map((tour, index) => {
+                                const total = tours.length;
+                                const isLast = index === total - 1;
+                                const remainder3 = total % 3;
+                                const remainder2 = total % 2;
+
+                                let spanClass = "";
+                                if (isLast) {
+                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                    if (remainder2 === 1) spanClass += " md:col-span-2";
+                                }
+
+                                return (
+                                    <div key={tour._id} className={spanClass}>
+                                        <TourCard
+                                            id={tour._id}
+                                            title={tour.title}
+                                            image={tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                                            duration={tour.duration}
+                                            groupSize={tour.groupSize || 'Contact us'}
+                                            price={tour.price}
+                                            rating={tour.rating || 0}
+                                            reviews={tour.reviews || 0}
+                                        />
+                                    </div>
+                                );
+                            })}
                         </div>
                     ) : (
                         <div className="text-center py-12 bg-secondary-light rounded-lg">
@@ -567,7 +594,7 @@ const Home = () => {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:travelWithUs.title')}</h2>
                         <p className="text-gray-100 max-w-2xl mx-auto">{t('home:travelWithUs.description')}</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {[
                             {
                                 title: t('home:travelWithUs.experience.title'),
@@ -584,23 +611,37 @@ const Home = () => {
                                 description: t('home:travelWithUs.tailored.description'),
                                 image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
                             }
-                        ].map((item, index) => (
-                            <div
-                                key={index}
-                                className="relative overflow-hidden rounded-xl h-[300px] group shadow-lg border border-white/10"
-                            >
-                                <div
-                                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                    style={{ backgroundImage: `url("${item.image}")` }}
-                                />
-                                <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+                        ].map((item, index, self) => {
+                            const total = self.length;
+                            const isLast = index === total - 1;
+                            const remainder3 = total % 3;
+                            const remainder2 = total % 2;
 
-                                <div className="relative h-full flex flex-col justify-end p-8 z-10 text-center md:text-left">
-                                    <h3 className="text-xl font-serif font-bold mb-2 text-white">{item.title}</h3>
-                                    <p className="text-gray-100 text-sm md:text-base">{item.description}</p>
+                            let spanClass = "";
+                            if (isLast) {
+                                if (remainder3 === 1) spanClass += " lg:col-span-3";
+                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
+                                if (remainder2 === 1) spanClass += " md:col-span-2";
+                            }
+
+                            return (
+                                <div
+                                    key={index}
+                                    className={`relative overflow-hidden rounded-xl h-[300px] group shadow-lg border border-white/10 ${spanClass}`}
+                                >
+                                    <div
+                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                                        style={{ backgroundImage: `url("${item.image}")` }}
+                                    />
+                                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300" />
+
+                                    <div className="relative h-full flex flex-col justify-end p-8 z-10 text-center md:text-left">
+                                        <h3 className="text-xl font-serif font-bold mb-2 text-white">{item.title}</h3>
+                                        <p className="text-gray-100 text-sm md:text-base">{item.description}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </Container>
             </Section>
