@@ -50,9 +50,9 @@ const Blog = () => {
 
                     {!error && posts.length > 0 && (
                         <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="flex flex-wrap gap-8">
                                 {posts.map((post) => (
-                                    <div key={post._id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow flex flex-col">
+                                    <div key={post._id} className="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 hover:shadow-lg transition-shadow flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]">
                                         <div className="h-48 overflow-hidden">
                                             <img
                                                 src={post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}

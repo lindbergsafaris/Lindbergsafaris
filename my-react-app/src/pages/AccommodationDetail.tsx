@@ -126,10 +126,10 @@ const AccommodationDetail = () => {
                             {/* Amenities with Images */}
                             <div>
                                 <h3 className="text-2xl font-serif font-bold mb-8 text-white">Amenities & Facilities</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="flex flex-wrap gap-6">
                                     {accommodation.amenities && accommodation.amenities.length > 0 ? (
                                         accommodation.amenities.map((amenity: any, idx: number) => (
-                                            <div key={idx} className="bg-primary-dark/30 rounded-xl overflow-hidden border border-white/10 group">
+                                            <div key={idx} className="bg-primary-dark/30 rounded-xl overflow-hidden border border-white/10 group flex flex-col flex-grow basis-full md:basis-[calc(50%-1.5rem)]">
                                                 {amenity.image?.url && (
                                                     <div className="h-40 overflow-hidden">
                                                         <img
@@ -172,9 +172,9 @@ const AccommodationDetail = () => {
                                                 </div>
                                             )}
                                             {section.images && section.images.length > 0 && (
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="flex flex-wrap gap-4">
                                                     {section.images.map((img: Image, imgIdx: number) => (
-                                                        <div key={imgIdx} className="rounded-lg overflow-hidden h-64">
+                                                        <div key={imgIdx} className="rounded-lg overflow-hidden h-64 flex-grow basis-full md:basis-[calc(50%-1rem)]">
                                                             <img src={img.url} alt={img.alt || section.title} className="w-full h-full object-cover" />
                                                         </div>
                                                     ))}

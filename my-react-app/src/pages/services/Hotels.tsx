@@ -31,9 +31,9 @@ const Hotels = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {[1, 2, 3].map((item) => (
-                            <div key={item} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group">
+                            <div key={item} className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 group flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]">
                                 <div className="h-48 overflow-hidden">
                                     <img
                                         src={`https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`}

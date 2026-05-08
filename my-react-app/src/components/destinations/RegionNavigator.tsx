@@ -28,12 +28,12 @@ const RegionNavigator = ({ currentRegion }: { currentRegion?: string }) => {
                 <Globe size={20} className="text-white" />
                 <h3 className="text-lg font-bold text-white">Explore Other Regions</h3>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="flex flex-wrap gap-3">
                 {otherRegions.map((region) => (
                     <Link
                         key={region._id}
                         to={`/regions/${region.slug}`}
-                        className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-md text-white text-sm font-medium transition-all text-center border border-white/10 hover:border-white/30"
+                        className="flex-grow basis-[calc(50%-0.75rem)] md:basis-[calc(33.333%-0.75rem)] lg:basis-[calc(16.666%-0.75rem)] px-4 py-2 bg-white/20 hover:bg-white/30 rounded-md text-white text-sm font-medium transition-all text-center border border-white/10 hover:border-white/30"
                     >
                         {region.name}
                     </Link>

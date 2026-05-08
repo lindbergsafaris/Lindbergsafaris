@@ -112,7 +112,7 @@ const Transport = () => {
                                 <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Our Fleet Showcase</h2>
                                 <p className="text-gray-600">Explore the vehicles that drive your adventures across East Africa</p>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="flex flex-wrap gap-6">
                                 {[
                                     "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828030/car3_ww1lxp.jpg",
                                     "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828034/car8_rhpsug.jpg",
@@ -123,7 +123,7 @@ const Transport = () => {
                                     "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828040/Car1_e0z8yq.jpg",
                                     "https://res.cloudinary.com/dbqdpitah/image/upload/v1773828041/car5_drfmr6.jpg"
                                 ].map((img, index) => (
-                                    <div key={index} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 group">
+                                    <div key={index} className="relative aspect-[4/3] overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 group flex-grow basis-full md:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.333%-1.5rem)]">
                                         <img
                                             src={img}
                                             alt={`Lindberg Fleet ${index + 1}`}

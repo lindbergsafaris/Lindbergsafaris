@@ -72,9 +72,9 @@ const Flights = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {/* Air Ticketing */}
-                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(25%-2rem)]">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
                                 <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067327/ticket-11_l9gexs.png" alt="Air Ticketing" className="w-full h-full object-cover" />
                             </div>
@@ -85,7 +85,7 @@ const Flights = () => {
                         </div>
 
                         {/* Cruise Ticketing */}
-                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(25%-2rem)]">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
                                 <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067327/ticket-12_vbwndm.png" alt="Cruise Ticketing" className="w-full h-full object-cover" />
                             </div>
@@ -96,7 +96,7 @@ const Flights = () => {
                         </div>
 
                         {/* Train Ticketing */}
-                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100">
+                        <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-gray-100 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(25%-2rem)]">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 overflow-hidden">
                                 <img src="https://res.cloudinary.com/dbqdpitah/image/upload/v1771067331/ticket-13_mtta1x.png" alt="Train Ticketing" className="w-full h-full object-cover" />
                             </div>
@@ -185,9 +185,9 @@ const Flights = () => {
                     <div className="text-center mb-10">
                         <h2 className="text-2xl font-serif font-bold text-gray-800">Our Trusted Partners</h2>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-8 items-center justify-items-center opacity-70 hover:opacity-100 transition-opacity duration-500">
+                    <div className="flex flex-wrap gap-8 items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-500">
                         {partnerLogos.map((logo, index) => (
-                            <div key={index} className="w-full flex justify-center">
+                            <div key={index} className="flex-grow flex justify-center basis-[40%] md:basis-[18%]">
                                 <img
                                     src={logo}
                                     alt={`Partner Logo ${index + 1}`}

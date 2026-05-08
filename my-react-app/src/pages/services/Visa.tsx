@@ -117,24 +117,12 @@ const Visa = () => {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Common Visa Applications</h2>
                         <p className="text-gray-600">We assist with visa applications for major destinations across the globe</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {visaTypes.map((visa, index) => {
-                            const total = visaTypes.length;
-                            const isLast = index === total - 1;
-                            const remainder3 = total % 3;
-                            const remainder2 = total % 2;
-
-                            let spanClass = "";
-                            if (isLast) {
-                                if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                if (remainder2 === 1) spanClass += " md:col-span-2";
-                            }
-
+                    <div className="flex flex-wrap gap-6">
+                        {visaTypes.map((visa) => {
                             return (
                                 <div
-                                    key={index}
-                                    className={`group relative overflow-hidden rounded-xl h-80 block ${spanClass}`}
+                                    key={visa.name}
+                                    className="group relative overflow-hidden rounded-xl h-80 block flex-grow basis-full md:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.333%-1.5rem)]"
                                 >
                                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
                                     <img

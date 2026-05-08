@@ -66,19 +66,20 @@ const Tours = () => {
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="flex flex-wrap gap-8">
                                         {tours.map((tour) => (
-                                            <TourCard
-                                                key={tour._id}
-                                                id={tour._id}
-                                                title={tour.title}
-                                                image={tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                                duration={tour.duration}
-                                                groupSize={tour.groupSize || 'Contact us'}
-                                                price={tour.price}
-                                                rating={tour.rating || 0}
-                                                reviews={tour.reviews || 0}
-                                            />
+                                            <div key={tour._id} className="flex-grow basis-full md:basis-[calc(50%-2rem)]">
+                                                <TourCard
+                                                    id={tour._id}
+                                                    title={tour.title}
+                                                    image={tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                                                    duration={tour.duration}
+                                                    groupSize={tour.groupSize || 'Contact us'}
+                                                    price={tour.price}
+                                                    rating={tour.rating || 0}
+                                                    reviews={tour.reviews || 0}
+                                                />
+                                            </div>
                                         ))}
                                     </div>
                                 </>

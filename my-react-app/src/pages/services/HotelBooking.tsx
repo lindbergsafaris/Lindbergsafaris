@@ -104,11 +104,11 @@ const HotelBooking = () => {
                         <div className="h-1 w-20 bg-primary mx-auto" />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {collections.map((collection, index) => (
                             <div
                                 key={index}
-                                className={`bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${index === 6 ? 'lg:col-start-2' : ''}`}
+                                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
                             >
                                 <div className="relative h-64 overflow-hidden">
                                     <img

@@ -47,10 +47,10 @@ const TeamSection = () => {
                 ))}
             </div>
 
-            {/* Desktop Grid View */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Desktop View */}
+            <div className="hidden md:flex flex-wrap gap-8 justify-center">
                 {teamMembers.map((member: any, index: number) => (
-                    <div key={member._id || index} className="group text-center">
+                    <div key={member._id || index} className="group text-center flex-grow basis-full md:basis-[calc(45%-2rem)] lg:basis-[calc(22%-2rem)]">
                         <div className="relative mb-4 overflow-hidden rounded-lg aspect-[3/4]">
                             <img
                                 src={member.image?.url || 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}

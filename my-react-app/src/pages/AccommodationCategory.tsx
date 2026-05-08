@@ -71,9 +71,9 @@ const AccommodationCategory = () => {
                             <p className="mt-4 text-gray-600">Loading accommodations...</p>
                         </div>
                     ) : accommodations.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="flex flex-wrap gap-8">
                             {accommodations.map((acc) => (
-                                <div key={acc._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all">
+                                <div key={acc._id} className="bg-secondary-light rounded-xl overflow-hidden shadow-sm border border-gray-100 group hover:shadow-md transition-all flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]">
                                     <div className="h-64 overflow-hidden relative">
                                         <img
                                             src={acc.image?.url || "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"}

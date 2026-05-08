@@ -326,21 +326,12 @@ const Company = () => {
                             />
                         </div>
                         <div className="lg:w-1/2">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="flex flex-wrap gap-6">
                                 {values.map((value, index) => {
-                                    const total = values.length;
-                                    const isLast = index === total - 1;
-                                    const remainder2 = total % 2;
-
-                                    let spanClass = "";
-                                    if (isLast && remainder2 === 1) {
-                                        spanClass = " md:col-span-2";
-                                    }
-
                                     return (
                                         <div
                                             key={index}
-                                            className={`relative overflow-hidden rounded-xl h-48 group shadow-sm border border-white/10 ${spanClass}`}
+                                            className="relative overflow-hidden rounded-xl h-48 group shadow-sm border border-white/10 flex-grow basis-full md:basis-[calc(50%-1.5rem)]"
                                         >
                                             <div
                                                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -371,24 +362,12 @@ const Company = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {callingItems.map((item, index) => {
-                            const total = callingItems.length;
-                            const isLast = index === total - 1;
-                            const remainder3 = total % 3;
-                            const remainder2 = total % 2;
-
-                            let spanClass = "";
-                            if (isLast) {
-                                if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                if (remainder2 === 1) spanClass += " md:col-span-2";
-                            }
-
                             return (
                                 <div
                                     key={index}
-                                    className={`relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 ${spanClass}`}
+                                    className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
                                 >
                                     <div
                                         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -423,24 +402,12 @@ const Company = () => {
                             We believe that tourism should benefit both wildlife and the people who live alongside it.
                         </p>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="flex flex-wrap gap-8">
                             {impactItems.map((item, index) => {
-                                const total = impactItems.length;
-                                const isLast = index === total - 1;
-                                const remainder3 = total % 3;
-                                const remainder2 = total % 2;
-
-                                let spanClass = "";
-                                if (isLast) {
-                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                    if (remainder2 === 1) spanClass += " md:col-span-2";
-                                }
-
                                 return (
                                     <div
                                         key={index}
-                                        className={`relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 ${spanClass}`}
+                                        className="relative overflow-hidden rounded-xl h-[350px] group shadow-lg border border-white/10 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
                                     >
                                         <div
                                             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -559,14 +526,14 @@ const Company = () => {
                         <p className="text-gray-100 max-w-2xl mx-auto">Collaborating with the best to deliver excellence.</p>
                     </div>
 
-                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
+                    <div className="flex flex-wrap gap-4 md:gap-8 items-center opacity-80 hover:opacity-100 transition-all duration-500">
                         {partners.map((partner: any, index: number) => (
                             <Link 
                                 key={index} 
                                 to={partner.website || '#'} 
                                 target={partner.website ? "_blank" : "_self"}
                                 className={cn(
-                                    "snap-center shrink-0 w-[40%] md:w-auto flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100",
+                                    "flex-grow flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100 basis-[40%] md:basis-[20%] lg:basis-[12%]",
                                     !partner.website && "cursor-default"
                                 )}
                             >

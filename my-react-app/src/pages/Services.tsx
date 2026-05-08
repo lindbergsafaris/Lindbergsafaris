@@ -112,11 +112,15 @@ const Services = () => {
             <Section className="bg-primary">
                 <Container>
                     {isLoading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+                        <div className="flex flex-wrap gap-8">
+                            {Array.from({ length: 6 }).map((_, i) => (
+                                <div key={i} className="flex-grow basis-full md:basis-[calc(50%-2rem)]">
+                                    <SkeletonCard />
+                                </div>
+                            ))}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="flex flex-wrap gap-8">
                             {services.map((service) => {
                                 const IconComponent = iconMap[service.icon || ''] || Compass;
                                 const linkTarget = service.slug || '/contact';
@@ -125,7 +129,7 @@ const Services = () => {
                                 return (
                                     <div
                                         key={service._id}
-                                        className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col"
+                                        className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)]"
                                     >
                                         {/* Icon */}
                                         <div className="mb-6 bg-primary-light/10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0">

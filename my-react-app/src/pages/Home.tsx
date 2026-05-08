@@ -295,25 +295,13 @@ const Home = () => {
                             </p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {hotDeals.map((deal, index) => {
-                                const total = hotDeals.length;
-                                const isLast = index === total - 1;
-                                const remainder3 = total % 3;
-                                const remainder2 = total % 2;
-
-                                let spanClass = "";
-                                if (isLast) {
-                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                    if (remainder2 === 1) spanClass += " md:col-span-2";
-                                }
-
+                        <div className="flex flex-wrap gap-8">
+                            {hotDeals.map((deal) => {
                                 const isExpired = new Date(deal.dealExpiry) < new Date();
                                 return (
                                     <div
                                         key={deal._id}
-                                        className={`relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-col justify-end cursor-pointer ${spanClass}`}
+                                        className="relative h-[450px] rounded-2xl overflow-hidden shadow-2xl group flex flex-grow flex-col justify-end cursor-pointer basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
                                         onClick={() => setSelectedDeal(deal)}
                                     >
                                         {/* Background Image */}
@@ -380,9 +368,9 @@ const Home = () => {
                         <p className="text-gray-600 max-w-2xl mx-auto">{t('home:partners.description')}</p>
                     </div>
 
-                    <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 no-scrollbar md:grid md:grid-cols-4 lg:grid-cols-7 md:gap-8 items-start opacity-80 hover:opacity-100 transition-all duration-500 pb-4 md:pb-0">
+                    <div className="flex flex-wrap gap-4 md:gap-8 items-start opacity-80 hover:opacity-100 transition-all duration-500">
                         {partners.map((partner: any, index: number) => (
-                            <div key={index} className="snap-center shrink-0 w-[40%] md:w-auto flex flex-col items-center gap-3">
+                            <div key={index} className="flex-grow flex flex-col items-center gap-3 basis-[40%] md:basis-[20%] lg:basis-[12%]">
                                 <Link 
                                     to={partner.website || '#'} 
                                     target={partner.website ? "_blank" : "_self"}
@@ -414,26 +402,13 @@ const Home = () => {
                         <p className="text-gray-100 max-w-2xl mx-auto">{t('home:destinations.description')}</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {(destinationsData || []).map((region: any, index: number) => {
-                            const total = destinationsData.length;
-                            const isLast = index === total - 1;
-                            const remainder3 = total % 3;
-                            const remainder2 = total % 2;
-
-                            let spanClass = "";
-                            if (isLast) {
-                                if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
-
-                                if (remainder2 === 1) spanClass += " md:col-span-2";
-                            }
-
+                    <div className="flex flex-wrap gap-6">
+                        {(destinationsData || []).map((region: any) => {
                             return (
                                 <Link
                                     to={`/regions/${region.slug}`}
                                     key={region._id}
-                                    className={`group relative overflow-hidden rounded-xl h-80 block ${spanClass}`}
+                                    className="group relative overflow-hidden rounded-xl h-80 block flex-grow basis-full md:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.333%-1.5rem)]"
                                 >
                                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-500 z-10" />
                                     <img
@@ -469,22 +444,10 @@ const Home = () => {
                     </div>
 
                     {tours.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-                            {tours.map((tour, index) => {
-                                const total = tours.length;
-                                const isLast = index === total - 1;
-                                const remainder3 = total % 3;
-                                const remainder2 = total % 2;
-
-                                let spanClass = "";
-                                if (isLast) {
-                                    if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                    else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                    if (remainder2 === 1) spanClass += " md:col-span-2";
-                                }
-
+                        <div className="flex flex-wrap gap-8 text-left">
+                            {tours.map((tour) => {
                                 return (
-                                    <div key={tour._id} className={spanClass}>
+                                    <div key={tour._id} className="flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]">
                                         <TourCard
                                             id={tour._id}
                                             title={tour.title}
@@ -522,7 +485,7 @@ const Home = () => {
                     </div>
 
                     {/* Desktop Grid */}
-                    <div className="hidden md:grid md:grid-cols-5 gap-8 items-start justify-items-center">
+                    <div className="flex flex-wrap gap-8 justify-center items-start">
                         {[
                             { name: 'Rasor Expeditions', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_6ef53a09_kgh022.jpg' },
                             { name: 'Don Bosco Church', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.31.59_ca7bae5c_umiwbi.jpg' },
@@ -530,7 +493,7 @@ const Home = () => {
                             { name: 'Britam', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_349792e2_jclmvq.jpg' },
                             { name: 'Kingdom Bank', logo: 'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765971170/WhatsApp_Image_2025-12-14_at_20.32.50_6d3bd8ca_kalep2.jpg' }
                         ].map((client, index) => (
-                            <div key={index} className="flex flex-col items-center gap-3">
+                            <div key={index} className="flex flex-col items-center gap-3 flex-grow basis-[40%] md:basis-[18%] lg:basis-[18%]">
                                 <div className="w-40 h-40 flex items-center justify-center p-4 transition-all duration-300 bg-white rounded-lg shadow-sm">
                                     <img src={client.logo} alt={client.name} className="max-w-full max-h-full object-contain" />
                                 </div>
@@ -594,7 +557,7 @@ const Home = () => {
                         <h2 className="text-3xl md:text-4xl font-serif font-bold mb-3 text-white">{t('home:travelWithUs.title')}</h2>
                         <p className="text-gray-100 max-w-2xl mx-auto">{t('home:travelWithUs.description')}</p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {[
                             {
                                 title: t('home:travelWithUs.experience.title'),
@@ -611,23 +574,11 @@ const Home = () => {
                                 description: t('home:travelWithUs.tailored.description'),
                                 image: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg"
                             }
-                        ].map((item, index, self) => {
-                            const total = self.length;
-                            const isLast = index === total - 1;
-                            const remainder3 = total % 3;
-                            const remainder2 = total % 2;
-
-                            let spanClass = "";
-                            if (isLast) {
-                                if (remainder3 === 1) spanClass += " lg:col-span-3";
-                                else if (remainder3 === 2) spanClass += " lg:col-span-2";
-                                if (remainder2 === 1) spanClass += " md:col-span-2";
-                            }
-
+                        ].map((item, index) => {
                             return (
                                 <div
                                     key={index}
-                                    className={`relative overflow-hidden rounded-xl h-[300px] group shadow-lg border border-white/10 ${spanClass}`}
+                                    className="relative overflow-hidden rounded-xl h-[300px] group shadow-lg border border-white/10 flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(33.333%-2rem)]"
                                 >
                                     <div
                                         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -673,14 +624,14 @@ const Home = () => {
                         {/* Right Column: Affiliate Members */}
                         <div>
                             <h3 className="text-2xl font-serif font-bold mb-8 text-white text-center md:text-left">{t('home:travelWithUs.videoSection.affiliateMembers')}</h3>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="flex flex-wrap gap-6">
                                 {[
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg',
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg',
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg',
                                     'https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg'
                                 ].map((logoUrl, index) => (
-                                    <div key={index} className="flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100">
+                                    <div key={index} className="flex-grow flex justify-center items-center h-32 bg-secondary-light p-4 rounded-lg shadow-sm hover:shadow-md transition-all border border-gray-100 basis-[45%] md:basis-[22%]">
                                         <img
                                             src={logoUrl}
                                             alt={`Affiliate Member ${index + 1}`}
