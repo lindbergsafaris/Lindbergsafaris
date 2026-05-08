@@ -78,15 +78,16 @@ const RegionDestinations = () => {
 
             <Section className="bg-primary pt-4">
                 <Container>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap gap-8">
                         {posts.map((post) => (
-                            <DestinationCard
-                                key={post._id}
-                                id={post.slug} // Using slug as ID for navigation
-                                name={post.title}
-                                image={post.image.url}
-                                tourCount={post.tourCount || 0}
-                            />
+                            <div key={post._id} className="flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(25%-2rem)] max-w-full">
+                                <DestinationCard
+                                    id={post.slug} // Using slug as ID for navigation
+                                    name={post.title}
+                                    image={post.image.url}
+                                    tourCount={post.tourCount || 0}
+                                />
+                            </div>
                         ))}
                     </div>
                 </Container>
