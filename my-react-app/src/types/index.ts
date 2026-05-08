@@ -179,3 +179,12 @@ export interface HeroSlide {
     secondaryButtonLink?: string;
     order?: number;
 }
+
+export interface GalleryImage {
+    _id: string;
+    title: string;
+    location: string;
+    category: 'wildlife' | 'tours' | 'scenery';
+    imageUrl: string;
+    order?: number;
+}

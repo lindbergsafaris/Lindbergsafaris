@@ -319,6 +319,22 @@ export const partnersAPI = {
 };
 
 
+// Gallery Images API
+export const galleryAPI = {
+    getAll: async () => {
+        const query = `*[_type == "galleryImage"] | order(order asc, _createdAt desc) {
+            _id,
+            title,
+            location,
+            category,
+            imageUrl,
+            order
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    },
+};
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -409,6 +425,7 @@ export default {
     destinationPost: destinationPostAPI,
     heroSlides: heroSlidesAPI,
     partners: partnersAPI,
+    gallery: galleryAPI,
     healthCheck,
 };
 

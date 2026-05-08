@@ -1,135 +1,142 @@
 import { useState } from 'react';
+import useSWR from 'swr';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import { Map, X, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import api from '@/lib/api';
+import { GalleryImage } from '@/types';
 
-// Simple Section component usage since import might fail if not exported default
+// Simple Section component
 const Section = ({ children, className = "", id = "" }: { children: React.ReactNode, className?: string, id?: string }) => (
     <section id={id} className={`py-16 md:py-24 ${className}`}>
         {children}
     </section>
 );
 
-interface GalleryItem {
-    id: number;
-    src: string;
-    category: 'wildlife' | 'tours' | 'scenery';
-    title: string;
-    location: string;
-}
-
-const galleryItems: GalleryItem[] = [
+// Fallback images (shown when no Sanity documents exist yet)
+const fallbackItems: GalleryImage[] = [
     {
-        id: 1,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824821/WhatsApp_Image_2026-02-10_at_17.17.30_smziyr.jpg",
+        _id: 'fallback-1',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824821/WhatsApp_Image_2026-02-10_at_17.17.30_smziyr.jpg",
         category: 'wildlife',
-        title: "Elephant Grazzing",
+        title: "Elephant Grazing",
         location: "Maasai Mara, Kenya"
     },
     {
-        id: 2,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
+        _id: 'fallback-2',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824816/WhatsApp_Image_2026-02-10_at_17.18.58_ogv7ye.jpg",
         category: 'wildlife',
-        title: "Rhinos Grazzing",
-        location: "Masaai Mara, Kenya"
+        title: "Rhinos Grazing",
+        location: "Maasai Mara, Kenya"
     },
     {
-        id: 3,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_2_lzinpl.jpg",
+        _id: 'fallback-3',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_2_lzinpl.jpg",
         category: 'wildlife',
         title: "Lions Resting",
         location: "Amboseli, Kenya"
     },
     {
-        id: 4,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg",
+        _id: 'fallback-4',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.17.30_1_pxtrg4.jpg",
         category: 'wildlife',
         title: "Elephants Herd",
         location: "Kenya"
     },
     {
-        id: 5,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.18.58_3_a3h9sb.jpg",
+        _id: 'fallback-5',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824815/WhatsApp_Image_2026-02-10_at_17.18.58_3_a3h9sb.jpg",
         category: 'wildlife',
         title: "Elephants Migrating",
-        location: "Masaai Mara, Kenya"
+        location: "Maasai Mara, Kenya"
     },
     {
-        id: 6,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.58_2_qyeeay.jpg",
+        _id: 'fallback-6',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.58_2_qyeeay.jpg",
         category: 'wildlife',
         title: "Antelopes",
         location: "Kenya"
     },
     {
-        id: 7,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824813/WhatsApp_Image_2026-02-10_at_17.18.26_2_ire2q6.jpg",
+        _id: 'fallback-7',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824813/WhatsApp_Image_2026-02-10_at_17.18.26_2_ire2q6.jpg",
         category: 'wildlife',
         title: "Antelope",
-        location: "Masaai Mara, Kenya"
+        location: "Maasai Mara, Kenya"
     },
     {
-        id: 8,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.17.31_ntfymv.jpg",
+        _id: 'fallback-8',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.17.31_ntfymv.jpg",
         category: 'wildlife',
         title: "Majestic Rhino",
         location: "Kenya"
     },
     {
-        id: 9,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.58_1_hfgpip.jpg",
+        _id: 'fallback-9',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.58_1_hfgpip.jpg",
         category: 'wildlife',
         title: "Antelope",
-        location: "Masaai Mara, Kenya"
+        location: "Maasai Mara, Kenya"
     },
     {
-        id: 10,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.26_3_tnwxox.jpg",
+        _id: 'fallback-10',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824812/WhatsApp_Image_2026-02-10_at_17.18.26_3_tnwxox.jpg",
         category: 'wildlife',
         title: "Safari Vehicle in the Wild",
         location: "Kenya"
     },
     {
-        id: 11,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
+        _id: 'fallback-11',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
         category: 'tours',
         title: "Diani",
         location: "Kenya"
     },
     {
-        id: 12,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg",
+        _id: 'fallback-12',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892042/vehicle7_vomea0.jpg",
         category: 'tours',
         title: "Premium Tour Transport",
         location: "Kenya"
     },
     {
-        id: 13,
-        src: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.26_1_di3ojf.jpg",
+        _id: 'fallback-13',
+        imageUrl: "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.26_1_di3ojf.jpg",
         category: 'tours',
         title: "Malindi",
         location: "Nairobi, Kenya"
     },
     {
-        id: 14,
-        src: "https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        _id: 'fallback-14',
+        imageUrl: "https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         category: 'scenery',
         title: "Savannah Sunrise",
         location: "Serengeti, Tanzania"
     },
     {
-        id: 15,
-        src: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        _id: 'fallback-15',
+        imageUrl: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         category: 'scenery',
         title: "Mount Kilimanjaro",
         location: "Tanzania"
     }
 ];
 
+// Skeleton card shown while fetching
+const SkeletonCard = () => (
+    <div className="aspect-[4/3] rounded-lg overflow-hidden bg-gray-200 animate-pulse" />
+);
+
 const Gallery = () => {
     const [filter, setFilter] = useState<'all' | 'wildlife' | 'tours' | 'scenery'>('all');
-    const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
+    const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
+
+    // Fetch from Sanity; fall back to hardcoded items if empty
+    const { data: galleryData, isLoading } = useSWR('galleryImages', () =>
+        api.gallery.getAll().then(res => res.data)
+    );
+    const galleryItems: GalleryImage[] = galleryData && galleryData.length > 0 ? galleryData : fallbackItems;
 
     const filteredItems = filter === 'all'
         ? galleryItems
@@ -153,12 +160,12 @@ const Gallery = () => {
 
             <Section>
                 <Container>
-                    {/* Filters */}
+                    {/* Category Filters */}
                     <div className="flex flex-wrap justify-center gap-4 mb-12">
-                        {['all', 'wildlife', 'tours', 'scenery'].map((cat) => (
+                        {(['all', 'wildlife', 'tours', 'scenery'] as const).map((cat) => (
                             <button
                                 key={cat}
-                                onClick={() => setFilter(cat as any)}
+                                onClick={() => setFilter(cat)}
                                 className={cn(
                                     "px-6 py-2 rounded-full capitalize transition-all",
                                     filter === cat
@@ -172,28 +179,42 @@ const Gallery = () => {
                     </div>
 
                     {/* Gallery Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {filteredItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="group relative aspect-[4/3] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all"
-                                onClick={() => setSelectedImage(item)}
-                            >
-                                <img
-                                    src={item.src}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100">
-                                    <h3 className="text-white font-bold text-lg translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{item.title}</h3>
-                                    <div className="flex items-center gap-1 text-gray-200 text-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
-                                        <Map size={14} />
-                                        <span>{item.location}</span>
+                    {isLoading ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {filteredItems.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className="group relative aspect-[4/3] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all"
+                                    onClick={() => setSelectedImage(item)}
+                                >
+                                    <img
+                                        src={item.imageUrl}
+                                        alt={item.title}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100">
+                                        <h3 className="text-white font-bold text-lg translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{item.title}</h3>
+                                        <div className="flex items-center gap-1 text-gray-200 text-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                                            <Map size={14} />
+                                            <span>{item.location}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Empty state */}
+                    {!isLoading && filteredItems.length === 0 && (
+                        <div className="text-center py-20 text-gray-400">
+                            <Camera size={48} className="mx-auto mb-4 opacity-40" />
+                            <p className="text-lg">No images in this category yet.</p>
+                        </div>
+                    )}
                 </Container>
             </Section>
 
@@ -219,7 +240,7 @@ const Gallery = () => {
                     >
                         <div className="md:w-3/4 bg-black flex items-center justify-center h-[50vh] md:h-[80vh]">
                             <img
-                                src={selectedImage.src}
+                                src={selectedImage.imageUrl}
                                 alt={selectedImage.title}
                                 className="max-w-full max-h-full object-contain"
                             />
