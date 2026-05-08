@@ -14,5 +14,6 @@ import destinationPost from './destinationPost'
 import heroSlide from './heroSlide'
 import partner from './partner'
 import galleryImage from './galleryImage'
+import service from './service'
 
-export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember, destinationCategory, destinationPost, heroSlide, partner, galleryImage]
+export const schemaTypes = [tour, blogPost, accommodation, hotDeal, popupOffer, themedPackage, teamMember, destinationCategory, destinationPost, heroSlide, partner, galleryImage, service]

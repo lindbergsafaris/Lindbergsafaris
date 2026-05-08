@@ -222,12 +222,14 @@ export const packagesAPI = {
 // Services API
 export const servicesAPI = {
     getAll: async () => {
-        const query = `*[_type == "service"] | order(_createdAt desc) {
+        const query = `*[_type == "service" && isActive == true] | order(order asc, _createdAt asc) {
             _id,
             title,
             description,
             icon,
-            features
+            slug,
+            features,
+            order
         }`;
         const data = await client.fetch(query);
         return { data };

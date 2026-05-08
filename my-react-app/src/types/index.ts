@@ -86,12 +86,13 @@ export interface AccommodationSection {
 export interface Service {
     _id: string;
     title: string;
-    slug: { current: string };
+    slug?: string;
     description: string;
     icon?: string;
     image?: Image;
     features?: string[];
     order?: number;
+    isActive?: boolean;
 }
 
 export interface Package {
