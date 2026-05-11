@@ -13,19 +13,10 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'image',
-      title: 'Vehicle Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
-        }
-      ],
+      name: 'imageUrl',
+      title: 'Vehicle Image URL (Cloudinary)',
+      type: 'url',
+      description: 'Paste the full Cloudinary image URL here',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -38,7 +29,6 @@ export default defineType({
   preview: {
     select: {
       title: 'name',
-      media: 'image',
     },
   },
 })

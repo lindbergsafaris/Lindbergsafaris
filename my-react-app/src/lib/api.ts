@@ -328,10 +328,7 @@ export const fleetAPI = {
         const query = `*[_type == "fleetVehicle"] | order(order asc, _createdAt desc) {
             _id,
             name,
-            "image": image {
-                "url": asset->url,
-                alt
-            },
+            imageUrl,
             order
         }`;
         const data = await client.fetch(query);

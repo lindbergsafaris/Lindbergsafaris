@@ -22,7 +22,7 @@ const Transport = () => {
     const { data: fleetData, isLoading } = useSWR('fleet', () => api.fleet.getAll());
     const fleet: any[] = fleetData?.data && fleetData.data.length > 0
         ? fleetData.data
-        : fallbackFleet.map((url, i) => ({ _id: `fallback-${i}`, image: { url }, name: `Fleet ${i + 1}` }));
+        : fallbackFleet.map((url, i) => ({ _id: `fallback-${i}`, imageUrl: url, name: `Fleet ${i + 1}` }));
 
     const features = [
         "Car Hire",
@@ -145,7 +145,7 @@ const Transport = () => {
                                     {fleet.map((vehicle) => (
                                         <div key={vehicle._id} className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 group flex-grow basis-full md:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.333%-1.5rem)] border-2 border-white">
                                             <img
-                                                src={vehicle.image.url}
+                                                src={vehicle.imageUrl}
                                                 alt={vehicle.name}
                                                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                             />
