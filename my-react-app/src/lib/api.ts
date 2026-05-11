@@ -322,6 +322,23 @@ export const galleryAPI = {
     },
 };
 
+// Fleet API
+export const fleetAPI = {
+    getAll: async () => {
+        const query = `*[_type == "fleetVehicle"] | order(order asc, _createdAt desc) {
+            _id,
+            name,
+            "image": image {
+                "url": asset->url,
+                alt
+            },
+            order
+        }`;
+        const data = await client.fetch(query);
+        return { data };
+    }
+}
+
 // Health check (Stub for compatibility)
 export const healthCheck = async () => {
     return { success: true, message: 'Frontend-only mode' };
@@ -405,7 +422,7 @@ export default {
     hotDeals: hotDealsAPI,
     popup: popupAPI,
     packages: packagesAPI,
-
+    fleet: fleetAPI,
     themedPackages: themedPackageAPI,
     teamMember: teamMemberAPI,
     destinationCategory: destinationCategoryAPI,
