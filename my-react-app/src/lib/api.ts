@@ -219,22 +219,7 @@ export const packagesAPI = {
     },
 };
 
-// Services API
-export const servicesAPI = {
-    getAll: async () => {
-        const query = `*[_type == "service" && isActive == true] | order(order asc, _createdAt asc) {
-            _id,
-            title,
-            description,
-            icon,
-            slug,
-            features,
-            order
-        }`;
-        const data = await client.fetch(query);
-        return { data };
-    },
-};
+
 
 // Themed Packages API
 export const themedPackageAPI = {
@@ -420,7 +405,7 @@ export default {
     hotDeals: hotDealsAPI,
     popup: popupAPI,
     packages: packagesAPI,
-    services: servicesAPI,
+
     themedPackages: themedPackageAPI,
     teamMember: teamMemberAPI,
     destinationCategory: destinationCategoryAPI,

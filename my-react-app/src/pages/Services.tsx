@@ -1,5 +1,3 @@
-import useSWR from 'swr';
-import api from '@/lib/api';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -77,25 +75,8 @@ const fallbackServices: Service[] = [
     },
 ];
 
-// Skeleton card while loading
-const SkeletonCard = () => (
-    <div className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 animate-pulse">
-        <div className="mb-6 w-20 h-20 rounded-full bg-gray-200" />
-        <div className="h-7 bg-gray-200 rounded w-2/3 mb-3" />
-        <div className="h-4 bg-gray-200 rounded w-full mb-2" />
-        <div className="h-4 bg-gray-200 rounded w-5/6 mb-6" />
-        <div className="space-y-2 mb-6">
-            {[1, 2, 3].map(i => <div key={i} className="h-3 bg-gray-200 rounded w-4/5" />)}
-        </div>
-        <div className="h-5 bg-gray-200 rounded w-32" />
-    </div>
-);
-
 const Services = () => {
-    const { data: servicesData, isLoading } = useSWR('services', () => api.services.getAll());
-    const services: Service[] = servicesData?.data && servicesData.data.length > 0
-        ? servicesData.data
-        : fallbackServices;
+    const services: Service[] = fallbackServices;
 
     return (
         <Layout>
@@ -111,62 +92,52 @@ const Services = () => {
 
             <Section className="bg-primary">
                 <Container>
-                    {isLoading ? (
-                        <div className="flex flex-wrap gap-8">
-                            {Array.from({ length: 6 }).map((_, i) => (
-                                <div key={i} className="flex-grow basis-full md:basis-[calc(50%-2rem)]">
-                                    <SkeletonCard />
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="flex flex-wrap gap-8">
-                            {services.map((service) => {
-                                const IconComponent = iconMap[service.icon || ''] || Compass;
-                                const linkTarget = service.slug || '/contact';
-                                const isInternalDetailPage = service.slug && service.slug !== '/contact';
+                    <div className="flex flex-wrap gap-8">
+                        {services.map((service) => {
+                            const IconComponent = iconMap[service.icon || ''] || Compass;
+                            const linkTarget = service.slug || '/contact';
+                            const isInternalDetailPage = service.slug && service.slug !== '/contact';
 
-                                return (
-                                    <div
-                                        key={service._id}
-                                        className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)]"
-                                    >
-                                        {/* Icon */}
-                                        <div className="mb-6 bg-primary-light/10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0">
-                                            <IconComponent size={40} className="text-primary" />
-                                        </div>
-
-                                        {/* Title & Description */}
-                                        <h3 className="text-2xl font-serif font-bold mb-3">{service.title}</h3>
-                                        <p className="text-gray-600 mb-6">{service.description}</p>
-
-                                        {/* Features */}
-                                        {service.features && service.features.length > 0 && (
-                                            <ul className="mb-6 space-y-2">
-                                                {service.features.map((feature: string, idx: number) => (
-                                                    <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-
-                                        {/* CTA Link — pushed to bottom */}
-                                        <div className="mt-auto pt-4">
-                                            <Link
-                                                to={linkTarget}
-                                                className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors"
-                                            >
-                                                {isInternalDetailPage ? 'Learn More' : 'Inquire Now'}
-                                                <ArrowRight size={18} />
-                                            </Link>
-                                        </div>
+                            return (
+                                <div
+                                    key={service._id}
+                                    className="bg-secondary-light p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col flex-grow basis-full md:basis-[calc(50%-2rem)]"
+                                >
+                                    {/* Icon */}
+                                    <div className="mb-6 bg-primary-light/10 w-20 h-20 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <IconComponent size={40} className="text-primary" />
                                     </div>
-                                );
-                            })}
-                        </div>
-                    )}
+
+                                    {/* Title & Description */}
+                                    <h3 className="text-2xl font-serif font-bold mb-3">{service.title}</h3>
+                                    <p className="text-gray-600 mb-6">{service.description}</p>
+
+                                    {/* Features */}
+                                    {service.features && service.features.length > 0 && (
+                                        <ul className="mb-6 space-y-2">
+                                            {service.features.map((feature: string, idx: number) => (
+                                                <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+
+                                    {/* CTA Link — pushed to bottom */}
+                                    <div className="mt-auto pt-4">
+                                        <Link
+                                            to={linkTarget}
+                                            className="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors"
+                                        >
+                                            {isInternalDetailPage ? 'Learn More' : 'Inquire Now'}
+                                            <ArrowRight size={18} />
+                                        </Link>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </Container>
             </Section>
         </Layout>
