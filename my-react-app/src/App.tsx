@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, Suspense, lazy } from 'react';
 import Home from '@/pages/Home';
 import ScrollToTop from '@/components/ScrollToTop';
+import MetaPixelTracker from '@/components/MetaPixelTracker';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
 // Lazy load pages
@@ -52,6 +53,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
+      <MetaPixelTracker />
       <Suspense fallback={<LoadingScreen />}>
         <Routes>
           <Route path="/" element={<Home />} />
