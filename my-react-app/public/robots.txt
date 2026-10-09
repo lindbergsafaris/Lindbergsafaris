@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://lindbergsafaris.com/sitemap.xml
+Sitemap: https://www.lindbergsafaris.com/sitemap.xml

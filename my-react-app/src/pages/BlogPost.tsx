@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
+import { SITE_URL } from '@/lib/siteConfig';
 import { BlogPost as BlogPostType } from '@/types';
 
 // Helper to extract YouTube video ID
@@ -88,7 +89,7 @@ const BlogPost = () => {
             "name": "Lindberg Safaris",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://lindbergsafaris.com/logo.png"
+                "url": `${SITE_URL}/logo.png`
             }
         }
     };

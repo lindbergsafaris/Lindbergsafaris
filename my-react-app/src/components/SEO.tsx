@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { SITE_URL, SITE_NAME as SITE_NAME_CONST } from '../lib/siteConfig';
 
 interface SEOProps {
     title: string;
@@ -13,8 +14,8 @@ interface SEOProps {
     noindex?: boolean;
 }
 
-const SITE_NAME = "Lindberg Safaris";
-const DOMAIN = "https://lindbergsafaris.com";
+const SITE_NAME = SITE_NAME_CONST;
+const DOMAIN = SITE_URL;
 const DEFAULT_IMAGE = "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg";
 const DEFAULT_DESCRIPTION = "Experience tailor-made luxury safaris, wildlife adventures, and bespoke holidays in Kenya, Tanzania, Uganda, and Rwanda with Lindberg Safaris.";
 const DEFAULT_KEYWORDS = "Kenya safari, East Africa safaris, Masai Mara tour, luxury safari Kenya, Lindberg Safaris, African wildlife safaris, Kenya holiday packages";

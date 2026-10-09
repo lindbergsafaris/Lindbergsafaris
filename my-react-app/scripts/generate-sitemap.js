@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DOMAIN = 'https://lindbergsafaris.com';
+const DOMAIN = process.env.VITE_SITE_URL || 'https://www.lindbergsafaris.com';
 
 const client = createClient({
     projectId: process.env.VITE_SANITY_PROJECT_ID || 'tdpau1kt',
@@ -37,7 +37,7 @@ async function generateSitemap() {
     console.log('Generating sitemap.xml...');
 
     const today = new Date().toISOString().split('T')[0];
-    const urls = [...staticRoutes.map(r => ({ loc: `${DOMAIN}${r.url}`, lastmod: today, priority: r.priority, changefreq: r.changefreq }))];
+    const urls = [...staticRoutes.map(r => ({ loc: `${DOMAIN}${r.url}`, lastmod: today }))];
 
     try {
         // Fetch Tours
@@ -46,8 +46,6 @@ async function generateSitemap() {
             urls.push({
                 loc: `${DOMAIN}/tours/${t._id}`,
                 lastmod: (t._updatedAt || today).split('T')[0],
-                priority: '0.9',
-                changefreq: 'weekly',
             });
         });
 
@@ -57,8 +55,6 @@ async function generateSitemap() {
             urls.push({
                 loc: `${DOMAIN}/blog/${p._id}`,
                 lastmod: (p._updatedAt || today).split('T')[0],
-                priority: '0.8',
-                changefreq: 'weekly',
             });
         });
 
@@ -69,8 +65,6 @@ async function generateSitemap() {
                 urls.push({
                     loc: `${DOMAIN}/regions/${r.slug}`,
                     lastmod: (r._updatedAt || today).split('T')[0],
-                    priority: '0.8',
-                    changefreq: 'weekly',
                 });
             }
         });
@@ -82,8 +76,6 @@ async function generateSitemap() {
                 urls.push({
                     loc: `${DOMAIN}/destinations/${d.slug}`,
                     lastmod: (d._updatedAt || today).split('T')[0],
-                    priority: '0.8',
-                    changefreq: 'weekly',
                 });
             }
         });
@@ -96,16 +88,12 @@ async function generateSitemap() {
             urls.push({
                 loc: `${DOMAIN}/accommodation/view/${a._id}`,
                 lastmod: (a._updatedAt || today).split('T')[0],
-                priority: '0.7',
-                changefreq: 'monthly',
             });
         });
         accTypes.forEach((type) => {
             urls.push({
                 loc: `${DOMAIN}/accommodation/${type}`,
                 lastmod: today,
-                priority: '0.7',
-                changefreq: 'weekly',
             });
         });
 
@@ -116,8 +104,6 @@ async function generateSitemap() {
                 urls.push({
                     loc: `${DOMAIN}/packages/${pkg.category}`,
                     lastmod: (pkg._updatedAt || today).split('T')[0],
-                    priority: '0.8',
-                    changefreq: 'weekly',
                 });
             }
         });
@@ -131,8 +117,6 @@ async function generateSitemap() {
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
   </url>`).join('\n')}
 </urlset>`;
 

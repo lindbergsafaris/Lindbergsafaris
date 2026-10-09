@@ -10,6 +10,7 @@ import Button from '@/components/ui/Button';
 import TourCard from '@/components/tours/TourCard';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
+import { SITE_URL } from '@/lib/siteConfig';
 import { getWhatsAppLink, cn } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
 import TeamSection from '@/components/sections/TeamSection';
@@ -145,8 +146,8 @@ const Home = () => {
                         "@context": "https://schema.org",
                         "@type": "TravelAgency",
                         "name": "Lindberg Safaris",
-                        "url": "https://lindbergsafaris.com",
-                        "logo": "https://lindbergsafaris.com/logo.png",
+                        "url": SITE_URL,
+                        "logo": `${SITE_URL}/logo.png`,
                         "image": "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg",
                         "description": "Tailor-made luxury safaris, wildlife adventures, and bespoke holidays in Kenya, Tanzania, Uganda, and Rwanda.",
                         "address": {
@@ -159,7 +160,7 @@ const Home = () => {
                         "@context": "https://schema.org",
                         "@type": "WebSite",
                         "name": "Lindberg Safaris",
-                        "url": "https://lindbergsafaris.com"
+                        "url": SITE_URL
                     }
                 ]}
             />
