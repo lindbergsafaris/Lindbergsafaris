@@ -107,6 +107,28 @@ async function runPrerender() {
         { url: '/testimonials' }
     ];
 
+    // Static Accommodation Category routes
+    const accommodationCategories = ['lodges', 'holiday-homes', 'town-hotels', 'luxury-camps', 'resort-hotels', 'bush-camps'];
+    accommodationCategories.forEach(type => {
+        routes.push({
+            url: `/accommodation/${type}`,
+            fallback: { [`accommodations-${type}`]: { data: accommodations.filter(a => a.type === type) } }
+        });
+    });
+
+    // Static Themed Package routes from header navigation
+    const standardPackageCategories = ['wildlife', 'climbing', 'cruise', 'adventure', 'pilgrimages', 'corporate'];
+    standardPackageCategories.forEach(cat => {
+        const pkg = themedPackages.find(p => p.category === cat);
+        routes.push({
+            url: `/packages/${cat}`,
+            fallback: {
+                [`themed-package-${cat}`]: { data: pkg || null },
+                [`packages-${cat}`]: { data: [] }
+            }
+        });
+    });
+
     // Dynamic tour routes
     tours.forEach(t => {
         routes.push({
@@ -128,6 +150,10 @@ async function runPrerender() {
         if (c.slug) {
             routes.push({
                 url: `/regions/${c.slug}`,
+                fallback: {
+                    [`region-category-${c.slug}`]: { data: c },
+                    [`region-posts-${c.slug}`]: { data: destinationPosts.filter(p => p.category?.slug?.current === c.slug || p.category === c.slug) }
+                }
             });
         }
     });
@@ -137,11 +163,14 @@ async function runPrerender() {
         if (d.slug) {
             routes.push({
                 url: `/destinations/${d.slug}`,
+                fallback: {
+                    [`destination-post-${d.slug}`]: { data: d }
+                }
             });
         }
     });
 
-    // Dynamic accommodation routes
+    // Dynamic accommodation view routes
     accommodations.forEach(a => {
         routes.push({
             url: `/accommodation/view/${a._id}`,
@@ -149,12 +178,15 @@ async function runPrerender() {
         });
     });
 
-    // Dynamic themed package routes
+    // Dynamic themed package routes (for any extra categories from Sanity)
     themedPackages.forEach(p => {
-        if (p.category) {
+        if (p.category && !standardPackageCategories.includes(p.category)) {
             routes.push({
                 url: `/packages/${p.category}`,
-                fallback: { [`themed-package-${p.category}`]: { data: p } }
+                fallback: {
+                    [`themed-package-${p.category}`]: { data: p },
+                    [`packages-${p.category}`]: { data: [] }
+                }
             });
         }
     });

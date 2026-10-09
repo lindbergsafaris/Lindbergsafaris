@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Plus, Minus, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import SEO from '@/components/SEO';
 import { cn } from '@/lib/utils';
-import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
 import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import TeamSection from '@/components/sections/TeamSection';
@@ -15,7 +14,7 @@ import { Link } from 'react-router-dom';
 
 const Company = () => {
     const [openFaqIndex, setOpenFaqIndex] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
+
 
     // Navigation items for quick jump
     const navSections = [
@@ -227,14 +226,6 @@ const Company = () => {
         }
     ];
 
-    useEffect(() => {
-        // Simulate loading for smoother transition
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 1000);
-        return () => clearTimeout(timer);
-    }, []);
-
     const scrollToSection = (id: string) => {
         const element = document.getElementById(id);
         if (element) {
@@ -254,9 +245,7 @@ const Company = () => {
         setOpenFaqIndex(openFaqIndex === key ? null : key);
     };
 
-    if (loading) {
-        return <LoadingScreen />;
-    }
+
 
     return (
         <Layout>

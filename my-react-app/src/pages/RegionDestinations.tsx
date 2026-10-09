@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
@@ -11,69 +11,49 @@ import api from '@/lib/api';
 
 const RegionDestinations = () => {
     const { region } = useParams<{ region: string }>();
-    const [category, setCategory] = useState<any>(null);
-    const [posts, setPosts] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!region) return;
-            setLoading(true);
-            try {
-                // Fetch Category Details
-                const categoryRes = await api.destinationCategory.getBySlug(region);
-                setCategory(categoryRes.data);
+    const { data: categoryData, error: categoryError } = useSWR(
+        region ? `region-category-${region}` : null,
+        () => api.destinationCategory.getBySlug(region!)
+    );
 
-                // Fetch Posts for this Category
-                if (categoryRes.data) {
-                    const postsRes = await api.destinationPost.getByCategory(region);
-                    setPosts(postsRes.data || []);
-                }
-            } catch (error) {
-                console.error('Error fetching region data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const { data: postsData } = useSWR(
+        region ? `region-posts-${region}` : null,
+        () => api.destinationPost.getByCategory(region!)
+    );
 
-        fetchData();
-    }, [region]);
+    const category = categoryData?.data;
+    const posts = postsData?.data || [];
+    const loading = !categoryData && !categoryError;
 
     if (loading) {
         return <LoadingScreen />;
     }
 
-    if (!category) {
-        return (
-            <Layout>
-                <SEO title="Region Not Found | Lindberg Safaris" noindex={true} />
-                <Container>
-                    <div className="py-20 text-center">
-                        <h1 className="text-3xl font-bold mb-4">Region Not Found</h1>
-                        <p>The region you are looking for does not exist.</p>
-                    </div>
-                </Container>
-            </Layout>
-        );
-    }
+    const fallbackCategoryName = region ? region.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'Region';
+    const activeCategory = category || {
+        name: fallbackCategoryName,
+        description: `Explore top safari destinations and tour packages in ${fallbackCategoryName}.`,
+        image: { url: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80' }
+    };
 
     return (
         <Layout>
             <SEO
-                title={`${category.name} Safaris & Tour Destinations`}
-                description={category.description || `Discover top safari destinations and game reserves in ${category.name} with Lindberg Safaris.`}
-                image={category.image?.url}
+                title={`${activeCategory.name} Safaris & Tour Destinations`}
+                description={activeCategory.description || `Discover top safari destinations and game reserves in ${activeCategory.name} with Lindberg Safaris.`}
+                image={activeCategory.image?.url}
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"
-                    style={{ backgroundImage: `url("${category.image.url}")` }}
+                    style={{ backgroundImage: `url("${activeCategory.image?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801'}")` }}
                 >
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">{category.name}</h1>
-                    <p className="text-xl font-light tracking-wide">{category.description}</p>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">{activeCategory.name}</h1>
+                    <p className="text-xl font-light tracking-wide">{activeCategory.description}</p>
                 </Container>
             </div>
 
@@ -86,12 +66,12 @@ const RegionDestinations = () => {
             <Section className="bg-primary pt-4">
                 <Container>
                     <div className="flex flex-wrap gap-8">
-                        {posts.map((post) => (
+                        {posts.map((post: any) => (
                             <div key={post._id} className="flex-grow basis-full md:basis-[calc(50%-2rem)] lg:basis-[calc(25%-2rem)] max-w-full">
                                 <DestinationCard
                                     id={post.slug} // Using slug as ID for navigation
                                     name={post.title}
-                                    image={post.image.url}
+                                    image={post.image?.url || ''}
                                     tourCount={post.tourCount || 0}
                                 />
                             </div>

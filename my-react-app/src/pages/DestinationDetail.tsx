@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import useSWR from 'swr';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Info, MapPin, Send } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
@@ -16,55 +17,39 @@ import LoadingScreen from '@/components/ui/LoadingScreen';
 const DestinationDetail = () => {
     const { id } = useParams<{ id: string }>();
 
-    const [destination, setDestination] = useState<Destination | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { data: destPostData, error: destPostError } = useSWR(
+        id ? `destination-post-${id}` : null,
+        () => api.destinationPost.getBySlug(id!)
+    );
 
-    useEffect(() => {
-        const fetchDestination = async () => {
-            setLoading(true);
-            try {
-                // Try fetching from Sanity first
-                if (id) {
-                    const { data } = await api.destinationPost.getBySlug(id);
-                    if (data) {
-                        setDestination({
-                            _id: data._id,
-                            name: data.title,
-                            slug: { current: data.slug },
-                            description: data.excerpt || '',
-                            heroImage: { url: data.image?.url },
-                            content: data.content,
-                            // Map other fields if available/needed
-                        } as Destination);
-                        setLoading(false);
-                        return;
-                    }
-                }
+    const staticDest = id ? destinationsData[id] : null;
 
-                // Fallback to static data
-                const staticDest = id ? destinationsData[id] : null;
-                if (staticDest) {
-                    setDestination({
-                        _id: staticDest.id,
-                        name: staticDest.name,
-                        tagline: staticDest.tagline,
-                        description: staticDest.description,
-                        heroImage: { url: staticDest.heroImage },
-                        highlights: staticDest.highlights,
-                        practicalInfo: staticDest.practicalInfo,
-                        placesToVisit: staticDest.placesToVisit,
-                        slug: { current: id || '' }
-                    } as Destination);
-                }
-            } catch (error) {
-                console.error("Failed to fetch destination:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    let destination: Destination | null = null;
+    if (destPostData?.data) {
+        const data = destPostData.data;
+        destination = {
+            _id: data._id,
+            name: data.title,
+            slug: { current: data.slug },
+            description: data.excerpt || '',
+            heroImage: { url: data.image?.url },
+            content: data.content,
+        } as Destination;
+    } else if (staticDest) {
+        destination = {
+            _id: staticDest.id,
+            name: staticDest.name,
+            tagline: staticDest.tagline,
+            description: staticDest.description,
+            heroImage: { url: staticDest.heroImage },
+            highlights: staticDest.highlights,
+            practicalInfo: staticDest.practicalInfo,
+            placesToVisit: staticDest.placesToVisit,
+            slug: { current: id || '' }
+        } as Destination;
+    }
 
-        fetchDestination();
-    }, [id]);
+    const loading = !destPostData && !destPostError && !staticDest;
 
 
     // Form State

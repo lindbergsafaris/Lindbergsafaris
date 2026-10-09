@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
@@ -15,21 +15,21 @@ import { getWhatsAppLink } from '@/lib/utils';
 const ThemedPackage = () => {
     const { t } = useTranslation(['common', 'home']);
     const { category } = useParams();
-    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true);
-        window.scrollTo(0, 0);
+        if (typeof window !== 'undefined') {
+            window.scrollTo(0, 0);
+        }
     }, [category]);
 
     // Fetch the "About" content for this themed package category
-    const { data: themedPackageData, error: themeError } = useSWR(
+    const { data: themedPackageData } = useSWR(
         category ? `themed-package-${category}` : null,
         () => api.themedPackages.getByCategory(category!)
     );
 
     // Fetch the actual tour packages for this category
-    const { data: packagesData, error: packagesError } = useSWR(
+    const { data: packagesData } = useSWR(
         category ? `packages-${category}` : null,
         () => api.packages.getByCategory(category!)
     );
@@ -38,19 +38,6 @@ const ThemedPackage = () => {
 
     const themedPackage = themedPackageData?.data;
     const packages = packagesData?.data || [];
-    const loading = (!themedPackageData && !themeError) || (!packagesData && !packagesError);
-
-    if (!mounted) return null;
-
-    if (loading) {
-        return (
-            <Layout>
-                <div className="flex justify-center items-center min-h-[60vh]">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-                </div>
-            </Layout>
-        );
-    }
 
     // Fallback if no specific content is created yet in Sanity
     const title = themedPackage?.title || category?.replace('-', ' ') || 'Themed Package';
