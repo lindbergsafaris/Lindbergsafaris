@@ -3,6 +3,7 @@ import { Plus, Minus, TrendingUp } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
+import SEO from '@/components/SEO';
 import { cn } from '@/lib/utils';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import LocationMap from '@/components/ui/LocationMap';
@@ -259,6 +260,10 @@ const Company = () => {
 
     return (
         <Layout>
+            <SEO
+                title="About Lindberg Safaris | Company, Mission & Team"
+                description="Learn about Lindberg Safaris, our story, values, conservation impact, expert guides, and commitment to luxury African safari experiences."
+            />
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center text-white">
                 <div

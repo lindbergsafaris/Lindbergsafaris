@@ -6,6 +6,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Destination, PlaceToVisit } from '@/types';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { destinationsData } from '@/data/destinations';
@@ -113,8 +114,26 @@ const DestinationDetail = () => {
         );
     }
 
+    const destTitle = `${destination.name} Safari Travel Guide`;
+    const destDesc = destination.description
+        ? (typeof destination.description === 'string' ? destination.description.slice(0, 160) : `Plan your safari adventure to ${destination.name} with Lindberg Safaris.`)
+        : `Plan your safari adventure to ${destination.name} with Lindberg Safaris.`;
+    const destImage = destination.heroImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
+
     return (
         <Layout>
+            <SEO
+                title={destTitle}
+                description={destDesc}
+                image={destImage}
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "TouristAttraction",
+                    "name": destination.name,
+                    "description": destDesc,
+                    "image": destImage
+                }}
+            />
             {/* Hero */}
             <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
                 <div

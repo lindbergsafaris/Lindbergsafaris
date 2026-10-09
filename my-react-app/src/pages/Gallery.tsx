@@ -2,6 +2,7 @@ import { useState } from 'react';
 import useSWR from 'swr';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
+import SEO from '@/components/SEO';
 import { Map, X, Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import api from '@/lib/api';
@@ -144,6 +145,10 @@ const Gallery = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Safari Photo Gallery | African Wildlife & Scenery"
+                description="Explore our stunning photo gallery capturing Kenya wildlife, lion sightings, elephant herds, coastal safaris, and high-end fleet transport."
+            />
             {/* Hero Section */}
             <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
                 <div

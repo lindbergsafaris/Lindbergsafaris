@@ -6,6 +6,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import LocationMap from '@/components/ui/LocationMap';
+import SEO from '@/components/SEO';
 
 const Contact = () => {
     const form = useRef<HTMLFormElement>(null);
@@ -38,6 +39,10 @@ const Contact = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Contact Us | Book Kenya Safaris & Tailor-Made Tours"
+                description="Contact Lindberg Safaris to plan your customized Kenya safari, book wildlife tours, or inquire about luxury holidays in East Africa."
+            />
             {/* Hero */}
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div

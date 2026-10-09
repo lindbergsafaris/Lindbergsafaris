@@ -4,6 +4,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import TourCard from '@/components/tours/TourCard';
 import TourFilter from '@/components/tours/TourFilter';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { Tour } from '@/types';
 import LoadingScreen from '@/components/ui/LoadingScreen';
@@ -21,6 +22,11 @@ const Tours = () => {
 
     return (
         <Layout>
+            <SEO
+                title="East Africa Safari Tours & Holiday Packages"
+                description="Explore our curated collection of Kenya safaris, Masai Mara tours, Tanzania wildlife safaris, and custom East African holiday packages."
+                keywords="Kenya safaris, Masai Mara tour, Serengeti safari, East Africa tour packages, wildlife safaris Kenya"
+            />
             {/* Hero Section */}
             <div className="bg-primary text-white py-20">
                 <Container>

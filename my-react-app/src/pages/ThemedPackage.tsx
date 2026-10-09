@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import TourCard from '@/components/tours/TourCard';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { PortableText } from '@portabletext/react';
 import { getWhatsAppLink } from '@/lib/utils';
@@ -58,6 +59,11 @@ const ThemedPackage = () => {
 
     return (
         <Layout>
+            <SEO
+                title={`${title} Safari Packages`}
+                description={description}
+                image={heroImage}
+            />
             {/* Hero Section */}
             <div className="relative min-h-[600px] flex items-center justify-center text-white pt-28 pb-16">
                 <div

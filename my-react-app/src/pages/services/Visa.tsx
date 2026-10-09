@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Check, ArrowRight } from 'lucide-react';
 import { getWhatsAppLink } from '@/lib/utils';
 
@@ -35,6 +36,10 @@ const Visa = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Visa Application Assistance & Travel Services"
+                description="Hassle-free visa assistance for Schengen, US, UK, Australia, Dubai, and East Africa travel with Lindberg Safaris."
+            />
             {/* Hero Section */}
             <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
                 <div

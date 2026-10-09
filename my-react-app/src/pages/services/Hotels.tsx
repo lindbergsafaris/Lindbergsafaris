@@ -2,11 +2,16 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Star } from 'lucide-react';
 
 const Hotels = () => {
     return (
         <Layout>
+            <SEO
+                title="Luxury Safari Lodges & Hotel Booking East Africa"
+                description="Book top-rated safari lodges, tented camps, town hotels, and beachfront resorts across Kenya and Tanzania with Lindberg Safaris."
+            />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"

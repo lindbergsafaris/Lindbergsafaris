@@ -2,6 +2,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Calendar, MapPin, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -148,6 +149,10 @@ const CustomItineraries = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Custom Safari Itineraries Kenya & East Africa"
+                description="Custom tailor-made safari itineraries including Great Migration safaris, luxury lodge circuits, and coastal beach extensions."
+            />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"

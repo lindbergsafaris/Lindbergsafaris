@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import DestinationCard from '@/components/destinations/DestinationCard';
 import RegionNavigator from '@/components/destinations/RegionNavigator';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 
 const RegionDestinations = () => {
@@ -45,6 +46,7 @@ const RegionDestinations = () => {
     if (!category) {
         return (
             <Layout>
+                <SEO title="Region Not Found | Lindberg Safaris" noindex={true} />
                 <Container>
                     <div className="py-20 text-center">
                         <h1 className="text-3xl font-bold mb-4">Region Not Found</h1>
@@ -57,6 +59,11 @@ const RegionDestinations = () => {
 
     return (
         <Layout>
+            <SEO
+                title={`${category.name} Safaris & Tour Destinations`}
+                description={category.description || `Discover top safari destinations and game reserves in ${category.name} with Lindberg Safaris.`}
+                image={category.image?.url}
+            />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"

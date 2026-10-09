@@ -7,6 +7,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import TourItinerary from '@/components/tours/TourItinerary';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { Tour } from '@/types';
@@ -51,6 +52,7 @@ const TourDetail = () => {
     if (loading) {
         return (
             <Layout>
+                <SEO title="Loading Tour... | Lindberg Safaris" />
                 <div className="h-[60vh] flex items-center justify-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                 </div>
@@ -61,20 +63,57 @@ const TourDetail = () => {
     if (error || !tour) {
         return (
             <Layout>
-                <Container className="py-20 text-center">
-                    <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
-                    <p className="text-gray-600">{error || "Tour not found"}</p>
-                    <Button onClick={() => navigate('/tours')} className="mt-4">Back to Tours</Button>
-                </Container>
+                <SEO title="Tour Not Found | Lindberg Safaris" noindex={true} />
+                <Section className="py-20 text-center">
+                    <Container>
+                        <h1 className="text-3xl font-serif font-bold text-gray-900 mb-4">Tour Not Found</h1>
+                        <p className="text-gray-600 mb-8">{error || "The requested tour package could not be found."}</p>
+                        <Button onClick={() => navigate('/tours')}>Browse All Tours</Button>
+                    </Container>
+                </Section>
             </Layout>
         );
     }
+
+    const tourImage = tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
+    const tourDescription = tour.description
+        ? (typeof tour.description === 'string' ? tour.description.slice(0, 160) : `${tour.duration} luxury safari package with Lindberg Safaris.`)
+        : `${tour.duration} safari package exploring East Africa's top wildlife reserves with Lindberg Safaris.`;
+
+    const tourSchema = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": tour.title,
+        "description": tourDescription,
+        "image": tour.images?.map(img => img.url) || [tourImage],
+        "brand": {
+            "@type": "Brand",
+            "name": "Lindberg Safaris"
+        },
+        "offers": {
+            "@type": "Offer",
+            "priceCurrency": "USD",
+            "price": typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0'),
+            "availability": "https://schema.org/InStock",
+            "seller": {
+                "@type": "Organization",
+                "name": "Lindberg Safaris"
+            }
+        }
+    };
 
     const priceValue = typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0');
     const totalPrice = priceValue * guestCount;
 
     return (
         <Layout>
+            <SEO
+                title={`${tour.title} (${tour.duration})`}
+                description={tourDescription}
+                image={tourImage}
+                type="product"
+                schema={tourSchema}
+            />
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] flex items-end pb-12 text-white">
                 <div

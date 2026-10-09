@@ -5,6 +5,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Star, MapPin, Check, ArrowLeft, Calendar } from 'lucide-react';
 import api from '@/lib/api';
 import { createBookingMessage } from '@/lib/bookingUtils';
@@ -60,8 +61,18 @@ const AccommodationDetail = () => {
         );
     }
 
+    const accImage = accommodation.image?.url || "https://images.unsplash.com/photo-1566073771259-6a8506099945";
+    const accDesc = accommodation.description
+        ? (typeof accommodation.description === 'string' ? accommodation.description.slice(0, 160) : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`)
+        : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`;
+
     return (
         <Layout>
+            <SEO
+                title={`${accommodation.name} | ${accommodation.location}`}
+                description={accDesc}
+                image={accImage}
+            />
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] bg-gray-900">
                 <div className="absolute inset-0">

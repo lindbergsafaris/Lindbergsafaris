@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { ArrowRight } from 'lucide-react';
 import { getWhatsAppLink } from '@/lib/utils';
 
@@ -51,6 +52,10 @@ const HotelBooking = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Hotel Reservations & Global Accommodation Booking"
+                description="Securing the best rates on safari lodges, beach resorts, city hotels, and private villas worldwide with Lindberg Safaris."
+            />
             {/* Hero Section */}
             <div className="relative h-[70vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
                 <div

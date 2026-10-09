@@ -12,7 +12,6 @@ import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { getWhatsAppLink, cn } from '@/lib/utils';
 import PopupOffer from '@/components/ui/PopupOffer';
-import LoadingScreen from '@/components/ui/LoadingScreen';
 import TeamSection from '@/components/sections/TeamSection';
 import GoogleReviewsWidget from '@/components/ui/GoogleReviewsWidget';
 import MailchimpForm from '@/components/ui/MailchimpForm';
@@ -21,8 +20,6 @@ import { Tour, HotDeal, HeroSlide } from '@/types';
 
 const Home = () => {
     const { t } = useTranslation(['common', 'home']);
-    const [tours, setTours] = useState<Tour[]>([]);
-    const [hotDeals, setHotDeals] = useState<HotDeal[]>([]);
     const [selectedDeal, setSelectedDeal] = useState<HotDeal | null>(null);
 
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -124,41 +121,47 @@ const Home = () => {
         setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
     };
 
-    const { data: toursData, error: toursError } = useSWR('tours', () => api.tours.getAll().then(res => res.data));
-    const { data: hotDealsData, error: hotDealsError } = useSWR('hotDeals', () => api.hotDeals.getAll().then(res => res.data));
-    const { data: destinationsData, error: destinationsError } = useSWR('destinations', () => api.destinationCategory.getAll().then(res => res.data));
+    const { data: toursData } = useSWR('tours', () => api.tours.getAll().then(res => res.data));
+    const { data: hotDealsData } = useSWR('hotDeals', () => api.hotDeals.getAll().then(res => res.data));
+    const { data: destinationsData } = useSWR('destinations', () => api.destinationCategory.getAll().then(res => res.data));
 
-    useEffect(() => {
-        if (toursData) {
-            // Get featured tours or first 3
-            const allTours = toursData || [];
-            const featuredTours = allTours.filter((t: Tour) => t.featured).slice(0, 3);
-            setTours(featuredTours.length > 0 ? featuredTours : allTours.slice(0, 3));
-        }
-    }, [toursData]);
+    const allTours: Tour[] = Array.isArray(toursData) ? toursData : (toursData?.data || []);
+    const featuredToursList = allTours.filter((t: Tour) => t.featured).slice(0, 3);
+    const tours = featuredToursList.length > 0 ? featuredToursList : allTours.slice(0, 3);
 
-    useEffect(() => {
-        if (hotDealsData) {
-            // Filter out deals where expiry date is in the past
-            const activeDeals = (hotDealsData || []).filter((deal: HotDeal) => {
-                if (!deal.dealExpiry) return false;
-                return new Date(deal.dealExpiry) > new Date();
-            });
-            setHotDeals(activeDeals);
-        }
-    }, [hotDealsData]);
-
-    const loading = (!toursData && !toursError) || (!hotDealsData && !hotDealsError) || (!destinationsData && !destinationsError);
-
-    if (loading) {
-        return <LoadingScreen />;
-    }
+    const rawHotDeals: HotDeal[] = Array.isArray(hotDealsData) ? hotDealsData : (hotDealsData?.data || []);
+    const hotDeals = rawHotDeals.filter((deal: HotDeal) => {
+        if (!deal.dealExpiry) return true;
+        return new Date(deal.dealExpiry) > new Date();
+    });
 
     return (
         <Layout>
             <SEO
-                title="Home"
-                description="Experience the magic of East Africa with Lindberg Safaris. Tailor-made luxury safaris in Kenya, Tanzania, Uganda, and Rwanda."
+                title="Lindberg Safaris | Kenya Safari Packages & Luxury East Africa Tours"
+                description="Experience the magic of East Africa with Lindberg Safaris. Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda, and Rwanda."
+                schema={[
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "TravelAgency",
+                        "name": "Lindberg Safaris",
+                        "url": "https://lindbergsafaris.com",
+                        "logo": "https://lindbergsafaris.com/logo.png",
+                        "image": "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg",
+                        "description": "Tailor-made luxury safaris, wildlife adventures, and bespoke holidays in Kenya, Tanzania, Uganda, and Rwanda.",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": "Nairobi",
+                            "addressCountry": "Kenya"
+                        }
+                    },
+                    {
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "name": "Lindberg Safaris",
+                        "url": "https://lindbergsafaris.com"
+                    }
+                ]}
             />
 
             <PopupOffer />

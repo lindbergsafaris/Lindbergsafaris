@@ -4,6 +4,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Check } from 'lucide-react';
 import { getWhatsAppLink } from '@/lib/utils';
 
@@ -33,6 +34,11 @@ const Transport = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Safari Transport & Luxury Car Hire Kenya"
+                description="Custom 4x4 Land Cruisers, airport transfers, chauffeur services, and private safari vehicle hire in Kenya and East Africa."
+                keywords="safari vehicle hire Kenya, 4x4 Land Cruiser safari, airport transfer Nairobi, car hire Kenya"
+            />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
                     className="absolute inset-0 bg-cover bg-center z-0"

@@ -90,13 +90,12 @@ const resources = {
         home: koHome,
     },
 };
+if (typeof window !== 'undefined') {
+    i18n.use(LanguageDetector);
+}
 
 i18n
-    // Detect user language
-    .use(LanguageDetector)
-    // Pass the i18n instance to react-i18next
     .use(initReactI18next)
-    // Initialize i18next
     .init({
         resources,
         fallbackLng: 'en',

@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import api from '@/lib/api';
@@ -21,6 +22,11 @@ const Blog = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Safari Journal & Wildlife Travel Guides"
+                description="Read expert Kenya safari travel guides, wildlife photography tips, itinerary planning advice, and safari stories from Lindberg Safaris."
+                keywords="Kenya safari blog, wildlife travel guide, Masai Mara travel tips, African safari planning"
+            />
             <div className="bg-primary text-white py-20">
                 <Container>
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Safari Journal</h1>

@@ -5,6 +5,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import { Star, MapPin } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { Accommodation } from '@/types';
 
@@ -49,6 +50,10 @@ const AccommodationCategory = () => {
 
     return (
         <Layout>
+            <SEO
+                title={`${info.title} in East Africa`}
+                description={info.description}
+            />
             {/* Hero Section with Background Image */}
             <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
                 <div

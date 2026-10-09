@@ -5,6 +5,7 @@ import { PortableText } from '@portabletext/react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
+import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { BlogPost as BlogPostType } from '@/types';
 
@@ -34,6 +35,7 @@ const BlogPost = () => {
     if (loading) {
         return (
             <Layout>
+                <SEO title="Loading Post... | Lindberg Safaris" />
                 <Section>
                     <Container>
                         <div className="text-center py-20">
@@ -49,6 +51,7 @@ const BlogPost = () => {
     if (error || !post) {
         return (
             <Layout>
+                <SEO title="Blog Post Not Found | Lindberg Safaris" noindex={true} />
                 <Section>
                     <Container>
                         <div className="max-w-2xl mx-auto">
@@ -66,8 +69,39 @@ const BlogPost = () => {
         );
     }
 
+    const postImage = post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
+    const postExcerpt = post.excerpt || `${post.title} - Read full article on Lindberg Safaris.`;
+
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "description": postExcerpt,
+        "image": [postImage],
+        "datePublished": post.publishedAt || new Date().toISOString(),
+        "author": {
+            "@type": "Person",
+            "name": post.author || "Lindberg Safaris"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Lindberg Safaris",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://lindbergsafaris.com/logo.png"
+            }
+        }
+    };
+
     return (
         <Layout>
+            <SEO
+                title={post.title}
+                description={postExcerpt}
+                image={postImage}
+                type="article"
+                schema={articleSchema}
+            />
             <div className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
                 {/* Background Image */}
                 {post.featuredImage?.url && (

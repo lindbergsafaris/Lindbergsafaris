@@ -1,6 +1,7 @@
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
+import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
 import { Car, Hotel, Plane, Compass, ArrowRight, Map, Shield, Users, Heart, LucideIcon } from 'lucide-react';
 import { Service } from '@/types';
@@ -80,6 +81,11 @@ const Services = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Safari & Travel Services in Kenya"
+                description="Discover our full suite of travel services including car hire & safari transport, flight ticketing, visa assistance, hotel reservations, and custom itinerary planning."
+                keywords="Kenya safari transport, air ticketing Nairobi, hotel booking Kenya, visa processing East Africa"
+            />
             {/* Hero */}
             <div className="bg-primary text-white py-20">
                 <Container>
