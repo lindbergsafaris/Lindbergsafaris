@@ -10,6 +10,7 @@ const Quiz = () => {
             <SEO
                 title="Find Your Perfect Safari Quiz | Lindberg Safaris"
                 description="Take our quick safari quiz to find your ideal Kenya safari, wildlife adventure, or luxury holiday package matched to your travel preferences."
+                noindex={true}
             />
             <div className="bg-primary py-20 text-center text-white">
                 <Container>

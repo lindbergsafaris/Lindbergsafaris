@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -11,14 +11,37 @@ import api from '@/lib/api';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { Image, AccommodationSection, Accommodation } from '@/types';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import { isUUID, slugify } from '@/lib/slugUtils';
+import { SITE_URL } from '@/lib/siteConfig';
 
 const AccommodationDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const { data: accommodationData, error: accommodationError } = useSWR<{ data: Accommodation }>(id ? `accommodation-${id}` : null, () => api.accommodations.getById(id!));
-    const accommodation = accommodationData?.data || null;
-    const loading = !accommodationData && !accommodationError;
-    const error = accommodationError ? (accommodationError as Error).message || 'Failed to load accommodation details.' : null;
+
+    // Determine whether the param is a UUID (legacy /view/:id) or a name-slug
+    const paramIsUUID = id ? isUUID(id) : false;
+
+    // UUID path: fetch by _id, then redirect to slug URL
+    const { data: accByIdData } = useSWR(
+        paramIsUUID && id ? `accommodation-${id}` : null,
+        () => api.accommodations.getById(id!)
+    );
+
+    // Slug path: fetch by slugified name
+    const { data: accBySlugData, error: accBySlugError } = useSWR<{ data: Accommodation }>(
+        !paramIsUUID && id ? `accommodation-slug-${id}` : null,
+        () => api.accommodations.getBySlug(id!)
+    );
+
+    // UUID → redirect to slug URL
+    if (paramIsUUID && accByIdData?.data) {
+        const slug = slugify((accByIdData.data as any).name || id!);
+        return <Navigate to={`/accommodation/${slug}`} replace />;
+    }
+
+    const accommodation = accBySlugData?.data || null;
+    const loading = !paramIsUUID && !accBySlugData && !accBySlugError;
+    const error = accBySlugError ? (accBySlugError as Error).message || 'Failed to load accommodation details.' : null;
 
     const [checkInDate, setCheckInDate] = useState('');
     const [nights, setNights] = useState(1);
@@ -61,10 +84,26 @@ const AccommodationDetail = () => {
         );
     }
 
+    const accSlug = slugify(accommodation.name || id!);
+    const canonicalUrl = `${SITE_URL}/accommodation/${accSlug}`;
     const accImage = accommodation.image?.url || "https://images.unsplash.com/photo-1566073771259-6a8506099945";
     const accDesc = accommodation.description
         ? (typeof accommodation.description === 'string' ? accommodation.description.slice(0, 160) : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`)
         : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`;
+
+    const accSchema = {
+        "@context": "https://schema.org",
+        "@type": "LodgingBusiness",
+        "name": accommodation.name,
+        "description": accDesc,
+        "image": accImage,
+        "url": canonicalUrl,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": accommodation.location || "Kenya"
+        },
+        ...(accommodation.rating ? { "starRating": { "@type": "Rating", "ratingValue": accommodation.rating } } : {})
+    };
 
     return (
         <Layout>
@@ -72,6 +111,8 @@ const AccommodationDetail = () => {
                 title={`${accommodation.name} | ${accommodation.location}`}
                 description={accDesc}
                 image={accImage}
+                url={canonicalUrl}
+                schema={accSchema}
             />
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] bg-gray-900">

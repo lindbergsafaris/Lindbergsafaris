@@ -11,6 +11,8 @@ const Hotels = () => {
             <SEO
                 title="Luxury Safari Lodges & Hotel Booking East Africa"
                 description="Book top-rated safari lodges, tented camps, town hotels, and beachfront resorts across Kenya and Tanzania with Lindberg Safaris."
+                noindex={true}
+                url="https://www.lindbergsafaris.com/services/hotel-booking"
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div

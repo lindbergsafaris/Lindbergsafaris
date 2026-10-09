@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Navigate } from 'react-router-dom';
 import { Clock, Users, MapPin, Check, X, Calendar, Star } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import Container from '@/components/ui/Container';
@@ -11,16 +11,38 @@ import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { createBookingMessage } from '@/lib/bookingUtils';
 import { Tour } from '@/types';
+import { isUUID, slugify } from '@/lib/slugUtils';
+import { SITE_URL } from '@/lib/siteConfig';
 
 const TourDetail = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    // Determine if the param is a UUID (legacy) or a slug (canonical)
+    const paramIsUUID = id ? isUUID(id) : false;
 
-    const { data: tourData, error: tourError } = useSWR<{ data: Tour }>(id ? `tour-${id}` : null, () => api.tours.getById(id!));
-    const tour = tourData?.data || null;
-    const loading = !tourData && !tourError;
-    const error = tourError ? "Failed to load tour details." : null;
+    // If UUID: fetch by ID then redirect to slug URL
+    const { data: tourByIdData } = useSWR(
+        paramIsUUID && id ? `tour-${id}` : null,
+        () => api.tours.getById(id!)
+    );
+
+    // If slug: fetch by slug directly
+    const { data: tourBySlugData, error: tourBySlugError } = useSWR(
+        !paramIsUUID && id ? `tour-slug-${id}` : null,
+        () => api.tours.getBySlug(id!)
+    );
+
+    // UUID path: redirect to slug once we have the record
+    if (paramIsUUID && tourByIdData?.data) {
+        const slugVal = (tourByIdData.data as any).slug?.current
+            || slugify((tourByIdData.data as any).title || id!);
+        return <Navigate to={`/tours/${slugVal}`} replace />;
+    }
+
+    const tour = (tourBySlugData?.data || null) as Tour | null;
+    const loading = !paramIsUUID && !tourBySlugData && !tourBySlugError;
+    const error = tourBySlugError ? "Failed to load tour details." : null;
 
     const [guestCount, setGuestCount] = useState(1);
     const [travelDate, setTravelDate] = useState('');
@@ -105,6 +127,9 @@ const TourDetail = () => {
     const priceValue = typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0');
     const totalPrice = priceValue * guestCount;
 
+    const tourSlug = (tour as any).slug?.current || slugify(tour.title || id!);
+    const canonicalUrl = `${SITE_URL}/tours/${tourSlug}`;
+
     return (
         <Layout>
             <SEO
@@ -112,6 +137,7 @@ const TourDetail = () => {
                 description={tourDescription}
                 image={tourImage}
                 type="product"
+                url={canonicalUrl}
                 schema={tourSchema}
             />
             {/* Hero Section */}

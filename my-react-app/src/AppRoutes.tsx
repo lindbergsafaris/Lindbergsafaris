@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
@@ -51,11 +51,22 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tours" element={<Tours />} />
+
+        {/* Tours: canonical slug route; UUID route handled inside TourDetail (redirects) */}
         <Route path="/tours/:id" element={<TourDetail />} />
+
         <Route path="/regions/:region" element={<RegionDestinations />} />
         <Route path="/destinations/:id" element={<DestinationDetail />} />
+
+        {/* Destination typo fix: ambosseli → amboseli */}
+        <Route
+          path="/destinations/ambosseli-national-park"
+          element={<Navigate to="/destinations/amboseli-national-park" replace />}
+        />
+
         <Route path="/services" element={<Services />} />
         <Route path="/services/transport" element={<Transport />} />
+        {/* /services/hotels is noindex thin content; canonical → hotel-booking */}
         <Route path="/services/hotels" element={<Hotels />} />
         <Route path="/services/hotel-booking" element={<HotelBooking />} />
         <Route path="/services/flights" element={<Flights />} />
@@ -64,7 +75,10 @@ export function AppRoutes() {
         <Route path="/services/custom-itineraries" element={<CustomItineraries />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
+
+        {/* Blog: canonical slug route; UUID handled inside BlogPost (redirects) */}
         <Route path="/blog/:id" element={<BlogPost />} />
+
         <Route path="/quiz" element={<Quiz />} />
         <Route path="/company" element={<Company />} />
         <Route path="/gallery" element={<Gallery />} />
@@ -78,7 +92,11 @@ export function AppRoutes() {
 
         {/* Dynamic Themed Packages */}
         <Route path="/packages/:category" element={<ThemedPackage />} />
+
+        {/* Accommodation: canonical slug route (no "view" segment) */}
         <Route path="/accommodation/:type" element={<AccommodationCategory />} />
+
+        {/* Legacy UUID route — AccommodationDetail detects UUID and redirects to slug */}
         <Route path="/accommodation/view/:id" element={<AccommodationDetail />} />
       </Routes>
     </Suspense>

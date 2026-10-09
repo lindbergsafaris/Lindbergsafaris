@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { Calendar, User, Clock, Share2, ArrowLeft } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import Layout from '@/components/layout/Layout';
@@ -8,6 +8,7 @@ import Section from '@/components/ui/Section';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
 import { SITE_URL } from '@/lib/siteConfig';
+import { isUUID, slugify } from '@/lib/slugUtils';
 import { BlogPost as BlogPostType } from '@/types';
 
 // Helper to extract YouTube video ID
@@ -28,10 +29,31 @@ const getGoogleDriveEmbedUrl = (url: string) => {
 
 const BlogPost = () => {
     const { id } = useParams();
-    const { data: postData, error: postError } = useSWR<{ data: BlogPostType }>(id ? `blog-${id}` : null, () => api.blog.getById(id!));
-    const post = postData?.data || null;
-    const loading = !postData && !postError;
-    const error = postError ? (postError as Error).message || 'Failed to load blog post' : null;
+
+    const paramIsUUID = id ? isUUID(id) : false;
+
+    // UUID path: fetch by _id then redirect to slug
+    const { data: postByIdData } = useSWR(
+        paramIsUUID && id ? `blog-${id}` : null,
+        () => api.blog.getById(id!)
+    );
+
+    // Slug path: fetch by slug.current
+    const { data: postBySlugData, error: postBySlugError } = useSWR<{ data: BlogPostType }>(
+        !paramIsUUID && id ? `blog-slug-${id}` : null,
+        () => api.blog.getBySlug(id!)
+    );
+
+    // UUID → redirect to slug
+    if (paramIsUUID && postByIdData?.data) {
+        const slugVal = (postByIdData.data as any).slug?.current
+            || slugify((postByIdData.data as any).title || id!);
+        return <Navigate to={`/blog/${slugVal}`} replace />;
+    }
+
+    const post = postBySlugData?.data || null;
+    const loading = !paramIsUUID && !postBySlugData && !postBySlugError;
+    const error = postBySlugError ? (postBySlugError as Error).message || 'Failed to load blog post' : null;
 
     if (loading) {
         return (
@@ -73,6 +95,9 @@ const BlogPost = () => {
     const postImage = post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
     const postExcerpt = post.excerpt || `${post.title} - Read full article on Lindberg Safaris.`;
 
+    const postSlug = (post as any).slug?.current || slugify(post.title || id!);
+    const canonicalUrl = `${SITE_URL}/blog/${postSlug}`;
+
     const articleSchema = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
@@ -80,6 +105,7 @@ const BlogPost = () => {
         "description": postExcerpt,
         "image": [postImage],
         "datePublished": post.publishedAt || new Date().toISOString(),
+        "mainEntityOfPage": { "@type": "WebPage", "@id": canonicalUrl },
         "author": {
             "@type": "Person",
             "name": post.author || "Lindberg Safaris"
@@ -101,6 +127,7 @@ const BlogPost = () => {
                 description={postExcerpt}
                 image={postImage}
                 type="article"
+                url={canonicalUrl}
                 schema={articleSchema}
             />
             <div className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">

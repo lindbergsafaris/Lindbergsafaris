@@ -1,4 +1,5 @@
 import { client } from './sanity';
+import { slugify } from './slugUtils';
 
 /**
  * API Client for Lindberg Safaris (Direct Sanity)
@@ -42,6 +43,24 @@ export const toursAPI = {
         const data = await client.fetch(query, { id });
         return { data };
     },
+
+    getBySlug: async (slug: string) => {
+        // Try matching by slug.current first
+        const query = `*[_type == "tour" && slug.current == $slug][0] {
+            ...,
+            "images": images[]{
+                url,
+                alt
+            },
+            "destination": destination->{
+                _id,
+                name,
+                slug
+            }
+        }`;
+        const data = await client.fetch(query, { slug });
+        return { data };
+    },
 };
 
 
@@ -75,6 +94,18 @@ export const blogAPI = {
             }
         }`;
         const data = await client.fetch(query, { id });
+        return { data };
+    },
+
+    getBySlug: async (slug: string) => {
+        const query = `*[_type == "blogPost" && slug.current == $slug][0] {
+            ...,
+            "featuredImage": featuredImage{
+                url,
+                alt
+            }
+        }`;
+        const data = await client.fetch(query, { slug });
         return { data };
     },
 };
@@ -139,6 +170,38 @@ export const accommodationsAPI = {
         }`;
         const data = await client.fetch(query, { id });
         return { data };
+    },
+
+    /**
+     * Look up an accommodation by the slug derived from its name.
+     * Fetches all accommodations and finds the one whose slugified name matches.
+     * This avoids needing a slug field in Sanity.
+     */
+    getBySlug: async (slug: string) => {
+        const query = `*[_type == "accommodation"] {
+            _id,
+            name,
+            type,
+            location,
+            rating,
+            "image": image{
+                url,
+                alt
+            },
+            description,
+            amenities[]{
+                name,
+                image{
+                    url,
+                    alt
+                }
+            }
+        }`;
+        const all = await client.fetch(query);
+        const match = (all || []).find(
+            (a: { name: string }) => slugify(a.name || '') === slug
+        );
+        return { data: match || null };
     },
 };
 

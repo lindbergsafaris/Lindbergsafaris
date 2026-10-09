@@ -148,6 +148,7 @@ const Gallery = () => {
             <SEO
                 title="Safari Photo Gallery | African Wildlife & Scenery"
                 description="Explore our stunning photo gallery capturing Kenya wildlife, lion sightings, elephant herds, coastal safaris, and high-end fleet transport."
+                noindex={true}
             />
             {/* Hero Section */}
             <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
