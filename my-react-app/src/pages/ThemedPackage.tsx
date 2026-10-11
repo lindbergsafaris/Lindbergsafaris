@@ -12,6 +12,8 @@ import api from '@/lib/api';
 import { PortableText } from '@portabletext/react';
 import { getWhatsAppLink } from '@/lib/utils';
 
+import { getMetaDescription, getPageTitle, getPageH1 } from '@/lib/seoRegistry';
+
 const ThemedPackage = () => {
     const { t } = useTranslation(['common', 'home']);
     const { category } = useParams();
@@ -41,14 +43,17 @@ const ThemedPackage = () => {
 
     // Fallback if no specific content is created yet in Sanity
     const title = themedPackage?.title || category?.replace('-', ' ') || 'Themed Package';
-    const description = themedPackage?.description || 'Explore our curated packages.';
     const heroImage = themedPackage?.heroImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80';
+    const pkgTitle = getPageTitle('packages', { category, name: themedPackage?.title });
+    const pkgDesc = getMetaDescription('packages', { category, description: themedPackage?.description });
+    const pkgH1 = getPageH1('packages', { category, name: themedPackage?.title });
+    const description = themedPackage?.description || pkgDesc;
 
     return (
         <Layout>
             <SEO
-                title={`${title} Safari Packages`}
-                description={description}
+                title={pkgTitle}
+                description={pkgDesc}
                 image={heroImage}
             />
             {/* Hero Section */}
@@ -61,7 +66,7 @@ const ThemedPackage = () => {
                 </div>
                 <Container className="relative z-10 text-center">
                     <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 capitalize">
-                        {title}
+                        {pkgH1}
                     </h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide max-w-2xl mx-auto text-gray-200 mb-8">
                         {description}
@@ -107,7 +112,7 @@ const ThemedPackage = () => {
                             {/* Package List - Only show if there are actual packages to display */}
                             {packages.length > 0 && (
                                 <>
-                                    <h3 className="text-2xl font-serif font-bold text-gray-800 mb-6">Available Packages</h3>
+                                    <h2 className="text-2xl font-serif font-bold text-gray-800 mb-6">Available Packages</h2>
                                     <div className="flex flex-wrap gap-8">
                                         {packages.map((pkg: any) => (
                                             <div key={pkg._id} className="flex-grow basis-full md:basis-[calc(50%-2rem)]">
@@ -132,7 +137,7 @@ const ThemedPackage = () => {
                         <div className="lg:w-1/3 bg-primary rounded-3xl p-8 flex flex-col h-fit lg:h-auto gap-8">
                             <div className="sticky top-32 z-10 space-y-8">
                                 <div className="bg-accent text-white p-8 rounded-2xl text-center shadow-xl">
-                                    <h3 className="text-2xl font-serif font-bold mb-4">Ready to go?</h3>
+                                    <h2 className="text-2xl font-serif font-bold mb-4">Ready to go?</h2>
                                     <p className="mb-6 text-white/90">Contact us today to start planning your dream {title}.</p>
                                     <Link to="/contact">
                                         <Button variant="outline" className="w-full border-white text-white hover:bg-white hover:text-accent">

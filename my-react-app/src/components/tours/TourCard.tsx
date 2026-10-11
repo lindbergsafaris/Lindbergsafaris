@@ -32,9 +32,9 @@ const TourCard: React.FC<TourCardProps> = ({
             </div>
 
             <div className="p-5 flex flex-col flex-grow">
-                <h3 className="text-lg font-serif font-bold mb-2 group-hover:text-primary transition-colors">
+                <h2 className="text-lg font-serif font-bold mb-2 group-hover:text-primary transition-colors">
                     <Link to={`/tours/${id}`}>{title}</Link>
-                </h3>
+                </h2>
 
                 <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
                     <div className="flex items-center gap-1">

@@ -37,8 +37,8 @@ const Visa = () => {
     return (
         <Layout>
             <SEO
-                title="Visa Application Assistance & Travel Services"
-                description="Hassle-free visa assistance for Schengen, US, UK, Australia, Dubai, and East Africa travel with Lindberg Safaris."
+                title="Visa Application Assistance in Kenya | Lindberg Safaris"
+                description="Hassle-free visa assistance for Schengen, US, UK, Australia, Dubai, and East Africa travel. Expert guidance for a smooth application. Contact Lindberg Safaris."
             />
             {/* Hero Section */}
             <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">
@@ -49,9 +49,9 @@ const Visa = () => {
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
                 <Container className="relative z-10 text-center max-w-5xl">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">Your Gateway to the World, Simplified</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6">Visa Application Assistance in Kenya</h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide italic">
-                        Expert Guidance for a Stress-Free Visa Application Process
+                        Your Gateway to the World, Simplified
                     </p>
                 </Container>
             </div>

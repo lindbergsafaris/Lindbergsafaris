@@ -40,8 +40,8 @@ const Contact = () => {
     return (
         <Layout>
             <SEO
-                title="Contact Us | Book Kenya Safaris & Tailor-Made Tours"
-                description="Contact Lindberg Safaris to plan your customized Kenya safari, book wildlife tours, or inquire about luxury holidays in East Africa."
+                title="Contact Lindberg Safaris | Plan Your African Trip"
+                description="Contact Lindberg Safaris to plan your customized Kenya safari, book wildlife tours, or inquire about luxury holidays in East Africa. Get in touch."
             />
             {/* Hero */}
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
@@ -52,7 +52,7 @@ const Contact = () => {
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Contact Us</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Contact Lindberg Safaris | Plan Your Safari</h1>
                     <p className="text-xl font-light tracking-wide">Let's plan your dream safari.</p>
                 </Container>
             </div>

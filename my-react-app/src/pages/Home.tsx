@@ -139,8 +139,8 @@ const Home = () => {
     return (
         <Layout>
             <SEO
-                title="Lindberg Safaris | Kenya Safari Packages & Luxury East Africa Tours"
-                description="Experience the magic of East Africa with Lindberg Safaris. Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda, and Rwanda."
+                title="Kenya Safaris & East Africa Tours | Lindberg Safaris"
+                description="Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda & Rwanda. Book your East Africa dream trip with Lindberg Safaris."
                 schema={[
                     {
                         "@context": "https://schema.org",
@@ -227,9 +227,17 @@ const Home = () => {
                         </div>
                         <Container className="relative h-full flex items-center justify-center text-center z-20">
                             <div className="max-w-4xl mx-auto px-4">
-                                <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight animate-fade-in-up">
-                                    {slide.title}
-                                </h1>
+                                {/* Only the active slide gets an h1; inactive slides use h2 with identical classes
+                                    so crawlers never see more than one h1 on this page. */}
+                                {index === currentSlide ? (
+                                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight animate-fade-in-up">
+                                        {slide.title}
+                                    </h1>
+                                ) : (
+                                    <h2 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight animate-fade-in-up">
+                                        {slide.title}
+                                    </h2>
+                                )}
                                 <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-100 animate-fade-in-up delay-100">
                                     {slide.subtitle}
                                 </p>

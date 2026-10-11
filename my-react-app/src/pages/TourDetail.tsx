@@ -13,6 +13,7 @@ import { createBookingMessage } from '@/lib/bookingUtils';
 import { Tour } from '@/types';
 import { isUUID, slugify } from '@/lib/slugUtils';
 import { SITE_URL } from '@/lib/siteConfig';
+import { getMetaDescription, getPageTitle } from '@/lib/seoRegistry';
 
 const TourDetail = () => {
     const { id } = useParams();
@@ -88,7 +89,7 @@ const TourDetail = () => {
                 <SEO title="Tour Not Found | Lindberg Safaris" noindex={true} />
                 <Section className="py-20 text-center">
                     <Container>
-                        <h1 className="text-3xl font-serif font-bold text-gray-900 mb-4">Tour Not Found</h1>
+                        <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">Tour Not Found</h2>
                         <p className="text-gray-600 mb-8">{error || "The requested tour package could not be found."}</p>
                         <Button onClick={() => navigate('/tours')}>Browse All Tours</Button>
                     </Container>
@@ -98,9 +99,8 @@ const TourDetail = () => {
     }
 
     const tourImage = tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
-    const tourDescription = tour.description
-        ? (typeof tour.description === 'string' ? tour.description.slice(0, 160) : `${tour.duration} luxury safari package with Lindberg Safaris.`)
-        : `${tour.duration} safari package exploring East Africa's top wildlife reserves with Lindberg Safaris.`;
+    const tourDescription = getMetaDescription('tour-detail', tour);
+    const tourTitle = getPageTitle('tour-detail', tour);
 
     const tourSchema = {
         "@context": "https://schema.org",
@@ -133,7 +133,7 @@ const TourDetail = () => {
     return (
         <Layout>
             <SEO
-                title={`${tour.title} (${tour.duration})`}
+                title={tourTitle}
                 description={tourDescription}
                 image={tourImage}
                 type="product"

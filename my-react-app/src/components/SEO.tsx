@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { SITE_URL, SITE_NAME as SITE_NAME_CONST } from '../lib/siteConfig';
+import { clampDescription, formatTitle } from '../lib/seoRegistry';
 
 interface SEOProps {
     title: string;
@@ -17,7 +18,7 @@ interface SEOProps {
 const SITE_NAME = SITE_NAME_CONST;
 const DOMAIN = SITE_URL;
 const DEFAULT_IMAGE = "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg";
-const DEFAULT_DESCRIPTION = "Experience tailor-made luxury safaris, wildlife adventures, and bespoke holidays in Kenya, Tanzania, Uganda, and Rwanda with Lindberg Safaris.";
+const DEFAULT_DESCRIPTION = "Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda & Rwanda. Book your East Africa dream trip with Lindberg Safaris.";
 const DEFAULT_KEYWORDS = "Kenya safari, East Africa safaris, Masai Mara tour, luxury safari Kenya, Lindberg Safaris, African wildlife safaris, Kenya holiday packages";
 
 const SEO: React.FC<SEOProps> = ({
@@ -35,15 +36,12 @@ const SEO: React.FC<SEOProps> = ({
         const location = useLocation();
         locationPath = location.pathname;
     } catch {
-        // Fallback for non-router contexts during rendering if any
         locationPath = '';
     }
 
     const canonicalUrl = url || `${DOMAIN}${locationPath.startsWith('/') ? locationPath : `/${locationPath}`}`;
-
-    const formattedTitle = title.toLowerCase().includes(SITE_NAME.toLowerCase())
-        ? title
-        : `${title} | ${SITE_NAME}`;
+    const formattedTitle = formatTitle(title);
+    const formattedDescription = clampDescription(description);
 
     const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
@@ -51,7 +49,7 @@ const SEO: React.FC<SEOProps> = ({
         <Helmet>
             {/* Standard Meta Tags */}
             <title>{formattedTitle}</title>
-            <meta name="description" content={description} />
+            <meta name="description" content={formattedDescription} />
             <meta name="keywords" content={keywords} />
             <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
             <link rel="canonical" href={canonicalUrl} />
@@ -61,7 +59,7 @@ const SEO: React.FC<SEOProps> = ({
             <meta property="og:site_name" content={SITE_NAME} />
             <meta property="og:url" content={canonicalUrl} />
             <meta property="og:title" content={formattedTitle} />
-            <meta property="og:description" content={description} />
+            <meta property="og:description" content={formattedDescription} />
             <meta property="og:image" content={image} />
             <meta property="og:locale" content="en_US" />
 
@@ -70,7 +68,7 @@ const SEO: React.FC<SEOProps> = ({
             <meta name="twitter:site" content="@LindbergSafaris" />
             <meta name="twitter:url" content={canonicalUrl} />
             <meta name="twitter:title" content={formattedTitle} />
-            <meta name="twitter:description" content={description} />
+            <meta name="twitter:description" content={formattedDescription} />
             <meta name="twitter:image" content={image} />
 
             {/* Structured Data (JSON-LD) */}
@@ -84,4 +82,3 @@ const SEO: React.FC<SEOProps> = ({
 };
 
 export default SEO;
-

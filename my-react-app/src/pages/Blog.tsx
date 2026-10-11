@@ -23,13 +23,13 @@ const Blog = () => {
     return (
         <Layout>
             <SEO
-                title="Safari Journal & Wildlife Travel Guides"
-                description="Read expert Kenya safari travel guides, wildlife photography tips, itinerary planning advice, and safari stories from Lindberg Safaris."
+                title="Safari Journal & Travel Guides | Lindberg Safaris"
+                description="Read expert Kenya safari travel guides, wildlife photography tips, itinerary planning advice, and safari stories from Lindberg Safaris. Get inspired."
                 keywords="Kenya safari blog, wildlife travel guide, Masai Mara travel tips, African safari planning"
             />
             <div className="bg-primary text-white py-20">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Safari Journal</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Kenya Safari Journal &amp; Travel Blog</h1>
                     <p className="text-lg text-gray-100 max-w-2xl">
                         Stories, tips, and inspiration from the heart of Africa.
                     </p>
@@ -74,11 +74,11 @@ const Blog = () => {
                                                     {new Date(post.publishedAt).toLocaleDateString()}
                                                 </div>
                                             </div>
-                                            <h3 className="text-xl font-bold mb-3 line-clamp-2">
+                                            <h2 className="text-xl font-bold mb-3 line-clamp-2">
                                                 <Link to={`/blog/${post._id}`} className="hover:text-primary transition-colors">
                                                     {post.title}
                                                 </Link>
-                                            </h3>
+                                            </h2>
                                             <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">{post.excerpt}</p>
                                             <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
                                                 <div className="flex items-center gap-2 text-sm text-gray-600">

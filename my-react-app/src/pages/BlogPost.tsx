@@ -7,8 +7,9 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
-import { SITE_URL } from '@/lib/siteConfig';
 import { isUUID, slugify } from '@/lib/slugUtils';
+import { SITE_URL } from '@/lib/siteConfig';
+import { getMetaDescription, getPageTitle } from '@/lib/seoRegistry';
 import { BlogPost as BlogPostType } from '@/types';
 
 // Helper to extract YouTube video ID
@@ -93,7 +94,8 @@ const BlogPost = () => {
     }
 
     const postImage = post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
-    const postExcerpt = post.excerpt || `${post.title} - Read full article on Lindberg Safaris.`;
+    const postExcerpt = getMetaDescription('blog-detail', post);
+    const postTitle = getPageTitle('blog-detail', post);
 
     const postSlug = (post as any).slug?.current || slugify(post.title || id!);
     const canonicalUrl = `${SITE_URL}/blog/${postSlug}`;
@@ -123,7 +125,7 @@ const BlogPost = () => {
     return (
         <Layout>
             <SEO
-                title={post.title}
+                title={postTitle}
                 description={postExcerpt}
                 image={postImage}
                 type="article"
@@ -136,7 +138,7 @@ const BlogPost = () => {
                     <div className="absolute inset-0 z-0">
                         <img
                             src={post.featuredImage.url}
-                            alt=""
+                            alt={post.featuredImage.alt || post.title}
                             className="w-full h-full object-cover"
                         />
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />

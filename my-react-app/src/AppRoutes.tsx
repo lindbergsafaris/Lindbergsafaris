@@ -1,5 +1,5 @@
 import { useEffect, Suspense } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Home from '@/pages/Home';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 
@@ -43,6 +43,23 @@ const CompanyRedirect = ({ section }: { section: string }) => {
   }, [section]);
 
   return <Company />;
+};
+
+const VALID_ACCOMMODATION_CATEGORIES = new Set([
+  'lodges',
+  'holiday-homes',
+  'town-hotels',
+  'luxury-camps',
+  'resort-hotels',
+  'bush-camps'
+]);
+
+const AccommodationRouter = () => {
+  const { type } = useParams();
+  if (type && VALID_ACCOMMODATION_CATEGORIES.has(type)) {
+    return <AccommodationCategory />;
+  }
+  return <AccommodationDetail />;
 };
 
 export function AppRoutes() {
@@ -93,8 +110,8 @@ export function AppRoutes() {
         {/* Dynamic Themed Packages */}
         <Route path="/packages/:category" element={<ThemedPackage />} />
 
-        {/* Accommodation: canonical slug route (no "view" segment) */}
-        <Route path="/accommodation/:type" element={<AccommodationCategory />} />
+        {/* Accommodation: routes categories to AccommodationCategory and slugs to AccommodationDetail */}
+        <Route path="/accommodation/:type" element={<AccommodationRouter />} />
 
         {/* Legacy UUID route — AccommodationDetail detects UUID and redirects to slug */}
         <Route path="/accommodation/view/:id" element={<AccommodationDetail />} />

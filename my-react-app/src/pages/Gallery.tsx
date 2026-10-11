@@ -146,8 +146,8 @@ const Gallery = () => {
     return (
         <Layout>
             <SEO
-                title="Safari Photo Gallery | African Wildlife & Scenery"
-                description="Explore our stunning photo gallery capturing Kenya wildlife, lion sightings, elephant herds, coastal safaris, and high-end fleet transport."
+                title="Safari Photo Gallery | African Wildlife Pictures"
+                description="Explore our stunning photo gallery capturing Kenya wildlife, lion sightings, elephant herds, coastal safaris, and high-end fleet transport. Get inspired."
                 noindex={true}
             />
             {/* Hero Section */}
@@ -159,7 +159,7 @@ const Gallery = () => {
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">Our Gallery</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">African Safari Wildlife & Travel Gallery</h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide">Capturing moments in the wild</p>
                 </Container>
             </div>
@@ -203,7 +203,7 @@ const Gallery = () => {
                                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                     />
                                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100">
-                                        <h3 className="text-white font-bold text-lg translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{item.title}</h3>
+                                        <p className="text-white font-bold text-lg translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{item.title}</p>
                                         <div className="flex items-center gap-1 text-gray-200 text-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
                                             <Map size={14} />
                                             <span>{item.location}</span>

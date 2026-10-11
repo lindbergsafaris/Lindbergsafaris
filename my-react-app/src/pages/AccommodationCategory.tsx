@@ -16,42 +16,49 @@ const AccommodationCategory = () => {
     const accommodations = accommodationsData?.data || [];
     const loading = !accommodationsData && !accommodationsError;
 
-    const typeInfo: Record<string, { title: string; description: string }> = {
+    const typeInfo: Record<string, { title: string; description: string; h1: string }> = {
         'lodges': {
-            title: "Safari Lodges",
-            description: "Comfortable and luxurious lodges located within or near national parks."
+            title: "Safari Lodges in East Africa",
+            h1: "Safari Lodges in Kenya & East Africa",
+            description: "Book safari lodges inside Kenya's top national parks — Masai Mara, Amboseli, Tsavo. Comfortable stays steps from big five wildlife. Reserve with Lindberg Safaris."
         },
         'holiday-homes': {
-            title: "Holiday Homes",
-            description: "Private villas and homes for families and groups seeking exclusivity."
+            title: "Holiday Homes & Private Villas Kenya",
+            h1: "Holiday Homes & Private Villas in Kenya",
+            description: "Exclusive private villas and holiday homes for families and groups in Kenya. Self-catering beach cottages, garden retreats, and secluded estate properties."
         },
         'town-hotels': {
-            title: "Town Hotels",
-            description: "Convenient city hotels in Nairobi, Mombasa, and Arusha."
+            title: "Town Hotels in Nairobi, Mombasa & Arusha",
+            h1: "Town Hotels in Nairobi, Mombasa & Arusha",
+            description: "Convenient and comfortable city hotels in Nairobi, Mombasa, and Arusha. Business-friendly stays, airport hotels, and boutique properties. Book today."
         },
         'luxury-camps': {
-            title: "Luxury Tented Camps",
-            description: "Glamping experiences that combine nature with 5-star amenities."
+            title: "Luxury Tented Camps in Kenya & Tanzania",
+            h1: "Luxury Tented Camps in Kenya & Tanzania",
+            description: "Glamping at its finest — 5-star luxury tented camps in the Masai Mara, Serengeti, and beyond. Private plunge pools, gourmet dining, and guided game drives."
         },
         'resort-hotels': {
-            title: "Resort Hotels",
-            description: "Beachfront resorts with pools, spas, and all-inclusive options."
+            title: "Beach Resort Hotels in Kenya & Zanzibar",
+            h1: "Beach Resort Hotels in Kenya & Zanzibar",
+            description: "Beachfront resort hotels on the Kenyan coast, Zanzibar, and Indian Ocean islands. Pools, spas, and all-inclusive packages for your perfect tropical holiday."
         },
         'bush-camps': {
-            title: "Bush Camps",
-            description: "Authentic and immersive camping experiences close to nature."
+            title: "Bush Camps & Wilderness Camps in Kenya",
+            h1: "Bush Camps & Wilderness Camps in Kenya",
+            description: "Authentic mobile bush camps and permanent wilderness campsites in Kenya's remotest reserves. Immersive nature experiences with expert guides. Book with us."
         }
     };
 
     const info = typeInfo[type || ''] || {
-        title: "Accommodation",
-        description: "Find the perfect place to stay during your safari."
+        title: "Accommodation in East Africa",
+        h1: "Accommodation in East Africa",
+        description: "Discover the perfect place to stay for your East Africa safari — from luxury tented camps to private beach resorts, town hotels, and holiday homes."
     };
 
     return (
         <Layout>
             <SEO
-                title={`${info.title} in East Africa`}
+                title={info.title}
                 description={info.description}
             />
             {/* Hero Section with Background Image */}
@@ -63,7 +70,7 @@ const AccommodationCategory = () => {
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10">
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 capitalize">{info.title}</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 capitalize">{info.h1}</h1>
                     <p className="text-lg text-gray-100 max-w-2xl">{info.description}</p>
                 </Container>
             </div>

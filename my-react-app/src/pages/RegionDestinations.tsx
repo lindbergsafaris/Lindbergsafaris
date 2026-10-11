@@ -8,6 +8,7 @@ import RegionNavigator from '@/components/destinations/RegionNavigator';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import SEO from '@/components/SEO';
 import api from '@/lib/api';
+import { getMetaDescription, getPageTitle, getPageH1 } from '@/lib/seoRegistry';
 
 const RegionDestinations = () => {
     const { region } = useParams<{ region: string }>();
@@ -37,11 +38,15 @@ const RegionDestinations = () => {
         image: { url: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80' }
     };
 
+    const regionTitle = getPageTitle('regions', activeCategory);
+    const regionDesc = getMetaDescription('regions', activeCategory);
+    const regionH1 = getPageH1('regions', activeCategory);
+
     return (
         <Layout>
             <SEO
-                title={`${activeCategory.name} Safaris & Tour Destinations`}
-                description={activeCategory.description || `Discover top safari destinations and game reserves in ${activeCategory.name} with Lindberg Safaris.`}
+                title={regionTitle}
+                description={regionDesc}
                 image={activeCategory.image?.url}
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
@@ -52,7 +57,7 @@ const RegionDestinations = () => {
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">{activeCategory.name}</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">{regionH1}</h1>
                     <p className="text-xl font-light tracking-wide">{activeCategory.description}</p>
                 </Container>
             </div>

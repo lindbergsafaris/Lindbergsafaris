@@ -82,14 +82,14 @@ const Services = () => {
     return (
         <Layout>
             <SEO
-                title="Safari & Travel Services in Kenya"
-                description="Discover our full suite of travel services including car hire & safari transport, flight ticketing, visa assistance, hotel reservations, and custom itinerary planning."
+                title="Safari & Travel Services Kenya | Lindberg Safaris"
+                description="Full suite of Kenya travel services: safari transport, flight ticketing, visa assistance, hotel booking, and custom itineraries. Plan your trip with us."
                 keywords="Kenya safari transport, air ticketing Nairobi, hotel booking Kenya, visa processing East Africa"
             />
             {/* Hero */}
             <div className="bg-primary text-white py-20">
                 <Container>
-                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Our Services</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Safari &amp; Travel Services in Kenya</h1>
                     <p className="text-lg text-gray-100 max-w-2xl">
                         Beyond safaris, we offer a comprehensive range of travel services to make your trip seamless.
                     </p>
@@ -115,7 +115,7 @@ const Services = () => {
                                     </div>
 
                                     {/* Title & Description */}
-                                    <h3 className="text-2xl font-serif font-bold mb-3">{service.title}</h3>
+                                    <h2 className="text-2xl font-serif font-bold mb-3">{service.title}</h2>
                                     <p className="text-gray-600 mb-6">{service.description}</p>
 
                                     {/* Features */}

@@ -35,8 +35,8 @@ const Transport = () => {
     return (
         <Layout>
             <SEO
-                title="Safari Transport & Luxury Car Hire Kenya"
-                description="Custom 4x4 Land Cruisers, airport transfers, chauffeur services, and private safari vehicle hire in Kenya and East Africa."
+                title="Safari Transport & Car Hire | Lindberg Safaris"
+                description="Reliable safari transport services in Kenya — custom 4x4 Land Cruisers, Nairobi airport transfers, chauffeur drive, and overland tour vehicles. Book today."
                 keywords="safari vehicle hire Kenya, 4x4 Land Cruiser safari, airport transfer Nairobi, car hire Kenya"
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
@@ -47,7 +47,7 @@ const Transport = () => {
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4 uppercase">Transport Services</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4 uppercase">Safari Transport Services in Kenya</h1>
                     <p className="text-xl font-light tracking-wide italic">Connecting people, destinations, and unforgettable memories</p>
                 </Container>
             </div>

@@ -23,8 +23,8 @@ const Flights = () => {
     return (
         <Layout>
             <SEO
-                title="Air & Cruise Ticketing Services Kenya"
-                description="Book domestic safari bush flights, international airfare, cruises, train, and ferry tickets with Lindberg Safaris."
+                title="Air & Cruise Ticketing in Kenya | Lindberg Safaris"
+                description="Seamless air ticketing, domestic bush flights, and international cruise bookings in Kenya. Expert travel coordination with Lindberg Safaris. Inquire now."
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
@@ -34,7 +34,7 @@ const Flights = () => {
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Ticketing Services</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Air &amp; Cruise Ticketing Services in Kenya</h1>
                     <p className="text-xl font-light tracking-wide">Seamless Travel Solutions Across Air, Sea, and Land</p>
                 </Container>
             </div>
@@ -138,8 +138,8 @@ const Flights = () => {
                                 <div className="flex-shrink-0 bg-primary/10 w-10 h-10 rounded-full flex items-center justify-center text-primary mt-1">
                                     <Check size={20} />
                                 </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900 mb-1">Global Reach</h4>
+                            <div>
+                                    <p className="font-bold text-gray-900 mb-1">Global Reach</p>
                                     <p className="text-gray-600 text-sm">Partnerships with leading airlines, cruise lines, and transport networks worldwide.</p>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@ const Flights = () => {
                                     <Check size={20} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-1">Competitive Pricing</h4>
+                                    <p className="font-bold text-gray-900 mb-1">Competitive Pricing</p>
                                     <p className="text-gray-600 text-sm">Exclusive deals and discounts across all travel modes.</p>
                                 </div>
                             </div>
@@ -157,7 +157,7 @@ const Flights = () => {
                                     <Check size={20} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-1">24/7 Support</h4>
+                                    <p className="font-bold text-gray-900 mb-1">24/7 Support</p>
                                     <p className="text-gray-600 text-sm">Dedicated assistance for bookings, changes, or cancellations anytime.</p>
                                 </div>
                             </div>
@@ -166,7 +166,7 @@ const Flights = () => {
                                     <Check size={20} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-1">Flexible Options</h4>
+                                    <p className="font-bold text-gray-900 mb-1">Flexible Options</p>
                                     <p className="text-gray-600 text-sm">Economy to luxury choices tailored to every traveler's comfort and budget.</p>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@ const Flights = () => {
                                     <Check size={20} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-1">Personalized Service</h4>
+                                    <p className="font-bold text-gray-900 mb-1">Personalized Service</p>
                                     <p className="text-gray-600 text-sm">Every ticket is handled with care to ensure a smooth, enjoyable journey.</p>
                                 </div>
                             </div>

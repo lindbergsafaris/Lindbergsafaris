@@ -53,8 +53,8 @@ const HotelBooking = () => {
     return (
         <Layout>
             <SEO
-                title="Hotel Reservations & Global Accommodation Booking"
-                description="Securing the best rates on safari lodges, beach resorts, city hotels, and private villas worldwide with Lindberg Safaris."
+                title="Hotel Booking & Safari Lodge Reservations | Lindberg Safaris"
+                description="Best rates on safari lodges, beach resorts, city hotels, and private villas in Kenya, East Africa & worldwide. Expert booking with Lindberg Safaris."
             />
             {/* Hero Section */}
             <div className="relative h-[70vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">
@@ -66,8 +66,7 @@ const HotelBooking = () => {
                 </div>
                 <Container className="relative z-10 text-center max-w-5xl">
                     <h1 className="text-4xl md:text-6xl font-serif font-bold mb-6 leading-tight">
-                        Find Your Perfect Stay, <br />
-                        <span className="text-primary italic">anywhere in the World</span>
+                        Hotel Booking &amp; Safari Lodge Reservations
                     </h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide mb-10 text-gray-100">
                         Global access. Local expertise. Unbeatable rates. From secluded safari hideaways to the glittering skylines of Dubai, we leverage world-class booking technology to secure your ideal accommodation at the best possible price.

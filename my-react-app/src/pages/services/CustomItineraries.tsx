@@ -150,8 +150,8 @@ const CustomItineraries = () => {
     return (
         <Layout>
             <SEO
-                title="Custom Safari Itineraries Kenya & East Africa"
-                description="Custom tailor-made safari itineraries including Great Migration safaris, luxury lodge circuits, and coastal beach extensions."
+                title="Custom Safari Itineraries Kenya & East Africa | Lindberg Safaris"
+                description="Tailor-made safari itineraries across Kenya, Tanzania & East Africa — Great Migration circuits, luxury lodge routes, and coastal beach extensions. Plan your trip today."
             />
             <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
                 <div
@@ -161,7 +161,7 @@ const CustomItineraries = () => {
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">CUSTOM ITINERARIES</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Custom Safari Itineraries in Kenya &amp; East Africa</h1>
                 </Container>
             </div>
 

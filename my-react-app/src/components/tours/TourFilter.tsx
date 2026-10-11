@@ -5,7 +5,7 @@ const TourFilter = () => {
     return (
         <div className="bg-secondary-light p-6 rounded-xl shadow-sm border border-gray-100 sticky top-24">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="font-serif font-bold text-lg">Filters</h3>
+                <p className="font-serif font-bold text-lg">Filters</p>
                 <SlidersHorizontal size={18} className="text-gray-400" />
             </div>
 

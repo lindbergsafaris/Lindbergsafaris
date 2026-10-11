@@ -13,6 +13,7 @@ import { createBookingMessage } from '@/lib/bookingUtils';
 import { destinationsData } from '@/data/destinations';
 import api from '@/lib/api';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import { getMetaDescription, getPageTitle, getPageH1 } from '@/lib/seoRegistry';
 
 const DestinationDetail = () => {
     const { id } = useParams<{ id: string }>();
@@ -99,10 +100,9 @@ const DestinationDetail = () => {
         );
     }
 
-    const destTitle = `${destination.name} Safari Travel Guide`;
-    const destDesc = destination.description
-        ? (typeof destination.description === 'string' ? destination.description.slice(0, 160) : `Plan your safari adventure to ${destination.name} with Lindberg Safaris.`)
-        : `Plan your safari adventure to ${destination.name} with Lindberg Safaris.`;
+    const destTitle = getPageTitle('destinations', destination);
+    const destDesc = getMetaDescription('destinations', destination);
+    const destH1 = getPageH1('destinations', destination);
     const destImage = destination.heroImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
 
     return (
@@ -128,7 +128,7 @@ const DestinationDetail = () => {
                     <div className="absolute inset-0 bg-black/50" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">{destination.name}</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">{destH1}</h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide">{destination.tagline}</p>
                 </Container>
             </div>

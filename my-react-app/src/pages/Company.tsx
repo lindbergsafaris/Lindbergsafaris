@@ -250,8 +250,8 @@ const Company = () => {
     return (
         <Layout>
             <SEO
-                title="About Lindberg Safaris | Company, Mission & Team"
-                description="Learn about Lindberg Safaris, our story, values, conservation impact, expert guides, and commitment to luxury African safari experiences."
+                title="About Lindberg Safaris | East Africa Tour Operator"
+                description="Learn about Lindberg Safaris, our story, values, conservation impact, expert guides, and commitment to luxury African safari experiences. Contact us."
             />
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center text-white">
@@ -262,7 +262,7 @@ const Company = () => {
                     <div className="absolute inset-0 bg-black/60" />
                 </div>
                 <Container className="relative z-10 text-center">
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">Our Company</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif font-bold mb-4">About Lindberg Safaris — Kenya Tour Operator</h1>
                     <p className="text-xl md:text-2xl font-light tracking-wide mb-8">Passionate about Africa. Dedicated to You.</p>
 
                     {/* Quick Navigation */}

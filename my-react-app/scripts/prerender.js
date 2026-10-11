@@ -14,6 +14,30 @@ const client = createClient({
     apiVersion: '2024-01-01',
 });
 
+function slugify(text) {
+    return text
+        .toString()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+}
+
+function uniqueSlug(base, usedSlugs) {
+    if (!usedSlugs.has(base)) {
+        usedSlugs.add(base);
+        return base;
+    }
+    let n = 2;
+    while (usedSlugs.has(`${base}-${n}`)) n++;
+    const s = `${base}-${n}`;
+    usedSlugs.add(s);
+    return s;
+}
+
 async function runPrerender() {
     console.log('🚀 Starting SSG pre-rendering pipeline...');
 
@@ -129,16 +153,40 @@ async function runPrerender() {
         });
     });
 
-    // Dynamic tour routes
+    // Dynamic tour routes: pre-render BOTH canonical slug URL AND legacy id URL
+    const usedTourSlugs = new Set();
     tours.forEach(t => {
+        // t.slug is a Sanity slug object { _type: 'slug', current: '...' } — extract .current
+        const slugCurrent = (t.slug && typeof t.slug === 'object' ? t.slug.current : t.slug) || null;
+        const raw = slugCurrent || t.title || t._id;
+        const slug = uniqueSlug(slugify(raw), usedTourSlugs);
+        routes.push({
+            url: `/tours/${slug}`,
+            fallback: {
+                [`tour-slug-${slug}`]: { data: t },
+                [`tour-${t._id}`]: { data: t }
+            }
+        });
         routes.push({
             url: `/tours/${t._id}`,
             fallback: { [`tour-${t._id}`]: { data: t } }
         });
     });
 
-    // Dynamic blog routes
+    // Dynamic blog routes: pre-render BOTH canonical slug URL AND legacy id URL
+    const usedBlogSlugs = new Set();
     blogPosts.forEach(b => {
+        // b.slug is a Sanity slug object { _type: 'slug', current: '...' } — extract .current
+        const slugCurrent = (b.slug && typeof b.slug === 'object' ? b.slug.current : b.slug) || null;
+        const raw = slugCurrent || b.title || b._id;
+        const slug = uniqueSlug(slugify(raw), usedBlogSlugs);
+        routes.push({
+            url: `/blog/${slug}`,
+            fallback: {
+                [`blog-slug-${slug}`]: { data: b },
+                [`blog-${b._id}`]: { data: b }
+            }
+        });
         routes.push({
             url: `/blog/${b._id}`,
             fallback: { [`blog-${b._id}`]: { data: b } }
@@ -148,11 +196,12 @@ async function runPrerender() {
     // Dynamic region routes
     destinationCategories.forEach(c => {
         if (c.slug) {
+            const slug = slugify(c.slug);
             routes.push({
-                url: `/regions/${c.slug}`,
+                url: `/regions/${slug}`,
                 fallback: {
-                    [`region-category-${c.slug}`]: { data: c },
-                    [`region-posts-${c.slug}`]: { data: destinationPosts.filter(p => p.category?.slug?.current === c.slug || p.category === c.slug) }
+                    [`region-category-${slug}`]: { data: c },
+                    [`region-posts-${slug}`]: { data: destinationPosts.filter(p => p.category?.slug?.current === c.slug || p.category === c.slug) }
                 }
             });
         }
@@ -161,17 +210,29 @@ async function runPrerender() {
     // Dynamic destination routes
     destinationPosts.forEach(d => {
         if (d.slug) {
+            const rawSlug = d.slug;
+            const fixedSlug = slugify(rawSlug.replace('ambosseli', 'amboseli'));
             routes.push({
-                url: `/destinations/${d.slug}`,
+                url: `/destinations/${fixedSlug}`,
                 fallback: {
-                    [`destination-post-${d.slug}`]: { data: d }
+                    [`destination-post-${fixedSlug}`]: { data: d },
+                    [`destination-post-${rawSlug}`]: { data: d }
                 }
             });
         }
     });
 
-    // Dynamic accommodation view routes
+    // Dynamic accommodation routes: pre-render BOTH canonical slug URL AND legacy view/:id URL
+    const usedAccSlugs = new Set();
     accommodations.forEach(a => {
+        const slug = uniqueSlug(slugify(a.name || a._id), usedAccSlugs);
+        routes.push({
+            url: `/accommodation/${slug}`,
+            fallback: {
+                [`accommodation-slug-${slug}`]: { data: a },
+                [`accommodation-${a._id}`]: { data: a }
+            }
+        });
         routes.push({
             url: `/accommodation/view/${a._id}`,
             fallback: { [`accommodation-${a._id}`]: { data: a } }
@@ -208,7 +269,8 @@ async function runPrerender() {
 
             // Clean existing title tags from template
             let finalHtml = templateHtml.replace(/<title[\s\S]*?<\/title>/gi, '');
-            finalHtml = finalHtml.replace('</head>', `${helmetHead}\n</head>`);
+            const swrScript = `<script>window.__SWR_DATA__ = ${JSON.stringify(routeFallback).replace(/</g, '\\u003c')};</script>`;
+            finalHtml = finalHtml.replace('</head>', `${helmetHead}\n${swrScript}\n</head>`);
             finalHtml = finalHtml.replace(/<div id="root">[\s\S]*?<\/div>/i, `<div id="root">${html}</div>`);
 
             // Output path setup

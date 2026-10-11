@@ -18,7 +18,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 relative z-10">
                     {/* Brand Column */}
                     <div>
-                        <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">{t('footer.brandName')}</h3>
+                        <p className="text-2xl font-serif font-bold text-gray-900 mb-4">{t('footer.brandName')}</p>
                         <p className="text-sm leading-relaxed mb-6 font-medium">
                             {t('footer.brandDescription')}
                         </p>
@@ -42,11 +42,11 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-lg font-bold text-gray-900 mb-4">{t('footer.quickLinks')}</h4>
+                        <p className="text-lg font-bold text-gray-900 mb-4">{t('footer.quickLinks')}</p>
                         <ul className="space-y-2 font-medium">
                             <li><Link to="/about" className="hover:text-primary-dark transition-colors">{t('footer.aboutUs')}</Link></li>
                             <li><Link to="/tours" className="hover:text-primary-dark transition-colors">{t('footer.ourTours')}</Link></li>
-                            <li><Link to="/destinations" className="hover:text-primary-dark transition-colors">{t('footer.destinations')}</Link></li>
+                            <li><Link to="/tours" className="hover:text-primary-dark transition-colors">{t('footer.destinations')}</Link></li>
                             <li><Link to="/blog" className="hover:text-primary-dark transition-colors">{t('footer.travelBlog')}</Link></li>
                             <li><Link to="/contact" className="hover:text-primary-dark transition-colors">{t('footer.contactUs')}</Link></li>
                         </ul>
@@ -54,18 +54,18 @@ const Footer = () => {
 
                     {/* Services */}
                     <div>
-                        <h4 className="text-lg font-bold text-gray-900 mb-4">{t('footer.services')}</h4>
+                        <p className="text-lg font-bold text-gray-900 mb-4">{t('footer.services')}</p>
                         <ul className="space-y-2 font-medium">
-                            <li><Link to="/services/safaris" className="hover:text-primary-dark transition-colors">{t('footer.safarisAndTours')}</Link></li>
-                            <li><Link to="/services/hotels" className="hover:text-primary-dark transition-colors">{t('footer.hotelsAndAccommodation')}</Link></li>
+                            <li><Link to="/services" className="hover:text-primary-dark transition-colors">{t('footer.safarisAndTours')}</Link></li>
+                            <li><Link to="/services/hotel-booking" className="hover:text-primary-dark transition-colors">{t('footer.hotelsAndAccommodation')}</Link></li>
                             <li><Link to="/services/transport" className="hover:text-primary-dark transition-colors">{t('footer.transportServices')}</Link></li>
-                            <li><Link to="/services/flights" className="hover:text-primary-dark transition-colors">{t('footer.flightTicketing')}</Link></li>
+                            <li><Link to="/services/airticketing" className="hover:text-primary-dark transition-colors">{t('footer.flightTicketing')}</Link></li>
                         </ul>
                     </div>
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="text-lg font-bold text-gray-900 mb-4">{t('footer.contactInfo')}</h4>
+                        <p className="text-lg font-bold text-gray-900 mb-4">{t('footer.contactInfo')}</p>
                         <ul className="space-y-4 font-medium">
                             <li className="flex items-start gap-3">
                                 <MapPin size={20} className="text-primary-dark shrink-0" />
@@ -88,7 +88,7 @@ const Footer = () => {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-gray-600/30">
-                    <h4 className="text-lg font-bold text-gray-900 mb-6">{t('footer.visitUs')}</h4>
+                    <p className="text-lg font-bold text-gray-900 mb-6">{t('footer.visitUs')}</p>
                     <LocationMap className="h-64 md:h-80 w-full rounded-lg shadow-lg" />
                 </div>
 

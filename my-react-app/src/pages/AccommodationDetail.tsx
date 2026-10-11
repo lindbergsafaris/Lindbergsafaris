@@ -13,9 +13,11 @@ import { Image, AccommodationSection, Accommodation } from '@/types';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import { isUUID, slugify } from '@/lib/slugUtils';
 import { SITE_URL } from '@/lib/siteConfig';
+import { getMetaDescription, getPageTitle } from '@/lib/seoRegistry';
 
 const AccommodationDetail = () => {
-    const { id } = useParams();
+    const { id: paramId, type: paramType } = useParams();
+    const id = paramId || paramType;
     const navigate = useNavigate();
 
     // Determine whether the param is a UUID (legacy /view/:id) or a name-slug
@@ -87,9 +89,8 @@ const AccommodationDetail = () => {
     const accSlug = slugify(accommodation.name || id!);
     const canonicalUrl = `${SITE_URL}/accommodation/${accSlug}`;
     const accImage = accommodation.image?.url || "https://images.unsplash.com/photo-1566073771259-6a8506099945";
-    const accDesc = accommodation.description
-        ? (typeof accommodation.description === 'string' ? accommodation.description.slice(0, 160) : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`)
-        : `Book ${accommodation.name} in ${accommodation.location} with Lindberg Safaris.`;
+    const accDesc = getMetaDescription('accommodation-detail', accommodation);
+    const accTitle = getPageTitle('accommodation-detail', accommodation);
 
     const accSchema = {
         "@context": "https://schema.org",
@@ -108,7 +109,7 @@ const AccommodationDetail = () => {
     return (
         <Layout>
             <SEO
-                title={`${accommodation.name} | ${accommodation.location}`}
+                title={accTitle}
                 description={accDesc}
                 image={accImage}
                 url={canonicalUrl}

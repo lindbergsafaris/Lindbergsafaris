@@ -27,6 +27,7 @@ const staticRoutes = [
     { url: '/services/transport' },
     // /services/hotels is noindex — omitted from sitemap
     { url: '/services/hotel-booking' },
+    { url: '/services/airticketing' },
     { url: '/services/flights' },
     { url: '/services/visa' },
     { url: '/services/custom-itineraries' },
