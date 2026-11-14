@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "Entdecken Sie Afrikas wildes Herz",
+            "subtitle": "Erleben Sie die Magie der Savanne mit personalisierten Safaris, die genau auf Ihre Träume zugeschnitten sind."
+        },
+        "slide2": {
+            "title": "Hotelbuchung",
+            "subtitle": "Luxusunterkünfte im Herzen der Natur, von Buschcamps bis hin zu 5-Sterne-Resorts."
+        },
+        "slide3": {
+            "title": "Transportdienste",
+            "subtitle": "Komfortable und zuverlässige Transportlösungen für Ihre gesamte Reise."
+        },
+        "slide4": {
+            "title": "Visumantrag",
+            "subtitle": "Problemlose Unterstützung bei der Visumbeantragung für eine reibungslose Einreise an Ihr Ziel."
+        },
+        "slide5": {
+            "title": "Ticketservice",
+            "subtitle": "Beste Flugangebote und nahtlose Buchungserlebnisse für internationale und lokale Reisen."
+        },
+        "slide6": {
+            "title": "Individuelle Reiserouten",
+            "subtitle": "Maßgeschneiderte Pakete, die speziell auf Ihre Wünsche und Ihr Budget zugeschnitten sind."
+        }
+    },
+    "hotDeals": {
+        "badge": "Top-Angebote",
+        "title": "Exklusive Angebote",
+        "description": "Zeitlich begrenzte Angebote für unsere beliebtesten Safari-Pakete."
+    },
+    "partners": {
+        "badge": "Unsere Partner",
+        "title": "Von den Besten Vertraut",
+        "description": "Wir arbeiten mit erstklassigen Partnern zusammen, um eine reibungslose Reise zu gewährleisten."
+    },
+    "destinations": {
+        "title": "Top-Reiseziele Erkunden",
+        "description": "Von den weiten Ebenen der Serengeti bis zu den unberührten Stränden von Sansibar."
+    },
+    "tours": {
+        "title": "Exklusive Safaris",
+        "description": "Handverlesene Erlebnisse, die das Beste der afrikanischen Tierwelt und Landschaften zeigen.",
+        "noToursAvailable": "Noch keine Touren verfügbar. Fügen Sie Touren im Sanity Studio hinzu!"
+    },
+    "clients": {
+        "title": "Unsere Kunden",
+        "description": "Von führenden Organisationen und glücklichen Reisenden geschätzt."
+    },
+    "travelWithUs": {
+        "title": "Reisen Sie mit Uns",
+        "description": "Warum sollten Sie Lindberg Safaris für Ihr nächstes Abenteuer wählen?",
+        "experience": {
+            "title": "25+ Jahre Erfahrung",
+            "description": "Tiefes lokales Wissen und Fachkompetenz in der Gestaltung perfekter Safari-Routen seit 1998."
+        },
+        "safety": {
+            "title": "Sicher & Geborgen",
+            "description": "Ihre Sicherheit ist unsere Priorität. Wir bieten 24/7 Support und arbeiten mit vertrauenswürdigen Partnern zusammen."
+        },
+        "tailored": {
+            "title": "Maßgeschneiderte Reisen",
+            "description": "Jede Reise ist einzigartig. Wir passen jedes Detail an Ihre Wünsche und Träume an."
+        },
+        "videoSection": {
+            "title": "Reisen Sie mit Uns",
+            "description": "Erfahren Sie, was unsere Reisen so besonders macht und lernen Sie unsere Partner kennen.",
+            "affiliateMembers": "Affiliate-Mitglieder"
+        }
+    },
+    "team": {
+        "title": "Unser Team",
+        "description": "Die leidenschaftlichen Experten hinter Ihren unvergesslichen Reisen."
+    },
+    "newsletter": {
+        "title": "Inspiration Erhalten",
+        "description": "Abonnieren Sie unseren Newsletter für Safari-Tipps, exklusive Angebote und Reiseinspirationen.",
+        "placeholder": "Geben Sie Ihre E-Mail ein"
+    }
+}

@@ -1,0 +1,81 @@
+{
+    "hero": {
+        "slide1": {
+            "title": "Descubra o Coração Selvagem da África",
+            "subtitle": "Experimente a magia da savana com safaris personalizados adaptados aos seus sonhos."
+        },
+        "slide2": {
+            "title": "Reserva de Hotéis",
+            "subtitle": "Acomodações de luxo no coração da natureza, de acampamentos na selva a resorts 5 estrelas."
+        },
+        "slide3": {
+            "title": "Serviços de Transporte",
+            "subtitle": "Soluções de transporte confortáveis e confiáveis para toda a sua jornada."
+        },
+        "slide4": {
+            "title": "Pedido de Visto",
+            "subtitle": "Assistência de visto sem complicações para garantir uma entrada tranquila no seu destino."
+        },
+        "slide5": {
+            "title": "Serviços de Bilheteira",
+            "subtitle": "As melhores ofertas de voos e experiências de reserva perfeitas para viagens internacionais e locais."
+        },
+        "slide6": {
+            "title": "Itinerários Personalizados",
+            "subtitle": "Pacotes sob medida projetados especificamente para suas preferências e orçamento exclusivos."
+        }
+    },
+    "hotDeals": {
+        "badge": "Ofertas Quentes",
+        "title": "Ofertas Exclusivas",
+        "description": "Ofertas por tempo limitado em nossos pacotes de safari mais populares."
+    },
+    "partners": {
+        "badge": "Nossos Parceiros",
+        "title": "Confiado Pelos Melhores",
+        "description": "Trabalhamos com parceiros de classe mundial para garantir que sua jornada seja perfeita."
+    },
+    "destinations": {
+        "title": "Explore os Melhores Destinos",
+        "description": "Das vastas planícies do Serengeti às praias imaculadas de Zanzibar."
+    },
+    "tours": {
+        "title": "Safaris de Assinatura",
+        "description": "Experiências escolhidas a dedo que mostram o melhor da vida selvagem e das paisagens africanas.",
+        "noToursAvailable": "Nenhum tour disponível ainda. Adicione tours no Sanity Studio!"
+    },
+    "clients": {
+        "title": "Nossos Clientes",
+        "description": "Confiado por organizações líderes e viajantes felizes."
+    },
+    "travelWithUs": {
+        "title": "Viaje Conosco",
+        "description": "Por que escolher a Lindberg Safaris para sua próxima aventura?",
+        "experience": {
+            "title": "25+ Anos de Experiência",
+            "description": "Profundo conhecimento local e especialização na criação de itinerários de safari perfeitos desde 1998."
+        },
+        "safety": {
+            "title": "Seguro e Protegido",
+            "description": "Sua segurança é nossa prioridade. Oferecemos suporte 24 horas por dia, 7 dias por semana e trabalhamos com parceiros de confiança."
+        },
+        "tailored": {
+            "title": "Jornadas Personalizadas",
+            "description": "Cada viagem é única. Personalizamos cada detalhe para corresponder às suas preferências e sonhos."
+        },
+        "videoSection": {
+            "title": "Viaje Conosco",
+            "description": "Veja o que torna nossas jornadas especiais e conheça nossos parceiros de confiança.",
+            "affiliateMembers": "Membros Afiliados"
+        }
+    },
+    "team": {
+        "title": "Conheça Nossa Equipe",
+        "description": "Os especialistas apaixonados por trás de suas jornadas inesquecíveis."
+    },
+    "newsletter": {
+        "title": "Mantenha-se Inspirado",
+        "description": "Assine nossa newsletter para dicas de safari, ofertas exclusivas e inspiração para viagens.",
+        "placeholder": "Digite seu e-mail"
+    }
+}
