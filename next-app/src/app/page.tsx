@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ChevronRight, Handshake } from 'lucide-react';
 import Section from '@/components/ui/Section';
@@ -11,7 +12,7 @@ import MailchimpForm from '@/components/ui/MailchimpForm';
 import HeroSlider from '@/components/home/HeroSlider';
 import HotDealsSection from '@/components/home/HotDealsSection';
 import JsonLd from '@/components/JsonLd';
-import { SITE_URL } from '@/lib/siteConfig';
+import { SITE_URL, SITE_NAME } from '@/lib/siteConfig';
 import {
   getTours,
   getHotDeals,
@@ -24,6 +25,30 @@ import {
 import { Tour, HeroSlide, Partner } from '@/types';
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Kenya Safaris & East Africa Tours | Lindberg Safaris',
+  description:
+    'Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda & Rwanda. Book your East Africa dream trip with Lindberg Safaris.',
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: 'Kenya Safaris & East Africa Tours | Lindberg Safaris',
+    description:
+      'Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda & Rwanda.',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [
+      {
+        url: 'https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Lindberg Safaris - East Africa Adventures',
+      },
+    ],
+  },
+};
 
 const fallbackSlides: HeroSlide[] = [
   { _id: 'fallback-1', image: 'https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg', title: 'Discover East Africa', subtitle: 'Unforgettable safaris tailored just for you', primaryButtonText: 'Start Your Journey', primaryButtonLink: '/contact', secondaryButtonText: 'View Our Tours', secondaryButtonLink: '/tours' },

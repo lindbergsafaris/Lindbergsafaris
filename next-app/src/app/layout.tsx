@@ -22,10 +22,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: {
-    default: 'Kenya Safaris & East Africa Tours | Lindberg Safaris',
-    template: '%s | Lindberg Safaris',
-  },
+  title: 'Kenya Safaris & East Africa Tours | Lindberg Safaris',
   description:
     'Tailor-made luxury safaris, wildlife adventures, and holiday packages in Kenya, Tanzania, Uganda & Rwanda. Book your East Africa dream trip with Lindberg Safaris.',
   keywords: [
