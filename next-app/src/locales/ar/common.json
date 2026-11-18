@@ -1,0 +1,85 @@
+{
+    "nav": {
+        "home": "الرئيسية",
+        "services": "الخدمات",
+        "themedPackages": "الباقات المتخصصة",
+        "accommodation": "الإقامة",
+        "destination": "الوجهات",
+        "company": "الشركة",
+        "blog": "المدونة",
+        "contact": "اتصل بنا",
+        "bookNow": "احجز الآن"
+    },
+    "services": {
+        "airticketing": "خدمات التذاكر",
+        "hotelBooking": "حجز الفنادق",
+        "transportServices": "خدمات النقل",
+        "visaApplications": "طلبات التأشيرة",
+        "customItineraries": "خطط رحلات مخصصة"
+    },
+    "packages": {
+        "wildlifeSafaris": "سفاري الحياة البرية",
+        "mountainClimbing": "تسلق الجبال",
+        "cruiseHoliday": "عطلات بحرية",
+        "adventurePackages": "باقات المغامرة",
+        "pilgrimages": "رحلات الحج",
+        "corporateTrips": "رحلات تعليمية ومؤسسية"
+    },
+    "accommodation": {
+        "lodges": "النزل (Lodges)",
+        "holidayHomes": "منازل العطلات",
+        "townHotels": "فنادق المدينة",
+        "luxuryCamps": "مخيمات فاخرة",
+        "resortHotels": "فنادق المنتجع",
+        "bushCamps": "مخيمات البرية"
+    },
+    "destinations": {
+        "kenya": "كينيا",
+        "africa": "أفريقيا",
+        "middleEast": "الشرق الأوسط",
+        "europe": "أوروبا",
+        "america": "أمريكا",
+        "oceania": "أوقيانوسيا",
+        "southAmerica": "أمريكا الجنوبية",
+        "northAmerica": "أمريكا الشمالية"
+    },
+    "footer": {
+        "brandName": "ليندبرغ سافاري",
+        "brandDescription": "تصميم تجارب سفاري لا تُنسى لأكثر من 25 عامًا. اكتشف سحر أفريقيا مع رحلاتنا المخصصة.",
+        "quickLinks": "روابط سريعة",
+        "aboutUs": "من نحن",
+        "ourTours": "جولاتنا",
+        "destinations": "الوجهات",
+        "travelBlog": "مدونة السفر",
+        "contactUs": "اتصل بنا",
+        "services": "الخدمات",
+        "safarisAndTours": "رحلات السفاري والجولات",
+        "hotelsAndAccommodation": "الفنادق والإقامة",
+        "transportServices": "خدمات النقل",
+        "flightTicketing": "تذاكر الطيران",
+        "contactInfo": "اتصل بنا",
+        "visitUs": "زرنا",
+        "copyright": "© {{year}} ليندبرغ سافاري. جميع الحقوق محفوظة."
+    },
+    "buttons": {
+        "bookNow": "احجز الآن",
+        "viewAllTours": "عرض جميع الجولات",
+        "startYourJourney": "ابدأ رحلتك",
+        "viewOurTours": "عرض جولاتنا",
+        "inquireDeal": "استفسار عن عرض",
+        "exploreRegion": "استكشف المنطقة",
+        "subscribeNow": "اشترك الآن",
+        "submit": "إرسال",
+        "sendMessage": "إرسال رسالة",
+        "learnMore": "تعلم المزيد"
+    },
+    "common": {
+        "loading": "جاري التحميل...",
+        "error": "خطأ",
+        "noDataAvailable": "لا توجد بيانات متاحة",
+        "tryAgain": "حاول مرة أخرى",
+        "close": "إغلاق",
+        "open": "فتح",
+        "menu": "القائمة"
+    }
+}
