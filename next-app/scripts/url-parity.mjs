@@ -40,7 +40,7 @@ async function checkUrl(path) {
         chainLength = 2;
         nextTarget = `${location} -> ${hopRes.headers.get('location') || ''}`;
       }
-    } catch (_err) {
+    } catch {
       // ignore
     }
   }

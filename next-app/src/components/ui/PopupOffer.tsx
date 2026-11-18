@@ -27,12 +27,14 @@ const PopupOffer = ({ initialOffer }: PopupOfferProps) => {
       if (typeof window !== 'undefined' && window.sessionStorage) {
         const seenOffer = sessionStorage.getItem(`seen_offer_${initialOffer._id}`);
         if (!seenOffer) {
-          setOffer(initialOffer);
-          const timer = setTimeout(() => setIsOpen(true), 2000);
+          const timer = setTimeout(() => {
+            setOffer(initialOffer);
+            setIsOpen(true);
+          }, 2000);
           return () => clearTimeout(timer);
         }
       }
-    } catch (_err) {
+    } catch {
       // Ignore storage errors on client
     }
   }, [initialOffer]);
@@ -42,7 +44,7 @@ const PopupOffer = ({ initialOffer }: PopupOfferProps) => {
     if (offer && typeof window !== 'undefined' && window.sessionStorage) {
       try {
         sessionStorage.setItem(`seen_offer_${offer._id}`, 'true');
-      } catch (_err) {
+      } catch {
         // Ignore storage errors
       }
     }

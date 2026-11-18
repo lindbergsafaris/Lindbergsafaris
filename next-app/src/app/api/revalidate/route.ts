@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Invalidate document tag cache
-    revalidateTag(tag);
+    revalidateTag(tag, 'default');
 
     // Invalidate specific page path if slug is provided
     const slug = body.slug?.current || body.slug;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -11,6 +11,8 @@ interface Language {
   name: string;
   flag: string;
 }
+
+const emptySubscribe = () => () => {};
 
 const languages: Language[] = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
@@ -30,11 +32,14 @@ const languages: Language[] = [
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
     const savedLang = localStorage.getItem('i18nextLng');
     if (savedLang && savedLang !== i18n.language) {
       i18n.changeLanguage(savedLang);
