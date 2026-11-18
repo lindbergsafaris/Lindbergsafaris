@@ -11,6 +11,7 @@ import {
   getPackagesByCategory,
   getAllThemedPackages,
 } from '@/lib/data';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -105,9 +106,15 @@ export default async function ThemedPackagePage({ params }: PageProps) {
     })),
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Packages', url: '/tours' },
+    { name: title, url: `/packages/${category}` },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero Section */}
       <div className="relative min-h-[500px] flex items-center justify-center text-white pt-28 pb-16">

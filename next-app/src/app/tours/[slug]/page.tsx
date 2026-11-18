@@ -7,7 +7,8 @@ import TourItinerary from '@/components/tours/TourItinerary';
 import TourBookingForm from '@/components/tours/TourBookingForm';
 import JsonLd from '@/components/JsonLd';
 import { getTourBySlug, getTourById, getAllTourSlugs } from '@/lib/data';
-import { isUUID } from '@/lib/slugUtils';
+import { isUUID, slugify } from '@/lib/slugUtils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -18,7 +19,8 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const slugs = await getAllTourSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const cleanSlugs = Array.from(new Set(slugs.map((s) => slugify(s)).filter(Boolean)));
+  return cleanSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (tour?.slug?.current) {
       return {
         title: `${tour.title} | Lindberg Safaris`,
-        alternates: { canonical: `${SITE_URL}/tours/${tour.slug.current}` },
+        alternates: { canonical: `${SITE_URL}/tours/${slugify(tour.slug.current)}` },
       };
     }
   }
@@ -36,11 +38,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tour = await getTourBySlug(slug);
   if (!tour) return { title: 'Tour Not Found | Lindberg Safaris' };
 
+  const cleanSlug = slugify(tour.slug?.current || tour.title || slug);
   const tourImage = tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
   const description = tour.description
     ? tour.description.slice(0, 155).replace(/\s+/g, ' ').trim() + '...'
     : 'Book this custom safari tour with Lindberg Safaris.';
-  const tourUrl = `${SITE_URL}/tours/${tour.slug?.current || slug}`;
+  const tourUrl = `${SITE_URL}/tours/${cleanSlug}`;
 
   return {
     title: `${tour.title} | Lindberg Safaris`,
@@ -68,9 +71,16 @@ export default async function TourDetailPage({ params }: PageProps) {
   if (isUUID(slug)) {
     const tour = await getTourById(slug);
     if (tour?.slug?.current) {
-      permanentRedirect(`/tours/${tour.slug.current}`);
+      permanentRedirect(`/tours/${slugify(tour.slug.current)}`);
     }
     notFound();
+  }
+
+  // If dirty slug (e.g. contains spaces, uppercase or percent-encoded), 308 redirect to clean slug
+  const decodedSlug = decodeURIComponent(slug);
+  const cleanSlug = slugify(decodedSlug);
+  if (slug !== cleanSlug && decodedSlug !== cleanSlug) {
+    permanentRedirect(`/tours/${cleanSlug}`);
   }
 
   const tour = await getTourBySlug(slug);
@@ -79,33 +89,45 @@ export default async function TourDetailPage({ params }: PageProps) {
   }
 
   const tourImage = tour.images?.[0]?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=2068&q=80';
-  const priceNumber = typeof tour.price === 'number' ? tour.price : parseInt(String(tour.price).replace(/[^0-9]/g, '') || '0');
 
+  // TouristTrip Schema (for tailor-made and inquiry-based tour itineraries)
   const tourSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Product',
+    '@type': 'TouristTrip',
     name: tour.title,
     description: tour.description || `${tour.title} by Lindberg Safaris`,
     image: tour.images?.map((img) => img.url) || [tourImage],
-    brand: {
-      '@type': 'Brand',
+    touristType: 'Wildlife & Safari Travelers',
+    provider: {
+      '@type': 'TravelAgency',
       name: 'Lindberg Safaris',
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo.png`,
     },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'USD',
-      price: priceNumber,
-      availability: 'https://schema.org/InStock',
-      seller: {
-        '@type': 'Organization',
-        name: 'Lindberg Safaris',
-      },
-    },
+    itinerary:
+      tour.itinerary && tour.itinerary.length > 0
+        ? {
+            '@type': 'ItemList',
+            numberOfItems: tour.itinerary.length,
+            itemListElement: tour.itinerary.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: item.title,
+              description: item.description,
+            })),
+          }
+        : undefined,
   };
+
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Tours', url: '/tours' },
+    { name: tour.title, url: `/tours/${cleanSlug}` },
+  ]);
 
   return (
     <>
       <JsonLd schema={tourSchema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero Section */}
       <div className="relative h-[60vh] min-h-[500px] flex items-end pb-12 text-white">

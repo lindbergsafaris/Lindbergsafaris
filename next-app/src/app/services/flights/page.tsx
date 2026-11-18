@@ -4,6 +4,7 @@ import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import JsonLd from '@/components/JsonLd';
 import { getWhatsAppLink } from '@/lib/utils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -49,9 +50,15 @@ export default function FlightsPage() {
     areaServed: 'Worldwide',
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+    { name: 'Air & Cruise Ticketing', url: '/services/flights' },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
         <div

@@ -5,6 +5,7 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import JsonLd from '@/components/JsonLd';
 import { getBlogPosts } from '@/lib/data';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -39,9 +40,14 @@ export default async function BlogPage() {
     })),
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Blog', url: '/blog' },
+  ]);
+
   return (
     <>
       <JsonLd schema={blogSchema} />
+      <JsonLd schema={breadcrumbsSchema} />
       <div className="bg-primary text-white py-20">
         <Container>
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Kenya Safari Journal &amp; Travel Blog</h1>

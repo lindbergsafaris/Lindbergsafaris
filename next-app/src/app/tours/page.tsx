@@ -4,6 +4,7 @@ import Section from '@/components/ui/Section';
 import ToursClientView from '@/components/tours/ToursClientView';
 import JsonLd from '@/components/JsonLd';
 import { getTours } from '@/lib/data';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -37,9 +38,14 @@ export default async function ToursPage() {
     })),
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Tours', url: '/tours' },
+  ]);
+
   return (
     <>
       <JsonLd schema={itemListSchema} />
+      <JsonLd schema={breadcrumbsSchema} />
       {/* Hero Section */}
       <div className="bg-primary text-white py-20">
         <Container>

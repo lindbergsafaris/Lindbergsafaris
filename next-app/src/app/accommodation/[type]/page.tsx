@@ -13,6 +13,7 @@ import {
   getAllAccommodationSlugs,
 } from '@/lib/data';
 import { slugify } from '@/lib/slugUtils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -149,9 +150,15 @@ export default async function AccommodationPolymorphicPage({ params }: PageProps
       })),
     };
 
+    const breadcrumbsSchema = createBreadcrumbsSchema([
+      { name: 'Accommodation', url: '/services/hotel-booking' },
+      { name: info.title, url: `/accommodation/${type}` },
+    ]);
+
     return (
       <>
         <JsonLd schema={schema} />
+        <JsonLd schema={breadcrumbsSchema} />
 
         {/* Hero Section */}
         <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">
@@ -253,9 +260,18 @@ export default async function AccommodationPolymorphicPage({ params }: PageProps
     ...(accommodation.rating ? { starRating: { '@type': 'Rating', ratingValue: accommodation.rating } } : {}),
   };
 
+  const categorySlug = accommodation.type || 'lodges';
+  const categoryName = CATEGORY_INFO[categorySlug]?.title || 'Accommodation';
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Accommodation', url: '/services/hotel-booking' },
+    { name: categoryName, url: `/accommodation/${categorySlug}` },
+    { name: accommodation.name, url: `/accommodation/${accSlug}` },
+  ]);
+
   return (
     <>
       <JsonLd schema={accSchema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero Section */}
       <div className="relative h-[60vh] min-h-[500px] bg-gray-900">

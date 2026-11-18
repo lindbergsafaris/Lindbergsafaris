@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { X } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { getWhatsAppLink } from '@/lib/utils';
@@ -13,7 +13,16 @@ interface HotDealsSectionProps {
 const HotDealsSection = ({ deals }: HotDealsSectionProps) => {
   const [selectedDeal, setSelectedDeal] = useState<HotDeal | null>(null);
 
-  if (deals.length === 0) return null;
+  // Client-side expiry filtering ensures stale cached pages never display expired deals
+  const activeDeals = useMemo(() => {
+    const now = new Date();
+    return (deals || []).filter((deal) => {
+      if (!deal.dealExpiry) return true;
+      return new Date(deal.dealExpiry) > now;
+    });
+  }, [deals]);
+
+  if (activeDeals.length === 0) return null;
 
   return (
     <>
@@ -64,7 +73,7 @@ const HotDealsSection = ({ deals }: HotDealsSectionProps) => {
 
       {/* Deals Grid */}
       <div className="flex flex-wrap gap-8">
-        {deals.map((deal) => {
+        {activeDeals.map((deal) => {
           const isExpired = deal.dealExpiry ? new Date(deal.dealExpiry) < new Date() : false;
           return (
             <div

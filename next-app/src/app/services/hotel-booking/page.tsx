@@ -4,6 +4,7 @@ import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import JsonLd from '@/components/JsonLd';
 import { getWhatsAppLink } from '@/lib/utils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -81,9 +82,15 @@ export default function HotelBookingPage() {
     areaServed: 'East Africa & Worldwide',
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+    { name: 'Hotel Booking', url: '/services/hotel-booking' },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero Section */}
       <div className="relative h-[70vh] min-h-[600px] flex items-center justify-center text-white overflow-hidden">

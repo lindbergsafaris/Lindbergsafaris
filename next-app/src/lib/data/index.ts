@@ -702,7 +702,7 @@ export async function getDestinationPostsByCategory(categorySlug: string): Promi
 }
 
 export async function getDestinationPostBySlug(slug: string): Promise<DestinationPost | null> {
-  const query = `*[_type == "destinationPost" && slug.current == $slug][0] {
+  const query = `*[_type == "destinationPost" && (slug.current == $slug || slug.current == $altSlug)][0] {
     _id,
     title,
     "slug": slug.current,
@@ -714,11 +714,38 @@ export async function getDestinationPostBySlug(slug: string): Promise<Destinatio
     tourCount,
     content
   }`;
-  const data = await sanityFetch<DestinationPost | null>({
+  // Map typo variants (e.g. amboseli <-> ambosseli)
+  const altSlug = slug === 'amboseli-national-park' ? 'ambosseli-national-park' : slug;
+  let data = await sanityFetch<DestinationPost | null>({
     query,
-    params: { slug },
+    params: { slug, altSlug },
     tags: ['destinationPost'],
   });
+
+  if (!data) {
+    const allQuery = `*[_type == "destinationPost"] {
+      _id,
+      title,
+      "slug": slug.current,
+      excerpt,
+      "image": {
+        "url": coalesce(imageUrl, image.asset->url, image.url),
+        "alt": title
+      },
+      tourCount,
+      content
+    }`;
+    const all = await sanityFetch<DestinationPost[]>({ query: allQuery, tags: ['destinationPost'] });
+    data = (all || []).find((p) => {
+      const pSlug = p.slug || '';
+      return (
+        pSlug === slug ||
+        slugify(pSlug) === slugify(slug) ||
+        (slug === 'amboseli-national-park' && pSlug === 'ambosseli-national-park')
+      );
+    }) || null;
+  }
+
   if (!data) return null;
   return {
     ...data,
@@ -733,6 +760,9 @@ export async function getAllDestinationSlugs(): Promise<string[]> {
     tags: ['destinationPost'],
   });
   return (data || [])
-    .map((d) => d.slug || (d.title ? slugify(d.title) : ''))
+    .map((d) => {
+      const raw = d.slug || (d.title ? slugify(d.title) : '');
+      return raw === 'ambosseli-national-park' ? 'amboseli-national-park' : raw;
+    })
     .filter(Boolean);
 }

@@ -6,6 +6,7 @@ import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
 import JsonLd from '@/components/JsonLd';
 import { getWhatsAppLink } from '@/lib/utils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -83,9 +84,15 @@ export default function CustomItinerariesPage() {
     areaServed: 'Kenya & East Africa',
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+    { name: 'Custom Itineraries', url: '/services/custom-itineraries' },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero */}
       <div className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-white">

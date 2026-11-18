@@ -20,6 +20,26 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/tours/VISIT%20LAMU",
+        destination: "/tours/visit-lamu",
+        permanent: true,
+      },
+      {
+        source: "/tours/VISIT LAMU",
+        destination: "/tours/visit-lamu",
+        permanent: true,
+      },
+      {
+        source: "/blog/Altitude%20Training%20Kenya",
+        destination: "/blog/altitude-training-kenya",
+        permanent: true,
+      },
+      {
+        source: "/blog/Altitude Training Kenya",
+        destination: "/blog/altitude-training-kenya",
+        permanent: true,
+      },
+      {
         source: "/destinations/ambosseli-national-park",
         destination: "/destinations/amboseli-national-park",
         permanent: true,

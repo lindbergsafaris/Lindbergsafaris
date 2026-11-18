@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import JsonLd from '@/components/JsonLd';
 import { getFleetVehicles } from '@/lib/data';
 import { getWhatsAppLink } from '@/lib/utils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -61,9 +62,15 @@ export default async function TransportPage() {
     areaServed: 'Kenya',
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+    { name: 'Transport Services', url: '/services/transport' },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
         <div

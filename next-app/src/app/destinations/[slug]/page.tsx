@@ -8,6 +8,7 @@ import DestinationInquiryForm from '@/components/destinations/DestinationInquiry
 import JsonLd from '@/components/JsonLd';
 import { getDestinationPostBySlug, getAllDestinationSlugs } from '@/lib/data';
 import { destinationsData } from '@/data/destinations';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 import { Destination, PlaceToVisit } from '@/types';
 
@@ -105,9 +106,15 @@ export default async function DestinationDetailPage({ params }: PageProps) {
     image: destImage,
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Destinations', url: '/#destinations' },
+    { name: destination.name, url: `/destinations/${slug}` },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero */}
       <div className="relative h-[60vh] min-h-[400px] flex items-center justify-center text-white">

@@ -4,6 +4,8 @@ import { Star } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import Button from '@/components/ui/Button';
+import JsonLd from '@/components/JsonLd';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -17,8 +19,14 @@ export const metadata: Metadata = {
 };
 
 export default function HotelsPage() {
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+    { name: 'Hotels', url: '/services/hotels' },
+  ]);
+
   return (
     <>
+      <JsonLd schema={breadcrumbsSchema} />
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
         <div
           className="absolute inset-0 bg-cover bg-center z-0"

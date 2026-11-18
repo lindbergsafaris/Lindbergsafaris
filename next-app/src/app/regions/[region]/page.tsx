@@ -10,6 +10,7 @@ import {
   getDestinationCategoryBySlug,
   getDestinationPostsByCategory,
 } from '@/lib/data';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -90,9 +91,15 @@ export default async function RegionDestinationsPage({ params }: PageProps) {
     image: activeImage,
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Regions', url: '/#destinations' },
+    { name: activeName, url: `/regions/${region}` },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       <div className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-white">
         <div

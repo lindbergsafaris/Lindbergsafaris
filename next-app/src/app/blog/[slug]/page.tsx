@@ -7,7 +7,8 @@ import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import JsonLd from '@/components/JsonLd';
 import { getBlogPostBySlug, getBlogPostById, getAllBlogSlugs } from '@/lib/data';
-import { isUUID } from '@/lib/slugUtils';
+import { isUUID, slugify } from '@/lib/slugUtils';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -18,7 +19,8 @@ interface PageProps {
 
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();
-  return slugs.map((slug) => ({ slug }));
+  const cleanSlugs = Array.from(new Set(slugs.map((s) => slugify(s)).filter(Boolean)));
+  return cleanSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     if (post?.slug?.current) {
       return {
         title: `${post.title} | Lindberg Safaris`,
-        alternates: { canonical: `${SITE_URL}/blog/${post.slug.current}` },
+        alternates: { canonical: `${SITE_URL}/blog/${slugify(post.slug.current)}` },
       };
     }
   }
@@ -36,9 +38,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = await getBlogPostBySlug(slug);
   if (!post) return { title: 'Blog Post Not Found | Lindberg Safaris' };
 
+  const cleanSlug = slugify(post.slug?.current || post.title || slug);
   const postImage = post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
   const description = post.excerpt ? post.excerpt.slice(0, 155) : 'Read this article from Lindberg Safaris.';
-  const postUrl = `${SITE_URL}/blog/${post.slug?.current || slug}`;
+  const postUrl = `${SITE_URL}/blog/${cleanSlug}`;
 
   return {
     title: `${post.title} | Lindberg Safaris`,
@@ -80,9 +83,16 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (isUUID(slug)) {
     const post = await getBlogPostById(slug);
     if (post?.slug?.current) {
-      permanentRedirect(`/blog/${post.slug.current}`);
+      permanentRedirect(`/blog/${slugify(post.slug.current)}`);
     }
     notFound();
+  }
+
+  // If dirty slug (contains spaces, uppercase or percent-encoded), 308 redirect to clean slug
+  const decodedSlug = decodeURIComponent(slug);
+  const cleanSlug = slugify(decodedSlug);
+  if (slug !== cleanSlug && decodedSlug !== cleanSlug) {
+    permanentRedirect(`/blog/${cleanSlug}`);
   }
 
   const post = await getBlogPostBySlug(slug);
@@ -91,7 +101,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   }
 
   const postImage = post.featuredImage?.url || 'https://images.unsplash.com/photo-1516426122078-c23e76319801';
-  const canonicalUrl = `${SITE_URL}/blog/${post.slug?.current || slug}`;
+  const canonicalUrl = `${SITE_URL}/blog/${cleanSlug}`;
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -115,9 +125,15 @@ export default async function BlogPostPage({ params }: PageProps) {
     },
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Blog', url: '/blog' },
+    { name: post.title, url: `/blog/${cleanSlug}` },
+  ]);
+
   return (
     <>
       <JsonLd schema={articleSchema} />
+      <JsonLd schema={breadcrumbsSchema} />
       <div className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
         {post.featuredImage?.url && (
           <div className="absolute inset-0 z-0">

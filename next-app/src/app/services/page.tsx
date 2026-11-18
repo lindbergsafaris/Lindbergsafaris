@@ -15,6 +15,7 @@ import {
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import JsonLd from '@/components/JsonLd';
+import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
 export const revalidate = 60;
@@ -138,9 +139,14 @@ export default function ServicesPage() {
     },
   };
 
+  const breadcrumbsSchema = createBreadcrumbsSchema([
+    { name: 'Services', url: '/services' },
+  ]);
+
   return (
     <>
       <JsonLd schema={schema} />
+      <JsonLd schema={breadcrumbsSchema} />
 
       {/* Hero */}
       <div className="bg-primary text-white py-20">

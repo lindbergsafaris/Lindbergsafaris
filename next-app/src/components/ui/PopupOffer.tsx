@@ -11,7 +11,7 @@ interface PopupOfferProps {
 
 const PopupOffer = ({ initialOffer }: PopupOfferProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [offer, setOffer] = useState<PopupOfferType | null>(initialOffer || null);
+  const [offer, setOffer] = useState<PopupOfferType | null>(null);
 
   useEffect(() => {
     if (!initialOffer) return;
@@ -32,8 +32,8 @@ const PopupOffer = ({ initialOffer }: PopupOfferProps) => {
           return () => clearTimeout(timer);
         }
       }
-    } catch (e) {
-      console.warn('Session storage check failed:', e);
+    } catch (_err) {
+      // Ignore storage errors on client
     }
   }, [initialOffer]);
 
@@ -42,7 +42,7 @@ const PopupOffer = ({ initialOffer }: PopupOfferProps) => {
     if (offer && typeof window !== 'undefined' && window.sessionStorage) {
       try {
         sessionStorage.setItem(`seen_offer_${offer._id}`, 'true');
-      } catch (e) {
+      } catch (_err) {
         // Ignore storage errors
       }
     }
