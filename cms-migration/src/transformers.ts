@@ -1,16 +1,18 @@
 /**
  * transformers.ts
  *
- * Maps each Sanity document type to the Supabase row shape.
- * Returns null if a document should be skipped.
+ * Maps each Sanity document type to the exact Supabase Postgres row shape
+ * defined in supabase/migrations/0002_tables.sql.
+ *
+ * Note on JSONB columns: values are kept as native JS objects / arrays
+ * (not pre-stringified) so @supabase/supabase-js sends valid JSONB objects/arrays
+ * matching all jsonb_typeof(...) CHECK constraints.
  */
 
 import { normaliseImage, normaliseImages } from '../lib/cloudinary.ts';
-import { portableTextToTiptap, EMPTY_DOC } from '../lib/portableTextToTiptap.ts';
+import { portableTextToTiptap, EMPTY_DOC, type TiptapDoc } from '../lib/portableTextToTiptap.ts';
 import { slugify, getSlug } from '../lib/slugs.ts';
 import type { SanityDoc } from './loader.ts';
-
-const EMPTY_CONTENT = JSON.stringify(EMPTY_DOC);
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -29,123 +31,136 @@ function bool(v: unknown, fallback = false): boolean {
   return typeof v === 'boolean' ? v : fallback;
 }
 
-function richText(v: unknown): string {
-  if (!v) return EMPTY_CONTENT;
-  if (Array.isArray(v)) return JSON.stringify(portableTextToTiptap(v));
-  return EMPTY_CONTENT;
+function stringArray(v: unknown): string[] {
+  if (!Array.isArray(v)) return [];
+  return v
+    .map((item) => (typeof item === 'string' ? item.trim() : String(item ?? '').trim()))
+    .filter(Boolean);
+}
+
+function richTextDoc(v: unknown): TiptapDoc {
+  if (!v) return EMPTY_DOC;
+  if (Array.isArray(v)) return portableTextToTiptap(v);
+  return EMPTY_DOC;
 }
 
 function isoDate(v: unknown): string | null {
-  if (!v) return null;
-  if (typeof v !== 'string') return null;
+  if (!v || typeof v !== 'string') return null;
   const d = new Date(v);
   return isNaN(d.getTime()) ? null : d.toISOString();
 }
 
-/** Map Sanity gallery category to the allowed DB set. */
-const GALLERY_CATEGORY_MAP: Record<string, string> = {
-  wildlife:    'wildlife',
-  landscape:   'landscapes',
-  landscapes:  'landscapes',
-  safari:      'safari',
-  culture:     'culture',
-  travel:      'travel',
-  beach:       'beach',
-  mountain:    'mountains',
-  mountains:   'mountains',
-  camp:        'camps',
-  camps:       'camps',
-  lodge:       'camps',
-  family:      'family',
-  birding:     'birding',
-  birdlife:    'birding',
-};
+/**
+ * Identity mapping for gallery_images.category.
+ * DB CHECK constraint: ('wildlife', 'scenery', 'tours', 'accommodations', 'adventures').
+ */
+const ALLOWED_GALLERY_CATEGORIES = new Set([
+  'wildlife',
+  'scenery',
+  'tours',
+  'accommodations',
+  'adventures',
+]);
 
 function mapGalleryCategory(raw: unknown): string {
   const s = str(raw).toLowerCase();
-  return GALLERY_CATEGORY_MAP[s] ?? 'wildlife';
+  if (!s) return 'wildlife';
+  if (ALLOWED_GALLERY_CATEGORIES.has(s)) return s;
+  throw new Error(
+    `Gallery image has unrecognised category: "${s}". Allowed values: ${[...ALLOWED_GALLERY_CATEGORIES].join(', ')}`
+  );
 }
 
 // ---------------------------------------------------------------------------
-// Destination Categories
+// 1. Destination Categories
 // ---------------------------------------------------------------------------
 
 export function transformDestinationCategory(doc: SanityDoc) {
+  const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
   return {
     legacy_sanity_id: doc._id,
     name: str(doc.name),
-    slug: getSlug(doc._id, str((doc.slug as Record<string,unknown>)?.current), str(doc.name)),
+    slug: getSlug(doc._id, rawSlug, str(doc.name)),
     description: str(doc.description) || null,
-    icon: str(doc.icon) || null,
+    image: normaliseImage(doc.imageUrl ?? doc.image),
+    is_featured: bool(doc.isFeatured, false),
     display_order: num(doc.order, 0),
-  };
-}
-
-// ---------------------------------------------------------------------------
-// Destination Posts
-// ---------------------------------------------------------------------------
-
-export function transformDestinationPost(doc: SanityDoc, categoryIdMap: Map<string, string>) {
-  const catRef = (doc.category as Record<string, unknown>)?._ref as string | undefined;
-  const destination_category_id = catRef ? categoryIdMap.get(catRef) ?? null : null;
-
-  const rawSlug = str((doc.slug as Record<string,unknown>)?.current);
-  // Fix known typo
-  const slug = rawSlug === 'ambosseli-national-park' ? 'amboseli-national-park'
-              : getSlug(doc._id, rawSlug, str(doc.title));
-
-  return {
-    legacy_sanity_id: doc._id,
-    destination_category_id,
-    title: str(doc.title),
-    slug,
-    excerpt: str(doc.excerpt) || null,
-    content: richText(doc.content),
-    cover_image: normaliseImage(doc.coverImage ?? doc.image) ? JSON.stringify(normaliseImage(doc.coverImage ?? doc.image)) : null,
-    gallery: normaliseImages(doc.gallery).length ? JSON.stringify(normaliseImages(doc.gallery)) : null,
-    is_featured: bool(doc.isFeatured),
-    seo_title: str(doc.seoTitle) || null,
-    seo_description: str(doc.seoDescription) || null,
-    status: 'published',
+    status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Themed Packages
+// 2. Destination Posts
+// ---------------------------------------------------------------------------
+
+export function transformDestinationPost(
+  doc: SanityDoc,
+  categoryIdMap: Map<string, string>
+) {
+  const catRef = (doc.category as Record<string, unknown>)?._ref as string | undefined;
+  const category_id = catRef ? categoryIdMap.get(catRef) ?? null : null;
+
+  const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
+  const slug =
+    rawSlug === 'ambosseli-national-park'
+      ? 'amboseli-national-park'
+      : getSlug(doc._id, rawSlug, str(doc.title));
+
+  return {
+    legacy_sanity_id: doc._id,
+    category_id,
+    title: str(doc.title),
+    slug,
+    excerpt: str(doc.excerpt) || null,
+    image: normaliseImage(doc.imageUrl ?? doc.image ?? doc.coverImage),
+    tour_count: Math.max(0, Math.trunc(num(doc.tourCount, 0))),
+    content: richTextDoc(doc.content),
+    seo_title: str(doc.seoTitle) || null,
+    seo_description: str(doc.seoDescription) || null,
+    status: 'published' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// 3. Themed Packages
 // ---------------------------------------------------------------------------
 
 export function transformThemedPackage(doc: SanityDoc) {
-  const rawSlug = str((doc.slug as Record<string,unknown>)?.current);
-  const slug = rawSlug ? rawSlug.toLowerCase().trim().replace(/\s+/g, '-').replace(/-+/g, '-')
-              : slugify(str(doc.title));
+  const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
+  const slug = rawSlug
+    ? slugify(rawSlug)
+    : slugify(str(doc.title));
 
   return {
     legacy_sanity_id: doc._id,
     title: str(doc.title),
     slug,
-    description: richText(doc.description ?? doc.content),
-    cover_image: normaliseImage(doc.image ?? doc.coverImage) ? JSON.stringify(normaliseImage(doc.image ?? doc.coverImage)) : null,
-    icon: str(doc.icon) || null,
-    display_order: num(doc.order, 0),
-    is_active: bool(doc.isActive, true),
+    category: str(doc.category).toLowerCase(),
+    hero_image: normaliseImage(doc.heroImage ?? doc.image ?? doc.coverImage),
+    description: str(doc.description),
+    content: richTextDoc(doc.content),
     seo_title: str(doc.seoTitle) || null,
     seo_description: str(doc.seoDescription) || null,
+    status: 'published' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Tours
+// 4. Tours
 // ---------------------------------------------------------------------------
 
 export function transformTour(doc: SanityDoc) {
-  const rawSlug = str((doc.slug as Record<string,unknown>)?.current);
-  // "VISIT LAMU" override
-  const slug = str(doc.title).toUpperCase().includes('VISIT LAMU') ? 'visit-lamu'
-              : getSlug(doc._id, rawSlug, str(doc.title));
+  const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
+  const slug = str(doc.title).toUpperCase().includes('VISIT LAMU')
+    ? 'visit-lamu'
+    : getSlug(doc._id, rawSlug, str(doc.title));
 
-  // Itinerary: array of day objects sorted by day number
-  const itineraryRaw = Array.isArray(doc.itinerary) ? doc.itinerary as Record<string, unknown>[] : [];
+  const itineraryRaw = Array.isArray(doc.itinerary)
+    ? (doc.itinerary as Record<string, unknown>[])
+    : [];
   const itinerary = itineraryRaw
     .map((item) => ({
       day: num(item.day),
@@ -156,139 +171,153 @@ export function transformTour(doc: SanityDoc) {
     }))
     .sort((a, b) => a.day - b.day);
 
-  const themedRef = (doc.themedPackage as Record<string,unknown>)?._ref as string | undefined;
+  const rawDiff = str(doc.difficulty).toLowerCase();
+  const difficulty =
+    rawDiff === 'easy' || rawDiff === 'moderate' || rawDiff === 'challenging'
+      ? rawDiff
+      : null;
 
   return {
     legacy_sanity_id: doc._id,
     title: str(doc.title),
     slug,
-    excerpt: str(doc.excerpt) || null,
-    content: richText(doc.content),
-    cover_image: normaliseImage(doc.image ?? doc.coverImage) ? JSON.stringify(normaliseImage(doc.image ?? doc.coverImage)) : null,
-    gallery: normaliseImages(doc.gallery).length ? JSON.stringify(normaliseImages(doc.gallery)) : null,
-    duration_days: num(doc.durationDays ?? doc.duration),
+    location: str(doc.location) || 'Unknown',
+    description: str(doc.description),
+    duration: str(doc.duration) || 'Flexible',
+    group_size: str(doc.groupSize) || null,
+    difficulty,
     price: num(doc.price ?? doc.priceFrom),
     currency: (str(doc.currency) || 'KES').toUpperCase() as 'KES' | 'USD' | 'EUR',
-    group_size: num(doc.groupSize),
-    difficulty: str(doc.difficulty) || null,
-    is_featured: bool(doc.isFeatured),
-    itinerary: JSON.stringify(itinerary),
-    reviews_count: num(doc.reviewsCount ?? doc.reviews, 0),
     rating: doc.rating != null ? num(doc.rating) : null,
-    includes: Array.isArray(doc.includes) ? JSON.stringify(doc.includes) : JSON.stringify([]),
-    excludes: Array.isArray(doc.excludes) ? JSON.stringify(doc.excludes) : JSON.stringify([]),
-    destinations: Array.isArray(doc.destinations) ? JSON.stringify(doc.destinations) : JSON.stringify([]),
-    _themed_package_sanity_ref: themedRef ?? null,
+    reviews: Math.max(0, Math.trunc(num(doc.reviews ?? doc.reviewsCount, 0))),
+    images: normaliseImages(doc.images ?? doc.gallery),
+    highlights: stringArray(doc.highlights),
+    itinerary,
+    included: stringArray(doc.included ?? doc.includes),
+    excluded: stringArray(doc.excluded ?? doc.excludes),
+    featured: bool(doc.featured ?? doc.isFeatured, false),
     seo_title: str(doc.seoTitle) || null,
     seo_description: str(doc.seoDescription) || null,
-    status: 'published',
+    status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Blog Posts
+// 5. Blog Posts
 // ---------------------------------------------------------------------------
 
 export function transformBlogPost(doc: SanityDoc) {
-  const rawSlug = str((doc.slug as Record<string,unknown>)?.current);
+  const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
   const title = str(doc.title);
-  const slug = title.toLowerCase().includes('altitude training') ? 'altitude-training-kenya'
-              : getSlug(doc._id, rawSlug, title);
-
-  const authorRef = (doc.author as Record<string,unknown>)?._ref as string | undefined;
+  const slug = title.toLowerCase().includes('altitude training')
+    ? 'altitude-training-kenya'
+    : getSlug(doc._id, rawSlug, title);
 
   return {
     legacy_sanity_id: doc._id,
     title,
     slug,
-    excerpt: str(doc.excerpt) || null,
-    content: richText(doc.content ?? doc.body),
-    cover_image: normaliseImage(doc.coverImage ?? doc.mainImage) ? JSON.stringify(normaliseImage(doc.coverImage ?? doc.mainImage)) : null,
+    excerpt: str(doc.excerpt),
+    content: richTextDoc(doc.content ?? doc.body),
+    featured_image: normaliseImage(doc.featuredImage ?? doc.coverImage ?? doc.mainImage),
+    author: str(doc.author) || 'Lindberg Safaris',
     category: str(doc.category),
-    tags: Array.isArray(doc.tags) ? JSON.stringify(doc.tags) : JSON.stringify([]),
-    _author_sanity_ref: authorRef ?? null,
+    read_time: str(doc.readTime) || null,
     seo_title: str(doc.seoTitle) || null,
     seo_description: str(doc.seoDescription) || null,
-    status: 'published',
+    status: 'published' as const,
     published_at: isoDate(doc.publishedAt ?? doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Accommodations
+// 6. Accommodations
 // ---------------------------------------------------------------------------
 
 export function transformAccommodation(doc: SanityDoc) {
   const name = str(doc.name ?? doc.title);
   const slug = slugify(name);
 
-  const destRef = (doc.destination as Record<string,unknown>)?._ref as string | undefined;
-
-  // amenities: Sanity stores them as array of objects with name key
-  const amenitiesRaw = Array.isArray(doc.amenities) ? doc.amenities as Record<string,unknown>[] : [];
-  const amenities = amenitiesRaw.map((a) => str(a.name ?? a)).filter(Boolean);
+  // Preserve { name, image? } objects to match 0002_tables.sql & next-app Amenity type
+  const amenitiesRaw: unknown[] = Array.isArray(doc.amenities) ? doc.amenities : [];
+  const amenities = amenitiesRaw
+    .map((a) => {
+      if (typeof a === 'string') {
+        const aName = a.trim();
+        return aName ? { name: aName } : null;
+      }
+      if (typeof a === 'object' && a !== null) {
+        const obj = a as Record<string, unknown>;
+        const aName = str(obj.name);
+        if (!aName) return null;
+        const aImg = normaliseImage(obj.image);
+        return aImg ? { name: aName, image: aImg } : { name: aName };
+      }
+      return null;
+    })
+    .filter((x): x is { name: string; image?: NonNullable<ReturnType<typeof normaliseImage>> } => x !== null);
 
   return {
     legacy_sanity_id: doc._id,
     name,
     slug,
     type: str(doc.type ?? doc.accommodationType),
-    description: richText(doc.description ?? doc.content),
-    cover_image: normaliseImage(doc.image ?? doc.coverImage) ? JSON.stringify(normaliseImage(doc.image ?? doc.coverImage)) : null,
-    gallery: normaliseImages(doc.gallery ?? doc.images).length ? JSON.stringify(normaliseImages(doc.gallery ?? doc.images)) : null,
-    amenities: JSON.stringify(amenities),
-    price_per_night: doc.pricePerNight != null ? num(doc.pricePerNight) : null,
-    is_featured: bool(doc.isFeatured),
-    _destination_sanity_ref: destRef ?? null,
+    location: str(doc.location) || null,
+    description: typeof doc.description === 'string' ? doc.description.trim() || null : null,
+    image: normaliseImage(doc.image ?? doc.coverImage),
+    rating: doc.rating != null ? num(doc.rating) : null,
+    amenities,
+    sections: Array.isArray(doc.sections) ? doc.sections : [],
     seo_title: str(doc.seoTitle) || null,
     seo_description: str(doc.seoDescription) || null,
-    status: 'published',
+    status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Hot Deals  (imported as archived)
+// 7. Hot Deals (imported as archived)
 // ---------------------------------------------------------------------------
 
 export function transformHotDeal(doc: SanityDoc) {
-  const tourRef = (doc.tour as Record<string,unknown>)?._ref as string | undefined;
+  const publishedAt = isoDate(doc._updatedAt ?? doc._createdAt);
   return {
     legacy_sanity_id: doc._id,
     title: str(doc.title),
-    description: richText(doc.description ?? doc.content),
-    image: normaliseImage(doc.image) ? JSON.stringify(normaliseImage(doc.image)) : null,
-    original_price: num(doc.originalPrice ?? doc.price),
-    discounted_price: num(doc.discountedPrice ?? doc.salePrice),
-    discount_percentage: doc.discountPercentage != null ? num(doc.discountPercentage) : null,
-    valid_from: isoDate(doc.validFrom ?? doc.startDate),
-    valid_until: isoDate(doc.validUntil ?? doc.endDate),
-    _tour_sanity_ref: tourRef ?? null,
-    status: 'archived',
+    image: normaliseImage(doc.image),
+    whatsapp_number: str(doc.whatsappNumber) || '+254743377948',
+    whatsapp_message: str(doc.whatsappMessage) || null,
+    deal_expiry: isoDate(doc.dealExpiry) ?? publishedAt ?? new Date().toISOString(),
+    tag: str(doc.tag) || 'ON SALE',
+    is_active: bool(doc.isActive, true),
+    status: 'archived' as const,
+    published_at: publishedAt,
   };
 }
 
 // ---------------------------------------------------------------------------
-// Popup Offers  (imported as archived)
+// 8. Popup Offers (imported as archived)
 // ---------------------------------------------------------------------------
 
 export function transformPopupOffer(doc: SanityDoc) {
   return {
     legacy_sanity_id: doc._id,
     title: str(doc.title),
-    message: richText(doc.message ?? doc.content),
-    button_text: str(doc.buttonText) || null,
-    button_link: str(doc.buttonLink ?? doc.link) || null,
-    image: normaliseImage(doc.image) ? JSON.stringify(normaliseImage(doc.image)) : null,
-    valid_from: isoDate(doc.validFrom ?? doc.startDate),
-    valid_until: isoDate(doc.validUntil ?? doc.endDate),
-    status: 'archived',
+    description: typeof doc.description === 'string' ? doc.description.trim() || null : null,
+    image: normaliseImage(doc.image),
+    cta_text: str(doc.ctaText) || 'Claim Offer',
+    cta_link: str(doc.ctaLink ?? doc.link) || '/contact',
+    is_active: bool(doc.isActive, true),
+    start_date: isoDate(doc.startDate),
+    end_date: isoDate(doc.endDate),
+    status: 'archived' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Team Members
+// 9. Team Members
 // ---------------------------------------------------------------------------
 
 export function transformTeamMember(doc: SanityDoc) {
@@ -296,42 +325,42 @@ export function transformTeamMember(doc: SanityDoc) {
     legacy_sanity_id: doc._id,
     name: str(doc.name),
     role: str(doc.role ?? doc.position),
-    bio: richText(doc.bio ?? doc.description),
-    photo: normaliseImage(doc.photo ?? doc.image) ? JSON.stringify(normaliseImage(doc.photo ?? doc.image)) : null,
+    image: normaliseImage(doc.image ?? doc.photo),
     display_order: num(doc.order, 0),
-    is_active: bool(doc.isActive, true),
+    status: 'published' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Gallery Images
+// 10. Gallery Images
 // ---------------------------------------------------------------------------
 
 export function transformGalleryImage(doc: SanityDoc) {
   return {
     legacy_sanity_id: doc._id,
-    image: normaliseImage(doc.image ?? doc.photo) ? JSON.stringify(normaliseImage(doc.image ?? doc.photo)) : null,
-    alt: str(doc.alt ?? doc.title) || null,
-    caption: str(doc.caption) || null,
+    title: str(doc.title ?? doc.alt) || 'Untitled',
+    location: str(doc.location) || null,
     category: mapGalleryCategory(doc.category),
+    image: normaliseImage(doc.imageUrl ?? doc.image ?? doc.photo),
     display_order: num(doc.order, 0),
-    is_featured: bool(doc.isFeatured),
+    status: 'published' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }
 
 // ---------------------------------------------------------------------------
-// Fleet Vehicles
+// 11. Fleet Vehicles
 // ---------------------------------------------------------------------------
 
 export function transformFleetVehicle(doc: SanityDoc) {
-  const name = str(doc.name ?? doc.title).replace(/\s+/g, ' ').trim(); // trim internal whitespace
+  const name = str(doc.name ?? doc.title).replace(/\s+/g, ' ').trim();
   return {
     legacy_sanity_id: doc._id,
     name,
-    description: richText(doc.description ?? doc.content),
-    image: normaliseImage(doc.image ?? doc.photo) ? JSON.stringify(normaliseImage(doc.image ?? doc.photo)) : null,
-    passenger_capacity: doc.capacity != null ? num(doc.capacity) : (doc.passengerCapacity != null ? num(doc.passengerCapacity) : null),
-    features: Array.isArray(doc.features) ? JSON.stringify(doc.features) : JSON.stringify([]),
+    image: normaliseImage(doc.imageUrl ?? doc.image ?? doc.photo),
     display_order: num(doc.order, 0),
+    status: 'published' as const,
+    published_at: isoDate(doc._updatedAt ?? doc._createdAt),
   };
 }

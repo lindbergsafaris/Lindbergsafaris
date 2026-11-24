@@ -61,6 +61,16 @@ export function writeReport(opts: {
   lines.push(`| redirects | ${opts.redirectCount} | 0 |`);
   lines.push('');
 
+  const sectionWarnings = opts.sections.flatMap((s) =>
+    (s.warnings ?? []).map((w) => `- **[${s.table}]** ${w}`)
+  );
+  if (sectionWarnings.length > 0) {
+    lines.push('## ⚠️ Warnings & Skipped Records');
+    lines.push('');
+    lines.push(...sectionWarnings);
+    lines.push('');
+  }
+
   if (opts.olareDiff.length > 0) {
     lines.push('## Olare Mara Kempinski: Draft vs Published Diff');
     lines.push('');

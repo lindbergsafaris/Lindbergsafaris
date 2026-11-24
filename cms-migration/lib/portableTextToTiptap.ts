@@ -93,6 +93,9 @@ type PTNode = PTBlock | ExternalImageBlock | ImageBlock | VideoEmbedBlock | Reco
 // Mark conversion
 // ---------------------------------------------------------------------------
 
+// Supported decorator marks — throw on anything else not in markDefs
+const SUPPORTED_DECORATORS = new Set(['strong','em','code','underline','strike-through','strikethrough']);
+
 function convertMark(markKey: string, markDefs: MarkDef[]): TiptapMark | null {
   // Decorator marks
   switch (markKey) {
@@ -105,12 +108,16 @@ function convertMark(markKey: string, markDefs: MarkDef[]): TiptapMark | null {
   }
   // Reference marks (links etc.)
   const def = markDefs.find((d) => d._key === markKey);
-  if (!def) return null;
+  if (!def) {
+    // Unknown decorator mark not in markDefs — fail hard
+    throw new Error(`Unsupported Portable Text mark: "${markKey}" (not a known decorator and not in markDefs)`);
+  }
   if (def._type === 'link') {
     const href = (def.href ?? def.url ?? '') as string;
     return { type: 'link', attrs: { href, target: null, rel: null } };
   }
-  return null;
+  // Unknown markDef type — fail hard
+  throw new Error(`Unsupported Portable Text markDef type: "${def._type}" (key: "${markKey}")`);
 }
 
 // ---------------------------------------------------------------------------
@@ -144,8 +151,19 @@ function convertBlock(block: PTBlock): TiptapNode {
   if (style === 'h2') return { type: 'heading', attrs: { level: 2 }, content };
   if (style === 'h3') return { type: 'heading', attrs: { level: 3 }, content };
   if (style === 'h4') return { type: 'heading', attrs: { level: 4 }, content };
+  if (style === 'h5') return { type: 'heading', attrs: { level: 5 }, content };
+  if (style === 'h1') {
+    // h1 is unusual in body content — convert but callers should warn
+    return { type: 'heading', attrs: { level: 1 }, content };
+  }
+  if (style === 'h6') {
+    // h6 is unusual in body content — convert but callers should warn
+    return { type: 'heading', attrs: { level: 6 }, content };
+  }
+  if (style === 'normal') return { type: 'paragraph', content };
 
-  return { type: 'paragraph', content };
+  // Any other style is unsupported — fail hard so the caller notices
+  throw new Error(`Unsupported Portable Text block style: "${style}"`);
 }
 
 // ---------------------------------------------------------------------------

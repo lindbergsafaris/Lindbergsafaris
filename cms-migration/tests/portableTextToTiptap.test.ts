@@ -71,7 +71,7 @@ describe('paragraphs', () => {
 // ---------------------------------------------------------------------------
 
 describe('headings', () => {
-  test.each([['h2', 2], ['h3', 3], ['h4', 4]])('style %s → heading level %d', (style, level) => {
+  test.each([['h2', 2], ['h3', 3], ['h4', 4], ['h5', 5]])('style %s → heading level %d', (style, level) => {
     const input = [
       {
         _type: 'block',
@@ -84,6 +84,17 @@ describe('headings', () => {
     expect(result.content[0].type).toBe('heading');
     expect(result.content[0].attrs?.level).toBe(level);
     expect(result.content[0].content?.[0].text).toBe('Heading text');
+  });
+
+  test('h5 preserves text in plain-text extraction', () => {
+    const input = [
+      { _type: 'block', style: 'h5', children: [{ _type: 'span', text: 'Sub-section', marks: [] }], markDefs: [] },
+      { _type: 'block', style: 'normal', children: [{ _type: 'span', text: 'Body text', marks: [] }], markDefs: [] },
+    ];
+    const result = portableTextToTiptap(input);
+    const text = extractPlainText(result);
+    expect(text).toContain('Sub-section');
+    expect(text).toContain('Body text');
   });
 });
 
@@ -347,11 +358,10 @@ describe('real content samples', () => {
     const result = portableTextToTiptap(blogContentSample);
     const tiptapText = extractPlainText(result);
     const ptText = extractPlainTextFromPT(blogContentSample);
-    // Every word in PT text should appear somewhere in Tiptap text
-    const words = ptText.split(/\s+/).filter((w) => w.length > 3);
-    for (const word of words) {
-      expect(tiptapText).toContain(word);
-    }
+    // Every word in PT text should appear somewhere in Tiptap text (whitespace-insensitive)
+    const tiptapNorm = tiptapText.replace(/\s+/g, '');
+    const ptNorm = ptText.replace(/\s+/g, '');
+    expect(tiptapNorm).toBe(ptNorm);
   });
 
   // Destination post with link – real shape from amboseli description
@@ -434,5 +444,63 @@ describe('multiple marks on one span', () => {
     const types = textNode?.marks?.map((m) => m.type) ?? [];
     expect(types).toContain('bold');
     expect(types).toContain('italic');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 11. Fail-fast: unsupported block styles and marks
+// ---------------------------------------------------------------------------
+
+describe('fail-fast on unsupported content', () => {
+  test('unknown block style throws an error', () => {
+    const input = [
+      {
+        _type: 'block',
+        style: 'fancy-style',
+        children: [{ _type: 'span', text: 'Text', marks: [] }],
+        markDefs: [],
+      },
+    ];
+    expect(() => portableTextToTiptap(input)).toThrow(/unsupported.*style.*fancy-style/i);
+  });
+
+  test('unknown decorator mark throws an error', () => {
+    const input = [
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [{ _type: 'span', text: 'Text', marks: ['rainbow'] }],
+        markDefs: [],
+      },
+    ];
+    expect(() => portableTextToTiptap(input)).toThrow(/unsupported.*mark.*rainbow/i);
+  });
+
+  test('unknown markDef type throws an error', () => {
+    const input = [
+      {
+        _type: 'block',
+        style: 'normal',
+        children: [{ _type: 'span', text: 'Text', marks: ['ref1'] }],
+        markDefs: [{ _key: 'ref1', _type: 'footnote' }],
+      },
+    ];
+    expect(() => portableTextToTiptap(input)).toThrow(/unsupported.*markDef.*footnote/i);
+  });
+
+  test('h5 does NOT throw', () => {
+    const input = [
+      { _type: 'block', style: 'h5', children: [{ _type: 'span', text: 'OK', marks: [] }], markDefs: [] },
+    ];
+    expect(() => portableTextToTiptap(input)).not.toThrow();
+    const result = portableTextToTiptap(input);
+    expect(result.content[0]).toMatchObject({ type: 'heading', attrs: { level: 5 } });
+  });
+
+  test('h1 does NOT throw (unusual but allowed)', () => {
+    const input = [
+      { _type: 'block', style: 'h1', children: [{ _type: 'span', text: 'Title', marks: [] }], markDefs: [] },
+    ];
+    expect(() => portableTextToTiptap(input)).not.toThrow();
   });
 });

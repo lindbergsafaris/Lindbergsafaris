@@ -8,7 +8,7 @@
  *
  * Safety:
  * - Dry-run by default (--commit required to write)
- * - Idempotent: upserts on legacy_sanity_id
+ * - Idempotent: upserts on legacy_sanity_id / old_path
  * - Never deletes rows. Never touches profiles.
  * - Never logs SUPABASE_SERVICE_ROLE_KEY
  */
@@ -17,7 +17,8 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
 
-import { loadNdjson, groupByType, OLARE_PUBLISHED_ID, OLARE_DRAFT_ID } from './loader.ts';
+import { loadNdjson, OLARE_PUBLISHED_ID } from './loader.ts';
+import { groupByType } from './loader.ts';
 import { validateAll } from './validator.ts';
 import {
   transformDestinationCategory,
@@ -35,7 +36,6 @@ import {
 import { buildRedirects } from './redirects.ts';
 import { writeJson, writeReport, ensureOutDir, type ReportSection } from './report.ts';
 import { nonCloudinaryWarnings } from '../lib/cloudinary.ts';
-import { slugify } from '../lib/slugs.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '..', '..');
@@ -56,13 +56,21 @@ const SOURCE_PATH =
 // Seed files
 // ---------------------------------------------------------------------------
 
-const HERO_SLIDES_SEED = JSON.parse(
-  readFileSync(resolve(__dirname, '..', 'seed', 'hero-slides.json'), 'utf8')
-) as Record<string, unknown>[];
+const HERO_SLIDES_SEED = (
+  JSON.parse(readFileSync(resolve(__dirname, '..', 'seed', 'hero-slides.json'), 'utf8')) as Record<string, unknown>[]
+).map((row) => ({
+  ...row,
+  status: 'published',
+  legacy_sanity_id: `seed-hero-slide-${row.display_order}`,
+}));
 
-const PARTNERS_SEED = JSON.parse(
-  readFileSync(resolve(__dirname, '..', 'seed', 'partners.json'), 'utf8')
-) as Record<string, unknown>[];
+const PARTNERS_SEED = (
+  JSON.parse(readFileSync(resolve(__dirname, '..', 'seed', 'partners.json'), 'utf8')) as Record<string, unknown>[]
+).map((row) => ({
+  ...row,
+  status: 'published',
+  legacy_sanity_id: `seed-partner-${row.display_order}`,
+}));
 
 // ---------------------------------------------------------------------------
 // Supabase client (only needed for --commit)
@@ -103,15 +111,10 @@ async function upsert(
   return { inserted: rows.length, errors: [] };
 }
 
-// ---------------------------------------------------------------------------
-// Seed upsert (by name, not legacy_sanity_id)
-// ---------------------------------------------------------------------------
-
 async function upsertSeeds(
   table: string,
   rows: Row[],
-  dryRun: boolean,
-  conflictColumn: string
+  dryRun: boolean
 ): Promise<{ inserted: number; errors: string[] }> {
   if (dryRun) {
     writeJson(`${table}-seed`, rows);
@@ -120,7 +123,7 @@ async function upsertSeeds(
   const supabase = await getClient();
   const { error } = await supabase
     .from(table)
-    .upsert(rows, { onConflict: conflictColumn, ignoreDuplicates: false });
+    .upsert(rows, { onConflict: 'legacy_sanity_id', ignoreDuplicates: false });
   if (error) return { inserted: 0, errors: [`${table} seed: ${error.message}`] };
   return { inserted: rows.length, errors: [] };
 }
@@ -139,7 +142,7 @@ function diffOlare(published: Record<string, unknown>, draft: Record<string, unk
   const diffs: OlareDiff[] = [];
   const allKeys = new Set([...Object.keys(published), ...Object.keys(draft)]);
   for (const key of allKeys) {
-    if (key.startsWith('_')) continue; // skip metadata
+    if (key.startsWith('_')) continue;
     const pub = published[key];
     const dft = draft[key];
     if (JSON.stringify(pub) !== JSON.stringify(dft)) {
@@ -172,31 +175,24 @@ async function main() {
   const sections: ReportSection[] = [];
   const allErrors: string[] = [];
 
-  // Maps for FK resolution (sanityId → new DB id or slug)
-  // We build slug maps eagerly so redirects can reference them.
-  const categorySlugMap = new Map<string, string>(); // sanityId → slug
-  const categoryDbIdMap = new Map<string, string>(); // sanityId → db uuid (populated only on --commit)
+  const categoryDbIdMap = new Map<string, string>(); // sanityId -> db uuid (populated on --commit)
 
   // ---- A. Destination Categories ----
   const catDocs = byType.get('destinationCategory') ?? [];
-  const catRows = catDocs.map((d) => {
-    const row = transformDestinationCategory(d);
-    categorySlugMap.set(d._id, row.slug);
-    return row;
-  });
+  const catRows = catDocs.map(transformDestinationCategory);
   const catResult = await upsert('destination_categories', catRows, !IS_COMMIT);
   sections.push({ table: 'destination_categories', count: catResult.inserted });
   allErrors.push(...catResult.errors);
   console.log(`  destination_categories: ${catResult.inserted} rows`);
 
-  // If commit mode, fetch the newly inserted IDs
   if (IS_COMMIT) {
     const supabase = await getClient();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('destination_categories')
       .select('id, legacy_sanity_id')
       .in('legacy_sanity_id', catDocs.map((d) => d._id));
-    for (const row of (data ?? [])) {
+    if (error) allErrors.push(`fetch destination_categories ids: ${error.message}`);
+    for (const row of data ?? []) {
       categoryDbIdMap.set(row.legacy_sanity_id, row.id);
     }
   }
@@ -204,7 +200,6 @@ async function main() {
   // ---- B. Destination Posts ----
   const destDocs = byType.get('destinationPost') ?? [];
   const destRows = destDocs.map((d) => transformDestinationPost(d, categoryDbIdMap));
-  // Build slug map for redirects
   const destSlugMap = new Map<string, string>(destRows.map((r, i) => [destDocs[i]._id, r.slug]));
   const destResult = await upsert('destination_posts', destRows, !IS_COMMIT);
   sections.push({ table: 'destination_posts', count: destResult.inserted });
@@ -212,41 +207,57 @@ async function main() {
   console.log(`  destination_posts: ${destResult.inserted} rows`);
 
   // ---- C. Themed Packages ----
+  // Note: 0002_tables.sql has category TEXT NOT NULL UNIQUE (6 allowed categories).
+  // Sanity data currently has 2 docs in category 'adventure':
+  //   - 07422e07 ("HIGH ALTITUDE TRAINING PROGRAMME ", created 2026-06-29 — also exists as tour fd6ea14a)
+  //   - 2954b894 ("Adventure Package", created 2026-02-26, slug 'adventure-package')
+  // Keep one per category (preferring the canonical category-named 'adventure-package' if present)
+  // and flag any duplicate loudly.
   const themeDocs = byType.get('themedPackage') ?? [];
-  const themeRows = themeDocs.map(transformThemedPackage);
-  const themeSlugMap = new Map<string, string>(themeRows.map((r, i) => [themeDocs[i]._id, r.slug]));
-  const themeDbIdMap = new Map<string, string>();
-  const themeResult = await upsert('themed_packages', themeRows, !IS_COMMIT);
-  sections.push({ table: 'themed_packages', count: themeResult.inserted });
-  allErrors.push(...themeResult.errors);
-  console.log(`  themed_packages: ${themeResult.inserted} rows`);
+  const themeWarnings: string[] = [];
+  const themeByCategory = new Map<string, ReturnType<typeof transformThemedPackage>>();
+  let themeSkipped = 0;
 
-  if (IS_COMMIT) {
-    const supabase = await getClient();
-    const { data } = await supabase
-      .from('themed_packages')
-      .select('id, legacy_sanity_id')
-      .in('legacy_sanity_id', themeDocs.map((d) => d._id));
-    for (const row of (data ?? [])) {
-      themeDbIdMap.set(row.legacy_sanity_id, row.id);
+  // Prefer canonical slug 'adventure-package' over duplicate 'high-altitude-training-programme'
+  const sortedThemeDocs = [...themeDocs].sort((a, b) => {
+    const aSlug = ((a.slug as Record<string, unknown>)?.current as string) ?? '';
+    const bSlug = ((b.slug as Record<string, unknown>)?.current as string) ?? '';
+    if (aSlug === 'adventure-package') return -1;
+    if (bSlug === 'adventure-package') return 1;
+    return 0;
+  });
+
+  for (const doc of sortedThemeDocs) {
+    const row = transformThemedPackage(doc);
+    if (themeByCategory.has(row.category)) {
+      const kept = themeByCategory.get(row.category)!;
+      themeSkipped++;
+      const msg = `Duplicate themed_packages.category="${row.category}": skipped ${row.legacy_sanity_id} ("${row.title}") in favour of ${kept.legacy_sanity_id} ("${kept.title}") due to UNIQUE constraint on category.`;
+      themeWarnings.push(msg);
+      console.warn(`  ⚠️  ${msg}`);
+      continue;
     }
+    themeByCategory.set(row.category, row);
   }
+
+  const themeRows = [...themeByCategory.values()];
+  const themeResult = await upsert('themed_packages', themeRows, !IS_COMMIT);
+  sections.push({
+    table: 'themed_packages',
+    count: themeResult.inserted,
+    skipped: themeSkipped,
+    warnings: themeWarnings,
+  });
+  allErrors.push(...themeResult.errors);
+  console.log(`  themed_packages: ${themeResult.inserted} rows${themeSkipped ? ` (${themeSkipped} duplicate category skipped)` : ''}`);
 
   // ---- D. Packages (0 records in Sanity, skip) ----
   sections.push({ table: 'packages', count: 0, skipped: 0 });
 
   // ---- E. Tours ----
   const tourDocs = byType.get('tour') ?? [];
-  const tourRawRows = tourDocs.map(transformTour);
-  // Resolve themed_package FK
-  const tourRows = tourRawRows.map((r) => {
-    const row = { ...r } as Record<string, unknown>;
-    const ref = row._themed_package_sanity_ref as string | undefined;
-    delete row._themed_package_sanity_ref;
-    if (ref) row.themed_package_id = themeDbIdMap.get(ref) ?? null;
-    return row;
-  });
-  const tourSlugMap = new Map<string, string>(tourRawRows.map((r, i) => [tourDocs[i]._id, r.slug]));
+  const tourRows = tourDocs.map(transformTour);
+  const tourSlugMap = new Map<string, string>(tourRows.map((r, i) => [tourDocs[i]._id, r.slug]));
   const tourResult = await upsert('tours', tourRows, !IS_COMMIT);
   sections.push({ table: 'tours', count: tourResult.inserted });
   allErrors.push(...tourResult.errors);
@@ -254,14 +265,8 @@ async function main() {
 
   // ---- F. Blog Posts ----
   const blogDocs = byType.get('blogPost') ?? [];
-  const blogRawRows = blogDocs.map(transformBlogPost);
-  // Resolve author FK (team_members) – skip for now, resolve after team_members upsert
-  const blogSlugMap = new Map<string, string>(blogRawRows.map((r, i) => [blogDocs[i]._id, r.slug]));
-  const blogRows = blogRawRows.map((r) => {
-    const row = { ...r } as Record<string, unknown>;
-    delete row._author_sanity_ref; // resolve after team_members
-    return row;
-  });
+  const blogRows = blogDocs.map(transformBlogPost);
+  const blogSlugMap = new Map<string, string>(blogRows.map((r, i) => [blogDocs[i]._id, r.slug]));
   const blogResult = await upsert('blog_posts', blogRows, !IS_COMMIT);
   sections.push({ table: 'blog_posts', count: blogResult.inserted });
   allErrors.push(...blogResult.errors);
@@ -269,27 +274,8 @@ async function main() {
 
   // ---- G. Accommodations ----
   const accomDocs = byType.get('accommodation') ?? [];
-  const accomRawRows = accomDocs.map(transformAccommodation);
-  // Resolve destination_id FK
-  let destDbIdMap = new Map<string, string>();
-  if (IS_COMMIT) {
-    const supabase = await getClient();
-    const { data } = await supabase
-      .from('destination_posts')
-      .select('id, legacy_sanity_id')
-      .in('legacy_sanity_id', destDocs.map((d) => d._id));
-    for (const row of (data ?? [])) {
-      destDbIdMap.set(row.legacy_sanity_id, row.id);
-    }
-  }
-  const accomRows = accomRawRows.map((r) => {
-    const row = { ...r } as Record<string, unknown>;
-    const ref = row._destination_sanity_ref as string | undefined;
-    delete row._destination_sanity_ref;
-    if (ref) row.destination_id = destDbIdMap.get(ref) ?? null;
-    return row;
-  });
-  const accomSlugMap = new Map<string, string>(accomRawRows.map((r, i) => [accomDocs[i]._id, r.slug]));
+  const accomRows = accomDocs.map(transformAccommodation);
+  const accomSlugMap = new Map<string, string>(accomRows.map((r, i) => [accomDocs[i]._id, r.slug]));
   const accomResult = await upsert('accommodations', accomRows, !IS_COMMIT);
   sections.push({ table: 'accommodations', count: accomResult.inserted });
   allErrors.push(...accomResult.errors);
@@ -297,24 +283,7 @@ async function main() {
 
   // ---- H. Hot Deals ----
   const hotDocs = byType.get('hotDeal') ?? [];
-  let tourDbIdMap = new Map<string, string>();
-  if (IS_COMMIT) {
-    const supabase = await getClient();
-    const { data } = await supabase
-      .from('tours')
-      .select('id, legacy_sanity_id')
-      .in('legacy_sanity_id', tourDocs.map((d) => d._id));
-    for (const row of (data ?? [])) {
-      tourDbIdMap.set(row.legacy_sanity_id, row.id);
-    }
-  }
-  const hotRows = hotDocs.map((d) => {
-    const row = { ...transformHotDeal(d) } as Record<string, unknown>;
-    const ref = row._tour_sanity_ref as string | undefined;
-    delete row._tour_sanity_ref;
-    if (ref) row.tour_id = tourDbIdMap.get(ref) ?? null;
-    return row;
-  });
+  const hotRows = hotDocs.map(transformHotDeal);
   const hotResult = await upsert('hot_deals', hotRows, !IS_COMMIT);
   sections.push({ table: 'hot_deals', count: hotResult.inserted });
   allErrors.push(...hotResult.errors);
@@ -331,32 +300,10 @@ async function main() {
   // ---- J. Team Members ----
   const teamDocs = byType.get('teamMember') ?? [];
   const teamRows = teamDocs.map(transformTeamMember);
-  const teamDbIdMap = new Map<string, string>();
   const teamResult = await upsert('team_members', teamRows, !IS_COMMIT);
   sections.push({ table: 'team_members', count: teamResult.inserted });
   allErrors.push(...teamResult.errors);
   console.log(`  team_members: ${teamResult.inserted} rows`);
-
-  if (IS_COMMIT) {
-    const supabase = await getClient();
-    const { data } = await supabase
-      .from('team_members')
-      .select('id, legacy_sanity_id')
-      .in('legacy_sanity_id', teamDocs.map((d) => d._id));
-    for (const row of (data ?? [])) {
-      teamDbIdMap.set(row.legacy_sanity_id, row.id);
-    }
-    // Update blog_posts with author_id
-    for (const raw of blogRawRows) {
-      const ref = raw._author_sanity_ref;
-      if (!ref) continue;
-      const teamId = teamDbIdMap.get(ref);
-      if (!teamId) continue;
-      const sanityId = blogDocs.find((d) => ((d.author as Record<string,unknown>)?._ref) === ref)?._id;
-      if (!sanityId) continue;
-      await supabase.from('blog_posts').update({ author_id: teamId }).eq('legacy_sanity_id', sanityId);
-    }
-  }
 
   // ---- K. Gallery Images ----
   const galleryDocs = byType.get('galleryImage') ?? [];
@@ -375,34 +322,33 @@ async function main() {
   console.log(`  fleet_vehicles: ${fleetResult.inserted} rows`);
 
   // ---- M. Hero Slides (seed) ----
-  const heroResult = await upsertSeeds('hero_slides', HERO_SLIDES_SEED, !IS_COMMIT, 'display_order');
+  const heroResult = await upsertSeeds('hero_slides', HERO_SLIDES_SEED, !IS_COMMIT);
   sections.push({ table: 'hero_slides (seed)', count: heroResult.inserted });
   allErrors.push(...heroResult.errors);
   console.log(`  hero_slides (seed): ${heroResult.inserted} rows`);
 
   // ---- N. Partners (seed) ----
-  const partnerResult = await upsertSeeds('partners', PARTNERS_SEED, !IS_COMMIT, 'name');
+  const partnerResult = await upsertSeeds('partners', PARTNERS_SEED, !IS_COMMIT);
   sections.push({ table: 'partners (seed)', count: partnerResult.inserted });
   allErrors.push(...partnerResult.errors);
   console.log(`  partners (seed): ${partnerResult.inserted} rows`);
 
   // ---- O. Redirects ----
-  // Merge all slug maps
   const slugMap = new Map<string, string>([
     ...Array.from(destSlugMap),
-    ...Array.from(themeSlugMap),
     ...Array.from(tourSlugMap),
     ...Array.from(blogSlugMap),
     ...Array.from(accomSlugMap),
   ]);
-  const typeMap = new Map<string, string>(docs.map((d) => [d._id, d._type]));
-  const redirectRows = buildRedirects(docs, slugMap, typeMap);
+  const redirectRows = buildRedirects(docs, slugMap);
 
   if (!IS_COMMIT) {
     writeJson('redirects', redirectRows);
   } else {
     const supabase = await getClient();
-    const { error } = await supabase.from('redirects').upsert(redirectRows, { onConflict: 'from_path' });
+    const { error } = await supabase
+      .from('redirects')
+      .upsert(redirectRows, { onConflict: 'old_path' });
     if (error) allErrors.push(`redirects: ${error.message}`);
   }
   console.log(`  redirects: ${redirectRows.length} rows`);
