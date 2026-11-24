@@ -3,11 +3,10 @@
 -- Description: Automated transaction-based verification suite for Row Level
 --              Security (RLS) policies on Lindberg Safaris CMS.
 --
--- NOTE: This test suite MUST run against a Supabase instance (local via the
---       Supabase CLI or a remote Supabase test project), NOT a plain vanilla
---       Postgres server. It relies on Supabase-managed roles (anon, authenticated,
---       service_role), auth session functions (auth.uid()), and Supabase schema
---       conventions.
+-- NOTE: This test suite MUST run on Supabase (local or hosted), NOT a plain
+--       vanilla Postgres server. It relies on Supabase-managed roles (anon,
+--       authenticated, service_role), auth session functions (auth.uid()),
+--       and Supabase's pre-existing auth.users table.
 --
 -- Checks verified:
 --   1. Catalog check: Every table in public schema has RLS enabled.
@@ -82,16 +81,6 @@ BEGIN
     -- ------------------------------------------------------------------------
     -- 0. Seed Test Users & Entities (Run as superuser / service_role)
     -- ------------------------------------------------------------------------
-    CREATE SCHEMA IF NOT EXISTS auth;
-    CREATE TABLE IF NOT EXISTS auth.users (
-        id UUID PRIMARY KEY,
-        email TEXT UNIQUE,
-        raw_app_meta_data JSONB DEFAULT '{}'::jsonb,
-        raw_user_meta_data JSONB DEFAULT '{}'::jsonb,
-        is_super_admin BOOLEAN DEFAULT false,
-        created_at TIMESTAMPTZ DEFAULT now()
-    );
-
     INSERT INTO auth.users (id, email) VALUES 
         (v_admin_id, 'admin@lindbergsafaris.com'),
         (v_editor_id, 'editor@lindbergsafaris.com'),
