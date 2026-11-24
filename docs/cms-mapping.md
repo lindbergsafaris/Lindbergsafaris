@@ -310,9 +310,9 @@ A full audit of all 55 documents with slug fields revealed 3 dirty slugs that vi
 
 | Content Type | Sanity ID | Title | Existing Slug | Issues | Proposed Clean Slug |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `tour` | `6ded3abe-c4b7-4d01-9496-99a994c4d02d` | LAMU PACKAGE | `VISIT LAMU` | Uppercase, whitespace, mismatch with title | `lamu-package` |
-| `blogPost` | `0fca651e-99a4-4898-9171-7d854b343381` | Altitude Training in Kenya: Where Adventure Meets Peak Performance | `Altitude Training Kenya` | Uppercase, whitespace | `altitude-training-kenya` |
-| `themedPackage` | `efaebe21-56de-47cd-a6e3-1aa0774b1a64` | PILGRIMAGES & FAITH JOURNEYS | `The-journey-of-faith-transformative-pilgrimage-experiences` | Leading uppercase 'T' | `the-journey-of-faith-transformative-pilgrimage-experiences` |
+| `tour` | `6ded3abe-c4b7-4d01-9496-99a994c4d02d` | LAMU PACKAGE | `VISIT LAMU` | Uppercase, whitespace | `visit-lamu` (keep slug; redirect `/tours/VISIT%20LAMU` and `/tours/VISIT LAMU`) |
+| `blogPost` | `0fca651e-99a4-4898-9171-7d854b343381` | Altitude Training in Kenya: Where Adventure Meets Peak Performance | `Altitude Training Kenya` | Uppercase, whitespace | `altitude-training-kenya` (redirect `/blog/Altitude%20Training%20Kenya`) |
+| `themedPackage` | `efaebe21-56de-47cd-a6e3-1aa0774b1a64` | PILGRIMAGES & FAITH JOURNEYS | `The-journey-of-faith-transformative-pilgrimage-experiences` | Leading uppercase 'T' | `the-journey-of-faith-transformative-pilgrimage-experiences` (lowercase version) |
 
 In addition, typographical and semantic anomalies in slugs include:
 - `destinationPost`: `ambosseli-national-park` (typo: "ambosseli" with double 's').
@@ -357,15 +357,15 @@ None of the 42 accommodation records in Sanity possess a `slug` field.
 ## 6. Proposed Postgres Schema (Supabase)
 
 ### 6.1 Core Design Principles
-1. **Universal Metadata Columns:** Every table includes:
+1. **Universal Metadata Columns:** Every content table includes:
    - `id UUID PRIMARY KEY DEFAULT gen_random_uuid()`
    - `created_at TIMESTAMPTZ NOT NULL DEFAULT now()`
-   - `updated_at TIMESTAMPTZ NOT NULL DEFAULT now()`
+   - `updated_at TIMESTAMPTZ NOT NULL DEFAULT now()` (maintained via trigger)
    - `status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived'))`
    - `published_at TIMESTAMPTZ`
    - `legacy_sanity_id TEXT UNIQUE` (stores original Sanity `_id` for tracking and idempotent migration)
 2. **Slug Uniformity:** All slugs are stored lowercase, trimmed, and hyphenated (`CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$')`). Unique indexes enforce uniqueness per type.
-3. **Structured Media Standard:** Image fields are stored as `JSONB` following the standardized schema:
+3. **Structured Media Standard:** Image fields are stored as `JSONB` with mandatory `url` key when non-null:
    ```json
    {
      "public_id": "v1778182432/sagana_l93hmc",
@@ -375,19 +375,22 @@ None of the 42 accommodation records in Sanity possess a `slug` field.
      "height": 800
    }
    ```
-4. **Rich Text Standard:** Tiptap document content is stored as `JSONB` representing the standard Tiptap JSON node hierarchy (`{ "type": "doc", "content": [...] }`).
-5. **URL Parity & Redirects:** A dedicated `redirects` table guarantees that dirty slugs and legacy `/accommodation/view/[id]` URLs return HTTP 301.
+   *Constraint:* `CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0))`
+4. **Rich Text Standard:** Tiptap document content is stored as `JSONB` representing standard Tiptap JSON nodes, defaulting to `'{"type":"doc","content":[]}'::jsonb`. Rendered server-side via `@tiptap/html` and sanitized.
+5. **SEO Fields:** Nullable `seo_title TEXT` and `seo_description TEXT` added to core content tables (`tours`, `blog_posts`, `accommodations`, `destination_posts`, `themed_packages`, `packages`).
+6. **Currency Validation:** `CHECK (currency IN ('KES','USD','EUR'))` on `tours` and `packages`.
+7. **URL Parity & Redirects:** A dedicated `redirects` table guarantees that dirty slugs and legacy `/accommodation/view/[id]` URLs return HTTP 301.
+8. **Updated At Trigger:** Every table has a `BEFORE UPDATE` trigger attached to `update_updated_at_column()`.
+9. **Role Isolation:** Helper functions reside in a secure `private` schema with `search_path = ''`, accessible only to authenticated users (not exposed over PostgREST/RPC).
 
 ---
 
-### 6.2 Relational Schema Definitions
+### 6.2 Relational Schema Architecture
 
 ```mermaid
 erDiagram
     DESTINATION_CATEGORIES ||--o{ DESTINATION_POSTS : contains
     THEMED_PACKAGES ||--o{ PACKAGES : categorizes
-    TOURS ||--o{ TOUR_ITINERARIES : schedules
-    PROFILES ||--o{ AUDIT_LOGS : performs
 
     TOURS {
         uuid id PK
@@ -396,14 +399,10 @@ erDiagram
         numeric price
         text currency
         jsonb images
+        jsonb itinerary
         text status
-    }
-    TOUR_ITINERARIES {
-        uuid id PK
-        uuid tour_id FK
-        integer day
-        text title
-        text description
+        text seo_title
+        text seo_description
     }
     BLOG_POSTS {
         uuid id PK
@@ -412,6 +411,8 @@ erDiagram
         text excerpt
         jsonb content
         jsonb featured_image
+        text seo_title
+        text seo_description
     }
     ACCOMMODATIONS {
         uuid id PK
@@ -420,6 +421,9 @@ erDiagram
         text type
         jsonb image
         jsonb amenities
+        jsonb sections
+        text seo_title
+        text seo_description
     }
     DESTINATION_CATEGORIES {
         uuid id PK
@@ -433,6 +437,29 @@ erDiagram
         text title
         text slug UK
         jsonb content
+        text seo_title
+        text seo_description
+    }
+    THEMED_PACKAGES {
+        uuid id PK
+        text title
+        text slug UK
+        text category UK
+        jsonb hero_image
+        jsonb content
+        text seo_title
+        text seo_description
+    }
+    PACKAGES {
+        uuid id PK
+        uuid themed_package_id FK
+        text title
+        text slug UK
+        text category
+        numeric price
+        text currency
+        text seo_title
+        text seo_description
     }
     REDIRECTS {
         uuid id PK
@@ -440,22 +467,78 @@ erDiagram
         text new_path
         integer status_code
     }
+    PROFILES {
+        uuid id PK
+        text email UK
+        text full_name
+        text role
+    }
 ```
 
-#### Table: `profiles` (Admin Users & Roles)
+---
+
+### 6.3 Schema & Table Definitions (16 Tables)
+
+#### Private Schema & Role Functions
+```sql
+CREATE SCHEMA IF NOT EXISTS private;
+REVOKE ALL ON SCHEMA private FROM PUBLIC;
+GRANT USAGE ON SCHEMA private TO authenticated;
+
+CREATE OR REPLACE FUNCTION private.is_cms_user() 
+RETURNS BOOLEAN AS $$
+BEGIN
+    RETURN EXISTS (
+        SELECT 1 FROM public.profiles 
+        WHERE id = auth.uid() 
+        AND role IN ('admin', 'editor')
+    );
+END;
+$$ LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = '';
+
+CREATE OR REPLACE FUNCTION private.is_cms_admin() 
+RETURNS BOOLEAN AS $$
+BEGIN
+    RETURN EXISTS (
+        SELECT 1 FROM public.profiles 
+        WHERE id = auth.uid() 
+        AND role = 'admin'
+    );
+END;
+$$ LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = '';
+
+REVOKE ALL ON FUNCTION private.is_cms_user() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.is_cms_user() TO authenticated;
+
+REVOKE ALL ON FUNCTION private.is_cms_admin() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION private.is_cms_admin() TO authenticated;
+```
+
+#### Shared Updated At Trigger Function
+```sql
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+
+#### Table: `profiles`
 ```sql
 CREATE TABLE profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     email TEXT NOT NULL UNIQUE,
     full_name TEXT,
     avatar_url TEXT,
-    role TEXT NOT NULL DEFAULT 'editor' CHECK (role IN ('admin', 'editor')),
+    role TEXT NOT NULL CHECK (role IN ('admin', 'editor')), -- NO default
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 ```
 
-#### Table: `redirects` (Legacy & Dirty Slug Redirects)
+#### Table: `redirects`
 ```sql
 CREATE TABLE redirects (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -480,14 +563,17 @@ CREATE TABLE tours (
     group_size TEXT,
     difficulty TEXT CHECK (difficulty IN ('easy', 'moderate', 'challenging')),
     price NUMERIC(12, 2) NOT NULL CHECK (price >= 0),
-    currency TEXT NOT NULL DEFAULT 'KES',
+    currency TEXT NOT NULL DEFAULT 'KES' CHECK (currency IN ('KES','USD','EUR')),
     rating NUMERIC(2, 1) CHECK (rating >= 0 AND rating <= 5),
     reviews INTEGER NOT NULL DEFAULT 0 CHECK (reviews >= 0),
-    images JSONB NOT NULL DEFAULT '[]'::jsonb, -- Array of {public_id, url, alt, width, height}
+    images JSONB NOT NULL DEFAULT '[]'::jsonb,
     highlights TEXT[] NOT NULL DEFAULT '{}',
+    itinerary JSONB NOT NULL DEFAULT '[]'::jsonb, -- Array of {day, title, description, accommodation, meals}
     included TEXT[] NOT NULL DEFAULT '{}',
     excluded TEXT[] NOT NULL DEFAULT '{}',
     featured BOOLEAN NOT NULL DEFAULT false,
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -499,24 +585,6 @@ CREATE INDEX idx_tours_status_pub ON tours(status, published_at);
 CREATE INDEX idx_tours_featured ON tours(featured) WHERE status = 'published';
 ```
 
-#### Table: `tour_itineraries`
-```sql
-CREATE TABLE tour_itineraries (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    tour_id UUID NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
-    day INTEGER NOT NULL CHECK (day > 0),
-    title TEXT NOT NULL,
-    description TEXT NOT NULL,
-    accommodation TEXT,
-    meals TEXT,
-    order_index INTEGER NOT NULL DEFAULT 0,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    CONSTRAINT uq_tour_day UNIQUE (tour_id, day)
-);
-CREATE INDEX idx_tour_itineraries_tour ON tour_itineraries(tour_id, order_index);
-```
-
 #### Table: `blog_posts`
 ```sql
 CREATE TABLE blog_posts (
@@ -524,11 +592,13 @@ CREATE TABLE blog_posts (
     title TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
     excerpt TEXT NOT NULL,
-    content JSONB NOT NULL, -- Tiptap doc
-    featured_image JSONB, -- {public_id, url, alt, width, height}
+    content JSONB NOT NULL DEFAULT '{"type":"doc","content":[]}'::jsonb, -- Tiptap doc
+    featured_image JSONB CHECK (featured_image IS NULL OR (jsonb_typeof(featured_image) = 'object' AND featured_image ? 'url' AND featured_image->>'url' IS NOT NULL AND length(trim(featured_image->>'url')) > 0)),
     author TEXT NOT NULL DEFAULT 'Lindberg Safaris',
-    category TEXT NOT NULL,
+    category TEXT NOT NULL, -- Migration reports any nulls
     read_time TEXT,
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -546,13 +616,15 @@ CREATE TABLE accommodations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
-    type TEXT NOT NULL CHECK (type IN ('lodges', 'holiday-homes', 'town-hotels', 'luxury-camps', 'resort-hotels', 'bush-camps')),
+    type TEXT NOT NULL CHECK (type IN ('lodges', 'holiday-homes', 'town-hotels', 'luxury-camps', 'resort-hotels', 'bush-camps')), -- Migration reports any nulls
     location TEXT,
     description TEXT,
-    image JSONB, -- {public_id, url, alt, width, height}
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     rating NUMERIC(2, 1) CHECK (rating >= 1 AND rating <= 5),
     amenities JSONB NOT NULL DEFAULT '[]'::jsonb, -- Array of {name, image}
     sections JSONB NOT NULL DEFAULT '[]'::jsonb, -- Array of {title, content, images}
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -569,7 +641,7 @@ CREATE INDEX idx_accommodations_status_pub ON accommodations(status, published_a
 CREATE TABLE hot_deals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
-    image JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    image JSONB NOT NULL CHECK (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0),
     whatsapp_number TEXT NOT NULL DEFAULT '+254743377948',
     whatsapp_message TEXT,
     deal_expiry TIMESTAMPTZ NOT NULL,
@@ -590,7 +662,7 @@ CREATE TABLE popup_offers (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     description TEXT,
-    image JSONB, -- {public_id, url, alt, width, height}
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     cta_text TEXT NOT NULL DEFAULT 'Claim Offer',
     cta_link TEXT NOT NULL DEFAULT '/contact',
     is_active BOOLEAN NOT NULL DEFAULT true,
@@ -612,7 +684,7 @@ CREATE TABLE destination_categories (
     name TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
     description TEXT,
-    image JSONB, -- {public_id, url, alt, width, height}
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     is_featured BOOLEAN NOT NULL DEFAULT false,
     display_order INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
@@ -633,9 +705,11 @@ CREATE TABLE destination_posts (
     title TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
     excerpt TEXT,
-    image JSONB, -- {public_id, url, alt, width, height}
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     tour_count INTEGER NOT NULL DEFAULT 0,
-    content JSONB NOT NULL, -- Tiptap doc
+    content JSONB NOT NULL DEFAULT '{"type":"doc","content":[]}'::jsonb, -- Tiptap doc
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -654,9 +728,11 @@ CREATE TABLE themed_packages (
     title TEXT NOT NULL,
     slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
     category TEXT NOT NULL UNIQUE CHECK (category IN ('wildlife', 'climbing', 'cruise', 'adventure', 'pilgrimages', 'corporate')),
-    hero_image JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    hero_image JSONB NOT NULL CHECK (jsonb_typeof(hero_image) = 'object' AND hero_image ? 'url' AND hero_image->>'url' IS NOT NULL AND length(trim(hero_image->>'url')) > 0),
     description TEXT NOT NULL,
-    content JSONB NOT NULL, -- Tiptap doc
+    content JSONB NOT NULL DEFAULT '{"type":"doc","content":[]}'::jsonb, -- Tiptap doc
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -677,10 +753,12 @@ CREATE TABLE packages (
     category TEXT NOT NULL CHECK (category IN ('wildlife', 'climbing', 'cruise', 'adventure', 'pilgrimages', 'corporate')),
     duration TEXT,
     price NUMERIC(12, 2) CHECK (price >= 0),
-    currency TEXT NOT NULL DEFAULT 'KES',
-    image JSONB, -- {public_id, url, alt, width, height}
+    currency TEXT NOT NULL DEFAULT 'KES' CHECK (currency IN ('KES','USD','EUR')),
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     description TEXT,
     display_order INTEGER NOT NULL DEFAULT 0,
+    seo_title TEXT,
+    seo_description TEXT,
     status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
     legacy_sanity_id TEXT UNIQUE,
@@ -697,7 +775,7 @@ CREATE TABLE team_members (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     role TEXT NOT NULL,
-    image JSONB, -- {public_id, url, alt, width, height}
+    image JSONB CHECK (image IS NULL OR (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0)),
     display_order INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
@@ -714,7 +792,7 @@ CREATE TABLE hero_slides (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     subtitle TEXT,
-    image JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    image JSONB NOT NULL CHECK (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0),
     primary_button_text TEXT,
     primary_button_link TEXT,
     secondary_button_text TEXT,
@@ -735,7 +813,7 @@ CREATE INDEX idx_hero_slides_order ON hero_slides(display_order) WHERE is_active
 CREATE TABLE partners (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
-    logo JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    logo JSONB NOT NULL CHECK (jsonb_typeof(logo) = 'object' AND logo ? 'url' AND logo->>'url' IS NOT NULL AND length(trim(logo->>'url')) > 0),
     website TEXT,
     display_order INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published', 'archived')),
@@ -754,7 +832,7 @@ CREATE TABLE gallery_images (
     title TEXT NOT NULL,
     location TEXT,
     category TEXT NOT NULL CHECK (category IN ('wildlife', 'scenery', 'tours', 'accommodations', 'adventures')),
-    image JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    image JSONB NOT NULL CHECK (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0),
     display_order INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
@@ -770,7 +848,7 @@ CREATE INDEX idx_gallery_images_category ON gallery_images(category, display_ord
 CREATE TABLE fleet_vehicles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
-    image JSONB NOT NULL, -- {public_id, url, alt, width, height}
+    image JSONB NOT NULL CHECK (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0),
     display_order INTEGER NOT NULL DEFAULT 0,
     status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published', 'archived')),
     published_at TIMESTAMPTZ,
@@ -781,109 +859,48 @@ CREATE TABLE fleet_vehicles (
 CREATE INDEX idx_fleet_vehicles_order ON fleet_vehicles(display_order);
 ```
 
-#### Table: `services`
-```sql
-CREATE TABLE services (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title TEXT NOT NULL,
-    slug TEXT NOT NULL UNIQUE CHECK (slug ~ '^[a-z0-9]+(-[a-z0-9]+)*$'),
-    description TEXT NOT NULL,
-    icon TEXT NOT NULL CHECK (icon IN ('Car', 'Hotel', 'Plane', 'Compass', 'Map', 'Shield', 'Users', 'Heart')),
-    features TEXT[] NOT NULL DEFAULT '{}',
-    detail_page_link TEXT,
-    display_order INTEGER NOT NULL DEFAULT 0,
-    is_active BOOLEAN NOT NULL DEFAULT true,
-    status TEXT NOT NULL DEFAULT 'published' CHECK (status IN ('draft', 'published', 'archived')),
-    published_at TIMESTAMPTZ,
-    legacy_sanity_id TEXT UNIQUE,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
-CREATE INDEX idx_services_order ON services(display_order) WHERE is_active = true;
-```
-
 ---
 
-### 6.3 Row Level Security (RLS) Rules
+### 6.4 Row Level Security (RLS) Rules
 
-Every content table has Row Level Security enabled. Policies strictly segregate public anonymous reads from authenticated administrative writes.
+All 16 tables enforce Row Level Security. Helper functions reside in `private` schema and cannot be invoked as public RPC.
 
-```sql
--- Helper function to verify admin or editor role
-CREATE OR REPLACE FUNCTION auth.is_cms_user() 
-RETURNS BOOLEAN AS $$
-BEGIN
-    RETURN EXISTS (
-        SELECT 1 FROM profiles 
-        WHERE id = auth.uid() 
-        AND role IN ('admin', 'editor')
-    );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+#### RLS for `profiles`
+- **SELECT:** Users can read their own row (`id = auth.uid()`). Admins can read all rows (`private.is_cms_admin()`). Anon cannot read profiles.
+- **INSERT:** Disallowed for all clients (`WITH CHECK (false)`). New profiles are inserted solely by admin invitation API using the Supabase Service Role. No signup trigger.
+- **UPDATE:** Admins can update any profile (including changing roles). Users can update their own row (name, avatar) but **no user can change their own role**:
+  ```sql
+  -- Admin can update any profile and role
+  CREATE POLICY "profiles_update_admin" ON public.profiles FOR UPDATE TO authenticated
+  USING (private.is_cms_admin())
+  WITH CHECK (private.is_cms_admin());
 
--- Helper function to verify admin role
-CREATE OR REPLACE FUNCTION auth.is_cms_admin() 
-RETURNS BOOLEAN AS $$
-BEGIN
-    RETURN EXISTS (
-        SELECT 1 FROM profiles 
-        WHERE id = auth.uid() 
-        AND role = 'admin'
-    );
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-```
+  -- Self-update permitted, but role change strictly blocked
+  CREATE POLICY "profiles_update_self" ON public.profiles FOR UPDATE TO authenticated
+  USING (id = auth.uid() AND NOT private.is_cms_admin())
+  WITH CHECK (
+      id = auth.uid() 
+      AND role = (SELECT p.role FROM public.profiles p WHERE p.id = auth.uid())
+  );
+  ```
+- **DELETE:** Restricted to admins only (`private.is_cms_admin()`).
 
-**Standard Policy Pattern (Applied to all content tables):**
-```sql
-ALTER TABLE tours ENABLE ROW LEVEL SECURITY;
+#### RLS for Content Tables
+(Tours, Blog Posts, Accommodations, Hot Deals, Popup Offers, Destination Categories, Destination Posts, Themed Packages, Packages, Team Members, Hero Slides, Partners, Gallery Images, Fleet Vehicles)
+- **SELECT (Public / Anon):** Can only read published rows:
+  `USING (status = 'published' AND (published_at IS NULL OR published_at <= now()))`
+- **SELECT (CMS Staff):** Can view all rows (including drafts and archived):
+  `USING (private.is_cms_user())`
+- **INSERT (CMS Staff):** Editors and admins can create content:
+  `WITH CHECK (private.is_cms_user())`
+- **UPDATE (CMS Staff):** Editors and admins can edit content:
+  `USING (private.is_cms_user()) WITH CHECK (private.is_cms_user())`
+- **DELETE (Admin Only):** Only admins can permanently delete records. Editors cannot delete:
+  `USING (private.is_cms_admin())`
 
--- 1. Public can only read published content
-CREATE POLICY "Public read published tours" 
-ON tours FOR SELECT 
-TO anon, authenticated
-USING (status = 'published' AND (published_at IS NULL OR published_at <= now()));
-
--- 2. CMS users (admin, editor) can view all rows (including drafts & archived)
-CREATE POLICY "CMS staff view all tours" 
-ON tours FOR SELECT 
-TO authenticated 
-USING (auth.is_cms_user());
-
--- 3. CMS users can insert and update rows
-CREATE POLICY "CMS staff mutate tours" 
-ON tours FOR INSERT 
-TO authenticated 
-WITH CHECK (auth.is_cms_user());
-
-CREATE POLICY "CMS staff update tours" 
-ON tours FOR UPDATE 
-TO authenticated 
-USING (auth.is_cms_user())
-WITH CHECK (auth.is_cms_user());
-
--- 4. Only Admins can delete rows
-CREATE POLICY "CMS admin delete tours" 
-ON tours FOR DELETE 
-TO authenticated 
-USING (auth.is_cms_admin());
-```
-
-**Policy for `redirects`:**
-```sql
-ALTER TABLE redirects ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Public read redirects" 
-ON redirects FOR SELECT 
-TO anon, authenticated 
-USING (true);
-
-CREATE POLICY "CMS staff manage redirects" 
-ON redirects FOR ALL 
-TO authenticated 
-USING (auth.is_cms_user())
-WITH CHECK (auth.is_cms_user());
-```
+#### RLS for `redirects`
+- **SELECT:** Public (anon and authenticated) can read all rows (`USING (true)`).
+- **MUTATE (INSERT/UPDATE/DELETE):** CMS staff only (`private.is_cms_user()`).
 
 ---
 
@@ -1044,7 +1061,19 @@ export const tourConfig: ContentTypeConfig = {
           { name: 'slug', label: 'URL Slug', type: 'slug', sourceField: 'title', required: true },
           { name: 'location', label: 'Location', type: 'text', required: true },
           { name: 'duration', label: 'Duration', type: 'text', placeholder: 'e.g. 7 Days / 6 Nights', required: true },
-          { name: 'price', label: 'Price (KES)', type: 'number', required: true, validation: z.number().positive() },
+          { name: 'price', label: 'Price', type: 'number', required: true, validation: z.number().positive() },
+          {
+            name: 'currency',
+            label: 'Currency',
+            type: 'select',
+            required: true,
+            defaultValue: 'KES',
+            options: [
+              { label: 'KES (Kenyan Shilling)', value: 'KES' },
+              { label: 'USD (US Dollar)', value: 'USD' },
+              { label: 'EUR (Euro)', value: 'EUR' },
+            ],
+          },
           {
             name: 'difficulty',
             label: 'Difficulty',
@@ -1088,6 +1117,14 @@ export const tourConfig: ContentTypeConfig = {
         ],
       },
       {
+        id: 'seo',
+        label: 'SEO Metadata',
+        fields: [
+          { name: 'seo_title', label: 'Meta Title', type: 'text', placeholder: 'Defaults to tour title if empty' },
+          { name: 'seo_description', label: 'Meta Description', type: 'textarea', placeholder: 'Defaults to tour description excerpt if empty' },
+        ],
+      },
+      {
         id: 'publishing',
         label: 'Status & Publishing',
         fields: [
@@ -1113,36 +1150,24 @@ export const tourConfig: ContentTypeConfig = {
 
 ---
 
-## 8. Implementation Risks & Open Questions
+## 8. Implementation Rules & Decisions Agreed
 
-### 8.1 Key Implementation Risks
-1. **SEO Impact of Slug Normalization:**
-   - Normalizing dirty slugs (`VISIT LAMU` -> `lamu-package`, `Altitude Training Kenya` -> `altitude-training-kenya`) breaks existing URLs unless 301 redirects are flawlessly executed.
-   - *Mitigation:* The migration script will automatically register the legacy paths in the `redirects` table. Next.js middleware will evaluate requests against `redirects` with high performance.
-2. **Portable Text to Tiptap Conversion Fidelity:**
-   - Sanity Portable Text contains nested spans, marks, inline links, and custom blocks (`externalImage`, `videoEmbed`).
-   - *Mitigation:* A dedicated converter must transform Portable Text blocks into Tiptap JSON schema nodes (`paragraph`, `heading`, `bulletList`, `orderedList`, `blockquote`, custom `tiptap-image` and `tiptap-video` extensions) without stripping inline annotations.
-3. **Ghost `package` Document Type:**
-   - Next.js currently queries `*[_type == "package"]` which returned empty arrays in Sanity. The new database establishes a real `packages` table with a foreign key to `themed_packages`.
-4. **Cloudinary Asset Metadata Extraction:**
-   - Sanity records only store raw Cloudinary URLs (e.g. `https://res.cloudinary.com/dbqdpitah/image/upload/v1778182432/sagana_l93hmc.jpg`), omitting `width`, `height`, and explicit `public_id`.
-   - *Mitigation:* The migration pipeline will parse `public_id` from the URL string. Standard default aspect ratios can be inferred or enriched asynchronously.
+The following engineering decisions have been approved and will guide Step 2 (Migration):
 
----
-
-### 8.2 Open Questions for Project Approval
-
-1. **Handling Expired Hot Deals & Popup Offers:**
-   - All 9 hot deals and all 5 popup offers are expired according to their date fields, yet flagged active. If strictly filtered by `deal_expiry > now()`, the live site will display 0 hot deals. Should the migration:
-     - **Option A (Recommended):** Migrate them as `status = 'published'` and extend their expiration dates forward to ensure immediate visual parity?
-     - **Option B:** Migrate them with their exact historical dates and flag them as `status = 'archived'`?
-2. **Resolving the Duplicate Accommodation Record ("Olare Mara Kempinski"):**
-   - Record `1fb9709e...` is published, while `drafts.938b63a4...` is an orphaned draft with slightly different timestamps. Should the migration:
-     - **Option A (Recommended):** Discard the orphaned draft and import the published record as `olare-mara-kempinski`?
-     - **Option B:** Import both, slugifying the draft as `olare-mara-kempinski-draft` under `status = 'draft'`?
-3. **Tour Pricing Currency Display:**
-   - The data contains values like `52,186` and `515,650` with no currency field. Next.js currently formats these as `KES`. Should we formally fix the table schema to store `currency = 'KES'`, or add multi-currency conversion capabilities in the new CMS?
-4. **Rich Text Frontend Rendering:**
-   - Currently, Next.js uses `@portabletext/react`. When migrating the frontend, should we render Tiptap content server-side via `@tiptap/html` (`generateHTML()`), or use a lightweight React AST renderer for Tiptap JSON?
-5. **Admin Access & User Provisioning:**
-   - Should initial admin/editor access be configured via standard Supabase magic links, email/password invites, or OAuth (Google Workspace)?
+1. **Role Security Architecture:**
+   - Role verification functions (`is_cms_user`, `is_cms_admin`) reside in `private` schema with `SET search_path = ''`.
+   - `profiles` cannot be created client-side. No signup trigger. Profiles are provisioned exclusively via administrative invite server route using Supabase Service Role.
+   - Users cannot modify their own role. Only admins can assign or modify roles.
+2. **Table Lifecycle & Architecture:**
+   - `audit_logs` and `services` tables dropped.
+   - `tour_itineraries` dropped; `itinerary` stored as JSONB array directly in `tours`.
+   - Every table features an `updated_at` trigger.
+3. **Data Integrity & Normalization Rules (Step 2 Migration):**
+   - **Hot Deals & Popups:** Imported with `status = 'archived'` preserving their original historical dates.
+   - **Olare Mara Kempinski:** The published record (`1fb9709e...`) is imported; the orphaned draft (`drafts.938b63a4...`) will first be diffed and reported.
+   - **Slugs:** Kept as `visit-lamu` (tour), `altitude-training-kenya` (blog), and `the-journey-of-faith-transformative-pilgrimage-experiences` (themed package). Old uppercase and percent-encoded paths are recorded in `redirects`.
+   - **Whitespace & Trimming:** All string values (vehicle names like `"Mercedes-Benz "`, location strings, slugs) are trimmed during migration.
+   - **Seed Content:** `hero_slides` and `partners` will be seeded from hardcoded components in `next-app`.
+   - **Required Fields Reporting:** `accommodations.type` and `blog_posts.category` are required, but any nulls in source data will be reported prior to insert.
+4. **Rich Text Pipeline:**
+   - Tiptap content rendered on the server via `@tiptap/html` and sanitized prior to injection into Next.js React templates.
