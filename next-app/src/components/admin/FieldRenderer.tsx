@@ -543,7 +543,7 @@ export default function FieldRenderer({
             name={fullName}
             render={({ field: rhfField }) => (
               <select
-                value={typeof rhfField.value === 'string' ? rhfField.value : ''}
+                value={rhfField.value !== null && rhfField.value !== undefined ? String(rhfField.value) : ''}
                 onChange={(e) => rhfField.onChange(e.target.value)}
                 className="w-full rounded-md border border-stone-300 bg-white px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               >

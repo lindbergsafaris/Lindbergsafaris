@@ -172,6 +172,14 @@ export default function GenericListView({
       } else if (typeof copy.name === 'string') {
         copy.name = `${copy.name} (Copy)`;
       }
+      // Ensure duplicated image objects satisfy alt-text requirement
+      const fallbackAlt = String(copy.title || copy.name || 'Image');
+      if (copy.image && typeof copy.image === 'object' && !Array.isArray(copy.image)) {
+        const imgObj = copy.image as Record<string, unknown>;
+        if (!imgObj.alt || String(imgObj.alt).trim() === '') {
+          copy.image = { ...imgObj, alt: fallbackAlt };
+        }
+      }
       if (config.hasStatusWorkflow !== false) {
         copy.status = 'draft';
         copy.published_at = null;
