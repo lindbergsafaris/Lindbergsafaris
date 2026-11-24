@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Discover East Africa",
+    "subtitle": "Unforgettable safaris tailored just for you",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel_nprg6k.jpg",
+      "public_id": "carousel_nprg6k",
+      "alt": "Discover East Africa"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 1,
+    "is_active": true
+  },
+  {
+    "title": "Wildlife Encounters",
+    "subtitle": "Experience the magic of African wildlife up close",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1770824814/WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr.jpg",
+      "public_id": "WhatsApp_Image_2026-02-10_at_17.18.25_zvduyr",
+      "alt": "Wildlife Encounters"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 2,
+    "is_active": true
+  },
+  {
+    "title": "Expert Guided Tours",
+    "subtitle": "Professional guides with decades of experience",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892041/Vehicle_khehig.jpg",
+      "public_id": "Vehicle_khehig",
+      "alt": "Expert Guided Tours"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 3,
+    "is_active": true
+  },
+  {
+    "title": "Luxury Camps & Lodges",
+    "subtitle": "Stay in breathtaking accommodations in the wild",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1772176017/RPK_rxvnwy.jpg",
+      "public_id": "RPK_rxvnwy",
+      "alt": "Luxury Camps and Lodges"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 4,
+    "is_active": true
+  },
+  {
+    "title": "Seamless Air Ticketing",
+    "subtitle": "Book flights to any destination worldwide",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1770892892/Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz.jpg",
+      "public_id": "Boeing_787-8_Dreamliner_Kenya_Airways_5Y-KZA_Large_rqu4mz",
+      "alt": "Seamless Air Ticketing"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 5,
+    "is_active": true
+  },
+  {
+    "title": "Beach & Safari Combo",
+    "subtitle": "The perfect blend of wildlife and pristine beaches",
+    "image": {
+      "url": "https://res.cloudinary.com/dbqdpitah/image/upload/v1774850774/carousel2_kf3i7r.jpg",
+      "public_id": "carousel2_kf3i7r",
+      "alt": "Beach and Safari Combo"
+    },
+    "primary_button_text": "Start Your Journey",
+    "primary_button_link": "/contact",
+    "secondary_button_text": "View Our Tours",
+    "secondary_button_link": "/tours",
+    "display_order": 6,
+    "is_active": true
+  }
+]

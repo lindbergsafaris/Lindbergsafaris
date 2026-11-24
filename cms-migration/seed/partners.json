@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Legend Tours",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0024_fcc5e0.jpg",
+      "public_id": "IMG-20251214-WA0024_fcc5e0",
+      "alt": "Legend Tours"
+    },
+    "display_order": 1
+  },
+  {
+    "name": "Emirates",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0023_jwsxce.jpg",
+      "public_id": "IMG-20251214-WA0023_jwsxce",
+      "alt": "Emirates"
+    },
+    "display_order": 2
+  },
+  {
+    "name": "Magical Kenya",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812606/IMG-20251214-WA0022_im5faz.jpg",
+      "public_id": "IMG-20251214-WA0022_im5faz",
+      "alt": "Magical Kenya"
+    },
+    "display_order": 3
+  },
+  {
+    "name": "Kenya Tourism Board",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0021_ijcenx.jpg",
+      "public_id": "IMG-20251214-WA0021_ijcenx",
+      "alt": "Kenya Tourism Board"
+    },
+    "display_order": 4
+  },
+  {
+    "name": "Costa",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0025_mokzmf.jpg",
+      "public_id": "IMG-20251214-WA0025_mokzmf",
+      "alt": "Costa"
+    },
+    "display_order": 5
+  },
+  {
+    "name": "Kenya Tourism Federation",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812605/IMG-20251214-WA0020_vakifx.jpg",
+      "public_id": "IMG-20251214-WA0020_vakifx",
+      "alt": "Kenya Tourism Federation"
+    },
+    "display_order": 6
+  },
+  {
+    "name": "Ministry of Tourism & Wildlife",
+    "logo": {
+      "url": "https://res.cloudinary.com/di5ga8z9i/image/upload/v1765812604/IMG-20251214-WA0019_ncbbga.jpg",
+      "public_id": "IMG-20251214-WA0019_ncbbga",
+      "alt": "Ministry of Tourism and Wildlife"
+    },
+    "display_order": 7
+  }
+]

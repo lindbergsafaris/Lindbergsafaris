@@ -1,1 +1,4 @@
 cms-source/data.ndjson
+cms-migration/.env
+cms-migration/.env.*
+cms-migration/out/
