@@ -4,9 +4,8 @@
 --              security definer role verification functions with search_path=''.
 -- ============================================================================
 
--- 1. Enable Cryptographic & UUID Extensions
+-- 1. Enable Cryptographic Extensions
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- 2. Create Isolated Private Schema
 CREATE SCHEMA IF NOT EXISTS private;

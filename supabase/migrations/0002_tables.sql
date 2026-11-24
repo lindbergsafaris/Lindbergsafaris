@@ -196,7 +196,7 @@ CREATE TABLE hot_deals (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     title TEXT NOT NULL,
     image JSONB NOT NULL CHECK (jsonb_typeof(image) = 'object' AND image ? 'url' AND image->>'url' IS NOT NULL AND length(trim(image->>'url')) > 0),
-    whatsapp_number TEXT NOT NULL DEFAULT '+254743377948',
+    whatsapp_number TEXT NOT NULL,
     whatsapp_message TEXT,
     deal_expiry TIMESTAMPTZ NOT NULL,
     tag TEXT NOT NULL DEFAULT 'ON SALE',

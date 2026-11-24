@@ -52,11 +52,11 @@ WITH CHECK (
     (id <> auth.uid() AND private.is_cms_admin())
 );
 
--- DELETE: Only Admins can delete profiles
+-- DELETE: Only Admins can delete profiles (and admins cannot delete their own profile)
 CREATE POLICY "profiles_delete" 
 ON profiles FOR DELETE 
 TO authenticated 
-USING (private.is_cms_admin());
+USING (private.is_cms_admin() AND id <> auth.uid());
 
 -- NOTE: No INSERT policy is created for profiles. Client-side inserts are denied by default.
 -- Profiles are created exclusively by the admin-invite server route using the service role.
@@ -71,11 +71,9 @@ ON redirects FOR SELECT
 TO anon, authenticated 
 USING (true);
 
-CREATE POLICY "redirects_write_staff" 
-ON redirects FOR ALL 
-TO authenticated 
-USING (private.is_cms_user())
-WITH CHECK (private.is_cms_user());
+CREATE POLICY "redirects_insert_staff" ON redirects FOR INSERT TO authenticated WITH CHECK (private.is_cms_user());
+CREATE POLICY "redirects_update_staff" ON redirects FOR UPDATE TO authenticated USING (private.is_cms_user()) WITH CHECK (private.is_cms_user());
+CREATE POLICY "redirects_delete_admin" ON redirects FOR DELETE TO authenticated USING (private.is_cms_admin());
 
 -- ============================================================================
 -- 4. Policies for Content Tables (14 tables)
@@ -492,3 +490,12 @@ CREATE POLICY "fleet_vehicles_delete_admin"
 ON fleet_vehicles FOR DELETE 
 TO authenticated 
 USING (private.is_cms_admin());
+
+-- ============================================================================
+-- 5. Table Grants & Privilege Hardening
+-- ============================================================================
+REVOKE ALL ON TABLE public.profiles FROM anon;
+REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA public FROM anon;
+REVOKE UPDATE ON TABLE public.profiles FROM authenticated;
+GRANT UPDATE (full_name, avatar_url, role) ON TABLE public.profiles TO authenticated;
+
