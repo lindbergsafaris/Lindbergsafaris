@@ -21,7 +21,7 @@ export default async function AdminPanelLayout({
     <AdminShell
       profile={session.profile}
       configs={navConfigs}
-      showUsersLink={false}
+      showUsersLink={true}
     >
       {children}
     </AdminShell>

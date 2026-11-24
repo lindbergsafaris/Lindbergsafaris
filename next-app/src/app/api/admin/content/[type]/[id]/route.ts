@@ -4,6 +4,13 @@ import { getContentTypeConfig } from '@/lib/cms/registry';
 import { buildZodSchema } from '@/lib/cms/validation';
 import { formatCmsError } from '@/lib/cms/errors';
 
+const SLUG_REDIRECT_PREFIXES: Record<string, string> = {
+  tours: '/tours/',
+  'blog-posts': '/blog/',
+  accommodations: '/accommodation/',
+  'destination-posts': '/destinations/',
+};
+
 export async function GET(
   _request: Request,
   context: { params: Promise<{ type: string; id: string }> }
@@ -64,6 +71,22 @@ export async function PATCH(
       );
     }
 
+    const redirectPrefix = SLUG_REDIRECT_PREFIXES[type];
+    let previousSlug: string | null = null;
+    let wasPublished = false;
+
+    if (redirectPrefix) {
+      const { data: existing } = await auth.session.supabase
+        .from(config.tableName)
+        .select('slug, status')
+        .eq('id', id)
+        .maybeSingle();
+      if (existing) {
+        previousSlug = typeof existing.slug === 'string' ? existing.slug : null;
+        wasPublished = existing.status === 'published';
+      }
+    }
+
     const payload: Record<string, unknown> = { ...parsed.data };
 
     if (config.hasStatusWorkflow !== false) {
@@ -86,7 +109,54 @@ export async function PATCH(
       return NextResponse.json({ error: 'Record not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ item: data });
+    // Automatically insert redirect & rewrite chains when a published item changes its slug
+    let redirectCreated: { old_path: string; new_path: string } | null = null;
+    const nextSlug = typeof data.slug === 'string' ? data.slug : null;
+
+    if (
+      redirectPrefix &&
+      wasPublished &&
+      previousSlug &&
+      nextSlug &&
+      previousSlug !== nextSlug
+    ) {
+      const oldPath = `${redirectPrefix}${previousSlug}`;
+      const newPath = `${redirectPrefix}${nextSlug}`;
+      const supabase = auth.session.supabase;
+
+      // 1. Update any existing redirects pointing to oldPath -> newPath (prevent chains)
+      await supabase
+        .from('redirects')
+        .update({ new_path: newPath })
+        .eq('new_path', oldPath);
+
+      // 2. If a redirect from newPath previously existed, remove it (admin) to prevent loops
+      if (auth.session.profile.role === 'admin') {
+        await supabase.from('redirects').delete().eq('old_path', newPath);
+      }
+
+      // 3. Upsert (via select + insert/update so editors stay within RLS privileges)
+      const { data: existingRedirect } = await supabase
+        .from('redirects')
+        .select('id')
+        .eq('old_path', oldPath)
+        .maybeSingle();
+
+      if (existingRedirect) {
+        await supabase
+          .from('redirects')
+          .update({ new_path: newPath, status_code: 301 })
+          .eq('id', existingRedirect.id);
+      } else {
+        await supabase
+          .from('redirects')
+          .insert({ old_path: oldPath, new_path: newPath, status_code: 301 });
+      }
+
+      redirectCreated = { old_path: oldPath, new_path: newPath };
+    }
+
+    return NextResponse.json({ item: data, redirectCreated });
   } catch (err) {
     return NextResponse.json(
       { error: formatCmsError(err, 'Failed to update record') },

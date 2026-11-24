@@ -90,7 +90,13 @@ export default function GenericFormView({
       }
 
       methods.reset(data.item);
-      setSaveSuccess('Saved successfully.');
+      if (data.redirectCreated) {
+        setSaveSuccess(
+          `Saved successfully. Created redirect: ${data.redirectCreated.old_path} → ${data.redirectCreated.new_path}`
+        );
+      } else {
+        setSaveSuccess('Saved successfully.');
+      }
 
       if (mode === 'create' && data.item?.id) {
         router.push(`/admin/${config.slug}/${data.item.id}`);
@@ -162,6 +168,11 @@ export default function GenericFormView({
           </div>
 
           <div className="flex items-center gap-2">
+            {isDirty && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-xs font-medium">
+                Unsaved changes
+              </span>
+            )}
             {mode === 'edit' && role === 'admin' && (
               <button
                 type="button"
