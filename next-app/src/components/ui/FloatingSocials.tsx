@@ -1,9 +1,12 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { Facebook, Instagram } from 'lucide-react';
 import { getWhatsAppLink } from '@/lib/utils';
 
 const FloatingSocials = () => {
+    const pathname = usePathname();
+    if (pathname?.startsWith('/admin')) return null;
     const socialLinks = [
         {
             name: 'Facebook',

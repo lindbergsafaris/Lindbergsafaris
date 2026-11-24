@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getDestinationCategories } from '@/lib/data';
@@ -13,6 +14,8 @@ import { cn } from '@/lib/utils';
 import '@/lib/i18n';
 
 const Header = () => {
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith('/admin') ?? false;
   const { t } = useTranslation('common');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -21,6 +24,7 @@ const Header = () => {
   const [destinationCategories, setDestinationCategories] = useState<any[]>([]);
 
   useEffect(() => {
+    if (isAdmin) return;
     const fetchCategories = async () => {
       try {
         const data = await getDestinationCategories();
@@ -130,6 +134,8 @@ const Header = () => {
       setOpenDropdown(name);
     }
   };
+
+  if (isAdmin) return null;
 
   return (
     <header
