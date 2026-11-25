@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { getDestinationCategories } from '@/lib/data';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import LanguageSelector from '@/components/LanguageSelector';
@@ -27,14 +26,16 @@ const Header = () => {
     if (isAdmin) return;
     const fetchCategories = async () => {
       try {
-        const data = await getDestinationCategories();
-        setDestinationCategories(data || []);
+        const res = await fetch('/api/regions');
+        if (!res.ok) return;
+        const data = await res.json();
+        setDestinationCategories(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Failed to fetch destination categories:', error);
       }
     };
     fetchCategories();
-  }, []);
+  }, [isAdmin]);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;

@@ -3,6 +3,7 @@ import { requireApiCmsSession } from '@/lib/supabase/api-auth';
 import { getContentTypeConfig } from '@/lib/cms/registry';
 import { buildZodSchema } from '@/lib/cms/validation';
 import { formatCmsError } from '@/lib/cms/errors';
+import { revalidatePublicContent } from '@/lib/cms/revalidate';
 
 const SLUG_REDIRECT_PREFIXES: Record<string, string> = {
   tours: '/tours/',
@@ -156,6 +157,8 @@ export async function PATCH(
       redirectCreated = { old_path: oldPath, new_path: newPath };
     }
 
+    revalidatePublicContent(config, data as Record<string, unknown>, previousSlug);
+
     return NextResponse.json({ item: data, redirectCreated });
   } catch (err) {
     return NextResponse.json(
@@ -185,6 +188,12 @@ export async function DELETE(
     return NextResponse.json({ error: 'Unknown content type' }, { status: 404 });
   }
 
+  const { data: existing } = await auth.session.supabase
+    .from(config.tableName)
+    .select('*')
+    .eq('id', id)
+    .maybeSingle();
+
   const { error } = await auth.session.supabase
     .from(config.tableName)
     .delete()
@@ -193,6 +202,8 @@ export async function DELETE(
   if (error) {
     return NextResponse.json({ error: formatCmsError(error) }, { status: 400 });
   }
+
+  revalidatePublicContent(config, existing as Record<string, unknown> | null);
 
   return NextResponse.json({ ok: true });
 }

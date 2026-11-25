@@ -3,6 +3,7 @@ import { requireApiCmsSession } from '@/lib/supabase/api-auth';
 import { getContentTypeConfig } from '@/lib/cms/registry';
 import { buildZodSchema } from '@/lib/cms/validation';
 import { formatCmsError } from '@/lib/cms/errors';
+import { revalidatePublicContent } from '@/lib/cms/revalidate';
 
 export async function GET(
   request: Request,
@@ -127,6 +128,8 @@ export async function POST(
     if (error) {
       return NextResponse.json({ error: formatCmsError(error) }, { status: 400 });
     }
+
+    revalidatePublicContent(config, data as Record<string, unknown>);
 
     return NextResponse.json({ item: data }, { status: 201 });
   } catch (err) {

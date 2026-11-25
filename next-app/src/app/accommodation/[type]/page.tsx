@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { Star, MapPin, Check, ArrowLeft } from 'lucide-react';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
@@ -9,10 +9,12 @@ import JsonLd from '@/components/JsonLd';
 import AccommodationBookingForm from '@/components/accommodation/AccommodationBookingForm';
 import {
   getAccommodationsByType,
+  getAccommodationById,
   getAccommodationBySlug,
   getAllAccommodationSlugs,
+  getRedirectForPath,
 } from '@/lib/data';
-import { slugify } from '@/lib/slugUtils';
+import { isUUID, slugify } from '@/lib/slugUtils';
 import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
 
@@ -235,8 +237,16 @@ export default async function AccommodationPolymorphicPage({ params }: PageProps
   }
 
   // Detail View
+  if (isUUID(type)) {
+    const accById = await getAccommodationById(type);
+    if (accById?.name) {
+      permanentRedirect(`/accommodation/${slugify(accById.name)}`);
+    }
+  }
   const accommodation = await getAccommodationBySlug(type);
   if (!accommodation) {
+    const redir = await getRedirectForPath(`/accommodation/${type}`);
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 
