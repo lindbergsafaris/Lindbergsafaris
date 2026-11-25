@@ -34,7 +34,13 @@ import {
   transformFleetVehicle,
 } from './transformers.ts';
 import { buildRedirects } from './redirects.ts';
-import { writeJson, writeReport, ensureOutDir, type ReportSection } from './report.ts';
+import {
+  writeJson,
+  writeReport,
+  ensureOutDir,
+  type ReportSection,
+  type SkippedRecordDetail,
+} from './report.ts';
 import { nonCloudinaryWarnings } from '../lib/cloudinary.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -209,22 +215,20 @@ async function main() {
   // ---- C. Themed Packages ----
   // Note: 0002_tables.sql has category TEXT NOT NULL UNIQUE (6 allowed categories).
   // Sanity data currently has 2 docs in category 'adventure':
-  //   - 07422e07 ("HIGH ALTITUDE TRAINING PROGRAMME ", created 2026-06-29 — also exists as tour fd6ea14a)
-  //   - 2954b894 ("Adventure Package", created 2026-02-26, slug 'adventure-package')
-  // Keep one per category (preferring the canonical category-named 'adventure-package' if present)
-  // and flag any duplicate loudly.
+  //   - 07422e07-8e4f-4502-a2d1-e30fd035efa4 ("HIGH ALTITUDE TRAINING PROGRAMME", served live at /packages/adventure)
+  //   - 2954b894-cd6e-4ded-a0c0-a3c794166a1e ("Adventure Package")
+  // Keep 07422e07 to match the live site and skip 2954b894, archiving its full content in the report.
   const themeDocs = byType.get('themedPackage') ?? [];
   const themeWarnings: string[] = [];
+  const skippedDetails: SkippedRecordDetail[] = [];
   const themeByCategory = new Map<string, ReturnType<typeof transformThemedPackage>>();
   let themeSkipped = 0;
 
-  // Prefer canonical slug 'adventure-package' over duplicate 'high-altitude-training-programme'
+  const LIVE_ADVENTURE_ID = '07422e07-8e4f-4502-a2d1-e30fd035efa4';
   const sortedThemeDocs = [...themeDocs].sort((a, b) => {
-    const aSlug = ((a.slug as Record<string, unknown>)?.current as string) ?? '';
-    const bSlug = ((b.slug as Record<string, unknown>)?.current as string) ?? '';
-    if (aSlug === 'adventure-package') return -1;
-    if (bSlug === 'adventure-package') return 1;
-    return 0;
+    if (a._id === LIVE_ADVENTURE_ID) return -1;
+    if (b._id === LIVE_ADVENTURE_ID) return 1;
+    return a._id.localeCompare(b._id);
   });
 
   for (const doc of sortedThemeDocs) {
@@ -232,8 +236,22 @@ async function main() {
     if (themeByCategory.has(row.category)) {
       const kept = themeByCategory.get(row.category)!;
       themeSkipped++;
-      const msg = `Duplicate themed_packages.category="${row.category}": skipped ${row.legacy_sanity_id} ("${row.title}") in favour of ${kept.legacy_sanity_id} ("${kept.title}") due to UNIQUE constraint on category.`;
+      const msg = `Duplicate themed_packages.category="${row.category}": skipped ${row.legacy_sanity_id} ("${row.title}") to match the live site (which serves ${kept.legacy_sanity_id} "${kept.title}" at /packages/${row.category}).`;
       themeWarnings.push(msg);
+      skippedDetails.push({
+        table: 'themed_packages',
+        id: row.legacy_sanity_id,
+        title: row.title,
+        reason: msg,
+        content: {
+          slug: row.slug,
+          category: row.category,
+          hero_image: row.hero_image,
+          description: row.description,
+          tiptap_content: row.content,
+          raw_sanity_content: doc.content ?? null,
+        },
+      });
       console.warn(`  ⚠️  ${msg}`);
       continue;
     }
@@ -366,6 +384,7 @@ async function main() {
   // ---- Q. Report ----
   const reportPath = writeReport({
     sections,
+    skippedDetails,
     olareDiff: olareDiffs,
     redirectCount: redirectRows.length,
     nonCloudinaryUrls: [...nonCloudinaryWarnings],

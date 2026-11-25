@@ -28,6 +28,14 @@ export interface ReportSection {
   warnings?: string[];
 }
 
+export interface SkippedRecordDetail {
+  table: string;
+  id: string;
+  title: string;
+  reason: string;
+  content: unknown;
+}
+
 export interface OlareDiff {
   field: string;
   published: unknown;
@@ -36,6 +44,7 @@ export interface OlareDiff {
 
 export function writeReport(opts: {
   sections: ReportSection[];
+  skippedDetails?: SkippedRecordDetail[];
   olareDiff: OlareDiff[];
   redirectCount: number;
   nonCloudinaryUrls: string[];
@@ -69,6 +78,21 @@ export function writeReport(opts: {
     lines.push('');
     lines.push(...sectionWarnings);
     lines.push('');
+  }
+
+  if (opts.skippedDetails && opts.skippedDetails.length > 0) {
+    lines.push('## Skipped Record Archive (Full Content Preserved)');
+    lines.push('');
+    for (const item of opts.skippedDetails) {
+      lines.push(`### ${item.table}: ${item.title} (\`${item.id}\`)`);
+      lines.push('');
+      lines.push(`- **Reason:** ${item.reason}`);
+      lines.push('');
+      lines.push('```json');
+      lines.push(JSON.stringify(item.content, null, 2));
+      lines.push('```');
+      lines.push('');
+    }
   }
 
   if (opts.olareDiff.length > 0) {
