@@ -9,89 +9,90 @@
 
 Names only — never commit or log values.
 
+### Application Variables (`src/`)
+
+| Variable Name | Required / Optional | Build or Runtime | Browser-Exposed? | Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| `CMS_SOURCE` | Optional (defaults to Sanity when unset; set `supabase` to flip) | Build & Runtime | **No** (server-only) | Selects `supabase` vs `sanity` in `src/lib/data/index.ts` and `src/middleware.ts`. |
+| `NEXT_PUBLIC_SUPABASE_URL` | Required for `CMS_SOURCE=supabase` and `/admin` | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Supabase project URL for public anon reads and `/admin` auth. |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Required for `CMS_SOURCE=supabase` and `/admin` (preferred) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Supabase publishable/anon key (RLS-enforced). Read first by `src/lib/supabase/env.ts`. |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional (fallback if `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` unset) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Legacy alias for Supabase anon key. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Optional (required only to invite new CMS users) | Runtime | **No — NEVER expose** | Used strictly in `POST /api/admin/users/invite` after verifying an authenticated `admin` Supabase session and role. |
+| `CLOUDINARY_CLOUD_NAME` | Optional (required for `/admin` uploads unless `NEXT_PUBLIC_` fallback is set) | Runtime | **No** (server-only env var; signed response returns cloud name to authenticated CMS staff) | Preferred server-side Cloudinary cloud name in `src/app/api/admin/cloudinary-sign/route.ts`. |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Optional (fallback if `CLOUDINARY_CLOUD_NAME` unset) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Browser-exposed fallback Cloudinary cloud name in `src/app/api/admin/cloudinary-sign/route.ts`. |
+| `CLOUDINARY_API_KEY` | Optional (required for `/admin` direct uploads) | Runtime | **No** (returned only to authenticated CMS staff in signed upload payload) | Cloudinary API key used by `src/app/api/admin/cloudinary-sign/route.ts`. |
+| `CLOUDINARY_API_SECRET` | Optional (required for `/admin` direct uploads) | Runtime | **No — NEVER expose** | Signs Cloudinary upload parameters server-side in `src/app/api/admin/cloudinary-sign/route.ts`. |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Optional (defaults to `tdpau1kt`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Sanity project ID in `src/lib/sanity.ts` (Sanity mode only). |
+| `NEXT_PUBLIC_SANITY_DATASET` | Optional (defaults to `production`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Sanity dataset in `src/lib/sanity.ts` (Sanity mode only). |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | Optional (defaults to `2024-01-01`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Sanity API version in `src/lib/sanity.ts` (Sanity mode only). |
+| `SANITY_REVALIDATE_SECRET` | Optional (required only for Sanity webhook revalidation) | Runtime | **No** (server-only) | Authenticates `POST /api/revalidate` calls from Sanity webhooks. |
+| `NEXT_PUBLIC_SITE_URL` | Optional (defaults to `https://www.lindbergsafaris.com`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Canonical domain for metadata, JSON-LD, `robots.txt`, and `sitemap.xml` in `src/lib/siteConfig.ts`. |
+| `NEXT_PUBLIC_META_PIXEL_ID` | Optional (has fallback in `src/app/layout.tsx`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | Meta Pixel ID in `src/app/layout.tsx`. |
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | Optional (has fallback in `ContactForm.tsx`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | EmailJS service ID in `src/components/contact/ContactForm.tsx`. |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | Optional (has fallback in `ContactForm.tsx`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | EmailJS template ID in `src/components/contact/ContactForm.tsx`. |
+| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | Optional (has fallback in `ContactForm.tsx`) | Build & Runtime | **Yes** (`NEXT_PUBLIC_`) | EmailJS public key in `src/components/contact/ContactForm.tsx`. |
+
+### Verification Script Variables (`scripts/url-parity.mjs`)
+
 | Variable Name | Required / Optional | When Needed | Browser-Exposed? | Purpose |
 | :--- | :--- | :--- | :--- | :--- |
-| `CMS_SOURCE` | Optional (defaults to Sanity; set `supabase` to flip) | Build & Runtime | **No** (server-only) | Selects `supabase` vs `sanity` data source in `src/lib/data/index.ts`. |
-| `NEXT_PUBLIC_SUPABASE_URL` | Required for `CMS_SOURCE=supabase` and `/admin` | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Supabase project URL for public anon reads and `/admin` SSR/browser auth. |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Required for `CMS_SOURCE=supabase` and `/admin` (or use `ANON_KEY`) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Supabase publishable/anon key (RLS-enforced). |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Optional (fallback if `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` unset) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Legacy alias for Supabase anon key. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Optional (required only to invite new CMS users) | Runtime | **No (NEVER expose)** | Used strictly in `POST /api/admin/users/invite` after server-side admin verification. |
-| `CLOUDINARY_CLOUD_NAME` | Optional (required for `/admin` direct uploads; falls back to `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`) | Runtime | No (non-secret) | Cloudinary account cloud name for signed uploads in `/api/admin/cloudinary-sign`. |
-| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Optional (fallback for `CLOUDINARY_CLOUD_NAME`) | Runtime | Yes (`NEXT_PUBLIC_`) | Fallback Cloudinary cloud name. |
-| `CLOUDINARY_API_KEY` | Optional (required for `/admin` direct uploads) | Runtime | No (signed response only to CMS staff) | Cloudinary API key used by `/api/admin/cloudinary-sign`. |
-| `CLOUDINARY_API_SECRET` | Optional (required for `/admin` direct uploads) | Runtime | **No (NEVER expose)** | Signs Cloudinary upload parameters server-side in `/api/admin/cloudinary-sign`. |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Sanity project ID used when `CMS_SOURCE` is unset or `sanity`. |
-| `NEXT_PUBLIC_SANITY_DATASET` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Sanity dataset (`production`). |
-| `NEXT_PUBLIC_SANITY_API_VERSION` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Sanity API version. |
-| `SANITY_REVALIDATE_SECRET` | Optional (required only for Sanity webhook revalidation) | Runtime | **No** | Authenticates `POST /api/revalidate` calls from Sanity webhooks. |
-| `NEXT_PUBLIC_SITE_URL` | Optional (defaults to `https://www.lindbergsafaris.com`) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Canonical domain for metadata, JSON-LD, `robots.txt`, and `sitemap.xml`. |
-| `NEXT_PUBLIC_META_PIXEL_ID` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | Meta Pixel tracking ID in `src/app/layout.tsx`. |
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | EmailJS service ID in `ContactForm.tsx`. |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | EmailJS template ID in `ContactForm.tsx`. |
-| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | Optional (has fallback) | Build & Runtime | Yes (`NEXT_PUBLIC_`) | EmailJS public key in `ContactForm.tsx`. |
+| `HOST` | Optional (defaults `127.0.0.1`) | Local CLI script | **No** | Bind host for local parity script `scripts/url-parity.mjs`. |
+| `PORT` | Optional (defaults `3000`) | Local CLI script | **No** | Port for local parity script `scripts/url-parity.mjs`. |
+
+**Variables intentionally NOT used:**
+- **`ADMIN_JWT_SECRET`**: Not used anywhere. Admin auth is 100% Supabase-session based (`supabase.auth.signInWithPassword` -> HTTP cookie session -> `getCmsSessionState()` / RLS).
+- **`SANITY_API_TOKEN`**: Not required or read in `next-app`. The Sanity client in `src/lib/sanity.ts` reads published content without an auth token (`useCdn: false`).
 
 ---
 
-## 2. Pre-Cutover Prerequisites
+## 2. Pre-Cutover Prerequisites (Strict Order)
 
-Before flipping Production to Supabase:
-1. Ensure Supabase migrations `0001` through `0007` have been executed on the production Supabase project (including `0007_destination_category_display_order.sql`).
-2. Ensure clean migration data is committed (`cms-migration/reset.sql` + `npm run migrate:commit` in `cms-migration/`), and confirm `node scripts/data-parity.mjs` in `next-app/` exits `0` with `[ORDER OK]` on all collections.
-3. Verify all required Production environment variables are set in Vercel → **Project Settings → Environment Variables** (scope: **Production**). Mark `SUPABASE_SERVICE_ROLE_KEY`, `CLOUDINARY_API_SECRET`, and `SANITY_REVALIDATE_SECRET` as **Sensitive**.
-4. Confirm at least one bootstrap `admin` user exists in `auth.users` and `public.profiles`, and that public signups are disabled in Supabase Auth.
-
----
-
-## 3. Flip Procedure (Switch Production to Supabase)
-
-1. Open the Vercel dashboard for the `next-app` project → **Settings → Environment Variables**.
-2. Set `CMS_SOURCE` = `supabase` for the **Production** environment (confirm `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` are also present in Production).
-3. Trigger a fresh Production **Redeploy** (without build cache if switching from a cached Sanity build so ISR/SSG pages regenerate from Supabase).
-4. Wait for the deployment to reach **Ready** and run the Post-Flip Smoke Test checklist below.
+1. **Apply SQL migrations `0001` through `0007` manually in the Supabase SQL Editor** (Supabase Dashboard -> SQL Editor -> run in order: `0001_extensions_and_private_schema.sql` through `0007_destination_category_display_order.sql`).
+   - Do **not** expect `npm run migrate:commit` to apply SQL schema migrations; `migrate:commit` only loads data and requires `0007` (`display_order`) to already exist.
+2. **Load Sanity data into Supabase:** In `cms-migration/`, run `npm run migrate:commit` (requires `0001`–`0007` already applied in step 1).
+3. **Verify data parity:** In `next-app/`, run `node scripts/data-parity.mjs` and confirm exit code `0` (`MATCH` across all functions and `[ORDER OK]` across all collections).
+4. **Configure Vercel Production environment variables:** Ensure Supabase (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY`) and Cloudinary vars are present in Vercel **Production**, with `SUPABASE_SERVICE_ROLE_KEY` and `CLOUDINARY_API_SECRET` marked **Sensitive**. Keep `CMS_SOURCE` unset (or `sanity`) initially.
+5. **Confirm bootstrap admin user:** Ensure at least one `admin` user exists in `auth.users` and `public.profiles`, and public signups are disabled in Supabase Auth.
 
 ---
 
-## 4. Rollback Procedure
+## 3. Cutover / Flip Procedure
 
-If any regression is detected after cutover, choose either option:
+1. **Merge `feat/custom-cms` into `main` with `CMS_SOURCE` unset (`sanity` mode).** Confirm the production Vercel deploy succeeds and serves Sanity content as before.
+2. **Flip the flag in Vercel:** Project Settings -> Environment Variables -> set `CMS_SOURCE=supabase` for **Production**.
+3. **Redeploy Production** (without build cache so static/ISR pages regenerate from Supabase).
+4. Wait for the deployment to become **Ready**, then run the Post-Flip Smoke Test below.
 
-- **Option A — Vercel Instant Rollback (fastest, zero rebuild time):**
-  1. In Vercel → **Deployments**, locate the previous Sanity-mode Production deployment.
-  2. Click the `...` menu → **Instant Rollback**.
-  3. Also reset `CMS_SOURCE` back to `sanity` (or remove it) in Environment Variables so future deploys stay on Sanity until the issue is resolved.
+---
 
-- **Option B — Environment Variable Flip & Redeploy:**
-  1. In Vercel → **Settings → Environment Variables**, change `CMS_SOURCE` to `sanity` (or delete `CMS_SOURCE`).
-  2. Trigger a **Redeploy** of Production.
-  3. Because the public site defaults to Sanity when `CMS_SOURCE` is unset or `sanity`, all pages revert immediately to reading Sanity.
+## 4. Rollback Plan
+
+- **Option A — Instant Rollback (fastest):** Vercel Dashboard -> **Deployments** -> Promote the previous deployment to Production.
+- **Option B — Env Var Flip:** Change `CMS_SOURCE` back to `sanity` (or delete it) in Vercel Production Environment Variables and trigger a Redeploy. Sanity data is untouched.
 
 ---
 
 ## 5. Post-Flip Smoke Test Checklist
 
-Run these checks against `https://www.lindbergsafaris.com` right after cutover:
-
-1. **Core Public Pages (HTTP 200 & Content):**
-   - `/` — Hero slides, featured tours, hot deals (if active), partners render correctly.
-   - `/tours` and a tour detail page (e.g. `/tours/visit-lamu`, `/tours/high-altitude-training-programme`).
-   - `/blog/altitude-training-kenya` — Confirm both `<h5>` headings, all embedded images, `<title>`, canonical, and JSON-LD render cleanly.
-   - `/accommodation/lodges` and an accommodation detail page (e.g. `/accommodation/amboseli-serena-safari-lodge`).
-   - `/destinations/maasai-mara` and `/regions/kenya` (confirm header Region dropdown order matches expected `display_order`).
-   - `/packages/adventure` — Confirm "HIGH ALTITUDE TRAINING PROGRAMME" renders.
-   - `/company` — Confirm team members render in expected order.
-   - `/gallery` and `/services/transport` — Confirm gallery photos and fleet vehicles render.
-2. **Legacy Redirects (Single-Hop 301/308):**
-   - `/tours/VISIT%20LAMU` → `/tours/visit-lamu`
-   - `/tours/6ded3abe-c4b7-4d01-9496-99a994c4d02d` → `/tours/visit-lamu`
-   - `/blog/Altitude%20Training%20Kenya` → `/blog/altitude-training-kenya`
-   - `/destinations/ambosseli-national-park` → `/destinations/amboseli-national-park`
-   - `/accommodation/view/1fb9709e-50fa-4276-9288-83bc367b876f` → `/accommodation/olare-mara-kempinski`
-   - `/services/airticketing` → `/services/flights`
-   - `/about` → `/company#about`
-3. **SEO & Crawl Controls:**
-   - `/sitemap.xml` — HTTP 200, valid XML, contains clean slugs only, no `/admin`, `/api`, `/quiz`, `/gallery`, `/services/hotels`, spaces, capitals, or `%20`.
-   - `/robots.txt` — Disallows `/admin/` and `/api/`; allows `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Google-Extended`.
-   - `/admin/login` and `/admin` — Verify `X-Robots-Tag: noindex, nofollow` header (and `<meta name="robots" content="noindex...">` on `/admin/login`).
-4. **Admin & On-Demand Revalidation:**
-   - Sign in at `/admin/login` with a staff `admin` account; verify dashboard counts and list views load.
-   - Make a minor draft edit or publish test and confirm public page updates immediately after `revalidateTag` / `revalidatePath`.
+1. **Core pages return HTTP 200 with expected Title, H1, canonical, JSON-LD:**
+   - `/` (`Explore Our Destinations` renders Kenya first, then Africa..USA/Canada; Destinations header menu matches)
+   - `/tours`
+   - `/tours/visit-lamu`
+   - `/blog/altitude-training-kenya` (both `h5` headings and all article images render)
+   - `/accommodation/amboseli-serena-safari-lodge`
+   - `/destinations/maasai-mara`
+   - `/packages/adventure` (`HIGH ALTITUDE TRAINING PROGRAMME`)
+   - `/company`
+   - `/gallery`
+   - `/services/transport`
+2. **SEO & Crawlers:**
+   - `/sitemap.xml`: HTTP 200; no `/admin`, no `/api`, no uppercase or `%20` URLs
+   - `/robots.txt`: HTTP 200; disallows `/admin/` and `/api/`
+   - `/admin/login` and `/admin`: `X-Robots-Tag: noindex, nofollow`
+3. **Redirects (`curl -sI` -> single `308`, exactly one `Location` header):**
+   - `/tours/6ded3abe-c4b7-4d01-9496-99a994c4d02d` -> `/tours/visit-lamu`
+   - `/tours/VISIT%20LAMU` -> `/tours/visit-lamu`
+   - `/blog/Altitude%20Training%20Kenya` -> `/blog/altitude-training-kenya`
+   - `/destinations/ambosseli-national-park` -> `/destinations/amboseli-national-park`
+   - `/accommodation/view/1fb9709e-50fa-4276-9288-83bc367b876f` -> `/accommodation/olare-mara-kempinski`
+4. **Admin CMS:** Log in at `/admin/login`, open an item, and confirm edit + save refreshes the corresponding public page.

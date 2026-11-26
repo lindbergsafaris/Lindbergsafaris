@@ -224,9 +224,18 @@ function decodeBasicEntities(s: string): string {
   return s
     .replace(/&amp;/gi, '&')
     .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
+    .replace(/&#39;|&apos;/gi, "'")
     .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>');
+    .replace(/&gt;/gi, '>')
+    .replace(/&colon;/gi, ':')
+    .replace(/&#(\d+);?/g, (_, dec: string) => {
+      const code = Number.parseInt(dec, 10);
+      return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : '';
+    })
+    .replace(/&#x([0-9a-f]+);?/gi, (_, hex: string) => {
+      const code = Number.parseInt(hex, 16);
+      return Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : '';
+    });
 }
 
 function escapeAttr(val: string): string {
@@ -240,8 +249,11 @@ function escapeAttr(val: string): string {
 function isSafeUrl(raw: string): boolean {
   const cleaned = decodeBasicEntities(raw).replace(/[\u0000-\u0020]+/g, '').trim();
   if (!cleaned) return false;
+  // Explicitly block data:, javascript:, vbscript: and protocol-relative URLs
+  if (/^(?:data:|javascript:|vbscript:)/i.test(cleaned)) return false;
+  if (cleaned.startsWith('//')) return false;
   if (cleaned.startsWith('/') || cleaned.startsWith('#') || cleaned.startsWith('?')) {
-    return !cleaned.startsWith('//');
+    return true;
   }
   return /^(?:https?:|mailto:|tel:)/i.test(cleaned);
 }
@@ -266,6 +278,9 @@ export function sanitizeRichHtml(html: string): string {
   for (const tag of STRIP_WITH_BODY_TAGS) {
     const bodyRe = new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*?<\\/${tag}>`, 'gi');
     cleaned = cleaned.replace(bodyRe, '');
+    // Also strip unclosed dangerous tags (e.g. `<script>alert(1)` without closing tag)
+    const unclosedRe = new RegExp(`<${tag}\\b[^>]*>[\\s\\S]*$`, 'gi');
+    cleaned = cleaned.replace(unclosedRe, '');
   }
 
   let skipIframeDepth = 0;
@@ -291,6 +306,7 @@ export function sanitizeRichHtml(html: string): string {
     const parsedAttrs = parseAttributes(rawAttrs);
     const keptAttrs: string[] = [];
     let iframeSrcValid = tag !== 'iframe';
+    let imgSrcValid = tag !== 'img';
     let hasRel = false;
     let hasTargetBlank = false;
 
@@ -307,7 +323,12 @@ export function sanitizeRichHtml(html: string): string {
           }
           iframeSrcValid = true;
         } else if (!isSafeUrl(decoded)) {
+          if (tag === 'img' && attrName === 'src') {
+            imgSrcValid = false;
+          }
           continue;
+        } else if (tag === 'img' && attrName === 'src') {
+          imgSrcValid = true;
         }
         keptAttrs.push(`${attrName}="${escapeAttr(decoded)}"`);
         continue;
@@ -321,6 +342,10 @@ export function sanitizeRichHtml(html: string): string {
       } else {
         keptAttrs.push(`${attrName}="${escapeAttr(decodeBasicEntities(attrVal))}"`);
       }
+    }
+
+    if (tag === 'img' && !imgSrcValid) {
+      return '';
     }
 
     if (tag === 'iframe' && !iframeSrcValid) {

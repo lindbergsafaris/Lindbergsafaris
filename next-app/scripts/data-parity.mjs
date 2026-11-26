@@ -552,11 +552,11 @@ async function compareFleet() {
 async function compareDestinationCategories() {
   console.log('\n--- [13] getDestinationCategories / getDestinationCategoryBySlug ---');
   const sData = await sanity.fetch(
-    `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { _id, name, "slug": slug.current, "image": coalesce(imageUrl, image.asset->url, image.url) }`
+    `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { _id, name, "slug": slug.current, description, isFeatured, "image": coalesce(imageUrl, image.asset->url, image.url) }`
   );
   const { data: sbData } = await supabase
     .from('destination_categories')
-    .select('id, legacy_sanity_id, name, slug, image')
+    .select('id, legacy_sanity_id, name, slug, description, is_featured, display_order, image')
     .eq('status', 'published');
 
   const sb = sbData || [];
@@ -574,9 +574,13 @@ async function compareDestinationCategories() {
     const rowDiffs = [];
     if (sSlug !== r.slug) rowDiffs.push(`slug "${sSlug}" vs "${r.slug}"`);
     if (normStr(c.name) !== normStr(r.name)) rowDiffs.push(`name "${c.name}" vs "${r.name}"`);
+    if (normStr(c.description) !== normStr(r.description)) rowDiffs.push(`description differs`);
+    if (Boolean(c.isFeatured) !== Boolean(r.is_featured)) rowDiffs.push(`isFeatured ${Boolean(c.isFeatured)} vs ${Boolean(r.is_featured)}`);
     if (sImg !== sbImg) rowDiffs.push(`image "${sImg}" vs "${sbImg}"`);
     if (rowDiffs.length) diffs.push(`[${sSlug}] ${rowDiffs.join('; ')}`);
-    console.log(`  [${rowDiffs.length ? 'DIFF' : 'OK'}] slug=${r.slug} | name="${normStr(r.name)}" | img=${sbImg}`);
+    console.log(
+      `  [${rowDiffs.length ? 'DIFF' : 'OK'}] slug=${r.slug} | name="${normStr(r.name)}" | isFeatured=${Boolean(r.is_featured)} | order=${r.display_order} | img=${sbImg}`
+    );
   }
   record('getDestinationCategories / getDestinationCategoryBySlug', sData.length, sb.length, diffs);
 }
@@ -765,24 +769,31 @@ async function compareAllOrders() {
     );
   }
 
-  // 7. Destination categories: display_order asc, name with byCodePoint
+  // 7. Destination categories: match Sanity getDestinationCategories() JS sort (isFeatured desc, name.localeCompare)
   {
-    const sData = await sanity.fetch(
-      `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { name, "slug": slug.current }`
+    const sRaw = await sanity.fetch(
+      `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { name, "slug": slug.current, isFeatured }`
     );
+    const sData = [...(sRaw || [])].sort((a, b) => {
+      const aFeat = a.isFeatured ? 1 : 0;
+      const bFeat = b.isFeatured ? 1 : 0;
+      if (bFeat !== aFeat) return bFeat - aFeat;
+      return (a.name || '').localeCompare(b.name || '');
+    });
     const { data: sbData } = await supabase
       .from('destination_categories')
-      .select('name, slug, display_order')
+      .select('name, slug, is_featured, display_order')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
       .order('name', { ascending: true });
     const sb = [...(sbData || [])].sort(
       (x, y) =>
         (x.display_order ?? 0) - (y.display_order ?? 0) ||
+        (y.is_featured ? 1 : 0) - (x.is_featured ? 1 : 0) ||
         byCodePoint(x.name ?? '', y.name ?? '')
     );
     orderDiffs.destinationCategories = compareKeyOrder(
-      'destination categories (order: display_order asc, name asc byCodePoint)',
+      'destination categories (order: display_order asc, is_featured desc, name asc)',
       sData.map((c) => c.slug || slugify(c.name)),
       sb.map((c) => c.slug)
     );

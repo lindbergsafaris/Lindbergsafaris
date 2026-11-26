@@ -1,14 +1,81 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { getSupabasePublicEnv } from '@/lib/supabase/env';
+import { createSupabasePublicClient } from '@/lib/supabase/public';
+import { isUUID, slugify } from '@/lib/slugUtils';
 
 function withNoIndex(res: NextResponse): NextResponse {
   res.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return res;
 }
 
+const UUID_TABLE_BY_PREFIX: Array<{ prefix: string; table: string; targetPrefix: string; isAcc?: boolean }> = [
+  { prefix: '/tours/', table: 'tours', targetPrefix: '/tours/' },
+  { prefix: '/blog/', table: 'blog_posts', targetPrefix: '/blog/' },
+  { prefix: '/destinations/', table: 'destination_posts', targetPrefix: '/destinations/' },
+  { prefix: '/accommodation/view/', table: 'accommodations', targetPrefix: '/accommodation/', isAcc: true },
+  { prefix: '/accommodation/', table: 'accommodations', targetPrefix: '/accommodation/', isAcc: true },
+];
+
+async function handlePublicUuidRedirect(request: NextRequest): Promise<NextResponse | null> {
+  if (process.env.CMS_SOURCE !== 'supabase') return null;
+  const { pathname } = request.nextUrl;
+
+  for (const rule of UUID_TABLE_BY_PREFIX) {
+    if (!pathname.startsWith(rule.prefix)) continue;
+    const rawId = pathname.slice(rule.prefix.length);
+    if (!rawId || rawId.includes('/') || !isUUID(rawId)) return null;
+
+    try {
+      const supabase = createSupabasePublicClient();
+      const selectCols = rule.isAcc ? 'slug, name' : 'slug, title';
+      const { data } = await supabase
+        .from(rule.table)
+        .select(selectCols)
+        .eq('status', 'published')
+        .or(`id.eq.${rawId},legacy_sanity_id.eq.${rawId}`)
+        .maybeSingle();
+
+      if (data) {
+        const rec = data as { slug?: string | null; name?: string | null; title?: string | null };
+        const clean = rec.slug || slugify(rec.name || rec.title || '');
+        if (clean) {
+          return NextResponse.redirect(
+            new URL(`${rule.targetPrefix}${clean}`, request.url),
+            308
+          );
+        }
+      }
+
+      const { data: redir } = await supabase
+        .from('redirects')
+        .select('new_path, status_code')
+        .eq('old_path', pathname)
+        .maybeSingle();
+
+      if (redir?.new_path) {
+        return NextResponse.redirect(
+          new URL(redir.new_path, request.url),
+          redir.status_code || 308
+        );
+      }
+    } catch {
+      // Fall through to page handler if middleware lookup cannot resolve
+    }
+    return null;
+  }
+
+  return null;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (!pathname.startsWith('/admin') && !pathname.startsWith('/api/admin')) {
+    const uuidRedirect = await handlePublicUuidRedirect(request);
+    if (uuidRedirect) return uuidRedirect;
+    return NextResponse.next();
+  }
 
   let response = NextResponse.next({
     request: {
@@ -120,5 +187,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: [
+    '/admin/:path*',
+    '/api/admin/:path*',
+    '/tours/:id([0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+)',
+    '/blog/:id([0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+)',
+    '/destinations/:id([0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+)',
+    '/accommodation/:id([0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+)',
+    '/accommodation/view/:id([0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+-[0-9a-fA-F]+)',
+  ],
 };

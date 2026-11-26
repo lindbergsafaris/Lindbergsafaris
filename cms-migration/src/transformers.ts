@@ -76,14 +76,14 @@ function mapGalleryCategory(raw: unknown): string {
 // ---------------------------------------------------------------------------
 
 const DESTINATION_CATEGORY_DISPLAY_ORDER: Record<string, number> = {
-  africa: 1,
-  europe: 2,
-  'latin-america': 3,
-  'middle-east': 4,
-  oceania: 5,
-  'usa-canada': 6,
-  kenya: 7,
-  asia: 8,
+  kenya: 1,
+  africa: 2,
+  asia: 3,
+  europe: 4,
+  'latin-america': 5,
+  'middle-east': 6,
+  oceania: 7,
+  'usa-canada': 8,
 };
 
 export function transformDestinationCategory(doc: SanityDoc) {

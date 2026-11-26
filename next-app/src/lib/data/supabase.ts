@@ -855,6 +855,7 @@ export const getDestinationCategories = unstable_cache(
     const rows = [...(data || [])].sort(
       (x, y) =>
         (x.display_order ?? 0) - (y.display_order ?? 0) ||
+        (y.is_featured ? 1 : 0) - (x.is_featured ? 1 : 0) ||
         byCodePoint(x.name ?? '', y.name ?? '')
     );
     return rows.map(mapDestinationCategory);
