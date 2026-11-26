@@ -114,6 +114,8 @@ function normStr(v) {
   return String(v || '').replace(/\s+/g, ' ').trim();
 }
 
+const byCodePoint = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+
 const ExternalImageNode = Node.create({
   name: 'externalImage',
   group: 'block',
@@ -628,9 +630,7 @@ async function compareDestinationPosts() {
 // Order comparisons
 // ---------------------------------------------------------------------------
 
-function compareOrder(label, sanityList, supabaseList, getKey) {
-  const sKeys = sanityList.map(getKey);
-  const sbKeys = supabaseList.map(getKey);
+function compareKeyOrder(label, sKeys, sbKeys) {
   const diffs = [];
   const maxLen = Math.max(sKeys.length, sbKeys.length);
   for (let i = 0; i < maxLen; i++) {
@@ -663,24 +663,11 @@ async function compareAllOrders() {
       .order('created_at', { ascending: false })
       .order('id', { ascending: true });
     const sb = (sbRaw || []).filter((t) => t.slug !== 'test');
-    const sKeys = sData.map((t) => slugify(t.slug || t.title));
-    const sbKeys = sb.map((t) => t.slug);
-    const diffs = compareOrder('tours (order: _createdAt desc)', sData, sb, (_, i) => (i < sKeys.length ? sKeys[i] : sbKeys[i - sKeys.length]));
-    // redo with correct mapping
-    const diffs2 = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const sb2 = sbKeys[i] ?? '(missing)';
-      if (s !== sb2) diffs2.push(`  pos ${i}: sanity="${s}" vs supabase="${sb2}"`);
-    }
-    if (diffs2.length === 0) {
-      console.log(`  [ORDER OK] tours (order: _createdAt desc)`);
-    } else {
-      console.log(`  [ORDER DIFF] tours (order: _createdAt desc):`);
-      for (const d of diffs2) console.log(d);
-    }
-    orderDiffs.tours = diffs2;
+    orderDiffs.tours = compareKeyOrder(
+      'tours (order: _createdAt desc)',
+      sData.map((t) => slugify(t.slug || t.title)),
+      sb.map((t) => t.slug)
+    );
   }
 
   // 2. Blog posts: order(publishedAt desc)
@@ -694,25 +681,18 @@ async function compareAllOrders() {
       .eq('status', 'published')
       .order('published_at', { ascending: false, nullsFirst: false });
     const sb = sbData || [];
-    const sKeys = sData.map((b) => (b.title?.toLowerCase().includes('altitude training') ? 'altitude-training-kenya' : slugify(b.slug || b.title)));
-    const sbKeys = sb.map((b) => b.slug);
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] blog posts (order: publishedAt desc)`);
-    } else {
-      console.log(`  [ORDER DIFF] blog posts (order: publishedAt desc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.blogPosts = diffs;
+    orderDiffs.blogPosts = compareKeyOrder(
+      'blog posts (order: publishedAt desc)',
+      sData.map((b) =>
+        b.title?.toLowerCase().includes('altitude training')
+          ? 'altitude-training-kenya'
+          : slugify(b.slug || b.title)
+      ),
+      sb.map((b) => b.slug)
+    );
   }
 
-  // 3. Accommodations: order(name asc)
+  // 3. Accommodations: order(name asc) with code-point comparison
   {
     const sData = await sanity.fetch(`*[_type == "accommodation"] | order(name asc) { name }`);
     const { data: sbData } = await supabase
@@ -720,23 +700,12 @@ async function compareAllOrders() {
       .select('name')
       .eq('status', 'published')
       .order('name', { ascending: true });
-    const sb = sbData || [];
-    const sKeys = sData.map((a) => normStr(a.name));
-    const sbKeys = sb.map((a) => normStr(a.name));
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] accommodations (order: name asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] accommodations (order: name asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.accommodations = diffs;
+    const sb = [...(sbData || [])].sort((x, y) => byCodePoint(x.name ?? '', y.name ?? ''));
+    orderDiffs.accommodations = compareKeyOrder(
+      'accommodations (order: name asc, byCodePoint)',
+      sData.map((a) => normStr(a.name)),
+      sb.map((a) => normStr(a.name))
+    );
   }
 
   // 4. Team members: order(order asc, _createdAt desc)
@@ -751,23 +720,11 @@ async function compareAllOrders() {
       .order('display_order', { ascending: true })
       .order('created_at', { ascending: false })
       .order('id', { ascending: true });
-    const sb = sbData || [];
-    const sKeys = sData.map((m) => normStr(m.name));
-    const sbKeys = sb.map((m) => normStr(m.name));
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] team members (order: display_order asc, created_at desc, id asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] team members (order: display_order asc, created_at desc, id asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.teamMembers = diffs;
+    orderDiffs.teamMembers = compareKeyOrder(
+      'team members (order: display_order asc, created_at desc, id asc)',
+      sData.map((m) => normStr(m.name)),
+      (sbData || []).map((m) => normStr(m.name))
+    );
   }
 
   // 5. Gallery images: order(order asc, _createdAt desc)
@@ -782,23 +739,11 @@ async function compareAllOrders() {
       .order('display_order', { ascending: true })
       .order('created_at', { ascending: false })
       .order('id', { ascending: true });
-    const sb = sbData || [];
-    const sKeys = sData.map((g) => normStr(g.title) || '(untitled)');
-    const sbKeys = sb.map((g) => normStr(g.title) || '(untitled)');
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] gallery images (order: display_order asc, created_at desc, id asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] gallery images (order: display_order asc, created_at desc, id asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.galleryImages = diffs;
+    orderDiffs.galleryImages = compareKeyOrder(
+      'gallery images (order: display_order asc, created_at desc, id asc)',
+      sData.map((g) => normStr(g.title) || '(untitled)'),
+      (sbData || []).map((g) => normStr(g.title) || '(untitled)')
+    );
   }
 
   // 6. Fleet vehicles: order(order asc, _createdAt desc)
@@ -813,56 +758,37 @@ async function compareAllOrders() {
       .order('display_order', { ascending: true })
       .order('created_at', { ascending: false })
       .order('id', { ascending: true });
-    const sb = sbData || [];
-    const sKeys = sData.map((v) => normStr(v.name));
-    const sbKeys = sb.map((v) => normStr(v.name));
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] fleet vehicles (order: display_order asc, created_at desc, id asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] fleet vehicles (order: display_order asc, created_at desc, id asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.fleetVehicles = diffs;
+    orderDiffs.fleetVehicles = compareKeyOrder(
+      'fleet vehicles (order: display_order asc, created_at desc, id asc)',
+      sData.map((v) => normStr(v.name)),
+      (sbData || []).map((v) => normStr(v.name))
+    );
   }
 
-  // 7. Destination categories: order(isFeatured desc, name asc)
+  // 7. Destination categories: display_order asc, name with byCodePoint
   {
     const sData = await sanity.fetch(
       `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { name, "slug": slug.current }`
     );
     const { data: sbData } = await supabase
       .from('destination_categories')
-      .select('name, slug, is_featured')
+      .select('name, slug, display_order')
       .eq('status', 'published')
-      .order('is_featured', { ascending: false })
+      .order('display_order', { ascending: true })
       .order('name', { ascending: true });
-    const sb = sbData || [];
-    const sKeys = sData.map((c) => c.slug || slugify(c.name));
-    const sbKeys = sb.map((c) => c.slug);
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] destination categories (order: isFeatured desc, name asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] destination categories (order: isFeatured desc, name asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.destinationCategories = diffs;
+    const sb = [...(sbData || [])].sort(
+      (x, y) =>
+        (x.display_order ?? 0) - (y.display_order ?? 0) ||
+        byCodePoint(x.name ?? '', y.name ?? '')
+    );
+    orderDiffs.destinationCategories = compareKeyOrder(
+      'destination categories (order: display_order asc, name asc byCodePoint)',
+      sData.map((c) => c.slug || slugify(c.name)),
+      sb.map((c) => c.slug)
+    );
   }
 
-  // 8. Destination posts: order(title asc)
+  // 8. Destination posts: order(title asc) with code-point comparison
   {
     const sData = await sanity.fetch(
       `*[_type == "destinationPost"] | order(title asc) { title, "slug": slug.current }`
@@ -872,31 +798,21 @@ async function compareAllOrders() {
       .select('title, slug')
       .eq('status', 'published')
       .order('title', { ascending: true });
-    const sb = sbData || [];
+    const sb = [...(sbData || [])].sort((x, y) => byCodePoint(x.title ?? '', y.title ?? ''));
     const normSlug = (s, t) => {
       const raw = s || slugify(t);
       return raw === 'ambosseli-national-park' ? 'amboseli-national-park' : slugify(raw);
     };
-    const sKeys = sData.map((d) => normSlug(d.slug, d.title));
-    const sbKeys = sb.map((d) => d.slug);
-    const diffs = [];
-    const max = Math.max(sKeys.length, sbKeys.length);
-    for (let i = 0; i < max; i++) {
-      const s = sKeys[i] ?? '(missing)';
-      const r = sbKeys[i] ?? '(missing)';
-      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
-    }
-    if (diffs.length === 0) {
-      console.log(`  [ORDER OK] destination posts (order: title asc)`);
-    } else {
-      console.log(`  [ORDER DIFF] destination posts (order: title asc):`);
-      for (const d of diffs) console.log(d);
-    }
-    orderDiffs.destinationPosts = diffs;
+    orderDiffs.destinationPosts = compareKeyOrder(
+      'destination posts (order: title asc, byCodePoint)',
+      sData.map((d) => normSlug(d.slug, d.title)),
+      sb.map((d) => d.slug)
+    );
   }
 
   const totalOrderDiffs = Object.values(orderDiffs).reduce((sum, arr) => sum + arr.length, 0);
   console.log(`\nOrder check complete. Total position mismatches: ${totalOrderDiffs}`);
+  return totalOrderDiffs;
 }
 
 async function main() {
@@ -915,13 +831,15 @@ async function main() {
   await compareFleet();
   await compareDestinationCategories();
   await compareDestinationPosts();
-  await compareAllOrders();
+  const totalOrderDiffs = await compareAllOrders();
 
   console.log('\n=== SUMMARY ===\n');
   const pad = (s, n) => String(s).padEnd(n);
   console.log(`${pad('Function(s)', 62)} | ${pad('Sanity', 6)} | ${pad('Supa', 6)} | ${pad('Status', 10)} | Notes`);
   console.log('-'.repeat(120));
+  let hasUnexpectedDiff = totalOrderDiffs > 0;
   for (const r of results) {
+    if (r.status !== 'MATCH') hasUnexpectedDiff = true;
     console.log(
       `${pad(r.fnName, 62)} | ${pad(r.sanityCount, 6)} | ${pad(r.supabaseCount, 6)} | ${pad(r.status, 10)} | ${r.note || ''}`
     );
@@ -930,6 +848,10 @@ async function main() {
     }
   }
   console.log('');
+  if (hasUnexpectedDiff) {
+    console.error('Parity check exited with differences.');
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {

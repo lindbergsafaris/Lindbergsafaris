@@ -22,6 +22,8 @@ import type {
 
 const DEFAULT_REVALIDATE = 60;
 
+const byCodePoint = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
+
 // ---------------------------------------------------------------------------
 // Row -> Domain Mappers (exact parity with Sanity shapes)
 // ---------------------------------------------------------------------------
@@ -352,7 +354,8 @@ export const getAccommodations = unstable_cache(
       console.error('[supabase:getAccommodations]', error.message);
       return [];
     }
-    return (data || []).map((row) => mapAccommodation(row, false));
+    const rows = [...(data || [])].sort((x, y) => byCodePoint(x.name ?? '', y.name ?? ''));
+    return rows.map((row) => mapAccommodation(row, false));
   },
   ['supabase', 'getAccommodations'],
   { tags: ['accommodation'], revalidate: DEFAULT_REVALIDATE }
@@ -373,7 +376,8 @@ export async function getAccommodationsByType(type: string): Promise<Accommodati
         console.error('[supabase:getAccommodationsByType]', error.message);
         return [];
       }
-      return (data || []).map((row) => mapAccommodation(row, false));
+      const rows = [...(data || [])].sort((x, y) => byCodePoint(x.name ?? '', y.name ?? ''));
+      return rows.map((row) => mapAccommodation(row, false));
     },
     ['supabase', 'getAccommodationsByType', type],
     { tags: ['accommodation'], revalidate: DEFAULT_REVALIDATE }
@@ -839,22 +843,21 @@ export const getDestinationCategories = unstable_cache(
     const supabase = createSupabasePublicClient();
     const { data, error } = await supabase
       .from('destination_categories')
-      .select('id, legacy_sanity_id, name, slug, description, is_featured, image')
+      .select('id, legacy_sanity_id, name, slug, description, is_featured, display_order, image')
       .eq('status', 'published')
-      .order('is_featured', { ascending: false })
+      .order('display_order', { ascending: true })
       .order('name', { ascending: true });
 
     if (error) {
       console.error('[supabase:getDestinationCategories]', error.message);
       return [];
     }
-    const mapped = (data || []).map(mapDestinationCategory);
-    return mapped.sort((a, b) => {
-      const aFeat = a.isFeatured ? 1 : 0;
-      const bFeat = b.isFeatured ? 1 : 0;
-      if (bFeat !== aFeat) return bFeat - aFeat;
-      return (a.name || '').localeCompare(b.name || '');
-    });
+    const rows = [...(data || [])].sort(
+      (x, y) =>
+        (x.display_order ?? 0) - (y.display_order ?? 0) ||
+        byCodePoint(x.name ?? '', y.name ?? '')
+    );
+    return rows.map(mapDestinationCategory);
   },
   ['supabase', 'getDestinationCategories'],
   { tags: ['destinationCategory'], revalidate: DEFAULT_REVALIDATE }
@@ -917,7 +920,8 @@ export async function getDestinationPostsByCategory(
         console.error('[supabase:getDestinationPostsByCategory]', error.message);
         return [];
       }
-      return (data || []).map((row) => mapDestinationPost(row, false));
+      const rows = [...(data || [])].sort((x, y) => byCodePoint(x.title ?? '', y.title ?? ''));
+      return rows.map((row) => mapDestinationPost(row, false));
     },
     ['supabase', 'getDestinationPostsByCategory', categorySlug],
     { tags: ['destinationPost', 'destinationCategory'], revalidate: DEFAULT_REVALIDATE }

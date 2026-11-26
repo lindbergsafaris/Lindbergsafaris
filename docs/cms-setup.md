@@ -6,7 +6,17 @@
 
 ## 1. Overview & Security Architecture
 
-Lindberg Safaris CMS utilizes **Supabase Auth** paired with a custom `public.profiles` table governed by strict PostgreSQL Row Level Security (RLS). 
+Lindberg Safaris CMS utilizes **Supabase Auth** paired with a custom `public.profiles` table governed by strict PostgreSQL Row Level Security (RLS).
+
+### Database Migrations (`0001` to `0007`)
+Run the SQL migrations in `supabase/migrations/` in exact numeric order (`0001` through `0007`):
+1. `0001_extensions_and_private_schema.sql` — extensions & isolated `private` role helper functions
+2. `0002_tables.sql` — 16 CMS & auth tables
+3. `0003_triggers.sql` — `BEFORE UPDATE` triggers for `updated_at`
+4. `0004_rls_policies.sql` — Row Level Security policies across all tables
+5. `0005_indexes.sql` — slug, status, foreign-key, and display order indexes
+6. `0006_grants.sql` — `anon`, `authenticated`, and `service_role` table grants
+7. `0007_destination_category_display_order.sql` — adds/backfills `display_order` on `destination_categories` and adds `idx_destination_categories_display_order`
 
 - **Two Roles Supported:** `admin` and `editor`.
 - **Zero Client-Side Creation:** The `public.profiles` table has no client-side `INSERT` policy (`WITH CHECK (false)`). New staff cannot register or self-assign roles.

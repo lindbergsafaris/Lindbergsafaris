@@ -695,7 +695,9 @@ CREATE TABLE destination_categories (
 );
 CREATE INDEX idx_dest_categories_slug ON destination_categories(slug);
 CREATE INDEX idx_dest_categories_featured ON destination_categories(is_featured) WHERE status = 'published';
+CREATE INDEX idx_destination_categories_display_order ON destination_categories(display_order, name);
 ```
+*(Migrations run `0001` through `0007`; `0007_destination_category_display_order.sql` adds/backfills `display_order` for the 8 seeded regions and creates `idx_destination_categories_display_order` so category ordering no longer relies on `is_featured`.)*
 
 #### Table: `destination_posts`
 ```sql

@@ -19,6 +19,7 @@ export const destinationCategoriesConfig: ContentTypeConfig = {
       { field: 'name', label: 'Name', type: 'text', sortable: true },
       { field: 'slug', label: 'Slug', type: 'text' },
       { field: 'is_featured', label: 'Featured', type: 'boolean' },
+      { field: 'display_order', label: 'Display order', type: 'text', sortable: true },
       { field: 'status', label: 'Status', type: 'badge', sortable: true },
     ],
     searchFields: ['name', 'slug'],
@@ -43,7 +44,7 @@ export const destinationCategoriesConfig: ContentTypeConfig = {
           { name: 'description', label: 'Description', type: 'textarea' },
           { name: 'image', label: 'Region Image', type: 'image' },
           { name: 'is_featured', label: 'Featured Region', type: 'boolean', defaultValue: false },
-          { name: 'display_order', label: 'Display Order', type: 'number', min: 0, step: 1, defaultValue: 0 },
+          { name: 'display_order', label: 'Display order', type: 'number', min: 0, step: 1, defaultValue: 0 },
         ],
       },
       {

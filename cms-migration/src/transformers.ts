@@ -75,16 +75,28 @@ function mapGalleryCategory(raw: unknown): string {
 // 1. Destination Categories
 // ---------------------------------------------------------------------------
 
+const DESTINATION_CATEGORY_DISPLAY_ORDER: Record<string, number> = {
+  africa: 1,
+  europe: 2,
+  'latin-america': 3,
+  'middle-east': 4,
+  oceania: 5,
+  'usa-canada': 6,
+  kenya: 7,
+  asia: 8,
+};
+
 export function transformDestinationCategory(doc: SanityDoc) {
   const rawSlug = str((doc.slug as Record<string, unknown>)?.current);
+  const slug = getSlug(doc._id, rawSlug, str(doc.name));
   return {
     legacy_sanity_id: doc._id,
     name: str(doc.name),
-    slug: getSlug(doc._id, rawSlug, str(doc.name)),
+    slug,
     description: str(doc.description) || null,
     image: normaliseImage(doc.imageUrl ?? doc.image),
     is_featured: bool(doc.isFeatured, false),
-    display_order: num(doc.order, 0),
+    display_order: DESTINATION_CATEGORY_DISPLAY_ORDER[slug] ?? 100,
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
     created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),

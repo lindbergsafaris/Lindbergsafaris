@@ -2,6 +2,11 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { getSupabasePublicEnv } from '@/lib/supabase/env';
 
+function withNoIndex(res: NextResponse): NextResponse {
+  res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return res;
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -40,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
   // Let login/logout auth endpoints execute directly (they manage cookies & profile checks themselves)
   if (isAuthApi) {
-    return response;
+    return withNoIndex(response);
   }
 
   const {
@@ -51,15 +56,15 @@ export async function middleware(request: NextRequest) {
 
   if (!user) {
     if (isLoginPage) {
-      return response;
+      return withNoIndex(response);
     }
     if (isApiRoute) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+      return withNoIndex(NextResponse.json({ error: 'Authentication required' }, { status: 401 }));
     }
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = '/admin/login';
     loginUrl.searchParams.set('next', pathname);
-    return NextResponse.redirect(loginUrl);
+    return withNoIndex(NextResponse.redirect(loginUrl));
   }
 
   // Verify role in public.profiles via signed-in user's client (RLS enforced)
@@ -81,7 +86,7 @@ export async function middleware(request: NextRequest) {
     if (isApiRoute) {
       const jsonResp = NextResponse.json({ error: 'No access' }, { status: 403 });
       response.cookies.getAll().forEach((c) => jsonResp.cookies.set(c));
-      return jsonResp;
+      return withNoIndex(jsonResp);
     }
 
     if (isLoginPage) {
@@ -90,9 +95,9 @@ export async function middleware(request: NextRequest) {
         noAccessUrl.searchParams.set('error', 'no-access');
         const redirectResp = NextResponse.redirect(noAccessUrl);
         response.cookies.getAll().forEach((c) => redirectResp.cookies.set(c));
-        return redirectResp;
+        return withNoIndex(redirectResp);
       }
-      return response;
+      return withNoIndex(response);
     }
 
     const noAccessUrl = request.nextUrl.clone();
@@ -100,7 +105,7 @@ export async function middleware(request: NextRequest) {
     noAccessUrl.search = '?error=no-access';
     const redirectResp = NextResponse.redirect(noAccessUrl);
     response.cookies.getAll().forEach((c) => redirectResp.cookies.set(c));
-    return redirectResp;
+    return withNoIndex(redirectResp);
   }
 
   // Already signed in as valid CMS user -> don't linger on /admin/login
@@ -108,10 +113,10 @@ export async function middleware(request: NextRequest) {
     const adminUrl = request.nextUrl.clone();
     adminUrl.pathname = '/admin';
     adminUrl.search = '';
-    return NextResponse.redirect(adminUrl);
+    return withNoIndex(NextResponse.redirect(adminUrl));
   }
 
-  return response;
+  return withNoIndex(response);
 }
 
 export const config = {
