@@ -1,6 +1,7 @@
 import { sanityFetch } from '../sanity';
 import { slugify } from '../slugUtils';
 import { normalizeImage, normalizeImageList } from './images';
+import * as supabaseData from './supabase';
 import type {
   Tour,
   BlogPost,
@@ -18,10 +19,15 @@ import type {
   DestinationPost,
 } from '@/types';
 
+function useSupabaseSource(): boolean {
+  return process.env.CMS_SOURCE === 'supabase';
+}
+
 // ---------------------------------------------------------------------------
 // Tours
 // ---------------------------------------------------------------------------
 export async function getTours(): Promise<Tour[]> {
+  if (useSupabaseSource()) return supabaseData.getTours();
   const query = `*[_type == "tour"] | order(_createdAt desc) {
     _id,
     title,
@@ -48,6 +54,7 @@ export async function getTours(): Promise<Tour[]> {
 }
 
 export async function getTourById(id: string): Promise<Tour | null> {
+  if (useSupabaseSource()) return supabaseData.getTourById(id);
   const query = `*[_type == "tour" && _id == $id][0] {
     ...,
     "images": images[]{
@@ -73,6 +80,7 @@ export async function getTourById(id: string): Promise<Tour | null> {
 }
 
 export async function getTourBySlug(slug: string): Promise<Tour | null> {
+  if (useSupabaseSource()) return supabaseData.getTourBySlug(slug);
   const decoded = decodeURIComponent(slug);
   const query = `*[_type == "tour" && (slug.current == $slug || slug.current == $decoded)][0] {
     ...,
@@ -118,6 +126,7 @@ export async function getTourBySlug(slug: string): Promise<Tour | null> {
 }
 
 export async function getAllTourSlugs(): Promise<string[]> {
+  if (useSupabaseSource()) return supabaseData.getAllTourSlugs();
   const query = `*[_type == "tour"]{ "slug": slug.current, title }`;
   const data = await sanityFetch<Array<{ slug?: string; title?: string }>>({
     query,
@@ -132,6 +141,7 @@ export async function getAllTourSlugs(): Promise<string[]> {
 // Blog Posts
 // ---------------------------------------------------------------------------
 export async function getBlogPosts(): Promise<BlogPost[]> {
+  if (useSupabaseSource()) return supabaseData.getBlogPosts();
   const query = `*[_type == "blogPost"] | order(publishedAt desc) {
     _id,
     title,
@@ -157,6 +167,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
 }
 
 export async function getBlogPostById(id: string): Promise<BlogPost | null> {
+  if (useSupabaseSource()) return supabaseData.getBlogPostById(id);
   const query = `*[_type == "blogPost" && _id == $id][0] {
     ...,
     "featuredImage": {
@@ -177,6 +188,7 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  if (useSupabaseSource()) return supabaseData.getBlogPostBySlug(slug);
   const decoded = decodeURIComponent(slug);
   const query = `*[_type == "blogPost" && (slug.current == $slug || slug.current == $decoded)][0] {
     ...,
@@ -212,6 +224,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 }
 
 export async function getAllBlogSlugs(): Promise<string[]> {
+  if (useSupabaseSource()) return supabaseData.getAllBlogSlugs();
   const query = `*[_type == "blogPost"]{ "slug": slug.current, title }`;
   const data = await sanityFetch<Array<{ slug?: string; title?: string }>>({
     query,
@@ -226,6 +239,7 @@ export async function getAllBlogSlugs(): Promise<string[]> {
 // Accommodations
 // ---------------------------------------------------------------------------
 export async function getAccommodations(): Promise<Accommodation[]> {
+  if (useSupabaseSource()) return supabaseData.getAccommodations();
   const query = `*[_type == "accommodation"] | order(name asc) {
     _id,
     name,
@@ -250,6 +264,7 @@ export async function getAccommodations(): Promise<Accommodation[]> {
 }
 
 export async function getAccommodationsByType(type: string): Promise<Accommodation[]> {
+  if (useSupabaseSource()) return supabaseData.getAccommodationsByType(type);
   const query = `*[_type == "accommodation" && type == $type] | order(name asc) {
     _id,
     name,
@@ -275,6 +290,7 @@ export async function getAccommodationsByType(type: string): Promise<Accommodati
 }
 
 export async function getAccommodationById(id: string): Promise<Accommodation | null> {
+  if (useSupabaseSource()) return supabaseData.getAccommodationById(id);
   const query = `*[_type == "accommodation" && _id == $id][0] {
     _id,
     name,
@@ -313,6 +329,7 @@ export async function getAccommodationById(id: string): Promise<Accommodation | 
  * Slugs are dynamically derived from `slugify(name)`.
  */
 export async function getAccommodationBySlug(slug: string): Promise<Accommodation | null> {
+  if (useSupabaseSource()) return supabaseData.getAccommodationBySlug(slug);
   const query = `*[_type == "accommodation"] {
     _id,
     name,
@@ -346,6 +363,7 @@ export async function getAccommodationBySlug(slug: string): Promise<Accommodatio
 }
 
 export async function getAllAccommodationSlugs(): Promise<string[]> {
+  if (useSupabaseSource()) return supabaseData.getAllAccommodationSlugs();
   const accs = await getAccommodations();
   return accs.map((a) => slugify(a.name)).filter(Boolean);
 }
@@ -354,6 +372,7 @@ export async function getAllAccommodationSlugs(): Promise<string[]> {
 // Hot Deals
 // ---------------------------------------------------------------------------
 export async function getHotDeals(): Promise<HotDeal[]> {
+  if (useSupabaseSource()) return supabaseData.getHotDeals();
   const query = `*[_type == "hotDeal" && isActive == true] | order(_createdAt desc) {
     _id,
     title,
@@ -389,6 +408,7 @@ export async function getHotDeals(): Promise<HotDeal[]> {
 // Popup Offer
 // ---------------------------------------------------------------------------
 export async function getPopupOffer(): Promise<PopupOffer | null> {
+  if (useSupabaseSource()) return supabaseData.getPopupOffer();
   const query = `*[_type == "popupOffer" && isActive == true] | order(_createdAt desc)[0] {
     _id,
     title,
@@ -416,6 +436,7 @@ export async function getPopupOffer(): Promise<PopupOffer | null> {
 // Packages & Themed Packages
 // ---------------------------------------------------------------------------
 export async function getPackages(): Promise<Package[]> {
+  if (useSupabaseSource()) return supabaseData.getPackages();
   const query = `*[_type == "package"] | order(_createdAt desc) {
     _id,
     title,
@@ -439,6 +460,7 @@ export async function getPackages(): Promise<Package[]> {
 }
 
 export async function getPackagesByCategory(category: string): Promise<Package[]> {
+  if (useSupabaseSource()) return supabaseData.getPackagesByCategory(category);
   const query = `*[_type == "package" && category == $category] | order(_createdAt desc) {
     _id,
     title,
@@ -463,6 +485,7 @@ export async function getPackagesByCategory(category: string): Promise<Package[]
 }
 
 export async function getThemedPackageByCategory(category: string): Promise<ThemedPackage | null> {
+  if (useSupabaseSource()) return supabaseData.getThemedPackageByCategory(category);
   const query = `*[_type == "themedPackage" && category == $category][0] {
     title,
     category,
@@ -486,6 +509,7 @@ export async function getThemedPackageByCategory(category: string): Promise<Them
 }
 
 export async function getAllThemedPackages(): Promise<ThemedPackage[]> {
+  if (useSupabaseSource()) return supabaseData.getAllThemedPackages();
   const query = `*[_type == "themedPackage"] | order(_createdAt desc) {
     title,
     slug,
@@ -510,6 +534,7 @@ export async function getAllThemedPackages(): Promise<ThemedPackage[]> {
 // Team Members
 // ---------------------------------------------------------------------------
 export async function getTeamMembers(): Promise<TeamMember[]> {
+  if (useSupabaseSource()) return supabaseData.getTeamMembers();
   const query = `*[_type == "teamMember"] | order(order asc, _createdAt desc) {
     _id,
     name,
@@ -537,6 +562,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 // Hero Slides
 // ---------------------------------------------------------------------------
 export async function getHeroSlides(): Promise<HeroSlide[]> {
+  if (useSupabaseSource()) return supabaseData.getHeroSlides();
   const query = `*[_type == "heroSlide"] | order(order asc, _createdAt desc) {
     _id,
     title,
@@ -562,6 +588,7 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
 // Partners
 // ---------------------------------------------------------------------------
 export async function getPartners(): Promise<Partner[]> {
+  if (useSupabaseSource()) return supabaseData.getPartners();
   const query = `*[_type == "partner"] | order(order asc, _createdAt desc) {
     _id,
     name,
@@ -583,6 +610,7 @@ export async function getPartners(): Promise<Partner[]> {
 // Gallery
 // ---------------------------------------------------------------------------
 export async function getGalleryImages(): Promise<GalleryImage[]> {
+  if (useSupabaseSource()) return supabaseData.getGalleryImages();
   const query = `*[_type == "galleryImage"] | order(order asc, _createdAt desc) {
     _id,
     title,
@@ -605,6 +633,7 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
 // Fleet Vehicles
 // ---------------------------------------------------------------------------
 export async function getFleetVehicles(): Promise<FleetVehicle[]> {
+  if (useSupabaseSource()) return supabaseData.getFleetVehicles();
   const query = `*[_type == "fleetVehicle"] | order(order asc, _createdAt desc) {
     _id,
     name,
@@ -625,6 +654,7 @@ export async function getFleetVehicles(): Promise<FleetVehicle[]> {
 // Destination Categories (Regions)
 // ---------------------------------------------------------------------------
 export async function getDestinationCategories(): Promise<DestinationCategory[]> {
+  if (useSupabaseSource()) return supabaseData.getDestinationCategories();
   const query = `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) {
     _id,
     name,
@@ -653,6 +683,7 @@ export async function getDestinationCategories(): Promise<DestinationCategory[]>
 }
 
 export async function getDestinationCategoryBySlug(slug: string): Promise<DestinationCategory | null> {
+  if (useSupabaseSource()) return supabaseData.getDestinationCategoryBySlug(slug);
   const query = `*[_type == "destinationCategory" && slug.current == $slug][0] {
     _id,
     name,
@@ -679,6 +710,7 @@ export async function getDestinationCategoryBySlug(slug: string): Promise<Destin
 // Destination Posts
 // ---------------------------------------------------------------------------
 export async function getDestinationPostsByCategory(categorySlug: string): Promise<DestinationPost[]> {
+  if (useSupabaseSource()) return supabaseData.getDestinationPostsByCategory(categorySlug);
   const query = `*[_type == "destinationPost" && category->slug.current == $categorySlug] | order(title asc) {
     _id,
     title,
@@ -702,6 +734,7 @@ export async function getDestinationPostsByCategory(categorySlug: string): Promi
 }
 
 export async function getDestinationPostBySlug(slug: string): Promise<DestinationPost | null> {
+  if (useSupabaseSource()) return supabaseData.getDestinationPostBySlug(slug);
   const query = `*[_type == "destinationPost" && (slug.current == $slug || slug.current == $altSlug)][0] {
     _id,
     title,
@@ -754,6 +787,7 @@ export async function getDestinationPostBySlug(slug: string): Promise<Destinatio
 }
 
 export async function getAllDestinationSlugs(): Promise<string[]> {
+  if (useSupabaseSource()) return supabaseData.getAllDestinationSlugs();
   const query = `*[_type == "destinationPost"]{ "slug": slug.current, title }`;
   const data = await sanityFetch<Array<{ slug?: string; title?: string }>>({
     query,
@@ -765,4 +799,14 @@ export async function getAllDestinationSlugs(): Promise<string[]> {
       return raw === 'ambosseli-national-park' ? 'amboseli-national-park' : raw;
     })
     .filter(Boolean);
+}
+
+// ---------------------------------------------------------------------------
+// Redirects (Supabase CMS redirects table)
+// ---------------------------------------------------------------------------
+export async function getRedirectForPath(
+  oldPath: string
+): Promise<{ new_path: string; status_code: number } | null> {
+  if (!useSupabaseSource()) return null;
+  return supabaseData.getRedirectForPath(oldPath);
 }

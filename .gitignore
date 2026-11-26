@@ -1,0 +1,18 @@
+cms-source/data.ndjson
+cms-migration/.env
+cms-migration/.env.*
+cms-migration/out/
+
+# env files at any depth (examples stay tracked)
+.env
+.env.*
+!.env.example
+
+node_modules/
+
+# Sanity exports and local data (never commit)
+cms-source/
+sanity-studio/*.tar.gz
+sanity-studio/production-export-*/
+sanity-studio/schema.json
+

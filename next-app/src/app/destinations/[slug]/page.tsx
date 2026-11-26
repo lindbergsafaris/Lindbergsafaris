@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import { Calendar, Info, MapPin } from 'lucide-react';
 import { PortableText } from '@portabletext/react';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import DestinationInquiryForm from '@/components/destinations/DestinationInquiryForm';
 import JsonLd from '@/components/JsonLd';
-import { getDestinationPostBySlug, getAllDestinationSlugs } from '@/lib/data';
+import { getDestinationPostBySlug, getAllDestinationSlugs, getRedirectForPath } from '@/lib/data';
 import { destinationsData } from '@/data/destinations';
 import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
@@ -93,6 +93,8 @@ export default async function DestinationDetailPage({ params }: PageProps) {
   const destination = await getDestination(slug);
 
   if (!destination) {
+    const redir = await getRedirectForPath(`/destinations/${slug}`);
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 

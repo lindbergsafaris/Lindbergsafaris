@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Globe } from 'lucide-react';
-import { getDestinationCategories } from '@/lib/data';
 import { DestinationCategory } from '@/types';
 
 interface RegionNavigatorProps {
@@ -18,8 +17,10 @@ const RegionNavigator = ({ currentRegion, initialRegions }: RegionNavigatorProps
     if (initialRegions && initialRegions.length > 0) return;
     const fetchRegions = async () => {
       try {
-        const data = await getDestinationCategories();
-        setRegions(data || []);
+        const res = await fetch('/api/regions');
+        if (!res.ok) return;
+        const data = await res.json();
+        setRegions(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Failed to fetch regions:', error);
       }

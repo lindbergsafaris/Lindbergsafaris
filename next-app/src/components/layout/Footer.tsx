@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Facebook, Instagram, Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Container from '@/components/ui/Container';
@@ -8,7 +9,10 @@ import LocationMap from '@/components/ui/LocationMap';
 import '@/lib/i18n';
 
 const Footer = () => {
+  const pathname = usePathname();
   const { t } = useTranslation('common');
+
+  if (pathname?.startsWith('/admin')) return null;
 
   return (
     <footer

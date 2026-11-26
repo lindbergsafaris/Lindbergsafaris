@@ -6,7 +6,7 @@ import Section from '@/components/ui/Section';
 import TourItinerary from '@/components/tours/TourItinerary';
 import TourBookingForm from '@/components/tours/TourBookingForm';
 import JsonLd from '@/components/JsonLd';
-import { getTourBySlug, getTourById, getAllTourSlugs } from '@/lib/data';
+import { getTourBySlug, getTourById, getAllTourSlugs, getRedirectForPath } from '@/lib/data';
 import { isUUID, slugify } from '@/lib/slugUtils';
 import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
@@ -73,6 +73,8 @@ export default async function TourDetailPage({ params }: PageProps) {
     if (tour?.slug?.current) {
       permanentRedirect(`/tours/${slugify(tour.slug.current)}`);
     }
+    const redir = await getRedirectForPath(`/tours/${slug}`);
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 
@@ -85,6 +87,10 @@ export default async function TourDetailPage({ params }: PageProps) {
 
   const tour = await getTourBySlug(slug);
   if (!tour) {
+    const redir =
+      (await getRedirectForPath(`/tours/${slug}`)) ||
+      (await getRedirectForPath(`/tours/${cleanSlug}`));
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 

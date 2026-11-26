@@ -6,7 +6,7 @@ import { PortableText } from '@portabletext/react';
 import Container from '@/components/ui/Container';
 import Section from '@/components/ui/Section';
 import JsonLd from '@/components/JsonLd';
-import { getBlogPostBySlug, getBlogPostById, getAllBlogSlugs } from '@/lib/data';
+import { getBlogPostBySlug, getBlogPostById, getAllBlogSlugs, getRedirectForPath } from '@/lib/data';
 import { isUUID, slugify } from '@/lib/slugUtils';
 import { createBreadcrumbsSchema } from '@/lib/breadcrumbs';
 import { SITE_URL } from '@/lib/siteConfig';
@@ -85,6 +85,8 @@ export default async function BlogPostPage({ params }: PageProps) {
     if (post?.slug?.current) {
       permanentRedirect(`/blog/${slugify(post.slug.current)}`);
     }
+    const redir = await getRedirectForPath(`/blog/${slug}`);
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 
@@ -97,6 +99,10 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const post = await getBlogPostBySlug(slug);
   if (!post) {
+    const redir =
+      (await getRedirectForPath(`/blog/${slug}`)) ||
+      (await getRedirectForPath(`/blog/${cleanSlug}`));
+    if (redir) permanentRedirect(redir.new_path);
     notFound();
   }
 

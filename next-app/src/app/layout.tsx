@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import MainWrapper from '@/components/layout/MainWrapper';
 import FloatingSocials from '@/components/ui/FloatingSocials';
 import MetaPixelTracker from '@/components/MetaPixelTracker';
 import { SITE_URL, SITE_NAME } from '@/lib/siteConfig';
@@ -116,7 +117,7 @@ export default function RootLayout({
         </noscript>
         <MetaPixelTracker />
         <Header />
-        <main className="flex-grow pt-24">{children}</main>
+        <MainWrapper>{children}</MainWrapper>
         <Footer />
         <FloatingSocials />
       </body>
