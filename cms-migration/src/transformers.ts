@@ -87,6 +87,8 @@ export function transformDestinationCategory(doc: SanityDoc) {
     display_order: num(doc.order, 0),
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -120,6 +122,8 @@ export function transformDestinationPost(
     seo_description: str(doc.seoDescription) || null,
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -145,6 +149,8 @@ export function transformThemedPackage(doc: SanityDoc) {
     seo_description: str(doc.seoDescription) || null,
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -200,6 +206,8 @@ export function transformTour(doc: SanityDoc) {
     seo_description: str(doc.seoDescription) || null,
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -228,6 +236,8 @@ export function transformBlogPost(doc: SanityDoc) {
     seo_description: str(doc.seoDescription) || null,
     status: 'published' as const,
     published_at: isoDate(doc.publishedAt ?? doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -273,6 +283,8 @@ export function transformAccommodation(doc: SanityDoc) {
     seo_description: str(doc.seoDescription) || null,
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -293,6 +305,8 @@ export function transformHotDeal(doc: SanityDoc) {
     is_active: bool(doc.isActive, true),
     status: 'archived' as const,
     published_at: publishedAt,
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -313,6 +327,8 @@ export function transformPopupOffer(doc: SanityDoc) {
     end_date: isoDate(doc.endDate),
     status: 'archived' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -329,6 +345,8 @@ export function transformTeamMember(doc: SanityDoc) {
     display_order: num(doc.order, 0),
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -346,6 +364,8 @@ export function transformGalleryImage(doc: SanityDoc) {
     display_order: num(doc.order, 0),
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }
 
@@ -362,5 +382,7 @@ export function transformFleetVehicle(doc: SanityDoc) {
     display_order: num(doc.order, 0),
     status: 'published' as const,
     published_at: isoDate(doc._updatedAt ?? doc._createdAt),
+    created_at: isoDate(doc._createdAt) ?? new Date().toISOString(),
+    updated_at: isoDate(doc._updatedAt) ?? new Date().toISOString(),
   };
 }

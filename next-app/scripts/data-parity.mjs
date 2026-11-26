@@ -624,6 +624,281 @@ async function compareDestinationPosts() {
   record('getDestinationPostsByCategory / getDestinationPostBySlug / getAllDestinationSlugs', sData.length, sb.length, diffs);
 }
 
+// ---------------------------------------------------------------------------
+// Order comparisons
+// ---------------------------------------------------------------------------
+
+function compareOrder(label, sanityList, supabaseList, getKey) {
+  const sKeys = sanityList.map(getKey);
+  const sbKeys = supabaseList.map(getKey);
+  const diffs = [];
+  const maxLen = Math.max(sKeys.length, sbKeys.length);
+  for (let i = 0; i < maxLen; i++) {
+    const s = sKeys[i] ?? '(missing)';
+    const sb = sbKeys[i] ?? '(missing)';
+    if (s !== sb) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${sb}"`);
+  }
+  if (diffs.length === 0) {
+    console.log(`  [ORDER OK] ${label}`);
+  } else {
+    console.log(`  [ORDER DIFF] ${label}:`);
+    for (const d of diffs) console.log(d);
+  }
+  return diffs;
+}
+
+async function compareAllOrders() {
+  console.log('\n=== ORDER COMPARISON (Sanity vs Supabase) ===');
+  const orderDiffs = {};
+
+  // 1. Tours: order(_createdAt desc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "tour"] | order(_createdAt desc) { "slug": slug.current, title }`
+    );
+    const { data: sbRaw } = await supabase
+      .from('tours')
+      .select('slug, title, created_at')
+      .eq('status', 'published')
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
+    const sb = (sbRaw || []).filter((t) => t.slug !== 'test');
+    const sKeys = sData.map((t) => slugify(t.slug || t.title));
+    const sbKeys = sb.map((t) => t.slug);
+    const diffs = compareOrder('tours (order: _createdAt desc)', sData, sb, (_, i) => (i < sKeys.length ? sKeys[i] : sbKeys[i - sKeys.length]));
+    // redo with correct mapping
+    const diffs2 = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const sb2 = sbKeys[i] ?? '(missing)';
+      if (s !== sb2) diffs2.push(`  pos ${i}: sanity="${s}" vs supabase="${sb2}"`);
+    }
+    if (diffs2.length === 0) {
+      console.log(`  [ORDER OK] tours (order: _createdAt desc)`);
+    } else {
+      console.log(`  [ORDER DIFF] tours (order: _createdAt desc):`);
+      for (const d of diffs2) console.log(d);
+    }
+    orderDiffs.tours = diffs2;
+  }
+
+  // 2. Blog posts: order(publishedAt desc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "blogPost"] | order(publishedAt desc) { "slug": slug.current, title }`
+    );
+    const { data: sbData } = await supabase
+      .from('blog_posts')
+      .select('slug, title, published_at')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false, nullsFirst: false });
+    const sb = sbData || [];
+    const sKeys = sData.map((b) => (b.title?.toLowerCase().includes('altitude training') ? 'altitude-training-kenya' : slugify(b.slug || b.title)));
+    const sbKeys = sb.map((b) => b.slug);
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] blog posts (order: publishedAt desc)`);
+    } else {
+      console.log(`  [ORDER DIFF] blog posts (order: publishedAt desc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.blogPosts = diffs;
+  }
+
+  // 3. Accommodations: order(name asc)
+  {
+    const sData = await sanity.fetch(`*[_type == "accommodation"] | order(name asc) { name }`);
+    const { data: sbData } = await supabase
+      .from('accommodations')
+      .select('name')
+      .eq('status', 'published')
+      .order('name', { ascending: true });
+    const sb = sbData || [];
+    const sKeys = sData.map((a) => normStr(a.name));
+    const sbKeys = sb.map((a) => normStr(a.name));
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] accommodations (order: name asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] accommodations (order: name asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.accommodations = diffs;
+  }
+
+  // 4. Team members: order(order asc, _createdAt desc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "teamMember"] | order(order asc, _createdAt desc) { name, order }`
+    );
+    const { data: sbData } = await supabase
+      .from('team_members')
+      .select('name, display_order, created_at')
+      .eq('status', 'published')
+      .order('display_order', { ascending: true })
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
+    const sb = sbData || [];
+    const sKeys = sData.map((m) => normStr(m.name));
+    const sbKeys = sb.map((m) => normStr(m.name));
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] team members (order: display_order asc, created_at desc, id asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] team members (order: display_order asc, created_at desc, id asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.teamMembers = diffs;
+  }
+
+  // 5. Gallery images: order(order asc, _createdAt desc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "galleryImage"] | order(order asc, _createdAt desc) { title, order }`
+    );
+    const { data: sbData } = await supabase
+      .from('gallery_images')
+      .select('title, display_order, created_at')
+      .eq('status', 'published')
+      .order('display_order', { ascending: true })
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
+    const sb = sbData || [];
+    const sKeys = sData.map((g) => normStr(g.title) || '(untitled)');
+    const sbKeys = sb.map((g) => normStr(g.title) || '(untitled)');
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] gallery images (order: display_order asc, created_at desc, id asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] gallery images (order: display_order asc, created_at desc, id asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.galleryImages = diffs;
+  }
+
+  // 6. Fleet vehicles: order(order asc, _createdAt desc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "fleetVehicle"] | order(order asc, _createdAt desc) { name, order }`
+    );
+    const { data: sbData } = await supabase
+      .from('fleet_vehicles')
+      .select('name, display_order, created_at')
+      .eq('status', 'published')
+      .order('display_order', { ascending: true })
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
+    const sb = sbData || [];
+    const sKeys = sData.map((v) => normStr(v.name));
+    const sbKeys = sb.map((v) => normStr(v.name));
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] fleet vehicles (order: display_order asc, created_at desc, id asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] fleet vehicles (order: display_order asc, created_at desc, id asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.fleetVehicles = diffs;
+  }
+
+  // 7. Destination categories: order(isFeatured desc, name asc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "destinationCategory"] | order(isFeatured desc, name asc) { name, "slug": slug.current }`
+    );
+    const { data: sbData } = await supabase
+      .from('destination_categories')
+      .select('name, slug, is_featured')
+      .eq('status', 'published')
+      .order('is_featured', { ascending: false })
+      .order('name', { ascending: true });
+    const sb = sbData || [];
+    const sKeys = sData.map((c) => c.slug || slugify(c.name));
+    const sbKeys = sb.map((c) => c.slug);
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] destination categories (order: isFeatured desc, name asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] destination categories (order: isFeatured desc, name asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.destinationCategories = diffs;
+  }
+
+  // 8. Destination posts: order(title asc)
+  {
+    const sData = await sanity.fetch(
+      `*[_type == "destinationPost"] | order(title asc) { title, "slug": slug.current }`
+    );
+    const { data: sbData } = await supabase
+      .from('destination_posts')
+      .select('title, slug')
+      .eq('status', 'published')
+      .order('title', { ascending: true });
+    const sb = sbData || [];
+    const normSlug = (s, t) => {
+      const raw = s || slugify(t);
+      return raw === 'ambosseli-national-park' ? 'amboseli-national-park' : slugify(raw);
+    };
+    const sKeys = sData.map((d) => normSlug(d.slug, d.title));
+    const sbKeys = sb.map((d) => d.slug);
+    const diffs = [];
+    const max = Math.max(sKeys.length, sbKeys.length);
+    for (let i = 0; i < max; i++) {
+      const s = sKeys[i] ?? '(missing)';
+      const r = sbKeys[i] ?? '(missing)';
+      if (s !== r) diffs.push(`  pos ${i}: sanity="${s}" vs supabase="${r}"`);
+    }
+    if (diffs.length === 0) {
+      console.log(`  [ORDER OK] destination posts (order: title asc)`);
+    } else {
+      console.log(`  [ORDER DIFF] destination posts (order: title asc):`);
+      for (const d of diffs) console.log(d);
+    }
+    orderDiffs.destinationPosts = diffs;
+  }
+
+  const totalOrderDiffs = Object.values(orderDiffs).reduce((sum, arr) => sum + arr.length, 0);
+  console.log(`\nOrder check complete. Total position mismatches: ${totalOrderDiffs}`);
+}
+
 async function main() {
   console.log('=== CMS DATA PARITY REPORT (Sanity vs Supabase, Row-Level) ===');
   await compareTours();
@@ -640,6 +915,7 @@ async function main() {
   await compareFleet();
   await compareDestinationCategories();
   await compareDestinationPosts();
+  await compareAllOrders();
 
   console.log('\n=== SUMMARY ===\n');
   const pad = (s, n) => String(s).padEnd(n);

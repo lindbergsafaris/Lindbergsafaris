@@ -568,7 +568,8 @@ export const getPackages = unstable_cache(
       .select('id, legacy_sanity_id, title, category, duration, price, image, description')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getPackages]', error.message);
@@ -598,7 +599,8 @@ export async function getPackagesByCategory(category: string): Promise<Package[]
         .eq('status', 'published')
         .eq('category', category)
         .order('display_order', { ascending: true })
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .order('id', { ascending: true });
 
       if (error) {
         console.error('[supabase:getPackagesByCategory]', error.message);
@@ -675,7 +677,8 @@ export const getTeamMembers = unstable_cache(
       .select('id, legacy_sanity_id, name, role, image, display_order')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getTeamMembers]', error.message);
@@ -711,7 +714,8 @@ export const getHeroSlides = unstable_cache(
       .eq('status', 'published')
       .eq('is_active', true)
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getHeroSlides]', error.message);
@@ -745,7 +749,8 @@ export const getPartners = unstable_cache(
       .select('id, legacy_sanity_id, name, logo, website, display_order')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getPartners]', error.message);
@@ -775,7 +780,8 @@ export const getGalleryImages = unstable_cache(
       .select('id, legacy_sanity_id, title, location, category, image, display_order')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getGalleryImages]', error.message);
@@ -806,7 +812,8 @@ export const getFleetVehicles = unstable_cache(
       .select('id, legacy_sanity_id, name, image, display_order')
       .eq('status', 'published')
       .order('display_order', { ascending: true })
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false })
+      .order('id', { ascending: true });
 
     if (error) {
       console.error('[supabase:getFleetVehicles]', error.message);

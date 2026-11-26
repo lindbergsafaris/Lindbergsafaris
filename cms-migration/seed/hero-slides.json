@@ -12,7 +12,9 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 1,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:01Z",
+    "updated_at": "2026-01-01T00:00:01Z"
   },
   {
     "title": "Wildlife Encounters",
@@ -27,7 +29,9 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 2,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:02Z",
+    "updated_at": "2026-01-01T00:00:02Z"
   },
   {
     "title": "Expert Guided Tours",
@@ -42,7 +46,9 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 3,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:03Z",
+    "updated_at": "2026-01-01T00:00:03Z"
   },
   {
     "title": "Luxury Camps & Lodges",
@@ -57,7 +63,9 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 4,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:04Z",
+    "updated_at": "2026-01-01T00:00:04Z"
   },
   {
     "title": "Seamless Air Ticketing",
@@ -72,7 +80,9 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 5,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:05Z",
+    "updated_at": "2026-01-01T00:00:05Z"
   },
   {
     "title": "Beach & Safari Combo",
@@ -87,6 +97,8 @@
     "secondary_button_text": "View Our Tours",
     "secondary_button_link": "/tours",
     "display_order": 6,
-    "is_active": true
+    "is_active": true,
+    "created_at": "2026-01-01T00:00:06Z",
+    "updated_at": "2026-01-01T00:00:06Z"
   }
 ]
