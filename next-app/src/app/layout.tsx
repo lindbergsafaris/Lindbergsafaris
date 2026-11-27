@@ -43,11 +43,6 @@ export const metadata: Metadata = {
     address: true,
     telephone: true,
   },
-  icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
-  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
